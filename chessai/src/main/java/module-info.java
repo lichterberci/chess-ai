@@ -1,14 +1,10 @@
-module chess.ai.chessai {
+module chessai.chessai {
     requires javafx.controls;
     requires javafx.fxml;
-        requires javafx.web;
-            
-        requires org.controlsfx.controls;
-            requires com.dlsc.formsfx;
-            requires net.synedra.validatorfx;
-                requires org.kordamp.bootstrapfx.core;
-            requires eu.hansolo.tilesfx;
-        
-    opens chess.ai.chessai to javafx.fxml;
-    exports chess.ai.chessai;
+
+    requires org.controlsfx.controls;
+    requires org.kordamp.bootstrapfx.core;
+
+    opens chessai.chessai to javafx.fxml;
+    exports chessai.chessai;
 }
