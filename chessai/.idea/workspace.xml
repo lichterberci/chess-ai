@@ -5,6 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Added imageview to squares but it doesnt work yet">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bK.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bQ.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bR.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wB.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wK.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wP.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wQ.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wR.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
@@ -22,9 +36,27 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
   <component name="ProjectId" id="2Vc3hHiujf81crKWVsuJbXGEhJp" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -41,7 +73,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/User/IdeaProjects/chess-ai/chessai/src/main/resources/chessai/chessai",
+    "last_opened_file_path": "E:/chess-ai/chessai",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,7 +87,7 @@
       <recent name="C:\Users\User\IdeaProjects\chess-ai\chessai\src\main\resources\chessai\chessai" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="chessai.chessai.MainApplication" />
       <module name="chessai.main" />
@@ -63,6 +95,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="chessai [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.chessai [build]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -74,6 +133,7 @@
       <updated>1695121660488</updated>
       <workItem from="1695121662855" duration="400000" />
       <workItem from="1695123366065" duration="8513000" />
+      <workItem from="1695150890264" duration="1709000" />
     </task>
     <task id="LOCAL-00001" summary="Removed maven project, added gradle project">
       <option name="closed" value="true" />

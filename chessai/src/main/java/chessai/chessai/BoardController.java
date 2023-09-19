@@ -29,12 +29,11 @@ public class BoardController {
 
         final double size = Math.min(width, height);
 
-        System.out.printf("resize to (%s, %s) --> %s%n", width, height, size);
-
         final double squareSize = size / 8.0;
 
         board.getColumnConstraints().forEach(columnConstraints -> columnConstraints.setPrefWidth(squareSize));
         board.getRowConstraints().forEach(rowConstraints -> rowConstraints.setPrefHeight(squareSize));
+
     }
 
     public void colorBoard(boolean whiteIsAtBottom, Color whiteColor, Color blackColor) {
@@ -52,24 +51,30 @@ public class BoardController {
     }
     public void drawPiece (int file, int row, URL pieceResourceUrl) throws IOException {
 
-        board.getChildren()
+        Pane parentSquare = (Pane) board.getChildren()
                 .stream()
                 .filter(square -> square.getId().equals("Square_%d_%d".formatted(file, row)))
                 .filter(square -> square instanceof Pane)
-                .forEach(square -> ((Pane) square).getChildren().removeAll());
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Board does not have square %d %d".formatted(file, row)));
 
-        Image imageOfSet = new Image(pieceResourceUrl.openStream());
+
+        parentSquare.getChildren().removeAll();
+
+        Image image = new Image(
+                pieceResourceUrl.openStream()
+        );
 
         ImageView imageView = new ImageView();
 
-        imageView.setImage(imageOfSet);
+        imageView.fitWidthProperty().bind(parentSquare.widthProperty());
+        imageView.fitHeightProperty().bind(parentSquare.heightProperty());
+        imageView.setPreserveRatio(true);
+
+        imageView.setImage(image);
 
         imageView.setId(MessageFormat.format("Piece_{0}_{1}", file, row));
 
-        board.getChildren()
-                .stream()
-                .filter(child -> child.getId().equals("Square_%d_%d".formatted(file, row)))
-                .filter(square -> square instanceof Pane)
-                .forEach(square -> ((Pane)square).getChildren().add(imageView));
+        parentSquare.getChildren().add(imageView);
     }
 }

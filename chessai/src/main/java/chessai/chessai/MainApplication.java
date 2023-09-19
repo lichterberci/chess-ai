@@ -19,14 +19,15 @@ public class MainApplication extends Application {
         BoardController boardController = fxmlLoader.getController();
 
         boardController.colorBoard(true, Color.WHITE, Color.BLACK);
-        boardController.drawPiece(2, 2, Objects.requireNonNull(getClass().getResource("MainPieceSet.png")));
+        boardController.drawPiece(2, 2, Objects.requireNonNull(getClass().getResource("pieces/bK.png")));
 
         stage.setTitle("GézaBot");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch();
     }
 }
