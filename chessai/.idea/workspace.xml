@@ -4,24 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Added imageview to squares but it doesnt work yet">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bB.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bK.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bN.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bP.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bQ.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bR.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wB.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wK.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wN.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wP.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wQ.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wR.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Added pieces as png and solved image resize">
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cuba-project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cuba-project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +40,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -133,7 +130,7 @@
       <updated>1695121660488</updated>
       <workItem from="1695121662855" duration="400000" />
       <workItem from="1695123366065" duration="8513000" />
-      <workItem from="1695150890264" duration="1709000" />
+      <workItem from="1695150890264" duration="3758000" />
     </task>
     <task id="LOCAL-00001" summary="Removed maven project, added gradle project">
       <option name="closed" value="true" />
@@ -151,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695138193804</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added pieces as png and solved image resize">
+      <option name="closed" value="true" />
+      <created>1695152648359</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1695152648359</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +177,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Removed maven project, added gradle project" />
     <MESSAGE value="Added imageview to squares but it doesnt work yet" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added imageview to squares but it doesnt work yet" />
+    <MESSAGE value="Added pieces as png and solved image resize" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pieces as png and solved image resize" />
   </component>
 </project>

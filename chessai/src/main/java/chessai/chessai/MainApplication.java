@@ -18,8 +18,13 @@ public class MainApplication extends Application {
 
         BoardController boardController = fxmlLoader.getController();
 
-        boardController.colorBoard(true, Color.WHITE, Color.BLACK);
-        boardController.drawPiece(2, 2, Objects.requireNonNull(getClass().getResource("pieces/bK.png")));
+        boardController.colorBoard(true, Color.valueOf("#EEE"), Color.valueOf("#003366"));
+        boardController.drawPiece(0, 0, Objects.requireNonNull(getClass().getResource("pieces/bR.png")));
+        boardController.drawPiece(1, 0, Objects.requireNonNull(getClass().getResource("pieces/bN.png")));
+        boardController.drawPiece(2, 0, Objects.requireNonNull(getClass().getResource("pieces/bB.png")));
+        boardController.drawPiece(0, 7, Objects.requireNonNull(getClass().getResource("pieces/wR.png")));
+        boardController.drawPiece(1, 7, Objects.requireNonNull(getClass().getResource("pieces/wN.png")));
+        boardController.drawPiece(2, 7, Objects.requireNonNull(getClass().getResource("pieces/wB.png")));
 
         stage.setTitle("GézaBot");
         stage.setScene(scene);

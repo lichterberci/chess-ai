@@ -7,4 +7,5 @@ module chessai.chessai {
 
     opens chessai.chessai to javafx.fxml;
     exports chessai.chessai;
+    exports chessai.chessai.lib;
 }
