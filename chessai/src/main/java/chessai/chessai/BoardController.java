@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.MessageFormat;
 
 public class BoardController {
@@ -48,7 +50,7 @@ public class BoardController {
             }
         }
     }
-    public void drawPiece (int file, int row, String pieceSetResourceName) {
+    public void drawPiece (int file, int row, URL pieceResourceUrl) throws IOException {
 
         board.getChildren()
                 .stream()
@@ -56,13 +58,10 @@ public class BoardController {
                 .filter(square -> square instanceof Pane)
                 .forEach(square -> ((Pane) square).getChildren().removeAll());
 
-
-        Image imageOfSet = new Image(pieceSetResourceName, 40, 40, false, true);
+        Image imageOfSet = new Image(pieceResourceUrl.openStream());
 
         ImageView imageView = new ImageView();
 
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(40);
         imageView.setImage(imageOfSet);
 
         imageView.setId(MessageFormat.format("Piece_{0}_{1}", file, row));

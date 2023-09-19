@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainApplication extends Application {
     @Override
@@ -17,8 +18,8 @@ public class MainApplication extends Application {
 
         BoardController boardController = fxmlLoader.getController();
 
-        boardController.colorBoard(true, Color.TRANSPARENT, Color.TRANSPARENT);
-        boardController.drawPiece(2, 2, MainApplication.class.getResource("MainPieceSet.png").getPath());
+        boardController.colorBoard(true, Color.WHITE, Color.BLACK);
+        boardController.drawPiece(2, 2, Objects.requireNonNull(getClass().getResource("MainPieceSet.png")));
 
         stage.setTitle("GézaBot");
         stage.setScene(scene);

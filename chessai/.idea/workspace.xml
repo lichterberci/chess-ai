@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Removed maven project, added gradle project">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainPieceSet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/MainPieceSet.png" afterDir="false" />
+    <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Added imageview to squares but it doesnt work yet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695121660488</updated>
       <workItem from="1695121662855" duration="400000" />
-      <workItem from="1695123366065" duration="7807000" />
+      <workItem from="1695123366065" duration="8513000" />
     </task>
     <task id="LOCAL-00001" summary="Removed maven project, added gradle project">
       <option name="closed" value="true" />
@@ -86,7 +83,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695132859459</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added imageview to squares but it doesnt work yet">
+      <option name="closed" value="true" />
+      <created>1695138193804</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1695138193804</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +111,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Removed maven project, added gradle project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed maven project, added gradle project" />
+    <MESSAGE value="Added imageview to squares but it doesnt work yet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added imageview to squares but it doesnt work yet" />
   </component>
 </project>
