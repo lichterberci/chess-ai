@@ -16,8 +16,9 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
 
         BoardController boardController = fxmlLoader.getController();
-        boardController.colorBoard(true, Color.WHITE, Color.BLACK);
-        boardController.colorBoard(true, Color.WHITE, Color.BLACK);
+
+        boardController.colorBoard(true, Color.TRANSPARENT, Color.TRANSPARENT);
+        boardController.drawPiece(2, 2, MainApplication.class.getResource("MainPieceSet.png").getPath());
 
         stage.setTitle("GézaBot");
         stage.setScene(scene);

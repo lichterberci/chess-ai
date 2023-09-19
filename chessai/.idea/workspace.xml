@@ -5,32 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="201da7a4-4eeb-4daf-9d1d-6885b5973447" name="Changes" comment="Removed maven project, added gradle project">
-      <change afterPath="$PROJECT_DIR$/.idea/cuba-project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chess/ai/chessai/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chess/ai/chessai/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chess/ai/chessai/hello-view.fxml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainPieceSet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/MainPieceSet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,25 +29,35 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="2Vc3hHiujf81crKWVsuJbXGEhJp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/User/IdeaProjects/chess-ai/chessai/src/main/resources/chessai/chessai",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "editor.preferences.import",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\chess-ai\chessai\src\main\resources\chessai\chessai" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="chessai.chessai.MainApplication" />
@@ -86,8 +76,17 @@
       <option name="presentableId" value="Default" />
       <updated>1695121660488</updated>
       <workItem from="1695121662855" duration="400000" />
-      <workItem from="1695123366065" duration="2504000" />
+      <workItem from="1695123366065" duration="7807000" />
     </task>
+    <task id="LOCAL-00001" summary="Removed maven project, added gradle project">
+      <option name="closed" value="true" />
+      <created>1695132859459</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1695132859459</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,6 +104,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Removed maven project, added gradle project" />
     <option name="LAST_COMMIT_MESSAGE" value="Removed maven project, added gradle project" />
   </component>
