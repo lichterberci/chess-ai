@@ -1,5 +1,6 @@
 package chessai.chessai;
 
+import chessai.chessai.ui.BoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

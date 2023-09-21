@@ -8,4 +8,6 @@ module chessai.chessai {
     opens chessai.chessai to javafx.fxml;
     exports chessai.chessai;
     exports chessai.chessai.lib;
+    exports chessai.chessai.ui;
+    opens chessai.chessai.ui to javafx.fxml;
 }
