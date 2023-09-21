@@ -1,5 +1,8 @@
 package chessai.chessai.lib;
 
+import chessai.chessai.lib.pieces.King;
+import chessai.chessai.lib.pieces.Pawn;
+import chessai.chessai.lib.pieces.Rook;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
@@ -25,11 +28,97 @@ public class Board {
     int fullMoveClock;
     int halfMoveCounter;
 
+    public Board(Board other) {
+        this(other.squares,
+                other.colorToMove,
+                other.canBlackCastleKingSide,
+                other.canBlackCastleQueenSide,
+                other.canWhiteCastleKingSide,
+                other.canWhiteCastleQueenSide,
+                other.enPassantTarget,
+                other.fullMoveClock,
+                other.halfMoveCounter);
+    }
+    public Board (Piece[] squares,
+                  PieceColor colorToMove,
+                  boolean canBlackCastleKingSide,
+                  boolean canBlackCastleQueenSide,
+                  boolean canWhiteCastleKingSide,
+                  boolean canWhiteCastleQueenSide,
+                  Square enPassantTarget,
+                  int fullMoveClock,
+                  int halfMoveCounter
+    ) {
+        this.squares = squares;
+        this.colorToMove = colorToMove;
+        this.canBlackCastleKingSide = canBlackCastleKingSide;
+        this.canBlackCastleQueenSide = canBlackCastleQueenSide;
+        this.canWhiteCastleKingSide = canWhiteCastleKingSide;
+        this.canWhiteCastleQueenSide = canWhiteCastleQueenSide;
+        this.enPassantTarget = enPassantTarget;
+        this.fullMoveClock = fullMoveClock;
+        this.halfMoveCounter = halfMoveCounter;
+    }
     public Board (String fenString) throws ParseException {
         setFromFENString(fenString);
     }
     public Piece get (@NotNull Square square) {
         return squares[square.getIndex()];
+    }
+    public Board move (Square from, Square to) {
+        Piece movingPiece = get(from);
+
+        if (movingPiece == null)
+            return new Board(this);
+
+        Board result = new Board(this);
+
+        Piece[] newSquares = squares.clone();
+        newSquares[to.getIndex()] = newSquares[from.getIndex()];
+
+        result.squares = newSquares;
+
+        if (movingPiece.getColor() == PieceColor.WHITE) {
+            if (movingPiece instanceof King) {
+                result.canWhiteCastleQueenSide = false;
+                result.canWhiteCastleKingSide = false;
+            }
+            else if (movingPiece instanceof Rook) {
+                if (from.equals(new Square("a1")))
+                    result.canWhiteCastleQueenSide = false;
+                else if (from.equals(new Square("h1")))
+                    result.canWhiteCastleKingSide = false;
+            }
+        } else {
+            if (movingPiece instanceof King) {
+                result.canBlackCastleQueenSide = false;
+                result.canBlackCastleKingSide = false;
+            }
+            else if (movingPiece instanceof Rook) {
+                if (from.equals(new Square("a8")))
+                    result.canBlackCastleQueenSide = false;
+                else if (from.equals(new Square("h8")))
+                    result.canBlackCastleQueenSide = false;
+            }
+        }
+
+        // en passant target detection
+        if (movingPiece instanceof Pawn && Math.abs(from.row() - to.row()) == 2)
+            result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
+
+        result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+
+        // move counts
+        if (get(to) != null || movingPiece instanceof Pawn) {
+            result.halfMoveCounter = 0;
+            result.fullMoveClock = 0;
+        } else {
+            result.halfMoveCounter++;
+            if (result.halfMoveCounter % 2 == 0)
+                result.fullMoveClock++;
+        }
+
+        return result;
     }
     public void setFromFENString(@NotNull String fenString) throws ParseException {
 
