@@ -1,5 +1,6 @@
 package chessai.chessai;
 
+import chessai.chessai.lib.Board;
 import chessai.chessai.ui.BoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.text.ParseException;
 
 public class MainApplication extends Application {
     @Override
@@ -19,13 +20,12 @@ public class MainApplication extends Application {
 
         BoardController boardController = fxmlLoader.getController();
 
-        boardController.colorBoard(true, Color.valueOf("#EEE"), Color.valueOf("#003366"));
-        boardController.drawPiece(0, 0, Objects.requireNonNull(getClass().getResource("pieces/bR.png")));
-        boardController.drawPiece(1, 0, Objects.requireNonNull(getClass().getResource("pieces/bN.png")));
-        boardController.drawPiece(2, 0, Objects.requireNonNull(getClass().getResource("pieces/bB.png")));
-        boardController.drawPiece(0, 7, Objects.requireNonNull(getClass().getResource("pieces/wR.png")));
-        boardController.drawPiece(1, 7, Objects.requireNonNull(getClass().getResource("pieces/wN.png")));
-        boardController.drawPiece(2, 7, Objects.requireNonNull(getClass().getResource("pieces/wB.png")));
+        boardController.colorBoard(true, Color.rgb(255, 230, 210), Color.rgb(163, 68, 10));
+        try {
+            boardController.drawBoard(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), getClass(), true);
+        } catch (ParseException e) {
+            System.out.println("Cannot draw board!");
+        }
 
         stage.setTitle("BOTond");
         stage.setScene(scene);

@@ -4,23 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Added fen parsing and tests for that">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__21__19_20_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__21__19_20__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PieceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__21__12_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__21__12_40__Changes_.xml" afterDir="false" />
+    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Board controller now can display boards">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -53,7 +48,7 @@
       <recent name="chessai.chessai.lib" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Tests">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -79,11 +74,21 @@
     </list>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="Added fen parsing and tests for that">
+      <option name="closed" value="true" />
+      <created>1695321360737</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1695321360737</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic event handling added for demonstration purposes" />
     <MESSAGE value="Added fen parsing and tests for that" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added fen parsing and tests for that" />
+    <MESSAGE value="Board controller now can display boards" />
+    <option name="LAST_COMMIT_MESSAGE" value="Board controller now can display boards" />
   </component>
 </project>

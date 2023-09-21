@@ -1,6 +1,10 @@
 package chessai.chessai.ui;
 
-//import chessai.chessai.lib.Square;
+import chessai.chessai.lib.Board;
+import chessai.chessai.lib.Piece;
+import chessai.chessai.lib.PieceColor;
+import chessai.chessai.lib.Square;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,19 +62,50 @@ public class BoardController {
             }
         }
     }
+    public void drawBoard (Board board, Class<? extends Application> resourceLoaderClass, boolean fromWhitesPerspective) throws IOException {
 
-//    public void drawPiece (Square square, URL pieceResourceUrl) throws IOException {
-//        drawPiece(square.file(), square.row(), pieceResourceUrl);
-//    }
+        resetBoard();
 
-    public void drawPiece (int file, int row, URL pieceResourceUrl) throws IOException {
+        for (int i = 0; i < 64; i++) {
+            Square square = new Square(i);
 
+            Piece piece = board.get(new Square(i));
+
+            // empty square
+            if (piece == null)
+                continue;
+
+            String urlString = "pieces/%s%s.png".formatted(
+                    piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
+                    Character.toUpperCase(piece.getFENChar())
+            );
+
+//            System.out.println("Draw " + urlString + " --> " + resourceLoaderClass.getResource(urlString));
+
+            drawPiece(square, resourceLoaderClass.getResource(urlString), fromWhitesPerspective);
+        }
+    }
+
+    private void resetBoard() {
+        board.getChildren().forEach(square -> ((Pane)square).getChildren().removeAll());
+    }
+
+    public void drawPiece (Square square, URL pieceResourceUrl, boolean fromWhitesPerspective) throws IOException {
+        drawPiece(square.file(), square.row(), pieceResourceUrl, fromWhitesPerspective);
+    }
+
+    public void drawPiece (int file, int row, URL pieceResourceUrl, boolean fromWhitesPerspective) throws IOException {
+
+        if (fromWhitesPerspective)
+            row = 7 - row;
+
+        int finalRow = row;
         Pane parentSquare = (Pane) board.getChildren()
                 .stream()
-                .filter(square -> square.getId().equals("Square_%d_%d".formatted(file, row)))
+                .filter(square -> square.getId().equals("Square_%d_%d".formatted(file, finalRow)))
                 .filter(square -> square instanceof Pane)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Board does not have square %d %d".formatted(file, row)));
+                .orElseThrow(() -> new IllegalStateException("Board does not have square %d %d".formatted(file, finalRow)));
 
 
         parentSquare.getChildren().removeAll();
