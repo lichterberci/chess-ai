@@ -1,25 +1,56 @@
 package chessai.chessai.lib;
 
-import java.security.InvalidParameterException;
 import java.util.Collection;
-import java.util.Collections;
 
 public class Board {
 
     /**
-     * 0 = A1
-     * 1 = A2
+     * 0 = A8
+     * 1 = B8
      * ...
-     * 8 = B1
+     * 8 = A7
      * ...
-     * 63 = H8
+     * 63 = H1
      *
      * */
-    Piece[] pieces;
+    Piece[] squares;
+    boolean canBlackCastleKingSide;
+    boolean canBlackCastleQueenSide;
+    boolean canWhiteCastleKingSide;
+    boolean canWhiteCastleQueenSide;
+    Square enPassantTarget;
 
+    public Board (String FENString) {
+
+    }
     public Board (Collection<Piece> pieces) {
-        this.pieces = new Piece[64];
-        pieces.forEach(piece -> this.pieces[piece.getSquare().toIndex()] = piece);
+        this.squares = new Piece[64];
+        pieces.forEach(piece -> this.squares[piece.getSquare().getIndex()] = piece);
     }
 
+    public Piece get (Square square) {
+        return squares[square.getIndex()];
+    }
+    public String getFENString () {
+        StringBuilder sb = new StringBuilder(40);
+
+        int emptySquaresCount = 0;
+        for (int i = 0; i < 64; i++) {
+            Piece piece = squares[i];
+
+            if (piece == null) {
+                emptySquaresCount++;
+                continue;
+            }
+
+            if (emptySquaresCount > 0) {
+                sb.append(emptySquaresCount);
+            }
+
+            emptySquaresCount = 0;
+            sb.append()
+        }
+
+        return sb.toString();
+    }
 }
