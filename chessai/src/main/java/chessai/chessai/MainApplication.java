@@ -21,8 +21,13 @@ public class MainApplication extends Application {
         BoardController boardController = fxmlLoader.getController();
 
         boardController.colorBoard(true, Color.rgb(255, 230, 210), Color.rgb(163, 68, 10));
+
+//        String startingPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+        String initialPosition = "8/4npk1/5p1p/1Q5P/1p4P1/4r3/7q/3K1R2 b - - 1 49";
+
         try {
-            boardController.drawBoard(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), getClass(), true);
+            boardController.drawBoard(new Board(initialPosition), getClass(), true);
         } catch (ParseException e) {
             System.out.println("Cannot draw board!");
         }

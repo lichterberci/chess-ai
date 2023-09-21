@@ -1,5 +1,7 @@
 package chessai.chessai.lib;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.util.List;
 
@@ -26,11 +28,10 @@ public class Board {
     public Board (String fenString) throws ParseException {
         setFromFENString(fenString);
     }
-
-    public Piece get (Square square) {
+    public Piece get (@NotNull Square square) {
         return squares[square.getIndex()];
     }
-    public void setFromFENString(String fenString) throws ParseException {
+    public void setFromFENString(@NotNull String fenString) throws ParseException {
 
         squares = new Piece[64];
 
@@ -117,39 +118,10 @@ public class Board {
         halfMoveCounter = Integer.parseInt(fenStringParts[4]);
         fullMoveClock = Integer.parseInt(fenStringParts[5]);
     }
-
     public String getFENString () {
         StringBuilder sb = new StringBuilder(40);
 
-        int emptySquaresCount = 0;
-        for (int i = 0; i < 64; i++) {
-            Piece piece = squares[i];
-
-            if (piece == null) {
-                emptySquaresCount++;
-
-                if (i % 8 == 7) {
-                    sb.append(emptySquaresCount);
-
-                    if (i != 63)
-                        sb.append('/');
-
-                    emptySquaresCount = 0;
-                }
-
-                continue;
-            }
-
-            if (emptySquaresCount > 0) {
-                sb.append(emptySquaresCount);
-            }
-
-            emptySquaresCount = 0;
-            sb.append(squares[i].getFENChar());
-
-            if (i % 8 == 7 && i != 63)
-                sb.append('/');
-        }
+        sb.append(getFENPositionString());
 
         sb.append(' ');
 
@@ -186,6 +158,41 @@ public class Board {
 
         return sb.toString();
 
+    }
+    public String getFENPositionString () {
+        StringBuilder sb = new StringBuilder(32);
+
+        int emptySquaresCount = 0;
+        for (int i = 0; i < 64; i++) {
+            Piece piece = squares[i];
+
+            if (piece == null) {
+                emptySquaresCount++;
+
+                if (i % 8 == 7) {
+                    sb.append(emptySquaresCount);
+
+                    if (i != 63)
+                        sb.append('/');
+
+                    emptySquaresCount = 0;
+                }
+
+                continue;
+            }
+
+            if (emptySquaresCount > 0) {
+                sb.append(emptySquaresCount);
+            }
+
+            emptySquaresCount = 0;
+            sb.append(squares[i].getFENChar());
+
+            if (i % 8 == 7 && i != 63)
+                sb.append('/');
+        }
+
+        return sb.toString();
     }
 }
 

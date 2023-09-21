@@ -4,6 +4,7 @@ module chessai.chessai {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires org.jetbrains.annotations;
 
     opens chessai.chessai to javafx.fxml;
     exports chessai.chessai;

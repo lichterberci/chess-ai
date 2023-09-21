@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Board controller now can display boards">
+    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Added fen position gettre to board">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,13 +83,22 @@
       <option name="project" value="LOCAL" />
       <updated>1695321360737</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Board controller now can display boards">
+      <option name="closed" value="true" />
+      <created>1695323731660</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1695323731660</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Basic event handling added for demonstration purposes" />
     <MESSAGE value="Added fen parsing and tests for that" />
     <MESSAGE value="Board controller now can display boards" />
-    <option name="LAST_COMMIT_MESSAGE" value="Board controller now can display boards" />
+    <MESSAGE value="Added fen position gettre to board" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fen position gettre to board" />
   </component>
 </project>
