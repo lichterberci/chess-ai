@@ -26,7 +26,7 @@ public class MainApplication extends Application {
         boardController.drawPiece(1, 7, Objects.requireNonNull(getClass().getResource("pieces/wN.png")));
         boardController.drawPiece(2, 7, Objects.requireNonNull(getClass().getResource("pieces/wB.png")));
 
-        stage.setTitle("GézaBot");
+        stage.setTitle("BOTond");
         stage.setScene(scene);
         stage.show();
     }
