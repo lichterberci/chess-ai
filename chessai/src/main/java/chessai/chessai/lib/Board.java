@@ -65,7 +65,11 @@ public class Board {
     public Piece get (@NotNull Square square) {
         return squares[square.getIndex()];
     }
-    public Board move (Square from, Square to) {
+    public Board move (Move move) {
+
+        Square from = move.from();
+        Square to = move.to();
+
         Piece movingPiece = get(from);
 
         if (movingPiece == null)
@@ -74,7 +78,59 @@ public class Board {
         Board result = new Board(this);
 
         Piece[] newSquares = squares.clone();
-        newSquares[to.getIndex()] = newSquares[from.getIndex()];
+
+        if (move.specialMove() == SpecialMove.NONE || move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH) {
+
+            if (move.isEnPassant()) {
+                newSquares[enPassantTarget.getIndex()] = squares[from.getIndex()];
+
+                if (colorToMove == PieceColor.WHITE) {
+                    newSquares[new Square(enPassantTarget.file(), enPassantTarget.row() - 1).getIndex()] = null;
+                } else {
+                    newSquares[new Square(enPassantTarget.file(), enPassantTarget.row() + 1).getIndex()] = null;
+                }
+            } else {
+                newSquares[to.getIndex()] = squares[from.getIndex()];
+            }
+
+            newSquares[from.getIndex()] = null;
+        }
+        else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
+            if (colorToMove == PieceColor.WHITE) {
+                newSquares[new Square("d1").getIndex()] = squares[new Square("a1").getIndex()];
+                newSquares[new Square("c1").getIndex()] = squares[new Square("e1").getIndex()];
+                newSquares[new Square("e1").getIndex()] = null;
+                newSquares[new Square("a1").getIndex()] = null;
+            }
+            else {
+                newSquares[new Square("d8").getIndex()] = squares[new Square("a8").getIndex()];
+                newSquares[new Square("c8").getIndex()] = squares[new Square("e8").getIndex()];
+                newSquares[new Square("e8").getIndex()] = null;
+                newSquares[new Square("a8").getIndex()] = null;
+            }
+        }
+        else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
+            if (colorToMove == PieceColor.WHITE) {
+                newSquares[new Square("f1").getIndex()] = squares[new Square("h1").getIndex()];
+                newSquares[new Square("g1").getIndex()] = squares[new Square("e1").getIndex()];
+                newSquares[new Square("e1").getIndex()] = null;
+                newSquares[new Square("h1").getIndex()] = null;
+            }
+            else {
+                newSquares[new Square("f8").getIndex()] = squares[new Square("h8").getIndex()];
+                newSquares[new Square("g8").getIndex()] = squares[new Square("e8").getIndex()];
+                newSquares[new Square("e8").getIndex()] = null;
+                newSquares[new Square("h8").getIndex()] = null;
+            }
+        }
+
+        if (move.promotionPieceType() != null) {
+            try {
+                newSquares[to.getIndex()] = move.promotionPieceType().getConstructor(PieceColor.class).newInstance(colorToMove);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         result.squares = newSquares;
 
@@ -103,13 +159,13 @@ public class Board {
         }
 
         // en passant target detection
-        if (movingPiece instanceof Pawn && Math.abs(from.row() - to.row()) == 2)
+        if (move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH)
             result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
 
         result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
 
         // move counts
-        if (get(to) != null || movingPiece instanceof Pawn) {
+        if (move.isCapture() || movingPiece instanceof Pawn) {
             result.halfMoveCounter = 0;
             result.fullMoveClock = 0;
         } else {

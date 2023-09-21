@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Added fen position gettre to board">
+    <list default="true" id="74af661d-4e91-4fe2-90bd-8626c3417062" name="Changes" comment="Added move">
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SpecialMove.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +24,8 @@
       <list>
         <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Record" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -40,6 +45,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="chessai.chessai.lib" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -97,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695324022694</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added move">
+      <option name="closed" value="true" />
+      <created>1695325020181</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1695325020182</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -105,6 +121,7 @@
     <MESSAGE value="Added fen parsing and tests for that" />
     <MESSAGE value="Board controller now can display boards" />
     <MESSAGE value="Added fen position gettre to board" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added fen position gettre to board" />
+    <MESSAGE value="Added move" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added move" />
   </component>
 </project>
