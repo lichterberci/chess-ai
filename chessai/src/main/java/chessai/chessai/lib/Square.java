@@ -11,11 +11,11 @@ public record Square(int file, int row) {
     }
     @Override
     public String toString () {
-        return "%s%d".formatted(String.valueOf((char) ('A' + file)), row + 1);
+        return "%s%d".formatted(String.valueOf((char) ('a' + file)), row + 1);
     }
 
     public Square (String name) {
-        this( name.charAt(0) - 'A', name.charAt(1) - '1');
+        this( name.charAt(0) - 'a', name.charAt(1) - '1');
     }
     public Square (int index) {
         this (index % 8, 7 - index / 8);

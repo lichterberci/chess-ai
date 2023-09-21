@@ -14,18 +14,17 @@ public class Board {
      *
      * */
     Piece[] squares;
+    PieceColor colorToMove;
     boolean canBlackCastleKingSide;
     boolean canBlackCastleQueenSide;
     boolean canWhiteCastleKingSide;
     boolean canWhiteCastleQueenSide;
     Square enPassantTarget;
+    int numHalfMovesMadeByWhiteSinceCaptureOrPawnMove;
+    int numHalfMovesMadeByBlackSinceCaptureOrPawnMove;
 
     public Board (String FENString) {
 
-    }
-    public Board (Collection<Piece> pieces) {
-        this.squares = new Piece[64];
-        pieces.forEach(piece -> this.squares[piece.getSquare().getIndex()] = piece);
     }
 
     public Piece get (Square square) {
@@ -40,6 +39,16 @@ public class Board {
 
             if (piece == null) {
                 emptySquaresCount++;
+
+                if (i % 8 == 7) {
+                    sb.append(emptySquaresCount);
+
+                    if (i != 63)
+                        sb.append('/');
+
+                    emptySquaresCount = 0;
+                }
+
                 continue;
             }
 
@@ -48,9 +57,47 @@ public class Board {
             }
 
             emptySquaresCount = 0;
-            sb.append()
+            sb.append(squares[i].getFENChar());
+
+            if (i % 8 == 7 && i != 63)
+                sb.append('/');
         }
 
+        sb.append(' ');
+
+        sb.append(colorToMove == PieceColor.WHITE ? 'w' : 'b');
+
+        sb.append(' ');
+
+        if (canWhiteCastleKingSide)
+            sb.append('K');
+        if (canWhiteCastleQueenSide)
+            sb.append('Q');
+        if (canBlackCastleKingSide)
+            sb.append('k');
+        if (canBlackCastleQueenSide)
+            sb.append('q');
+
+        if (!canWhiteCastleQueenSide && !canWhiteCastleKingSide && !canBlackCastleKingSide && !canBlackCastleQueenSide)
+            sb.append('-');
+
+        sb.append(' ');
+
+        if (enPassantTarget != null)
+            sb.append(enPassantTarget);
+        else
+            sb.append('-');
+
+        sb.append(' ');
+
+        sb.append(numHalfMovesMadeByWhiteSinceCaptureOrPawnMove);
+
+        sb.append(' ');
+
+        sb.append(numHalfMovesMadeByBlackSinceCaptureOrPawnMove);
+
         return sb.toString();
+
+
     }
 }
