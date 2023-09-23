@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 public class Board {
 
@@ -65,6 +66,9 @@ public class Board {
     public Piece get (@NotNull Square square) {
         return squares[square.getIndex()];
     }
+    public Optional<PieceColor> getColorAtSquare (Square square) { return Optional.ofNullable(squares[square.getIndex()]).map(Piece::getColor); }
+    public Optional<PieceColor> getColorAtSquare (int index) { return Optional.ofNullable(squares[index]).map(Piece::getColor); }
+    public Optional<PieceColor> getColorAtSquare (int file, int row) { return Optional.ofNullable(squares[file + (7 - row) * 8]).map(Piece::getColor); }
     public Board move (Move move) {
 
         Square from = move.from();

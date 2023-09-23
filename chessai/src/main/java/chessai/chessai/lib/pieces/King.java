@@ -1,9 +1,6 @@
 package chessai.chessai.lib.pieces;
 
-import chessai.chessai.lib.Board;
-import chessai.chessai.lib.Piece;
-import chessai.chessai.lib.PieceColor;
-import chessai.chessai.lib.Square;
+import chessai.chessai.lib.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Square> getLegalMoves(Board board) {
+    public List<Move> getAllPossibleMoves(Board board) {
         return null;
     }
 }

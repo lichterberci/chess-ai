@@ -10,7 +10,10 @@ public abstract class Piece {
         this.color = color;
     }
     public abstract char getFENChar ();
-    public abstract List<Square> getLegalMoves (Board board);
+    public abstract List<Move> getAllPossibleMoves(Board board);
+    public List<Move> getLegalMoves (Board board) {
+        // todo: effectively filter possible moves to get legal ones
+    }
     public Square getSquare() {
         return square;
     }
