@@ -212,7 +212,8 @@ public class Board {
 
             if (Character.isAlphabetic(c)) {
                 try {
-                    squares[numSquaresDone++] = PieceFactory.generateFromChar(c);
+                    Piece newPiece = squares[numSquaresDone++] = PieceFactory.generateFromChar(c);
+                    newPiece.setSquare(new Square(numSquaresDone - 1));
                 } catch (IllegalStateException e) {
                     ParseException newException =  new ParseException("Piece not recognized!", i);
                     newException.initCause(e);

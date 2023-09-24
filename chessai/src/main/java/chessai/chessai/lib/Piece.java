@@ -1,5 +1,6 @@
 package chessai.chessai.lib;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -13,6 +14,7 @@ public abstract class Piece {
     public abstract List<Move> getAllPossibleMoves(Board board);
     public List<Move> getLegalMoves (Board board) {
         // todo: effectively filter possible moves to get legal ones
+        return new ArrayList<>();
     }
     public Square getSquare() {
         return square;

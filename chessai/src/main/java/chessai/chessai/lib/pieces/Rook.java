@@ -22,33 +22,69 @@ public class Rook extends Piece {
 
         List<Move> moves = new ArrayList<>();
 
+        for (int i = currentFile + 1; i < 8; i++) {
+            final Square square = new Square(i, currentRow);
+
+            if (determineWhetherItCanMoveToSquare(board, moves, square))
+                break;
+        }
+
+        for (int i = 7; i > currentFile; i--) {
+            final Square square = new Square(i, currentRow);
+
+            if (determineWhetherItCanMoveToSquare(board, moves, square))
+                break;
+        }
+
+        for (int i = currentRow + 1; i < 8; i++) {
+            final Square square = new Square(currentFile, i);
+
+            if (determineWhetherItCanMoveToSquare(board, moves, square))
+                break;
+        }
+
+        for (int i = 7; i > currentRow; i--) {
+            final Square square = new Square(currentFile, i);
+
+            if (determineWhetherItCanMoveToSquare(board, moves, square))
+                break;
+        }
+
+        return moves;
+    }
+
+    /**
+     * @param board the board in which me want to move
+     * @param moves the list of moves that we amend
+     * @param square the square we want to look at
+     * @return whether we terminate the current loop
+     */
+    private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square square) {
         Optional<PieceColor> color;
 
-        for (int i = currentFile; i < 8; i++) {
-            if ((color = board.getColorAtSquare(currentFile + i, currentRow)).isPresent()) {
+        if ((color = board.getColorAtSquare(square)).isPresent()) {
 
-                if (color.get().equals(getColor()))
-                    break;
-
-                moves.add(new Move(getSquare(),
-                        new Square(currentFile + i, currentRow),
-                        null,
-                        true,
-                        false,
-                        SpecialMove.NONE));
-
-                break;
-            }
-
+            if (color.get().equals(getColor()))
+                return true;
 
             moves.add(new Move(getSquare(),
-                    new Square(currentFile + i, currentRow),
+                    square,
                     null,
-                    false,
+                    true,
                     false,
                     SpecialMove.NONE));
+
+            return true;
         }
-        return moves;
+
+        moves.add(new Move(getSquare(),
+                square,
+                null,
+                false,
+                false,
+                SpecialMove.NONE));
+
+        return false;
     }
 }
 
