@@ -22,28 +22,28 @@ public class Rook extends Piece {
 
         List<Move> moves = new ArrayList<>();
 
-        for (int i = currentFile + 1; i < 8; i++) {
+        for (int i = currentFile - 1; i >= 0; i--) {
             final Square square = new Square(i, currentRow);
 
             if (determineWhetherItCanMoveToSquare(board, moves, square))
                 break;
         }
 
-        for (int i = 7; i > currentFile; i--) {
+        for (int i = currentFile + 1; i <= 7; i++) {
             final Square square = new Square(i, currentRow);
 
             if (determineWhetherItCanMoveToSquare(board, moves, square))
                 break;
         }
 
-        for (int i = currentRow + 1; i < 8; i++) {
+        for (int i = currentRow - 1; i >= 0; i--) {
             final Square square = new Square(currentFile, i);
 
             if (determineWhetherItCanMoveToSquare(board, moves, square))
                 break;
         }
 
-        for (int i = 7; i > currentRow; i--) {
+        for (int i = currentRow + 1; i <= 7; i++) {
             final Square square = new Square(currentFile, i);
 
             if (determineWhetherItCanMoveToSquare(board, moves, square))
