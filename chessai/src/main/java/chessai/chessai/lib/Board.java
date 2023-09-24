@@ -20,14 +20,14 @@ public class Board {
      * 63 = H1
      * */
     Piece[] squares;
-    PieceColor colorToMove;
-    boolean canBlackCastleKingSide;
-    boolean canBlackCastleQueenSide;
-    boolean canWhiteCastleKingSide = true;
-    boolean canWhiteCastleQueenSide;
-    Square enPassantTarget;
-    int fullMoveClock;
-    int halfMoveCounter;
+    public PieceColor colorToMove;
+    public boolean canBlackCastleKingSide;
+    public boolean canBlackCastleQueenSide;
+    public boolean canWhiteCastleKingSide;
+    public boolean canWhiteCastleQueenSide;
+    public Square enPassantTarget;
+    public int fullMoveClock;
+    public int halfMoveCounter;
 
     public Board(Board other) {
         this(other.squares,

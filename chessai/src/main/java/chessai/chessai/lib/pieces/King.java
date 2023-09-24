@@ -52,6 +52,50 @@ public class King extends Piece {
             }
         }
 
+        if (getColor() == PieceColor.WHITE) {
+            if (board.canWhiteCastleKingSide) {
+                moves.add(new Move(
+                        getSquare(),
+                        new Square("g1"),
+                        null,
+                        false,
+                        false,
+                        SpecialMove.KING_SIDE_CASTLE
+                ));
+            }
+            if (board.canWhiteCastleQueenSide) {
+                moves.add(new Move(
+                        getSquare(),
+                        new Square("c1"),
+                        null,
+                        false,
+                        false,
+                        SpecialMove.QUEEN_SIDE_CASTLE
+                ));
+            }
+        } else {
+            if (board.canBlackCastleQueenSide) {
+                moves.add(new Move(
+                        getSquare(),
+                        new Square("g8"),
+                        null,
+                        false,
+                        false,
+                        SpecialMove.KING_SIDE_CASTLE
+                ));
+            }
+            if (board.canBlackCastleQueenSide) {
+                moves.add(new Move(
+                        getSquare(),
+                        new Square("c8"),
+                        null,
+                        false,
+                        false,
+                        SpecialMove.QUEEN_SIDE_CASTLE
+                ));
+            }
+        }
+
         return moves;
     }
 }

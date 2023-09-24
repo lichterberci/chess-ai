@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
-    private PieceColor color;
-    private Square square;
+    protected PieceColor color;
+    protected Square square;
 
     public Piece(PieceColor color) {
         this.color = color;
