@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -76,7 +77,8 @@ public class Board {
         int kingSquareIndex = Arrays.stream(squares)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.getColor() == color)
-                .findFirst(piece -> (piece instanceof King) == true)
+                .filter(piece -> (piece instanceof King))
+                .findFirst()
                 .orElseThrow(() -> new IllegalStateException("There is no king on side " + color))
                 .getSquare()
                 .getIndex();
@@ -84,7 +86,7 @@ public class Board {
         for (Piece piece : squares) {
 
             if (piece == null)
-                return;
+                continue;
 
             if (piece.getColor() == color)
                 continue;
@@ -103,6 +105,11 @@ public class Board {
         }
 
         return  false;
+    }
+    public boolean isMoveLegal (Move _move) {
+        Board boardAfterMove = move(_move);
+
+        return !boardAfterMove.isKingInCheck(colorToMove);
     }
     public Board move (Move move) {
 
@@ -214,6 +221,15 @@ public class Board {
         }
 
         return result;
+    }
+    public List<Move> getLegalMoves () {
+
+        return Arrays.stream(squares)
+                .filter(piece -> piece.getColor() == colorToMove)
+                .map(piece -> piece.getAllPossibleMoves(this))
+                .flatMap(List::stream)
+                .filter(this::isMoveLegal)
+                .collect(Collectors.toList());
     }
     public void setFromFENString(@NotNull String fenString) throws ParseException {
 
