@@ -6,10 +6,7 @@ import chessai.chessai.lib.pieces.Rook;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -31,7 +28,7 @@ public class Board {
     public Square enPassantTarget;
     public int fullMoveClock;
     public int halfMoveCounter;
-
+    public List<String> previousPositions;
     public Board(Board other) {
         this(other.squares,
                 other.colorToMove,
@@ -41,7 +38,8 @@ public class Board {
                 other.canWhiteCastleQueenSide,
                 other.enPassantTarget,
                 other.fullMoveClock,
-                other.halfMoveCounter);
+                other.halfMoveCounter,
+                other.previousPositions);
     }
     public Board (Piece[] squares,
                   PieceColor colorToMove,
@@ -51,9 +49,22 @@ public class Board {
                   boolean canWhiteCastleQueenSide,
                   Square enPassantTarget,
                   int fullMoveClock,
-                  int halfMoveCounter
+                  int halfMoveCounter,
+                  List<String> previousPositions
     ) {
-        this.squares = squares;
+        this.squares = new Piece[64];
+
+        for (int i = 0; i < 64; i++) {
+            if (squares[i] == null)
+                continue;
+            try {
+                this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+            this.squares[i].setSquare(new Square(i));
+        }
+
         this.colorToMove = colorToMove;
         this.canBlackCastleKingSide = canBlackCastleKingSide;
         this.canBlackCastleQueenSide = canBlackCastleQueenSide;
@@ -62,6 +73,9 @@ public class Board {
         this.enPassantTarget = enPassantTarget;
         this.fullMoveClock = fullMoveClock;
         this.halfMoveCounter = halfMoveCounter;
+        this.previousPositions = new ArrayList<>();
+        if (previousPositions != null)
+            this.previousPositions.addAll(previousPositions);
     }
     public Board (String fenString) throws ParseException {
         setFromFENString(fenString);
@@ -106,15 +120,60 @@ public class Board {
 
         return  false;
     }
+    public GameState getState () {
+
+        var moves = Arrays.stream(squares)
+                .filter(Objects::nonNull)
+                .filter(piece -> piece.getColor() == colorToMove)
+                .map(piece -> piece.getAllPossibleMoves(this).stream().filter(this::isMoveLegal).collect(Collectors.toList()))
+                .flatMap(List::stream)
+                .toList();
+
+        boolean hasMoves = moves.size() > 0;
+
+        if (hasMoves)
+            return GameState.PLAYING;
+
+        boolean isKingInCheck = isKingInCheck(colorToMove);
+
+        return isKingInCheck ? (colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN) : GameState.DRAW;
+    }
     public boolean isMoveLegal (Move _move) {
         Board boardAfterMove = move(_move);
 
-        return !boardAfterMove.isKingInCheck(colorToMove);
-    }
-    public Board move (Move move) {
+        Piece movingPiece = squares[_move.from().getIndex()];
 
-        Square from = move.from();
-        Square to = move.to();
+        if (!(movingPiece instanceof King)) {
+            return !boardAfterMove.isKingInCheck(colorToMove);
+        }
+
+        King blackKing = (King) Arrays.stream(boardAfterMove.squares)
+                .filter(Objects::nonNull)
+                .filter(piece -> piece.getColor() == PieceColor.BLACK)
+                .filter(piece -> (piece instanceof King))
+                .findFirst().orElse(null);
+
+        King whiteKing = (King) Arrays.stream(boardAfterMove.squares)
+                .filter(Objects::nonNull)
+                .filter(piece -> piece.getColor() == PieceColor.WHITE)
+                .filter(piece -> (piece instanceof King))
+                .findFirst().orElse(null);
+
+        if (whiteKing == null || blackKing == null)
+            return false;
+
+        int kingFileDistance = Math.abs(whiteKing.getSquare().file() - blackKing.getSquare().file());
+        int kingRowDistance = Math.abs(whiteKing.getSquare().row() - blackKing.getSquare().row());
+
+        boolean isKingInCheck = boardAfterMove.isKingInCheck(colorToMove);
+
+        return !isKingInCheck && (kingFileDistance > 1 || kingRowDistance > 1);
+
+    }
+    public Board move (Move move){
+
+        Square from = move.from().copy();
+        Square to = move.to().copy();
 
         Piece movingPiece = get(from);
 
@@ -123,12 +182,13 @@ public class Board {
 
         Board result = new Board(this);
 
-        Piece[] newSquares = squares.clone();
+        Piece[] newSquares = result.squares;
 
         if (move.specialMove() == SpecialMove.NONE || move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH) {
 
             if (move.isEnPassant()) {
                 newSquares[enPassantTarget.getIndex()] = squares[from.getIndex()];
+                newSquares[enPassantTarget.getIndex()].setSquare(enPassantTarget.copy());
 
                 if (colorToMove == PieceColor.WHITE) {
                     newSquares[new Square(enPassantTarget.file(), enPassantTarget.row() - 1).getIndex()] = null;
@@ -137,6 +197,7 @@ public class Board {
                 }
             } else {
                 newSquares[to.getIndex()] = squares[from.getIndex()];
+                newSquares[to.getIndex()].setSquare(to.copy());
             }
 
             newSquares[from.getIndex()] = null;
@@ -144,13 +205,17 @@ public class Board {
         else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
                 newSquares[new Square("d1").getIndex()] = squares[new Square("a1").getIndex()];
+                newSquares[new Square("d1").getIndex()].setSquare(new Square("d1"));
                 newSquares[new Square("c1").getIndex()] = squares[new Square("e1").getIndex()];
+                newSquares[new Square("c1").getIndex()].setSquare(new Square("c1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("a1").getIndex()] = null;
             }
             else {
                 newSquares[new Square("d8").getIndex()] = squares[new Square("a8").getIndex()];
+                newSquares[new Square("d8").getIndex()].setSquare(new Square("d8"));
                 newSquares[new Square("c8").getIndex()] = squares[new Square("e8").getIndex()];
+                newSquares[new Square("c8").getIndex()].setSquare(new Square("c8"));
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("a8").getIndex()] = null;
             }
@@ -158,13 +223,17 @@ public class Board {
         else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
                 newSquares[new Square("f1").getIndex()] = squares[new Square("h1").getIndex()];
+                newSquares[new Square("f1").getIndex()].setSquare(new Square("f1"));
                 newSquares[new Square("g1").getIndex()] = squares[new Square("e1").getIndex()];
+                newSquares[new Square("g1").getIndex()].setSquare(new Square("g1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("h1").getIndex()] = null;
             }
             else {
                 newSquares[new Square("f8").getIndex()] = squares[new Square("h8").getIndex()];
+                newSquares[new Square("f8").getIndex()].setSquare(new Square("f8"));
                 newSquares[new Square("g8").getIndex()] = squares[new Square("e8").getIndex()];
+                newSquares[new Square("g8").getIndex()].setSquare(new Square("g8"));
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("h8").getIndex()] = null;
             }
@@ -173,6 +242,7 @@ public class Board {
         if (move.promotionPieceType() != null) {
             try {
                 newSquares[to.getIndex()] = move.promotionPieceType().getConstructor(PieceColor.class).newInstance(colorToMove);
+                newSquares[to.getIndex()].setSquare(to.copy());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

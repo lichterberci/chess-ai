@@ -70,4 +70,13 @@ class BoardTest {
         assertTrue(board.isKingInCheck(PieceColor.WHITE));
         assertFalse(board.isKingInCheck(PieceColor.BLACK));
     }
+
+    @Test
+    void getState() throws ParseException {
+
+        assertEquals(GameState.WHITE_WIN, new Board("8/8/8/8/kQK5/8/8/8 b - - 0 1").getState());
+        assertEquals(GameState.DRAW, new Board("8/8/8/8/8/1Q6/2K5/k7 b - - 0 1").getState());
+        assertEquals(GameState.PLAYING, new Board("8/8/8/8/8/1Q6/2K5/k7 w - - 0 1").getState());
+
+    }
 }

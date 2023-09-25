@@ -16,7 +16,7 @@ public abstract class Piece {
     }
 
     public void setSquare(Square square) {
-        this.square = square;
+        this.square = new Square(square.getIndex());
     }
 
 

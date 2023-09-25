@@ -20,4 +20,7 @@ public record Square(int file, int row) {
     public Square (int index) {
         this (index % 8, 7 - index / 8);
     }
+    public Square copy() {
+        return new Square(getIndex());
+    }
 }
