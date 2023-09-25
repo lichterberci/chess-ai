@@ -6,7 +6,9 @@ import chessai.chessai.lib.pieces.Rook;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Board {
@@ -69,6 +71,39 @@ public class Board {
     public Optional<PieceColor> getColorAtSquare (Square square) { return Optional.ofNullable(squares[square.getIndex()]).map(Piece::getColor); }
     public Optional<PieceColor> getColorAtSquare (int index) { return Optional.ofNullable(squares[index]).map(Piece::getColor); }
     public Optional<PieceColor> getColorAtSquare (int file, int row) { return Optional.ofNullable(squares[file + (7 - row) * 8]).map(Piece::getColor); }
+    public boolean isKingInCheck(PieceColor color) {
+
+        int kingSquareIndex = Arrays.stream(squares)
+                .filter(Objects::nonNull)
+                .filter(piece -> piece.getColor() == color)
+                .findFirst(piece -> (piece instanceof King) == true)
+                .orElseThrow(() -> new IllegalStateException("There is no king on side " + color))
+                .getSquare()
+                .getIndex();
+
+        for (Piece piece : squares) {
+
+            if (piece == null)
+                return;
+
+            if (piece.getColor() == color)
+                continue;
+
+            if (piece instanceof King)
+                continue;
+
+            if (piece
+                .getAllPossibleMoves(this)
+                .stream()
+                .filter(Move::isCapture)
+                .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
+            ) {
+                return true;
+            }
+        }
+
+        return  false;
+    }
     public Board move (Move move) {
 
         Square from = move.from();

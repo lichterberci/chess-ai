@@ -61,4 +61,13 @@ class BoardTest {
             throw new TestAbortedException();
         }
     }
+
+    @Test
+    void isKingInCheck() throws ParseException {
+
+        Board board = new Board("8/3k4/8/8/2n5/1PP5/1K6/8 b - - 0 1");
+
+        assertTrue(board.isKingInCheck(PieceColor.WHITE));
+        assertFalse(board.isKingInCheck(PieceColor.BLACK));
+    }
 }
