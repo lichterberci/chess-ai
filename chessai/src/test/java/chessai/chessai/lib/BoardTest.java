@@ -79,4 +79,9 @@ class BoardTest {
         assertEquals(GameState.PLAYING, new Board("8/8/8/8/8/1Q6/2K5/k7 w - - 0 1").getState());
 
     }
+
+    @Test
+    void move () {
+
+    }
 }
