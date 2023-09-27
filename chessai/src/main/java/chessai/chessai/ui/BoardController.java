@@ -1,10 +1,10 @@
 package chessai.chessai.ui;
 
+import chessai.chessai.MainApplication;
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.Piece;
 import chessai.chessai.lib.PieceColor;
 import chessai.chessai.lib.Square;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,7 +62,8 @@ public class BoardController {
             }
         }
     }
-    public void drawBoard (Board board, Class<? extends Application> resourceLoaderClass, boolean fromWhitesPerspective) throws IOException {
+
+    public void drawBoard(Board board, boolean fromWhitesPerspective) throws IOException {
 
         resetBoard();
 
@@ -82,7 +83,7 @@ public class BoardController {
 
 //            System.out.println("Draw " + urlString + " --> " + resourceLoaderClass.getResource(urlString));
 
-            drawPiece(square, resourceLoaderClass.getResource(urlString), fromWhitesPerspective);
+            drawPiece(square, MainApplication.class.getResource(urlString), fromWhitesPerspective);
         }
     }
 
