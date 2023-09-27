@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="game state added but something is not right">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__26__9_29__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__26__9_29__Changes_.xml" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Castling rights corrected">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +79,7 @@
       <recent name="chessai.chessai.lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.BoardTest.getState">
+  <component name="RunManager" selected="JUnit.Tests">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -314,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695825317132</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="getState works now :D">
+      <option name="closed" value="true" />
+      <created>1695833901482</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1695833901482</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,20 +344,17 @@
     <MESSAGE value="Added test for board.move" />
     <MESSAGE value="Added test case for castling" />
     <MESSAGE value="game state added but something is not right" />
-    <option name="LAST_COMMIT_MESSAGE" value="game state added but something is not right" />
+    <MESSAGE value="getState works now :D" />
+    <MESSAGE value="Castling rights corrected" />
+    <option name="LAST_COMMIT_MESSAGE" value="Castling rights corrected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
-          <line>152</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
-          <line>142</line>
-          <option name="timeStamp" value="44" />
+          <url>file://$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

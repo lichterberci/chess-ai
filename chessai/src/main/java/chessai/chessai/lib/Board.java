@@ -60,7 +60,7 @@ public class Board {
             try {
                 this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
             } catch (Exception e) {
-                System.err.println(e);
+                System.err.println(e.getMessage());
             }
             this.squares[i].setSquare(new Square(i));
         }
@@ -97,6 +97,10 @@ public class Board {
                 .getSquare()
                 .getIndex();
 
+        return isKingInCheck(color, kingSquareIndex);
+    }
+    public boolean isKingInCheck(PieceColor color, int kingSquareIndex) {
+
         for (Piece piece : squares) {
 
             if (piece == null)
@@ -107,13 +111,13 @@ public class Board {
 
             List<Move> allPossibleMoves = piece.getAllPossibleMoves(this);
 
-            List<Move> captures = allPossibleMoves.stream().filter(Move::isCapture).collect(Collectors.toList());
+            List<Move> captures = allPossibleMoves.stream().filter(Move::isCapture).toList();
 
             if (piece
-                .getAllPossibleMoves(this)
-                .stream()
-                .filter(Move::isCapture)
-                .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
+                    .getAllPossibleMoves(this)
+                    .stream()
+                    .filter(Move::isCapture)
+                    .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
             ) {
                 return true;
             }
@@ -150,7 +154,7 @@ public class Board {
             }
         }
 
-        boolean hasMoves = moves.size() > 0;
+        boolean hasMoves = !moves.isEmpty();
 
         if (hasMoves)
             return GameState.PLAYING;
@@ -188,7 +192,50 @@ public class Board {
 
         boolean isKingInCheck = boardAfterMove.isKingInCheck(colorToMove);
 
-        // TODO: check for check and obstructing pieces when castling
+        // check for checks when castling
+
+        if (colorToMove == PieceColor.WHITE) {
+            if (_move.specialMove() == SpecialMove.KING_SIDE_CASTLE
+                && (
+                    isKingInCheck(colorToMove, new Square("e1").getIndex())
+                    || isKingInCheck(colorToMove, new Square("f1").getIndex())
+                    || isKingInCheck(colorToMove, new Square("g1").getIndex())
+                )
+            ) {
+                return false;
+            }
+
+            if (_move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE
+                    && (
+                        isKingInCheck(colorToMove, new Square("c1").getIndex())
+                        || isKingInCheck(colorToMove, new Square("d1").getIndex())
+                        || isKingInCheck(colorToMove, new Square("e1").getIndex())
+            )
+            ) {
+                return false;
+            }
+        }
+        if (colorToMove == PieceColor.BLACK) {
+            if (_move.specialMove() == SpecialMove.KING_SIDE_CASTLE
+                    && (
+                    isKingInCheck(colorToMove, new Square("e8").getIndex())
+                            || isKingInCheck(colorToMove, new Square("f8").getIndex())
+                            || isKingInCheck(colorToMove, new Square("g8").getIndex())
+            )
+            ) {
+                return false;
+            }
+
+            if (_move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE
+                    && (
+                    isKingInCheck(colorToMove, new Square("c8").getIndex())
+                            || isKingInCheck(colorToMove, new Square("d8").getIndex())
+                            || isKingInCheck(colorToMove, new Square("e8").getIndex())
+            )
+            ) {
+                return false;
+            }
+        }
 
         return !isKingInCheck && (kingFileDistance > 1 || kingRowDistance > 1);
 
@@ -236,9 +283,9 @@ public class Board {
             }
             else {
                 newSquares[new Square("d8").getIndex()] = newSquares[new Square("a8").getIndex()];
-                newSquares[new Square("d8").getIndex()].setSquare(new Square("a8"));
+                newSquares[new Square("d8").getIndex()].setSquare(new Square("d8"));
                 newSquares[new Square("c8").getIndex()] = newSquares[new Square("e8").getIndex()];
-                newSquares[new Square("c8").getIndex()].setSquare(new Square("e8"));
+                newSquares[new Square("c8").getIndex()].setSquare(new Square("c8"));
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("a8").getIndex()] = null;
             }

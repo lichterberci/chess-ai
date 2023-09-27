@@ -53,7 +53,10 @@ public class King extends Piece {
         }
 
         if (getColor() == PieceColor.WHITE) {
-            if (board.canWhiteCastleKingSide) {
+            if (board.canWhiteCastleKingSide
+                    && board.get(new Square("g1")) == null
+                    && board.get(new Square("f1")) == null
+            ) {
                 moves.add(new Move(
                         getSquare(),
                         new Square("g1"),
@@ -63,7 +66,11 @@ public class King extends Piece {
                         SpecialMove.KING_SIDE_CASTLE
                 ));
             }
-            if (board.canWhiteCastleQueenSide) {
+            if (board.canWhiteCastleQueenSide
+                    && board.get(new Square("b1")) == null
+                    && board.get(new Square("c1")) == null
+                    && board.get(new Square("d1")) == null
+            ) {
                 moves.add(new Move(
                         getSquare(),
                         new Square("c1"),
@@ -74,7 +81,10 @@ public class King extends Piece {
                 ));
             }
         } else {
-            if (board.canBlackCastleQueenSide) {
+            if (board.canBlackCastleQueenSide
+                    && board.get(new Square("g8")) == null
+                    && board.get(new Square("f8")) == null
+            ) {
                 moves.add(new Move(
                         getSquare(),
                         new Square("g8"),
@@ -84,7 +94,11 @@ public class King extends Piece {
                         SpecialMove.KING_SIDE_CASTLE
                 ));
             }
-            if (board.canBlackCastleQueenSide) {
+            if (board.canBlackCastleQueenSide
+                    && board.get(new Square("b8")) == null
+                    && board.get(new Square("c8")) == null
+                    && board.get(new Square("d8")) == null
+            ) {
                 moves.add(new Move(
                         getSquare(),
                         new Square("c8"),
