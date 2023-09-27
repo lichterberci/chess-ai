@@ -424,6 +424,7 @@ public class Board {
     public List<Move> getLegalMoves () {
 
         return Arrays.stream(squares)
+                .filter(Objects::nonNull)
                 .filter(piece -> piece.getColor() == colorToMove)
                 .map(piece -> piece.getAllPossibleMoves(this))
                 .flatMap(List::stream)

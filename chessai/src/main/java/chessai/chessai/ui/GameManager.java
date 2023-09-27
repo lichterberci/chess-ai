@@ -1,10 +1,8 @@
 package chessai.chessai.ui;
 
 import chessai.chessai.MainApplication;
-import chessai.chessai.lib.Board;
-import chessai.chessai.lib.GameState;
-import chessai.chessai.lib.Move;
-import chessai.chessai.lib.Square;
+import chessai.chessai.engine.RandomEngine;
+import chessai.chessai.lib.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -27,7 +25,7 @@ public class GameManager {
         return instance;
     }
 
-    public void playGame(Stage stage, PlayerType whitePlayerType, PlayerType blackPlayerType) throws IOException, ParseException {
+    public void playGame(Stage stage, PlayerType whitePlayerType, PlayerType blackPlayerType) throws IOException, ParseException, InterruptedException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("MainBoard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
@@ -61,8 +59,6 @@ public class GameManager {
 
         Function<Square, Boolean> tryToMoveToSquare = (square) -> {
 
-            System.out.println(selectedSquareWrapper.selectedSquare + " --> " + square);
-
             if (selectedSquareWrapper.selectedSquare == null)
                 return false;
 
@@ -73,11 +69,18 @@ public class GameManager {
                 return false;
             }
 
-            if (!boardWrapper.board.isMovePossibleAndLegal(move.get())) {
+            if (
+                    boardWrapper.board.get(selectedSquareWrapper.selectedSquare) != null && (
+                            boardWrapper.board.get(selectedSquareWrapper.selectedSquare).getColor() == PieceColor.WHITE && whitePlayerType != PlayerType.HUMAN
+                                    || boardWrapper.board.get(selectedSquareWrapper.selectedSquare).getColor() == PieceColor.BLACK && blackPlayerType != PlayerType.HUMAN
+                    )
+            ) {
                 return false;
             }
 
-            System.out.println("Make move!");
+            if (!boardWrapper.board.isMovePossibleAndLegal(move.get())) {
+                return false;
+            }
 
             boardWrapper.board = boardWrapper.board.move(move.get());
 
@@ -92,8 +95,29 @@ public class GameManager {
             GameState currentGameState = boardWrapper.board.getState();
 
             if (currentGameState != GameState.PLAYING) {
-
                 endGame(stage, currentGameState);
+                return true;
+            }
+
+            if (boardWrapper.board.colorToMove == PieceColor.WHITE && whitePlayerType != PlayerType.HUMAN
+                    || boardWrapper.board.colorToMove == PieceColor.BLACK && blackPlayerType != PlayerType.HUMAN
+            ) {
+                var engineMove = new RandomEngine().makeMove(boardWrapper.board);
+
+                engineMove.ifPresent(value -> boardWrapper.board = boardWrapper.board.move(value));
+
+                try {
+                    boardController.drawBoard(boardWrapper.board, true);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                GameState currentGameStateAfterEngineMove = boardWrapper.board.getState();
+
+                if (currentGameStateAfterEngineMove != GameState.PLAYING) {
+                    endGame(stage, currentGameStateAfterEngineMove);
+                    return true;
+                }
             }
 
             return true;
@@ -110,16 +134,21 @@ public class GameManager {
 
             selectSquare.accept(moved ? null : square);
         };
-//
-//        boardController.removeAllOnMouseDragEnterIntoSquareListenerss();
-//        boardController.addOnMouseDragEnterIntoSquareListeners(selectSquare);
-//
-//        boardController.removeAllOnMouseDragExitFromSquareListenerss();
-//        boardController.addOnMouseDragExitFromSquareListeners(tryToMoveToSquare);
 
-        boardController.removeAllOnMouseClickOnSquareListeners();
+
         boardController.addOnMouseClickOnSquareListener(selectOrMoveToSquare);
 
+        if (whitePlayerType == PlayerType.ENGINE) {
+            var engineMove = new RandomEngine().makeMove(boardWrapper.board);
+
+            engineMove.ifPresent(move -> boardWrapper.board = boardWrapper.board.move(move));
+
+            try {
+                boardController.drawBoard(boardWrapper.board, true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void endGame(Stage stage, GameState currentGameState) {

@@ -215,8 +215,10 @@ public class BoardController {
 
         selectionPane.setBackground(Background.fill(Color.RED));
         selectionPane.setId("selection");
+        selectionPane.setPrefWidth(200);
+        selectionPane.setPrefHeight(200);
 
         parentSquare.getChildren().add(selectionPane);
-
+        selectionPane.toBack();
     }
 }

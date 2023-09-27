@@ -10,11 +10,11 @@ import java.text.ParseException;
 
 public class MainApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException, ParseException {
+    public void start(Stage stage) throws IOException, ParseException, InterruptedException {
 
         GameManager gameManager = GameManager.getInstance();
 
-        gameManager.playGame(stage, PlayerType.HUMAN, PlayerType.HUMAN);
+        gameManager.playGame(stage, PlayerType.HUMAN, PlayerType.ENGINE);
 
     }
 
