@@ -40,5 +40,9 @@ public class GameManager {
         stage.setScene(scene);
         stage.show();
 
+        boardController.drawBoard(new Board("rnbqkbnr/8/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"), false);
+
+        stage.show();
+
     }
 }

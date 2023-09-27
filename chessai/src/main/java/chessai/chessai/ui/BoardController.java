@@ -88,7 +88,7 @@ public class BoardController {
     }
 
     private void resetBoard() {
-        board.getChildren().forEach(square -> ((Pane)square).getChildren().removeAll());
+        board.getChildren().forEach(square -> ((Pane) square).getChildren().clear());
     }
 
     public void drawPiece (Square square, URL pieceResourceUrl, boolean fromWhitesPerspective) throws IOException {
