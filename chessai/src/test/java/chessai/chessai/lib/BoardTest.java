@@ -81,7 +81,53 @@ class BoardTest {
     }
 
     @Test
-    void move () {
+    void move () throws ParseException {
 
+        Board board = new Board("2k5/3p4/8/8/8/8/4P3/2K5 w - - 0 1");
+
+        // e4
+
+        board = board.move(new Move(new Square("e2"), new Square("e4"), null, false, false, SpecialMove.DOUBLE_PAWN_PUSH));
+
+        Piece pawnOnE4 = board.get(new Square("e4"));
+
+        assertNotNull(pawnOnE4);
+        assertEquals(3, pawnOnE4.getSquare().row());
+
+        // kc7
+
+        board = board.move(new Move(new Square("c8"), new Square("c7"), null, false, false, SpecialMove.NONE));
+
+        Piece kingOnC7 = board.get(new Square("c7"));
+
+        assertNotNull(kingOnC7);
+        assertEquals(6, kingOnC7.getSquare().row());
+
+        // e5
+
+        board = board.move(new Move(new Square("e4"), new Square("e5"), null, false, false, SpecialMove.NONE));
+
+        Piece pawnOnE5 = board.get(new Square("e5"));
+
+        assertNotNull(pawnOnE5);
+        assertEquals(4, pawnOnE5.getSquare().row());
+
+        // d5
+
+        board = board.move(new Move(new Square("d7"), new Square("d5"), null, false, false, SpecialMove.DOUBLE_PAWN_PUSH));
+
+        Piece pawnOnD5 = board.get(new Square("d5"));
+
+        assertNotNull(pawnOnD5);
+        assertEquals(4, pawnOnD5.getSquare().row());
+
+        // exd4
+
+        board = board.move(new Move(new Square("e5"), new Square("d4"), null, true, true, SpecialMove.NONE));
+
+        Piece pawnAfterEnPassant = board.get(new Square("d6"));
+
+        assertNotNull(pawnAfterEnPassant);
+        assertEquals(5, pawnAfterEnPassant.getSquare().row());
     }
 }
