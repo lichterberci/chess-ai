@@ -362,6 +362,65 @@ public class Board {
 
         return result;
     }
+
+    public boolean isMovePossibleAndLegal(Move move) {
+        if (get(move.from()) == null)
+            return false;
+
+        if (get(move.from()).getAllPossibleMoves(this).stream().noneMatch(possibleMove -> possibleMove.equals(move)))
+            return false;
+
+        return isMoveLegal(move);
+    }
+
+    public Optional<Move> tryToInferMove(Square from, Square to, Class<? extends Piece> promotedPieceType) {
+
+        if (from.getIndex() == to.getIndex())
+            return Optional.empty();
+
+        Piece movingPiece = get(from);
+
+        Piece pieceOnDestinationSquare = get(to);
+
+        if (movingPiece == null || movingPiece.getColor() != colorToMove)
+            return Optional.empty();
+
+        boolean isPotentiallyEnPassant = movingPiece instanceof Pawn && pieceOnDestinationSquare == null && Math.abs(from.file() - to.file()) == 1;
+
+        boolean isPotentiallyNonEnPassantCapture = pieceOnDestinationSquare != null && pieceOnDestinationSquare.color != colorToMove;
+
+        SpecialMove specialType = getInferredSpecialType(from, to, movingPiece);
+
+        return Optional.of(new Move(from, to, promotedPieceType, isPotentiallyNonEnPassantCapture | isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
+    }
+
+    @NotNull
+    private SpecialMove getInferredSpecialType(Square from, Square to, Piece movingPiece) {
+        boolean isPotentialKingSideCastle = colorToMove == PieceColor.WHITE ? (
+                from.equals(new Square("e1")) && to.equals(new Square("g1"))
+        ) : (
+                from.equals(new Square("e8")) && to.equals(new Square("g8"))
+        );
+
+        boolean isPotentialQueenSideCastle = colorToMove == PieceColor.WHITE ? (
+                from.equals(new Square("e1")) && to.equals(new Square("c1"))
+        ) : (
+                from.equals(new Square("e8")) && to.equals(new Square("c8"))
+        );
+
+        boolean isPotentialDoublePawnMove = movingPiece instanceof Pawn && Math.abs(from.row() - to.row()) == 2;
+
+        SpecialMove specialType = SpecialMove.NONE;
+
+        if (isPotentialDoublePawnMove)
+            specialType = SpecialMove.DOUBLE_PAWN_PUSH;
+        if (isPotentialKingSideCastle)
+            specialType = SpecialMove.KING_SIDE_CASTLE;
+        if (isPotentialQueenSideCastle)
+            specialType = SpecialMove.QUEEN_SIDE_CASTLE;
+        return specialType;
+    }
+
     public List<Move> getLegalMoves () {
 
         return Arrays.stream(squares)

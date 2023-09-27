@@ -23,4 +23,11 @@ public record Square(int file, int row) {
     public Square copy() {
         return new Square(getIndex());
     }
+
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Square otherSquare)) return false;
+        return otherSquare.row == row && otherSquare.file == file;
+    }
 }
