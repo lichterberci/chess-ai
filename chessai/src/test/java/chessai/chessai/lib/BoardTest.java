@@ -83,51 +83,30 @@ class BoardTest {
     @Test
     void move () throws ParseException {
 
-        Board board = new Board("2k5/3p4/8/8/8/8/4P3/2K5 w - - 0 1");
+        Board board = new Board("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 
-        // e4
+        // O - O
 
-        board = board.move(new Move(new Square("e2"), new Square("e4"), null, false, false, SpecialMove.DOUBLE_PAWN_PUSH));
+        board = board.move(new Move(new Square("e1"), new Square("a1"), null, false, false, SpecialMove.KING_SIDE_CASTLE));
 
-        Piece pawnOnE4 = board.get(new Square("e4"));
+        Piece kingAfterCastle = board.get(new Square("g1"));
+        Piece rookAfterCastle = board.get(new Square("f1"));
 
-        assertNotNull(pawnOnE4);
-        assertEquals(3, pawnOnE4.getSquare().row());
+        assertNotNull(kingAfterCastle);
+        assertNotNull(rookAfterCastle);
+        assertEquals(6, kingAfterCastle.getSquare().file());
+        assertEquals(5, rookAfterCastle.getSquare().file());
 
-        // kc7
+        // O - O - O
 
-        board = board.move(new Move(new Square("c8"), new Square("c7"), null, false, false, SpecialMove.NONE));
+        board = board.move(new Move(new Square("a1"), new Square("a1"), null, false, false, SpecialMove.QUEEN_SIDE_CASTLE));
 
-        Piece kingOnC7 = board.get(new Square("c7"));
+        Piece kingAfterLongCastle = board.get(new Square("c8"));
+        Piece rookAfterLongCastle = board.get(new Square("d8"));
 
-        assertNotNull(kingOnC7);
-        assertEquals(6, kingOnC7.getSquare().row());
-
-        // e5
-
-        board = board.move(new Move(new Square("e4"), new Square("e5"), null, false, false, SpecialMove.NONE));
-
-        Piece pawnOnE5 = board.get(new Square("e5"));
-
-        assertNotNull(pawnOnE5);
-        assertEquals(4, pawnOnE5.getSquare().row());
-
-        // d5
-
-        board = board.move(new Move(new Square("d7"), new Square("d5"), null, false, false, SpecialMove.DOUBLE_PAWN_PUSH));
-
-        Piece pawnOnD5 = board.get(new Square("d5"));
-
-        assertNotNull(pawnOnD5);
-        assertEquals(4, pawnOnD5.getSquare().row());
-
-        // exd4
-
-        board = board.move(new Move(new Square("e5"), new Square("d4"), null, true, true, SpecialMove.NONE));
-
-        Piece pawnAfterEnPassant = board.get(new Square("d6"));
-
-        assertNotNull(pawnAfterEnPassant);
-        assertEquals(5, pawnAfterEnPassant.getSquare().row());
+        assertNotNull(kingAfterLongCastle);
+        assertNotNull(rookAfterLongCastle);
+        assertEquals(2, kingAfterLongCastle.getSquare().file());
+        assertEquals(3, rookAfterLongCastle.getSquare().file());
     }
 }
