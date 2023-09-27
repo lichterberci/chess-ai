@@ -108,6 +108,10 @@ public class Board {
             if (piece instanceof King)
                 continue;
 
+            List<Move> allPossibleMoves = piece.getAllPossibleMoves(this);
+
+            List<Move> captures = allPossibleMoves.stream().filter(Move::isCapture).collect(Collectors.toList());
+
             if (piece
                 .getAllPossibleMoves(this)
                 .stream()
@@ -166,6 +170,8 @@ public class Board {
         int kingRowDistance = Math.abs(whiteKing.getSquare().row() - blackKing.getSquare().row());
 
         boolean isKingInCheck = boardAfterMove.isKingInCheck(colorToMove);
+
+        // TODO: check for check and obstructing pieces when castling
 
         return !isKingInCheck && (kingFileDistance > 1 || kingRowDistance > 1);
 
