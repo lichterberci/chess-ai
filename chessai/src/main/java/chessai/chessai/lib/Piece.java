@@ -14,11 +14,9 @@ public abstract class Piece {
     public Square getSquare() {
         return square;
     }
-
     public void setSquare(Square square) {
         this.square = new Square(square.getIndex());
     }
-
 
     public PieceColor getColor() {
         return color;

@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added test case for castling">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="game state added but something is not right">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__26__9_29__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__09__26__9_29__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +113,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="BoardTest.isKingInCheck" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -133,7 +137,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="BoardTest.move" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -157,10 +161,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="PawnTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BoardTest.setFromFENString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -173,7 +177,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.pieces.PawnTest&quot;" />
+            <option value="&quot;chessai.chessai.lib.BoardTest.setFromFENString&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -181,7 +185,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="PawnTest.getAllPossibleMovesWithCastle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -205,7 +209,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -222,20 +226,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.BoardTest.setFromFENString" />
       <item itemvalue="Gradle.BoardTest.move" />
       <item itemvalue="Gradle.BoardTest.getState" />
       <item itemvalue="Gradle.BoardTest.isKingInCheck" />
-      <item itemvalue="Gradle.PawnTest" />
       <item itemvalue="Gradle.PawnTest.getAllPossibleMovesWithCastle" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.BoardTest.getState" />
+        <item itemvalue="Gradle.BoardTest.setFromFENString" />
         <item itemvalue="Gradle.BoardTest.move" />
         <item itemvalue="Gradle.BoardTest.isKingInCheck" />
         <item itemvalue="Gradle.PawnTest.getAllPossibleMovesWithCastle" />
-        <item itemvalue="Gradle.PawnTest" />
       </list>
     </recent_temporary>
   </component>
@@ -316,6 +320,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Continued setup for lib" />
     <MESSAGE value="Started work on legal and possible moves" />
@@ -323,15 +338,21 @@
     <MESSAGE value="Minor changes" />
     <MESSAGE value="Added test for board.move" />
     <MESSAGE value="Added test case for castling" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added test case for castling" />
+    <MESSAGE value="game state added but something is not right" />
+    <option name="LAST_COMMIT_MESSAGE" value="game state added but something is not right" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="5" />
+          <line>152</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

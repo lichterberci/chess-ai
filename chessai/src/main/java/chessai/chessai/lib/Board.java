@@ -105,9 +105,6 @@ public class Board {
             if (piece.getColor() == color)
                 continue;
 
-            if (piece instanceof King)
-                continue;
-
             List<Move> allPossibleMoves = piece.getAllPossibleMoves(this);
 
             List<Move> captures = allPossibleMoves.stream().filter(Move::isCapture).collect(Collectors.toList());
@@ -126,12 +123,32 @@ public class Board {
     }
     public GameState getState () {
 
-        var moves = Arrays.stream(squares)
+        var piecesWithRightColor = Arrays.stream(squares)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.getColor() == colorToMove)
-                .map(piece -> piece.getAllPossibleMoves(this).stream().filter(this::isMoveLegal).collect(Collectors.toList()))
-                .flatMap(List::stream)
                 .toList();
+//                .map(piece -> piece
+//                                .getAllPossibleMoves(this)
+//                                .stream()
+//                                .filter(this::isMoveLegal)
+//                                .collect(Collectors.toList())
+//                )
+//                .flatMap(List::stream)
+//                .toList();
+
+        List<Move> moves = new ArrayList<>();
+
+        for (Piece piece : piecesWithRightColor) {
+
+            var possibleMoves = piece.getAllPossibleMoves(this);
+
+            for (Move move : possibleMoves) {
+
+                if (isMoveLegal(move)) {
+                    moves.add(move);
+                }
+            }
+        }
 
         boolean hasMoves = moves.size() > 0;
 
@@ -178,8 +195,8 @@ public class Board {
     }
     public Board move (Move move){
 
-        Square from = move.from().copy();
-        Square to = move.to().copy();
+        Square from = move.from();
+        Square to = move.to();
 
         Piece movingPiece = get(from);
 
@@ -193,8 +210,8 @@ public class Board {
         if (move.specialMove() == SpecialMove.NONE || move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH) {
 
             if (move.isEnPassant()) {
-                newSquares[enPassantTarget.getIndex()] = squares[from.getIndex()];
-                newSquares[enPassantTarget.getIndex()].setSquare(enPassantTarget.copy());
+                newSquares[enPassantTarget.getIndex()] = newSquares[from.getIndex()];
+                newSquares[enPassantTarget.getIndex()].setSquare(enPassantTarget);
 
                 if (colorToMove == PieceColor.WHITE) {
                     newSquares[new Square(enPassantTarget.file(), enPassantTarget.row() - 1).getIndex()] = null;
@@ -202,7 +219,7 @@ public class Board {
                     newSquares[new Square(enPassantTarget.file(), enPassantTarget.row() + 1).getIndex()] = null;
                 }
             } else {
-                newSquares[to.getIndex()] = squares[from.getIndex()];
+                newSquares[to.getIndex()] = newSquares[from.getIndex()];
                 newSquares[to.getIndex()].setSquare(to.copy());
             }
 
@@ -210,35 +227,35 @@ public class Board {
         }
         else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
-                newSquares[new Square("d1").getIndex()] = squares[new Square("a1").getIndex()];
+                newSquares[new Square("d1").getIndex()] = newSquares[new Square("a1").getIndex()];
                 newSquares[new Square("d1").getIndex()].setSquare(new Square("d1"));
-                newSquares[new Square("c1").getIndex()] = squares[new Square("e1").getIndex()];
-                newSquares[new Square("c1").getIndex()].setSquare(new Square("c1"));
+                newSquares[new Square("c1").getIndex()] = newSquares[new Square("e1").getIndex()];
+                newSquares[new Square("e1").getIndex()].setSquare(new Square("e1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("a1").getIndex()] = null;
             }
             else {
-                newSquares[new Square("d8").getIndex()] = squares[new Square("a8").getIndex()];
-                newSquares[new Square("d8").getIndex()].setSquare(new Square("d8"));
-                newSquares[new Square("c8").getIndex()] = squares[new Square("e8").getIndex()];
-                newSquares[new Square("c8").getIndex()].setSquare(new Square("c8"));
+                newSquares[new Square("d8").getIndex()] = newSquares[new Square("a8").getIndex()];
+                newSquares[new Square("d8").getIndex()].setSquare(new Square("a8"));
+                newSquares[new Square("c8").getIndex()] = newSquares[new Square("e8").getIndex()];
+                newSquares[new Square("c8").getIndex()].setSquare(new Square("e8"));
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("a8").getIndex()] = null;
             }
         }
         else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
-                newSquares[new Square("f1").getIndex()] = squares[new Square("h1").getIndex()];
+                newSquares[new Square("f1").getIndex()] = newSquares[new Square("h1").getIndex()];
                 newSquares[new Square("f1").getIndex()].setSquare(new Square("f1"));
-                newSquares[new Square("g1").getIndex()] = squares[new Square("e1").getIndex()];
+                newSquares[new Square("g1").getIndex()] = newSquares[new Square("e1").getIndex()];
                 newSquares[new Square("g1").getIndex()].setSquare(new Square("g1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("h1").getIndex()] = null;
             }
             else {
-                newSquares[new Square("f8").getIndex()] = squares[new Square("h8").getIndex()];
+                newSquares[new Square("f8").getIndex()] = newSquares[new Square("h8").getIndex()];
                 newSquares[new Square("f8").getIndex()].setSquare(new Square("f8"));
-                newSquares[new Square("g8").getIndex()] = squares[new Square("e8").getIndex()];
+                newSquares[new Square("g8").getIndex()] = newSquares[new Square("e8").getIndex()];
                 newSquares[new Square("g8").getIndex()].setSquare(new Square("g8"));
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("h8").getIndex()] = null;

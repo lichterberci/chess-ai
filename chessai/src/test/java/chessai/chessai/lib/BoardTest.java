@@ -28,7 +28,7 @@ class BoardTest {
     }
 
     @Test
-    void setFromFENString() {
+    void setFromFENString() throws ParseException {
         assertDoesNotThrow(() -> new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
         assertDoesNotThrow(() -> new Board("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"));
         assertDoesNotThrow(() -> new Board("8/2B2k2/6p1/5P1p/6p1/p1p3PP/6P1/1n2K2R w K - 0 1"));
@@ -36,6 +36,13 @@ class BoardTest {
         assertThrows(ParseException.class, () -> new Board("     "));
         assertThrows(ParseException.class, () -> new Board("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R"));
         assertThrows(ParseException.class, () -> new Board("rnbqkbnr/pp1ppppp/8/2p5/3P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2"));
+
+        Board board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        for (int i = 0; i < 64; i++) {
+            Piece piece = board.get(new Square(i));
+            if (piece == null) continue;
+            assertEquals(i, piece.getSquare().getIndex());
+        }
     }
 
     @Test
