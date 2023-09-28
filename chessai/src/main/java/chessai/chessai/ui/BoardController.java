@@ -112,8 +112,14 @@ public class BoardController {
                 final int finalFile = file;
                 final int finalRow = 7 - row;
                 square.setOnMouseClicked(e -> handleMouseClickOnSquare(new Square(finalFile, finalRow)));
-                square.setOnMouseDragEntered(e -> handleMouseDragEnterIntoSquare(new Square(finalFile, finalRow)));
-                square.setOnMouseDragExited(e -> handleMouseDragExitedOutFromSquare(new Square(finalFile, finalRow)));
+                square.setOnDragDetected(e -> {
+                    handleMouseDragEnterIntoSquare(new Square(finalFile, finalRow));
+                    e.setDragDetect(true);
+                    square.startFullDrag();
+                });
+                square.setOnMouseDragReleased(e -> {
+                    handleMouseDragExitedOutFromSquare(new Square(finalFile, finalRow));
+                });
                 board.add(square, file, row);
             }
         }

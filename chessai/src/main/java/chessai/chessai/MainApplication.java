@@ -14,7 +14,7 @@ public class MainApplication extends Application {
 
         GameManager gameManager = GameManager.getInstance();
 
-        gameManager.playGame(stage, PlayerType.HUMAN, PlayerType.ENGINE);
+        gameManager.playGame(stage, PlayerType.ENGINE, PlayerType.HUMAN);
 
     }
 

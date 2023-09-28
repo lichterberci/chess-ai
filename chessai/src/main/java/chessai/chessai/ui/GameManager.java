@@ -137,6 +137,8 @@ public class GameManager {
 
 
         boardController.addOnMouseClickOnSquareListener(selectOrMoveToSquare);
+        boardController.addOnMouseDragEnterIntoSquareListeners(selectSquare);
+        boardController.addOnMouseDragExitFromSquareListeners(tryToMoveToSquare::apply);
 
         if (whitePlayerType == PlayerType.ENGINE) {
             var engineMove = new RandomEngine().makeMove(boardWrapper.board);
