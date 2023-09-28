@@ -11,7 +11,7 @@ public record Square(int file, int row) {
     }
     @Override
     public String toString () {
-        return "%s%d".formatted(String.valueOf((char) ('a' + file)), row + 1);
+        return String.valueOf((char) ('a' + file)) + (row + 1);
     }
 
     public Square (String name) {

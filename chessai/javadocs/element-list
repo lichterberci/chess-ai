@@ -1,0 +1,6 @@
+module:chessai.chessai
+chessai.chessai
+chessai.chessai.engine
+chessai.chessai.lib
+chessai.chessai.lib.pieces
+chessai.chessai.ui

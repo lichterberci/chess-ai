@@ -18,7 +18,7 @@ public class Board {
      * 8 = A7
      * ...
      * 63 = H1
-     * */
+     */
     Piece[] squares;
     public PieceColor colorToMove;
     public boolean canBlackCastleKingSide;
@@ -29,6 +29,7 @@ public class Board {
     public int fullMoveClock;
     public int halfMoveCounter;
     public List<String> previousPositions;
+
     public Board(Board other) {
         this(other.squares,
                 other.colorToMove,
@@ -41,16 +42,17 @@ public class Board {
                 other.halfMoveCounter,
                 other.previousPositions);
     }
-    public Board (Piece[] squares,
-                  PieceColor colorToMove,
-                  boolean canBlackCastleKingSide,
-                  boolean canBlackCastleQueenSide,
-                  boolean canWhiteCastleKingSide,
-                  boolean canWhiteCastleQueenSide,
-                  Square enPassantTarget,
-                  int fullMoveClock,
-                  int halfMoveCounter,
-                  List<String> previousPositions
+
+    public Board(Piece[] squares,
+                 PieceColor colorToMove,
+                 boolean canBlackCastleKingSide,
+                 boolean canBlackCastleQueenSide,
+                 boolean canWhiteCastleKingSide,
+                 boolean canWhiteCastleQueenSide,
+                 Square enPassantTarget,
+                 int fullMoveClock,
+                 int halfMoveCounter,
+                 List<String> previousPositions
     ) {
         this.squares = new Piece[64];
 
@@ -77,15 +79,27 @@ public class Board {
         if (previousPositions != null)
             this.previousPositions.addAll(previousPositions);
     }
-    public Board (String fenString) throws ParseException {
+
+    public Board(String fenString) throws ParseException {
         setFromFENString(fenString);
     }
-    public Piece get (@NotNull Square square) {
+
+    public Piece get(@NotNull Square square) {
         return squares[square.getIndex()];
     }
-    public Optional<PieceColor> getColorAtSquare (Square square) { return Optional.ofNullable(squares[square.getIndex()]).map(Piece::getColor); }
-    public Optional<PieceColor> getColorAtSquare (int index) { return Optional.ofNullable(squares[index]).map(Piece::getColor); }
-    public Optional<PieceColor> getColorAtSquare (int file, int row) { return Optional.ofNullable(squares[file + (7 - row) * 8]).map(Piece::getColor); }
+
+    public Optional<PieceColor> getColorAtSquare(Square square) {
+        return Optional.ofNullable(squares[square.getIndex()]).map(Piece::getColor);
+    }
+
+    public Optional<PieceColor> getColorAtSquare(int index) {
+        return Optional.ofNullable(squares[index]).map(Piece::getColor);
+    }
+
+    public Optional<PieceColor> getColorAtSquare(int file, int row) {
+        return Optional.ofNullable(squares[file + (7 - row) * 8]).map(Piece::getColor);
+    }
+
     public boolean isKingInCheck(PieceColor color) {
 
         int kingSquareIndex = Arrays.stream(squares)
@@ -99,6 +113,7 @@ public class Board {
 
         return isKingInCheck(color, kingSquareIndex);
     }
+
     public boolean isKingInCheck(PieceColor color, int kingSquareIndex) {
 
         for (Piece piece : squares) {
@@ -123,9 +138,10 @@ public class Board {
             }
         }
 
-        return  false;
+        return false;
     }
-    public GameState getState () {
+
+    public GameState getState() {
 
         var piecesWithRightColor = Arrays.stream(squares)
                 .filter(Objects::nonNull)
@@ -163,7 +179,8 @@ public class Board {
 
         return isKingInCheck ? (colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN) : GameState.DRAW;
     }
-    public boolean isMoveLegal (Move _move) {
+
+    public boolean isMoveLegal(Move _move) {
         Board boardAfterMove = move(_move);
 
         Piece movingPiece = squares[_move.from().getIndex()];
@@ -196,20 +213,20 @@ public class Board {
 
         if (colorToMove == PieceColor.WHITE) {
             if (_move.specialMove() == SpecialMove.KING_SIDE_CASTLE
-                && (
+                    && (
                     isKingInCheck(colorToMove, new Square("e1").getIndex())
-                    || isKingInCheck(colorToMove, new Square("f1").getIndex())
-                    || isKingInCheck(colorToMove, new Square("g1").getIndex())
-                )
+                            || isKingInCheck(colorToMove, new Square("f1").getIndex())
+                            || isKingInCheck(colorToMove, new Square("g1").getIndex())
+            )
             ) {
                 return false;
             }
 
             if (_move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE
                     && (
-                        isKingInCheck(colorToMove, new Square("c1").getIndex())
-                        || isKingInCheck(colorToMove, new Square("d1").getIndex())
-                        || isKingInCheck(colorToMove, new Square("e1").getIndex())
+                    isKingInCheck(colorToMove, new Square("c1").getIndex())
+                            || isKingInCheck(colorToMove, new Square("d1").getIndex())
+                            || isKingInCheck(colorToMove, new Square("e1").getIndex())
             )
             ) {
                 return false;
@@ -240,7 +257,8 @@ public class Board {
         return !isKingInCheck && (kingFileDistance > 1 || kingRowDistance > 1);
 
     }
-    public Board move (Move move){
+
+    public Board move(Move move) {
 
         Square from = move.from();
         Square to = move.to();
@@ -271,8 +289,7 @@ public class Board {
             }
 
             newSquares[from.getIndex()] = null;
-        }
-        else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
+        } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
                 newSquares[new Square("d1").getIndex()] = newSquares[new Square("a1").getIndex()];
                 newSquares[new Square("d1").getIndex()].setSquare(new Square("d1"));
@@ -280,8 +297,7 @@ public class Board {
                 newSquares[new Square("e1").getIndex()].setSquare(new Square("e1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("a1").getIndex()] = null;
-            }
-            else {
+            } else {
                 newSquares[new Square("d8").getIndex()] = newSquares[new Square("a8").getIndex()];
                 newSquares[new Square("d8").getIndex()].setSquare(new Square("d8"));
                 newSquares[new Square("c8").getIndex()] = newSquares[new Square("e8").getIndex()];
@@ -289,8 +305,7 @@ public class Board {
                 newSquares[new Square("e8").getIndex()] = null;
                 newSquares[new Square("a8").getIndex()] = null;
             }
-        }
-        else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
+        } else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
                 newSquares[new Square("f1").getIndex()] = newSquares[new Square("h1").getIndex()];
                 newSquares[new Square("f1").getIndex()].setSquare(new Square("f1"));
@@ -298,8 +313,7 @@ public class Board {
                 newSquares[new Square("g1").getIndex()].setSquare(new Square("g1"));
                 newSquares[new Square("e1").getIndex()] = null;
                 newSquares[new Square("h1").getIndex()] = null;
-            }
-            else {
+            } else {
                 newSquares[new Square("f8").getIndex()] = newSquares[new Square("h8").getIndex()];
                 newSquares[new Square("f8").getIndex()].setSquare(new Square("f8"));
                 newSquares[new Square("g8").getIndex()] = newSquares[new Square("e8").getIndex()];
@@ -324,8 +338,7 @@ public class Board {
             if (movingPiece instanceof King) {
                 result.canWhiteCastleQueenSide = false;
                 result.canWhiteCastleKingSide = false;
-            }
-            else if (movingPiece instanceof Rook) {
+            } else if (movingPiece instanceof Rook) {
                 if (from.equals(new Square("a1")))
                     result.canWhiteCastleQueenSide = false;
                 else if (from.equals(new Square("h1")))
@@ -335,8 +348,7 @@ public class Board {
             if (movingPiece instanceof King) {
                 result.canBlackCastleQueenSide = false;
                 result.canBlackCastleKingSide = false;
-            }
-            else if (movingPiece instanceof Rook) {
+            } else if (movingPiece instanceof Rook) {
                 if (from.equals(new Square("a8")))
                     result.canBlackCastleQueenSide = false;
                 else if (from.equals(new Square("h8")))
@@ -421,7 +433,7 @@ public class Board {
         return specialType;
     }
 
-    public List<Move> getLegalMoves () {
+    public List<Move> getLegalMoves() {
 
         return Arrays.stream(squares)
                 .filter(Objects::nonNull)
@@ -431,6 +443,7 @@ public class Board {
                 .filter(this::isMoveLegal)
                 .collect(Collectors.toList());
     }
+
     public void setFromFENString(@NotNull String fenString) throws ParseException {
 
         squares = new Piece[64];
@@ -466,7 +479,7 @@ public class Board {
                     Piece newPiece = squares[numSquaresDone++] = PieceFactory.generateFromChar(c);
                     newPiece.setSquare(new Square(numSquaresDone - 1));
                 } catch (IllegalStateException e) {
-                    ParseException newException =  new ParseException("Piece not recognized!", i);
+                    ParseException newException = new ParseException("Piece not recognized!", i);
                     newException.initCause(e);
                     throw newException;
                 }
@@ -519,7 +532,8 @@ public class Board {
         halfMoveCounter = Integer.parseInt(fenStringParts[4]);
         fullMoveClock = Integer.parseInt(fenStringParts[5]);
     }
-    public String getFENString () {
+
+    public String getFENString() {
         StringBuilder sb = new StringBuilder(40);
 
         sb.append(getFENPositionString());
@@ -560,7 +574,8 @@ public class Board {
         return sb.toString();
 
     }
-    public String getFENPositionString () {
+
+    public String getFENPositionString() {
         StringBuilder sb = new StringBuilder(32);
 
         int emptySquaresCount = 0;
