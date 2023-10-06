@@ -112,5 +112,10 @@ public class King extends Piece {
 
         return moves;
     }
+
+    @Override
+    public Piece copy() {
+        return new King(color);
+    }
 }
 

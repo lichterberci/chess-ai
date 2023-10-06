@@ -34,6 +34,11 @@ public class Knight extends Piece {
         return moves;
     }
 
+    @Override
+    public Piece copy() {
+        return new Knight(color);
+    }
+
     private void checkSquare(Board board, List<Move> moves, int file, int row) {
 
         if (file < 0 || row < 0 || file > 7 || row > 7)

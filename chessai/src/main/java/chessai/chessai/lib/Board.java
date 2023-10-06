@@ -60,7 +60,8 @@ public class Board {
             if (squares[i] == null)
                 continue;
             try {
-                this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
+//                this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
+                this.squares[i] = squares[i].copy();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -89,7 +90,9 @@ public class Board {
     }
 
     public Optional<PieceColor> getColorAtSquare(Square square) {
-        return Optional.ofNullable(squares[square.getIndex()]).map(Piece::getColor);
+        if (squares[square.getIndex()] == null)
+            return Optional.empty();
+        return Optional.of(squares[square.getIndex()].color);
     }
 
     public Optional<PieceColor> getColorAtSquare(int index) {
@@ -124,10 +127,6 @@ public class Board {
             if (piece.getColor() == color)
                 continue;
 
-            List<Move> allPossibleMoves = piece.getAllPossibleMoves(this);
-
-            List<Move> captures = allPossibleMoves.stream().filter(Move::isCapture).toList();
-
             if (piece
                     .getAllPossibleMoves(this)
                     .stream()
@@ -143,10 +142,17 @@ public class Board {
 
     public GameState getState() {
 
-        var piecesWithRightColor = Arrays.stream(squares)
-                .filter(Objects::nonNull)
-                .filter(piece -> piece.getColor() == colorToMove)
-                .toList();
+        if (halfMoveCounter >= 100)
+            return GameState.DRAW;
+
+        ArrayList<Piece> piecesWithRightColor = new ArrayList<>();
+        for (Piece square : squares) {
+            if (square != null) {
+                if (square.getColor() == colorToMove) {
+                    piecesWithRightColor.add(square);
+                }
+            }
+        }
 //                .map(piece -> piece
 //                                .getAllPossibleMoves(this)
 //                                .stream()
@@ -269,6 +275,7 @@ public class Board {
             return new Board(this);
 
         Board result = new Board(this);
+        result.enPassantTarget = null;
 
         Piece[] newSquares = result.squares;
 
@@ -353,6 +360,22 @@ public class Board {
                     result.canBlackCastleQueenSide = false;
                 else if (from.equals(new Square("h8")))
                     result.canBlackCastleQueenSide = false;
+            }
+        }
+
+        if (move.isCapture()) {
+
+            // if we capture a rook, we cant castle with it
+
+            if (squares[move.to().getIndex()] instanceof Rook) {
+                if (move.to().equals(new Square("a1")))
+                    result.canWhiteCastleQueenSide = false;
+                if (move.to().equals(new Square("a8")))
+                    result.canBlackCastleQueenSide = false;
+                if (move.to().equals(new Square("h1")))
+                    result.canWhiteCastleKingSide = false;
+                if (move.to().equals(new Square("h8")))
+                    result.canBlackCastleKingSide = false;
             }
         }
 

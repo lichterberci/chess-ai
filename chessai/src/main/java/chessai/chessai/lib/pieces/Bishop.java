@@ -58,6 +58,11 @@ public class Bishop extends Piece {
         return moves;
     }
 
+    @Override
+    public Piece copy() {
+        return new Bishop(color);
+    }
+
     /**
      * @param board the board in which me want to move
      * @param moves the list of moves that we amend

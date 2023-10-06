@@ -91,7 +91,7 @@ public class Pawn extends Piece {
 
             if (square.row() == 6) {
 
-                if (board.get(new Square(square.file(), square.row() + 1)) == null)
+                if (board.get(new Square(square.file(), 7)) == null)
                     addPromotionMoves(board, moves, new Square(square.file(), square.row() + 1), false);
 
                 if (square.file() < 7 && Optional.ofNullable(
@@ -182,7 +182,7 @@ public class Pawn extends Piece {
 
             if (square.row() == 1) {
 
-                if (board.get(new Square(square.file(), square.row() - 1)) == null)
+                if (board.get(new Square(square.file(), 0)) == null)
                     addPromotionMoves(board, moves, new Square(square.file(), square.row() - 1), false);
 
                 if (square.file() < 7 && Optional.ofNullable(
@@ -204,6 +204,11 @@ public class Pawn extends Piece {
         }
 
         return moves;
+    }
+
+    @Override
+    public Piece copy() {
+        return new Pawn(color);
     }
 
     private void addPromotionMoves(Board board, List<Move> moves, Square toSquare, boolean isCapture) {

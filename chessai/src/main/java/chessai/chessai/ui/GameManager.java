@@ -1,7 +1,7 @@
 package chessai.chessai.ui;
 
 import chessai.chessai.MainApplication;
-import chessai.chessai.engine.RandomEngine;
+import chessai.chessai.engine.ChessEngine;
 import chessai.chessai.lib.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,7 +25,7 @@ public class GameManager {
         return instance;
     }
 
-    public void playGame(Stage stage, PlayerType whitePlayerType, PlayerType blackPlayerType) throws IOException, ParseException, InterruptedException {
+    public void playGame(Stage stage, PlayerType whitePlayerType, PlayerType blackPlayerType, ChessEngine whiteEngine, ChessEngine blackEngine) throws IOException, ParseException, InterruptedException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("MainBoard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
@@ -33,7 +33,8 @@ public class GameManager {
         stage.setTitle(MessageFormat.format("{0} vs {1}", whitePlayerType, blackPlayerType));
         stage.setScene(scene);
 
-        String initialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+//        String initialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        String initialPosition = "6k1/p2rR1p1/1p1r1p1R/3P4/4QPq1/1P6/P5PK/8 w - - 1 0";
 
         BoardController boardController = fxmlLoader.getController();
 
@@ -102,7 +103,7 @@ public class GameManager {
             if (boardWrapper.board.colorToMove == PieceColor.WHITE && whitePlayerType != PlayerType.HUMAN
                     || boardWrapper.board.colorToMove == PieceColor.BLACK && blackPlayerType != PlayerType.HUMAN
             ) {
-                var engineMove = new RandomEngine().makeMove(boardWrapper.board);
+                var engineMove = (boardWrapper.board.colorToMove == PieceColor.WHITE ? whiteEngine : blackEngine).makeMove(boardWrapper.board);
 
                 engineMove.ifPresent(value -> boardWrapper.board = boardWrapper.board.move(value));
 
@@ -141,7 +142,7 @@ public class GameManager {
         boardController.addOnMouseDragExitFromSquareListeners(tryToMoveToSquare::apply);
 
         if (whitePlayerType == PlayerType.ENGINE) {
-            var engineMove = new RandomEngine().makeMove(boardWrapper.board);
+            var engineMove = whiteEngine.makeMove(boardWrapper.board);
 
             engineMove.ifPresent(move -> boardWrapper.board = boardWrapper.board.move(move));
 

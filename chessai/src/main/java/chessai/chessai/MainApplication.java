@@ -1,5 +1,7 @@
 package chessai.chessai;
 
+import chessai.chessai.engine.ChessEngine;
+import chessai.chessai.engine.MonteCarloEngine;
 import chessai.chessai.ui.GameManager;
 import chessai.chessai.ui.PlayerType;
 import javafx.application.Application;
@@ -14,7 +16,9 @@ public class MainApplication extends Application {
 
         GameManager gameManager = GameManager.getInstance();
 
-        gameManager.playGame(stage, PlayerType.ENGINE, PlayerType.HUMAN);
+        ChessEngine engine = new MonteCarloEngine(0, Math.sqrt(2), 20, 30);
+
+        gameManager.playGame(stage, PlayerType.ENGINE, PlayerType.HUMAN, engine, null);
 
     }
 
