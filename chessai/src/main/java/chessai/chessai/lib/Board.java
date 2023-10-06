@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Board {
 
@@ -466,13 +465,20 @@ public class Board {
 
     public List<Move> getLegalMoves() {
 
-        return Arrays.stream(squares)
-                .filter(Objects::nonNull)
-                .filter(piece -> piece.getColor() == colorToMove)
-                .map(piece -> piece.getAllPossibleMoves(this))
-                .flatMap(List::stream)
-                .filter(this::isMoveLegal)
-                .collect(Collectors.toList());
+        List<Move> legalMoves = new ArrayList<>();
+        for (Piece piece : squares) {
+            if (piece != null) {
+                if (piece.getColor() == colorToMove) {
+                    List<Move> moves = piece.getAllPossibleMoves(this);
+                    for (Move move : moves) {
+                        if (isMoveLegal(move)) {
+                            legalMoves.add(move);
+                        }
+                    }
+                }
+            }
+        }
+        return legalMoves;
     }
 
     public void setFromFENString(@NotNull String fenString) throws ParseException {
