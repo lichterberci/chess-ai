@@ -75,7 +75,7 @@ public class MonteCarloEngine extends ChessEngine {
 
         for (int i = 0; i < numNodesToCheck; i++) {
 
-            System.out.println("exploring node " + i);
+//            System.out.println("exploring node " + i);
 
             // selection
 
@@ -103,7 +103,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             for (int j = 0; j < numSimulations; j++) {
 
-                System.out.println("    running simulation " + j);
+//                System.out.println("    running simulation " + j);
 
                 GameState result = simulate(selectedNodeToExplore.state);
 
@@ -149,7 +149,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
 
-            System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===> " + winRate);
+//            System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===> " + winRate);
 
             if (Double.isNaN(winRate))
                 continue;
@@ -169,11 +169,11 @@ public class MonteCarloEngine extends ChessEngine {
         }
 
         if (result == null) {
-            System.out.println("empty move");
+//            System.out.println("empty move");
             return Optional.empty();
         }
 
-        System.out.println("move: " + result.from() + " --> " + result.to());
+//        System.out.println("move: " + result.from() + " --> " + result.to());
 
         return Optional.of(result);
     }

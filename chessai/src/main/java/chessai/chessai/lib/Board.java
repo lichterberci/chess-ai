@@ -105,11 +105,19 @@ public class Board {
 
     public boolean isKingInCheck(PieceColor color) {
 
-        int kingSquareIndex = Arrays.stream(squares)
-                .filter(Objects::nonNull)
-                .filter(piece -> piece.getColor() == color)
-                .filter(piece -> (piece instanceof King))
-                .findFirst()
+        Optional<Piece> found = Optional.empty();
+        for (Piece piece : squares) {
+            if (piece != null) {
+                if (piece.getColor() == color) {
+                    if ((piece instanceof King)) {
+                        found = Optional.of(piece);
+                        break;
+                    }
+                }
+            }
+        }
+
+        int kingSquareIndex = found
                 .orElseThrow(() -> new IllegalStateException("There is no king on side " + color))
                 .getSquare()
                 .getIndex();
@@ -162,7 +170,7 @@ public class Board {
 //                .flatMap(List::stream)
 //                .toList();
 
-        List<Move> moves = new ArrayList<>();
+        List<Move> moves = new LinkedList<>();
 
         for (Piece piece : piecesWithRightColor) {
 
