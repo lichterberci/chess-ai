@@ -1,8 +1,6 @@
 package chessai.chessai.lib;
 
-import chessai.chessai.lib.pieces.King;
-import chessai.chessai.lib.pieces.Pawn;
-import chessai.chessai.lib.pieces.Rook;
+import chessai.chessai.lib.pieces.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
@@ -152,7 +150,7 @@ public class Board {
         if (halfMoveCounter >= 100)
             return GameState.DRAW;
 
-        ArrayList<Piece> piecesWithRightColor = new ArrayList<>();
+        LinkedList<Piece> piecesWithRightColor = new LinkedList<>();
         for (Piece square : squares) {
             if (square != null) {
                 if (square.getColor() == colorToMove) {
@@ -160,6 +158,44 @@ public class Board {
                 }
             }
         }
+
+        LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
+        for (Piece square : squares) {
+            if (square != null) {
+                if (square.getColor() != colorToMove) {
+                    piecesWithOppositeColor.add(square);
+                }
+            }
+        }
+
+        int numRightColorPieces = piecesWithRightColor.size();
+        int numOppositeColorPieces = piecesWithOppositeColor.size();
+
+        if (numRightColorPieces == 1 && numOppositeColorPieces == 1)
+            return GameState.DRAW;
+
+        boolean canRightWin = true;
+        boolean canOppositeWin = true;
+
+        if (numOppositeColorPieces == 2) {
+            for (Piece oppositePiece : piecesWithOppositeColor)
+                if (oppositePiece instanceof Bishop || oppositePiece instanceof Knight) {
+                    canOppositeWin = false;
+                    break;
+                }
+        }
+
+        if (numRightColorPieces == 2) {
+            for (Piece rightPiece : piecesWithRightColor)
+                if (rightPiece instanceof Bishop || rightPiece instanceof Knight) {
+                    canRightWin = false;
+                    break;
+                }
+        }
+
+        if (!canRightWin && !canOppositeWin)
+            return GameState.DRAW;
+
 //                .map(piece -> piece
 //                                .getAllPossibleMoves(this)
 //                                .stream()
