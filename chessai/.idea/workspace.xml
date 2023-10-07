@@ -8,9 +8,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Optimizing...">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added check for draw enstates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +197,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="PawnTest.getAllPossibleMovesWithCastle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -208,7 +210,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.pieces.PawnTest.getAllPossibleMovesWithCastle&quot;" />
+            <option value="&quot;chessai.chessai.engine.mates.MateInTwoTest.findMateInTwo&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -233,20 +235,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
       <item itemvalue="Gradle.BoardTest.setFromFENString" />
       <item itemvalue="Gradle.BoardTest.move" />
       <item itemvalue="Gradle.BoardTest.getState" />
       <item itemvalue="Gradle.BoardTest.isKingInCheck" />
-      <item itemvalue="Gradle.PawnTest.getAllPossibleMovesWithCastle" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.BoardTest.getState" />
         <item itemvalue="Gradle.BoardTest.setFromFENString" />
         <item itemvalue="Gradle.BoardTest.move" />
         <item itemvalue="Gradle.BoardTest.isKingInCheck" />
-        <item itemvalue="Gradle.PawnTest.getAllPossibleMovesWithCastle" />
       </list>
     </recent_temporary>
   </component>
@@ -275,7 +277,7 @@
       <workItem from="1695925093085" duration="3220000" />
       <workItem from="1696587909313" duration="871000" />
       <workItem from="1696611203043" duration="12886000" />
-      <workItem from="1696675091888" duration="407000" />
+      <workItem from="1696675091888" duration="2428000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -421,7 +423,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696627440820</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Added check for draw enstates">
+      <option name="closed" value="true" />
+      <created>1696675541096</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1696675541096</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -459,7 +469,8 @@
     <MESSAGE value="Put javadocs into seperate folder" />
     <MESSAGE value="Added monte carlo tree search" />
     <MESSAGE value="Optimizing..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimizing..." />
+    <MESSAGE value="Added check for draw enstates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added check for draw enstates" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -16,7 +16,7 @@ public class MainApplication extends Application {
 
         GameManager gameManager = GameManager.getInstance();
 
-        ChessEngine engine = new MonteCarloEngine(0, Math.sqrt(2), 20, 30);
+        ChessEngine engine = new MonteCarloEngine(0, 0, 80, 50);
 
         gameManager.playGame(stage, PlayerType.ENGINE, PlayerType.HUMAN, engine, null);
 

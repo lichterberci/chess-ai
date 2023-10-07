@@ -6,6 +6,8 @@ import chessai.chessai.lib.Move;
 import chessai.chessai.lib.PieceColor;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class MonteCarloEngine extends ChessEngine {
 
@@ -39,7 +41,7 @@ public class MonteCarloEngine extends ChessEngine {
         void updateScore(double explorationParameter) {
 
             if (numSimulationsRanByThisNode == 0) {
-                score = -1;
+                score = 0;
                 return;
             }
 
@@ -75,7 +77,7 @@ public class MonteCarloEngine extends ChessEngine {
 
         for (int i = 0; i < numNodesToCheck; i++) {
 
-//            System.out.println("exploring node " + i);
+            System.out.println("exploring node " + i);
 
             // selection
 
@@ -96,27 +98,39 @@ public class MonteCarloEngine extends ChessEngine {
 
             unexploredNodes.addAll(selectedNodeToExplore.children);
 
-            // simulation
+//             simulation
 
-            int numWinsToAdd = 0;
-            int numDrawsToAdd = 0;
+            AtomicInteger numWinsToAdd = new AtomicInteger();
+            AtomicInteger numDrawsToAdd = new AtomicInteger();
 
-            for (int j = 0; j < numSimulations; j++) {
+//            for (int j = 0; j < numSimulations; j++) {
+//
+////                System.out.println("    running simulation " + j);
+//
+//                GameState result = simulate(selectedNodeToExplore.state);
+//
+//                if (result == GameState.DRAW)
+//                    numDrawsToAdd++;
+//                    // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
+//                else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
+//                    numWinsToAdd++;
+//            }
 
-//                System.out.println("    running simulation " + j);
+            IntStream.range(0, numSimulations).parallel().forEach(j -> {
 
                 GameState result = simulate(selectedNodeToExplore.state);
 
                 if (result == GameState.DRAW)
-                    numDrawsToAdd++;
+                    numDrawsToAdd.getAndIncrement();
                     // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
                 else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
-                    numWinsToAdd++;
-            }
+                    numWinsToAdd.getAndIncrement();
+
+            });
 
             selectedNodeToExplore.numSimulationsRanByThisNode += numSimulations;
-            selectedNodeToExplore.numWins = numWinsToAdd;
-            selectedNodeToExplore.numDraws = numDrawsToAdd;
+            selectedNodeToExplore.numWins = numWinsToAdd.get();
+            selectedNodeToExplore.numDraws = numDrawsToAdd.get();
 
             // backpropagation
 
@@ -126,8 +140,8 @@ public class MonteCarloEngine extends ChessEngine {
 
             while (currentNode != null) {
 
-                currentNode.numWins += numWinsToAdd;
-                currentNode.numDraws += numDrawsToAdd;
+                currentNode.numWins += numWinsToAdd.get();
+                currentNode.numDraws += numDrawsToAdd.get();
                 currentNode.numSimulationsRanByThisNode += numSimulations;
                 if (currentNode.parent != null)
                     currentNode.numSimulationsRanByParentNode += numSimulations;
@@ -149,7 +163,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
 
-//            System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===> " + winRate);
+            System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===> " + winRate + " (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
 
             if (Double.isNaN(winRate))
                 continue;
@@ -160,7 +174,7 @@ public class MonteCarloEngine extends ChessEngine {
             }
 
 //            System.out.println(child.score);
-//
+
 //            if (child.score > maxScore) {
 //                System.out.println("update to child");
 //                result = legalMovesByRoot.get(i);
@@ -169,11 +183,11 @@ public class MonteCarloEngine extends ChessEngine {
         }
 
         if (result == null) {
-//            System.out.println("empty move");
+            System.out.println("empty move");
             return Optional.empty();
         }
 
-//        System.out.println("move: " + result.from() + " --> " + result.to());
+        System.out.println("move: " + result.from() + " --> " + result.to());
 
         return Optional.of(result);
     }
