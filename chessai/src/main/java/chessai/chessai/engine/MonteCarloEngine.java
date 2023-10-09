@@ -45,7 +45,7 @@ public class MonteCarloEngine extends ChessEngine {
                 return;
             }
 
-            score = (numWins + numDraws / 2.0) / numSimulationsRanByThisNode
+            score = ((double) numWins /*+ numDraws / 2.0*/) / numSimulationsRanByThisNode
                     + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByParentNode) / numSimulationsRanByThisNode);
         }
     }
@@ -77,8 +77,6 @@ public class MonteCarloEngine extends ChessEngine {
 
         for (int i = 0; i < numNodesToCheck; i++) {
 
-            System.out.println("exploring node " + i);
-
             // selection
 
             unexploredNodes.forEach(node -> node.updateScore(explorationParameter));
@@ -97,6 +95,13 @@ public class MonteCarloEngine extends ChessEngine {
             selectedNodeToExplore.generateEmptyChildren();
 
             unexploredNodes.addAll(selectedNodeToExplore.children);
+
+            System.out.printf(
+                    "exploring node %d - parent: %s - fen: %s -  %n",
+                    i,
+                    selectedNodeToExplore.parent.hashCode(),
+                    selectedNodeToExplore.state.getFENString()
+            );
 
 //             simulation
 
