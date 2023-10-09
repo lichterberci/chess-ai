@@ -1,33 +1,47 @@
 package chessai.chessai.lib;
 
+public class Square {
 
-/**
- * @param file 0 indexed, 0 = A
- * @param row 0 indexed, 0 = 1
- */
-public record Square(int file, int row) {
+    /**
+     * 16 bits: |--file--||--row--|
+     * file: 0 = A
+     * row: 0 = 1
+     */
+    private final short squareData;
+
+    public Square(int file, int row) {
+        this.squareData = (short) (((file & 0xFF) << 8) | (row & 0xFF));
+    }
+
     public int getIndex() {
-        return file + (7 - row) * 8;
+        return (squareData >> 8) + ((7 - (squareData & 0xFF)) * 8);
     }
     @Override
     public String toString () {
-        return String.valueOf((char) ('a' + file)) + (row + 1);
+        return String.valueOf((char) ('a' + (squareData >> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
     }
 
     public Square (String name) {
         this( name.charAt(0) - 'a', name.charAt(1) - '1');
     }
     public Square (int index) {
-        this (index % 8, 7 - index / 8);
+        this(index % 8, 7 - (index / 8));
     }
     public Square copy() {
         return new Square(getIndex());
     }
-
     public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
         if (!(other instanceof Square otherSquare)) return false;
-        return otherSquare.row == row && otherSquare.file == file;
+        return otherSquare.squareData == this.squareData;
+    }
+
+    public int row() {
+        return (squareData) & 0xFF;
+    }
+
+    public int file() {
+        return (squareData >> 8) & 0xFF;
     }
 }
