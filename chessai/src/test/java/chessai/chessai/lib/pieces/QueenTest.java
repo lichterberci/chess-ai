@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QueenTest {
 
@@ -23,7 +24,7 @@ class QueenTest {
 
         assertDoesNotThrow(() -> ref.queen = (Queen) board.get(new Square("e4")));
 
-        List<Move> moves = ref.queen.getAllPossibleMoves(board);
+        List<Move> moves = ref.queen.getPseudoLegalMoves(board);
 
         assertEquals(21, moves.size());
 

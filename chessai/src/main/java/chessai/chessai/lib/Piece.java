@@ -10,7 +10,8 @@ public abstract class Piece {
         this.color = color;
     }
     public abstract char getFENChar ();
-    public abstract List<Move> getAllPossibleMoves(Board board);
+
+    public abstract List<Move> getPseudoLegalMoves(Board board);
     public Square getSquare() {
         return square;
     }

@@ -83,7 +83,7 @@ public class GameManager {
                 return false;
             }
 
-            boardWrapper.board = boardWrapper.board.move(move.get());
+            boardWrapper.board = boardWrapper.board.makeMove(move.get());
 
             try {
                 boardController.drawBoard(boardWrapper.board, true);
@@ -105,7 +105,7 @@ public class GameManager {
             ) {
                 var engineMove = (boardWrapper.board.colorToMove == PieceColor.WHITE ? whiteEngine : blackEngine).makeMove(boardWrapper.board);
 
-                engineMove.ifPresent(value -> boardWrapper.board = boardWrapper.board.move(value));
+                engineMove.ifPresent(value -> boardWrapper.board = boardWrapper.board.makeMove(value));
 
                 try {
                     boardController.drawBoard(boardWrapper.board, true);
@@ -144,7 +144,7 @@ public class GameManager {
         if (whitePlayerType == PlayerType.ENGINE) {
             var engineMove = whiteEngine.makeMove(boardWrapper.board);
 
-            engineMove.ifPresent(move -> boardWrapper.board = boardWrapper.board.move(move));
+            engineMove.ifPresent(move -> boardWrapper.board = boardWrapper.board.makeMove(move));
 
             try {
                 boardController.drawBoard(boardWrapper.board, true);

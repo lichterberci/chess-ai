@@ -32,7 +32,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             this.children = legalMoves
                     .stream()
-                    .map(move -> new TreeNode(state.move(move), this))
+                    .map(move -> new TreeNode(state.makeMove(move), this))
                     .toList();
 
             return legalMoves;
@@ -212,7 +212,7 @@ public class MonteCarloEngine extends ChessEngine {
 
 //            System.out.println("        " + playingBoard.getFENString() + " ::: " + playingBoard.get(move.from()).getFENChar() + " " + move.from() + " -> " + move.to());
 
-            playingBoard = playingBoard.move(move);
+            playingBoard = playingBoard.makeMove(move);
         }
 
         return playingBoard.getState();

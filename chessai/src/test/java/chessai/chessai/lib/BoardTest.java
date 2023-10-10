@@ -94,7 +94,7 @@ class BoardTest {
 
         // O - O
 
-        board = board.move(new Move(new Square("e1"), new Square("a1"), null, false, false, SpecialMove.KING_SIDE_CASTLE));
+        board = board.makeMove(new Move(new Square("e1"), new Square("a1"), null, false, false, SpecialMove.KING_SIDE_CASTLE));
 
         Piece kingAfterCastle = board.get(new Square("g1"));
         Piece rookAfterCastle = board.get(new Square("f1"));
@@ -106,7 +106,7 @@ class BoardTest {
 
         // O - O - O
 
-        board = board.move(new Move(new Square("a1"), new Square("a1"), null, false, false, SpecialMove.QUEEN_SIDE_CASTLE));
+        board = board.makeMove(new Move(new Square("a1"), new Square("a1"), null, false, false, SpecialMove.QUEEN_SIDE_CASTLE));
 
         Piece kingAfterLongCastle = board.get(new Square("c8"));
         Piece rookAfterLongCastle = board.get(new Square("d8"));

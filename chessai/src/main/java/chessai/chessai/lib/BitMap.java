@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BitMap {
+public class BitMap implements Cloneable {
 
     static class BitMapIterator implements Iterator<Boolean> {
         private final BitMap bitMap;
@@ -44,6 +44,15 @@ public class BitMap {
 
     public boolean getBit(int index) {
         return data << index == 1;
+    }
+
+    public BitMap setBit(int index, boolean value) {
+        long result = data;
+        long mask = ~(1L << index);
+        result &= mask;
+        if (value)
+            result |= 1L << index;
+        return new BitMap(result);
     }
 
     /**
@@ -134,5 +143,43 @@ public class BitMap {
         }
 
         return result;
+    }
+
+    public BitMap and(BitMap other) {
+        return new BitMap(data & other.data);
+    }
+
+    public BitMap or(BitMap other) {
+        return new BitMap(data | other.data);
+    }
+
+    public BitMap xor(BitMap other) {
+        return new BitMap(data ^ other.data);
+    }
+
+    public BitMap and(boolean value) {
+        return new BitMap(data & (value ? 0xFFFF_FFFF_FFFF_FFFFL : 0L));
+    }
+
+    public BitMap or(boolean value) {
+        return new BitMap(data | (value ? 0xFFFF_FFFF_FFFF_FFFFL : 0L));
+    }
+
+    public BitMap xor(boolean value) {
+        return new BitMap(data ^ (value ? 0xFFFF_FFFF_FFFF_FFFFL : 0L));
+    }
+
+    public BitMap invert() {
+        return new BitMap(~data);
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public BitMap clone() {
+        return new BitMap(data);
+    }
+
+    public boolean isNonZero() {
+        return data != 0;
     }
 }

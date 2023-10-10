@@ -24,7 +24,7 @@ public class MateInOneTest {
 
 		assertTrue(move.isPresent());
 
-		Board boardAfterMove = board.move(move.get());
+		Board boardAfterMove = board.makeMove(move.get());
 
 		assertEquals(GameState.WHITE_WIN, boardAfterMove.getState());
 	}

@@ -24,7 +24,7 @@ class BishopTest {
 
         assertDoesNotThrow(() -> ref.bishop = (Bishop) board.get(new Square("e4")));
 
-        List<Move> moves = ref.bishop.getAllPossibleMoves(board);
+        List<Move> moves = ref.bishop.getPseudoLegalMoves(board);
 
         assertEquals(9, moves.size());
     }

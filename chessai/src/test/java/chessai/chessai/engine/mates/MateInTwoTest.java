@@ -29,19 +29,19 @@ public class MateInTwoTest {
 //        assertEquals(new Square("h6"), firstMove.get().from());
 //        assertEquals(new Square("h8"), firstMove.get().to());
 
-        Board board2 = board1.move(move1.get());
+        Board board2 = board1.makeMove(move1.get());
 
         Optional<Move> move2 = engine.makeMove(board2);
 
         assertTrue(move2.isPresent());
 
-        Board board3 = board2.move(move2.get());
+        Board board3 = board2.makeMove(move2.get());
 
         Optional<Move> move3 = engine.makeMove(board3);
 
         assertTrue(move3.isPresent());
 
-        Board board4 = board3.move(move3.get());
+        Board board4 = board3.makeMove(move3.get());
 
         assertEquals(GameState.WHITE_WIN, board4.getState());
     }
