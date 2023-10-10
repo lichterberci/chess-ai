@@ -127,41 +127,48 @@ public class Board {
     }
 
     public boolean isKingInCheck(PieceColor color) {
-
-        if (color == PieceColor.WHITE) {
-            return blackAttackSquares.and(whiteKing).isNonZero();
-        } else {
-            return whiteAttackSquares.and(blackKing).isNonZero();
+        if (whiteAttackSquares != null && blackAttackSquares != null) {
+            if (color == PieceColor.WHITE) {
+                return blackAttackSquares.and(whiteKing).isNonZero();
+            } else {
+                return whiteAttackSquares.and(blackKing).isNonZero();
+            }
         }
+
+        int kingIndex = color == PieceColor.WHITE ? whiteKing.getIndexesOfOnes().get(0) : blackKing.getIndexesOfOnes().get(0);
+
+        return isKingInCheck(color, kingIndex);
     }
 
     public boolean isKingInCheck(PieceColor color, int kingSquareIndex) {
 
-        if (color == PieceColor.WHITE) {
-            return blackAttackSquares.getBit(kingSquareIndex);
-        } else {
-            return whiteAttackSquares.getBit(kingSquareIndex);
+        if (whiteAttackSquares != null && blackAttackSquares != null) {
+            if (color == PieceColor.WHITE) {
+                return blackAttackSquares.getBit(kingSquareIndex);
+            } else {
+                return whiteAttackSquares.getBit(kingSquareIndex);
+            }
         }
 
-//        for (Piece piece : squares) {
-//
-//            if (piece == null)
-//                continue;
-//
-//            if (piece.getColor() == color)
-//                continue;
-//
-//            if (piece
-//                    .getPseudoLegalMoves(this)
-//                    .stream()
-//                    .filter(Move::isCapture)
-//                    .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
-//            ) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
+        for (Piece piece : squares) {
+
+            if (piece == null)
+                continue;
+
+            if (piece.getColor() == color)
+                continue;
+
+            if (piece
+                    .getPseudoLegalMoves(this)
+                    .stream()
+                    .filter(Move::isCapture)
+                    .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public GameState getState() {
