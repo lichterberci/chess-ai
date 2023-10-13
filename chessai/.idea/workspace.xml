@@ -8,8 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added board bitmaps and started implementing their filling with data">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added fallback to kingInCheck">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +95,7 @@
       <recent name="chessai.chessai.lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.SquareTest">
+  <component name="RunManager" selected="JUnit.Tests">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -281,7 +282,8 @@
       <workItem from="1696587909313" duration="871000" />
       <workItem from="1696611203043" duration="12886000" />
       <workItem from="1696675091888" duration="2428000" />
-      <workItem from="1696915531438" duration="4033000" />
+      <workItem from="1696915531438" duration="4147000" />
+      <workItem from="1697223621466" duration="3489000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -451,7 +453,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696919375776</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Added fallback to kingInCheck">
+      <option name="closed" value="true" />
+      <created>1696919646451</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1696919646451</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,13 +502,29 @@
     <MESSAGE value="Added check for draw enstates" />
     <MESSAGE value="Added BitMap class and optimized square for memory footprint" />
     <MESSAGE value="Added board bitmaps and started implementing their filling with data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added board bitmaps and started implementing their filling with data" />
+    <MESSAGE value="Added fallback to kingInCheck" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added fallback to kingInCheck" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="chessai.chessai.lib.BitMap" memberName="data" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.Square" memberName="squareData" />
       </pinned-members>
     </pin-to-top-manager>

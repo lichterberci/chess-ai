@@ -177,18 +177,13 @@ public class Board {
             return GameState.DRAW;
 
         LinkedList<Piece> piecesWithRightColor = new LinkedList<>();
+        LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
+
         for (Piece square : squares) {
             if (square != null) {
                 if (square.getColor() == colorToMove) {
                     piecesWithRightColor.add(square);
-                }
-            }
-        }
-
-        LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
-        for (Piece square : squares) {
-            if (square != null) {
-                if (square.getColor() != colorToMove) {
+                } else {
                     piecesWithOppositeColor.add(square);
                 }
             }
@@ -200,36 +195,11 @@ public class Board {
         if (numRightColorPieces == 1 && numOppositeColorPieces == 1)
             return GameState.DRAW;
 
-        boolean canRightWin = true;
-        boolean canOppositeWin = true;
-
-        if (numOppositeColorPieces == 2) {
-            for (Piece oppositePiece : piecesWithOppositeColor)
-                if (oppositePiece instanceof Bishop || oppositePiece instanceof Knight) {
-                    canOppositeWin = false;
-                    break;
-                }
-        }
-
-        if (numRightColorPieces == 2) {
-            for (Piece rightPiece : piecesWithRightColor)
-                if (rightPiece instanceof Bishop || rightPiece instanceof Knight) {
-                    canRightWin = false;
-                    break;
-                }
-        }
+        boolean canRightWin = canRightColorWin(numRightColorPieces, piecesWithRightColor);
+        boolean canOppositeWin = canOppositeColorWin(numOppositeColorPieces, piecesWithOppositeColor);
 
         if (!canRightWin && !canOppositeWin)
             return GameState.DRAW;
-
-//                .map(piece -> piece
-//                                .getAllPossibleMoves(this)
-//                                .stream()
-//                                .filter(this::isMoveLegal)
-//                                .collect(Collectors.toList())
-//                )
-//                .flatMap(List::stream)
-//                .toList();
 
         List<Move> moves = new LinkedList<>();
 
@@ -255,6 +225,30 @@ public class Board {
         return isKingInCheck ? (colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN) : GameState.DRAW;
     }
 
+    private static boolean canRightColorWin(int numRightColorPieces, LinkedList<Piece> piecesWithRightColor) {
+        boolean canRightWin = true;
+        if (numRightColorPieces == 2) {
+            for (Piece rightPiece : piecesWithRightColor)
+                if (rightPiece instanceof Bishop || rightPiece instanceof Knight) {
+                    canRightWin = false;
+                    break;
+                }
+        }
+        return canRightWin;
+    }
+
+    private static boolean canOppositeColorWin(int numOppositeColorPieces, LinkedList<Piece> piecesWithOppositeColor) {
+        boolean canOppositeWin = true;
+        if (numOppositeColorPieces == 2) {
+            for (Piece oppositePiece : piecesWithOppositeColor)
+                if (oppositePiece instanceof Bishop || oppositePiece instanceof Knight) {
+                    canOppositeWin = false;
+                    break;
+                }
+        }
+        return canOppositeWin;
+    }
+
     public boolean isMoveLegal(Move _move) {
         Board boardAfterMove = makeMove(_move);
 
@@ -264,23 +258,23 @@ public class Board {
             return !boardAfterMove.isKingInCheck(colorToMove);
         }
 
-        King blackKing = (King) Arrays.stream(boardAfterMove.squares)
+        King blackKingOnBoard = (King) Arrays.stream(boardAfterMove.squares)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.getColor() == PieceColor.BLACK)
-                .filter(piece -> (piece instanceof King))
+                .filter(King.class::isInstance)
                 .findFirst().orElse(null);
 
-        King whiteKing = (King) Arrays.stream(boardAfterMove.squares)
+        King whiteKingOnBoard = (King) Arrays.stream(boardAfterMove.squares)
                 .filter(Objects::nonNull)
                 .filter(piece -> piece.getColor() == PieceColor.WHITE)
-                .filter(piece -> (piece instanceof King))
+                .filter(King.class::isInstance)
                 .findFirst().orElse(null);
 
-        if (whiteKing == null || blackKing == null)
+        if (whiteKingOnBoard == null || blackKingOnBoard == null)
             return false;
 
-        int kingFileDistance = Math.abs(whiteKing.getSquare().file() - blackKing.getSquare().file());
-        int kingRowDistance = Math.abs(whiteKing.getSquare().row() - blackKing.getSquare().row());
+        int kingFileDistance = Math.abs(whiteKingOnBoard.getSquare().file() - blackKingOnBoard.getSquare().file());
+        int kingRowDistance = Math.abs(whiteKingOnBoard.getSquare().row() - blackKingOnBoard.getSquare().row());
 
         boolean isKingInCheck = boardAfterMove.isKingInCheck(colorToMove);
 
@@ -346,6 +340,75 @@ public class Board {
         Board result = new Board(this);
         result.enPassantTarget = null;
 
+        result.squares = getSquaresAfterMove(move, result, to);
+
+        if (movingPiece.getColor() == PieceColor.WHITE) {
+            if (movingPiece instanceof King) {
+                result.canWhiteCastleQueenSide = false;
+                result.canWhiteCastleKingSide = false;
+
+                // update king bitmap
+
+                result.whiteKing = whiteKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
+
+            } else if (movingPiece instanceof Rook) {
+                if (from.equals(new Square("a1")))
+                    result.canWhiteCastleQueenSide = false;
+                else if (from.equals(new Square("h1")))
+                    result.canWhiteCastleKingSide = false;
+            }
+        } else {
+            if (movingPiece instanceof King) {
+                result.canBlackCastleQueenSide = false;
+                result.canBlackCastleKingSide = false;
+
+                // update king position in king bitmap
+                result.blackKing = blackKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
+
+            } else if (movingPiece instanceof Rook) {
+                if (from.equals(new Square("a8")))
+                    result.canBlackCastleQueenSide = false;
+                else if (from.equals(new Square("h8")))
+                    result.canBlackCastleQueenSide = false;
+            }
+        }
+
+        if (move.isCapture()) {
+
+            // if we capture a rook, we cant castle with it
+
+            if (squares[move.to().getIndex()] instanceof Rook) {
+                if (move.to().equals(new Square("a1")))
+                    result.canWhiteCastleQueenSide = false;
+                if (move.to().equals(new Square("a8")))
+                    result.canBlackCastleQueenSide = false;
+                if (move.to().equals(new Square("h1")))
+                    result.canWhiteCastleKingSide = false;
+                if (move.to().equals(new Square("h8")))
+                    result.canBlackCastleKingSide = false;
+            }
+        }
+
+        // en passant target detection
+        if (move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH)
+            result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
+
+        result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+
+        // move counts
+        if (move.isCapture() || movingPiece instanceof Pawn) {
+            result.halfMoveCounter = 0;
+            result.fullMoveClock = 0;
+        } else {
+            result.halfMoveCounter++;
+            if (result.halfMoveCounter % 2 == 0)
+                result.fullMoveClock++;
+        }
+
+        return result;
+    }
+
+    private Piece[] getSquaresAfterMove(Move move, Board result, Square to) {
         Piece[] newSquares = result.squares;
 
         if (move.specialMove() == SpecialMove.NONE || move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH) {
@@ -404,67 +467,10 @@ public class Board {
                 newSquares[move.toIndex()] = move.promotionPieceType().getConstructor(PieceColor.class).newInstance(colorToMove);
                 newSquares[move.toIndex()].setSquare(to.copy());
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }
-
-        result.squares = newSquares;
-
-        if (movingPiece.getColor() == PieceColor.WHITE) {
-            if (movingPiece instanceof King) {
-                result.canWhiteCastleQueenSide = false;
-                result.canWhiteCastleKingSide = false;
-            } else if (movingPiece instanceof Rook) {
-                if (from.equals(new Square("a1")))
-                    result.canWhiteCastleQueenSide = false;
-                else if (from.equals(new Square("h1")))
-                    result.canWhiteCastleKingSide = false;
-            }
-        } else {
-            if (movingPiece instanceof King) {
-                result.canBlackCastleQueenSide = false;
-                result.canBlackCastleKingSide = false;
-            } else if (movingPiece instanceof Rook) {
-                if (from.equals(new Square("a8")))
-                    result.canBlackCastleQueenSide = false;
-                else if (from.equals(new Square("h8")))
-                    result.canBlackCastleQueenSide = false;
-            }
-        }
-
-        if (move.isCapture()) {
-
-            // if we capture a rook, we cant castle with it
-
-            if (squares[move.to().getIndex()] instanceof Rook) {
-                if (move.to().equals(new Square("a1")))
-                    result.canWhiteCastleQueenSide = false;
-                if (move.to().equals(new Square("a8")))
-                    result.canBlackCastleQueenSide = false;
-                if (move.to().equals(new Square("h1")))
-                    result.canWhiteCastleKingSide = false;
-                if (move.to().equals(new Square("h8")))
-                    result.canBlackCastleKingSide = false;
-            }
-        }
-
-        // en passant target detection
-        if (move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH)
-            result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
-
-        result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
-
-        // move counts
-        if (move.isCapture() || movingPiece instanceof Pawn) {
-            result.halfMoveCounter = 0;
-            result.fullMoveClock = 0;
-        } else {
-            result.halfMoveCounter++;
-            if (result.halfMoveCounter % 2 == 0)
-                result.fullMoveClock++;
-        }
-
-        return result;
+        return newSquares;
     }
 
     public boolean isMovePossibleAndLegal(Move move) {
@@ -495,7 +501,7 @@ public class Board {
 
         SpecialMove specialType = getInferredSpecialType(from, to, movingPiece);
 
-        return Optional.of(new Move(from, to, promotedPieceType, isPotentiallyNonEnPassantCapture | isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
+        return Optional.of(new Move(from, to, promotedPieceType, isPotentiallyNonEnPassantCapture || isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
     }
 
     @NotNull
@@ -527,19 +533,22 @@ public class Board {
 
     public List<Move> getLegalMoves() {
 
-        List<Move> legalMoves = new ArrayList<>();
+        List<Move> pseudoLegalMoves = new LinkedList<>();
+
         for (Piece piece : squares) {
-            if (piece != null) {
-                if (piece.getColor() == colorToMove) {
-                    List<Move> moves = piece.getPseudoLegalMoves(this);
-                    for (Move move : moves) {
-                        if (isMoveLegal(move)) {
-                            legalMoves.add(move);
-                        }
-                    }
-                }
+            if (piece != null && piece.getColor() == colorToMove) {
+                pseudoLegalMoves.addAll(piece.getPseudoLegalMoves(this));
             }
         }
+
+        List<Move> legalMoves = new LinkedList<>();
+
+        for (Move move : pseudoLegalMoves) {
+            if (isMoveLegal(move)) {
+                legalMoves.add(move);
+            }
+        }
+
         return legalMoves;
     }
 

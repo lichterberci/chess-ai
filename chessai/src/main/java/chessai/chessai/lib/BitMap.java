@@ -1,7 +1,7 @@
 package chessai.chessai.lib;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class BitMap implements Cloneable {
@@ -43,7 +43,7 @@ public class BitMap implements Cloneable {
     }
 
     public boolean getBit(int index) {
-        return data << index == 1;
+        return ((data >> index) & 1L) == 1L;
     }
 
     public BitMap setBit(int index, boolean value) {
@@ -119,7 +119,7 @@ public class BitMap implements Cloneable {
 
     public BitMap shift(int fileOffset, int rowOffset) {
 
-        BitMap fileShiftedBitMap = fileOffset == 0 ? this : fileOffset > 0 ? shiftFilesRight(fileOffset) : shiftFilesLeft(-fileOffset);
+        BitMap fileShiftedBitMap = fileOffset == 0 ? this : shiftFilesRight(fileOffset > 0 ? fileOffset : -fileOffset);
 
         @SuppressWarnings("UnnecessaryLocalVariable")
         BitMap rowShiftedBitMap = rowOffset > 0 ? fileShiftedBitMap.shiftRowsDown(rowOffset) : fileShiftedBitMap.shiftRowsUp(-rowOffset);
@@ -133,12 +133,10 @@ public class BitMap implements Cloneable {
 
     public List<Integer> getIndexesOfOnes() {
 
-        List<Integer> result = new LinkedList<>();
+        List<Integer> result = new ArrayList<>();
 
-        int i = 0;
-        for (Iterator<Boolean> it = iterator(); it.hasNext(); i++) {
-            boolean bit = it.next();
-            if (bit)
+        for (int i = 0; i < 64; i++) {
+            if (getBit(i))
                 result.add(i);
         }
 
