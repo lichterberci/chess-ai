@@ -10,6 +10,9 @@ public class Square {
     private final short squareData;
 
     public Square(int file, int row) {
+        if (file > 7 || file < 0 || row > 7 || row < 0)
+            throw new IllegalStateException("File or row is not valid!");
+
         this.squareData = (short) (((file & 0xFF) << 8) | (row & 0xFF));
     }
 
