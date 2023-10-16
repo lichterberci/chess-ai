@@ -1,0 +1,14 @@
+
+f
+java:S3655W"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(”“ğ»
+h
+java:S3776B"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(‹ò¡
+@	java:S106c"+Replace this use of System.out by a logger.(ğÖ
+V	java:S125o"<This block of commented-out lines of code should be removed.(Òè°üÿÿÿÿ
+W	java:S125¡"<This block of commented-out lines of code should be removed.(íşøÖùÿÿÿÿ
+F	java:S106«"+Replace this use of System.out by a logger.(´×ı¼üÿÿÿÿ
+R	java:S125µ"<This block of commented-out lines of code should be removed.(¥Ñ†•
+W	java:S125·"<This block of commented-out lines of code should be removed.(«ßÓıÿÿÿÿ
+@	java:S106¿"+Replace this use of System.out by a logger.(–¢`
+F	java:S106Ã"+Replace this use of System.out by a logger.(´‡øùÿÿÿÿ
+W	java:S125Õ"<This block of commented-out lines of code should be removed.(Ëšß¯øÿÿÿÿ

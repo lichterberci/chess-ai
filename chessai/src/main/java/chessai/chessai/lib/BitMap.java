@@ -3,8 +3,9 @@ package chessai.chessai.lib;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class BitMap implements Cloneable {
+public class BitMap {
 
     static class BitMapIterator implements Iterator<Boolean> {
         private final BitMap bitMap;
@@ -20,7 +21,7 @@ public class BitMap implements Cloneable {
         }
 
         @Override
-        public Boolean next() {
+        public Boolean next() throws NoSuchElementException {
             return bitMap.getBit(index++);
         }
     }
@@ -32,7 +33,7 @@ public class BitMap implements Cloneable {
     bit 63 (msb) : H1
 
      */
-    private final long data;
+    private long data;
 
     public BitMap(boolean bitValue) {
         data = bitValue ? 0xFFFF_FFFF_FFFF_FFFFL : 0;
@@ -40,6 +41,17 @@ public class BitMap implements Cloneable {
 
     public BitMap(long data) {
         this.data = data;
+    }
+
+    public BitMap(String inputString) {
+        if (inputString.length() != 64)
+            throw new IllegalArgumentException("inputString must have 64 characters!");
+
+        data = 0L;
+
+        for (int i = 0; i < 64; i++) {
+            data |= (long) (inputString.charAt(i) == '1' ? 1 : 0) << i;
+        }
     }
 
     public boolean getBit(int index) {
@@ -119,7 +131,9 @@ public class BitMap implements Cloneable {
 
     public BitMap shift(int fileOffset, int rowOffset) {
 
-        BitMap fileShiftedBitMap = fileOffset == 0 ? this : shiftFilesRight(fileOffset > 0 ? fileOffset : -fileOffset);
+        final int unsignedFileOffset = fileOffset > 0 ? fileOffset : -fileOffset;
+
+        BitMap fileShiftedBitMap = fileOffset == 0 ? this : shiftFilesRight(unsignedFileOffset);
 
         @SuppressWarnings("UnnecessaryLocalVariable")
         BitMap rowShiftedBitMap = rowOffset > 0 ? fileShiftedBitMap.shiftRowsDown(rowOffset) : fileShiftedBitMap.shiftRowsUp(-rowOffset);
@@ -171,13 +185,32 @@ public class BitMap implements Cloneable {
         return new BitMap(~data);
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @Override
-    public BitMap clone() {
+    public BitMap copy() {
         return new BitMap(data);
     }
 
     public boolean isNonZero() {
         return data != 0;
+    }
+
+    public void setBitInPlace(int index, boolean value) {
+        long result = data;
+        long mask = ~(1L << index);
+        result &= mask;
+        if (value)
+            result |= 1L << index;
+        data = result;
+    }
+
+    public void orInPlace(BitMap other) {
+        data |= other.data;
+    }
+
+    public void andInPlace(BitMap other) {
+        data &= other.data;
+    }
+
+    public void xorInPlace(BitMap other) {
+        data ^= other.data;
     }
 }
