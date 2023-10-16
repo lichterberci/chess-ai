@@ -8,15 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Bishop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" afterDir="false" />
-    </list>
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -448,7 +440,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697454739223</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes">
+      <option name="closed" value="true" />
+      <created>1697455094560</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1697455094560</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
