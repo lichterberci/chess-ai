@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Rook extends Piece {
-    public Rook (PieceColor color) {
+public class Rook extends SlidingPiece {
+    public Rook(PieceColor color) {
         super(color);
     }
+
     @Override
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'R' : 'r';
@@ -54,26 +55,48 @@ public class Rook extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+
+        final int currentFile = getSquare().file();
+        final int currentRow = getSquare().row();
+
+        BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+        BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+        BitMap otherColorKing = color == PieceColor.WHITE ? board.blackKing : board.whiteKing;
+
+        MoveResult result = new MoveResult();
+
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 0);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 0);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, 1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, -1);
+
+        return result;
+
+    }
+
+    @Override
     public Piece copy() {
         return new Rook(color);
     }
 
     /**
-     * @param board the board in which me want to move
-     * @param moves the list of moves that we amend
-     * @param _square the _square we want to look at
+     * @param board         the board in which me want to move
+     * @param moves         the list of moves that we amend
+     * @param squareToCheck the squareToCheck we want to look at
      * @return whether we terminate the current loop
      */
-    private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square _square) {
-        Optional<PieceColor> color;
+    private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square squareToCheck) {
 
-        if ((color = board.getColorAtSquare(_square)).isPresent()) {
+        Optional<PieceColor> color = board.getColorAtSquare(squareToCheck);
+
+        if (color.isPresent()) {
 
             if (color.get().equals(getColor()))
                 return true;
 
             moves.add(new Move(square,
-                    _square,
+                    squareToCheck,
                     null,
                     true,
                     false,
@@ -83,7 +106,7 @@ public class Rook extends Piece {
         }
 
         moves.add(new Move(square,
-                _square,
+                squareToCheck,
                 null,
                 false,
                 false,

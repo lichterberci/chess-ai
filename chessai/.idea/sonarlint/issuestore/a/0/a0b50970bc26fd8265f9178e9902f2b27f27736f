@@ -1,0 +1,13 @@
+
+E	java:S1065"+Replace this use of System.out by a logger.(€³»ƒøÿÿÿÿ
+_
+java:S3358n"DExtract this nested ternary operation into an independent statement.(·œÜùÿÿÿÿ
+B
+java:S1602x",Remove useless curly braces around statement(“Â„¶
+R	java:S125’"<This block of commented-out lines of code should be removed.(ã©†©
+_
+java:S1612©"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ
+C
+java:S1602Ç",Remove useless curly braces around statement(”…æÇ
+_
+java:S1612Ø"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ

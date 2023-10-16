@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Bishop extends Piece {
-    public Bishop (PieceColor color) {
+public class Bishop extends SlidingPiece {
+    public Bishop(PieceColor color) {
         super(color);
     }
+
     @Override
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'B' : 'b';
@@ -59,6 +60,25 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        final int currentFile = getSquare().file();
+        final int currentRow = getSquare().row();
+
+        BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+        BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+        BitMap otherColorKing = color == PieceColor.WHITE ? board.blackKing : board.whiteKing;
+
+        MoveResult result = new MoveResult();
+
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, -1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, -1);
+
+        return result;
+    }
+
+    @Override
     public Piece copy() {
         return new Bishop(color);
     }
@@ -70,9 +90,10 @@ public class Bishop extends Piece {
      * @return whether we terminate the current loop
      */
     private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square square) {
-        Optional<PieceColor> color;
 
-        if ((color = board.getColorAtSquare(square)).isPresent()) {
+        Optional<PieceColor> color = board.getColorAtSquare(square);
+
+        if (color.isPresent()) {
 
             if (color.get().equals(getColor()))
                 return true;

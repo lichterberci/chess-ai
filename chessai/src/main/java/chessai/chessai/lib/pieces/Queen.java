@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Queen extends Piece {
-    public Queen (PieceColor color) {
-        super(color);
-    }
-    @Override
-    public char getFENChar() {
-        return getColor() == PieceColor.WHITE ? 'Q' : 'q';
-    }
+public class Queen extends SlidingPiece {
+	public Queen(PieceColor color) {
+		super(color);
+	}
 
-    @Override
-    public List<Move> getPseudoLegalMoves(Board board) {
+	@Override
+	public char getFENChar() {
+		return getColor() == PieceColor.WHITE ? 'Q' : 'q';
+	}
+
+	@Override
+	public List<Move> getPseudoLegalMoves(Board board) {
         final int currentFile = getSquare().file();
         final int currentRow = getSquare().row();
 
@@ -86,13 +87,36 @@ public class Queen extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+	    final int currentFile = getSquare().file();
+	    final int currentRow = getSquare().row();
+
+	    BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+	    BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+	    BitMap otherColorKing = color == PieceColor.WHITE ? board.blackKing : board.whiteKing;
+
+	    MoveResult result = new MoveResult();
+
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 0);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 0);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, 1);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, -1);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 1);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 1);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, -1);
+	    slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, -1);
+
+	    return result;
+    }
+
+    @Override
     public Piece copy() {
         return new Queen(color);
     }
 
     /**
-     * @param board the board in which me want to move
-     * @param moves the list of moves that we amend
+     * @param board  the board in which me want to move
+     * @param moves  the list of moves that we amend
      * @param square the square we want to look at
      * @return whether we terminate the current loop
      */

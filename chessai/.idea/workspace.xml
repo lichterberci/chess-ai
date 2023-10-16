@@ -8,9 +8,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor things">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added SlidingPiece class and implemented sliding for Rook">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,28 +64,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/chess-ai/chessai/src/test/java/chessai/chessai&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="chessai.chessai.ui" />
       <recent name="chessai.chessai.lib" />
+      <recent name="chessai.chessai.ui" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -126,7 +129,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="BoardTest.setFromFENString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -150,7 +153,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInOneTest.mateInOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -174,7 +177,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -198,7 +201,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="SquareTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -222,7 +225,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -282,9 +285,6 @@
       <workItem from="1696587909313" duration="871000" />
       <workItem from="1696611203043" duration="12886000" />
       <workItem from="1696675091888" duration="2428000" />
-      <workItem from="1696915531438" duration="4147000" />
-      <workItem from="1697223621466" duration="3753000" />
-      <workItem from="1697480941033" duration="130000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -438,45 +438,45 @@
       <option name="project" value="LOCAL" />
       <updated>1696675541096</updated>
     </task>
-    <task id="LOCAL-00021" summary="Added BitMap class and optimized square for memory footprint">
+    <task id="LOCAL-00021" summary="Added MoveResult class and extended BitMap functionality">
       <option name="closed" value="true" />
-      <created>1696883934141</created>
+      <created>1697454739223</created>
       <option name="number" value="00021" />
       <option name="presentableId" value="LOCAL-00021" />
       <option name="project" value="LOCAL" />
-      <updated>1696883934141</updated>
+      <updated>1697454739223</updated>
     </task>
-    <task id="LOCAL-00022" summary="Added board bitmaps and started implementing their filling with data">
+    <task id="LOCAL-00022" summary="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes">
       <option name="closed" value="true" />
-      <created>1696919375776</created>
+      <created>1697455094560</created>
       <option name="number" value="00022" />
       <option name="presentableId" value="LOCAL-00022" />
       <option name="project" value="LOCAL" />
-      <updated>1696919375776</updated>
+      <updated>1697455094560</updated>
     </task>
-    <task id="LOCAL-00023" summary="Added fallback to kingInCheck">
+    <task id="LOCAL-00023" summary="Augmented intelliJ warning set">
       <option name="closed" value="true" />
-      <created>1696919646451</created>
+      <created>1697455421607</created>
       <option name="number" value="00023" />
       <option name="presentableId" value="LOCAL-00023" />
       <option name="project" value="LOCAL" />
-      <updated>1696919646451</updated>
+      <updated>1697455421607</updated>
     </task>
-    <task id="LOCAL-00024" summary="Everything works now (at least on fallback)">
+    <task id="LOCAL-00024" summary="Implemented general sliding move generation (currently only on rook)">
       <option name="closed" value="true" />
-      <created>1697227165351</created>
+      <created>1697456741559</created>
       <option name="number" value="00024" />
       <option name="presentableId" value="LOCAL-00024" />
       <option name="project" value="LOCAL" />
-      <updated>1697227165352</updated>
+      <updated>1697456741559</updated>
     </task>
-    <task id="LOCAL-00025" summary="Minor things">
+    <task id="LOCAL-00025" summary="Added SlidingPiece class and implemented sliding for Rook">
       <option name="closed" value="true" />
-      <created>1697480998214</created>
+      <created>1697473871162</created>
       <option name="number" value="00025" />
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
-      <updated>1697480998214</updated>
+      <updated>1697473871162</updated>
     </task>
     <option name="localTasksCounter" value="26" />
     <servers />
@@ -516,12 +516,12 @@
     <MESSAGE value="Added monte carlo tree search" />
     <MESSAGE value="Optimizing..." />
     <MESSAGE value="Added check for draw enstates" />
-    <MESSAGE value="Added BitMap class and optimized square for memory footprint" />
-    <MESSAGE value="Added board bitmaps and started implementing their filling with data" />
-    <MESSAGE value="Added fallback to kingInCheck" />
-    <MESSAGE value="Everything works now (at least on fallback)" />
-    <MESSAGE value="Minor things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor things" />
+    <MESSAGE value="Added MoveResult class and extended BitMap functionality" />
+    <MESSAGE value="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes" />
+    <MESSAGE value="Augmented intelliJ warning set" />
+    <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
+    <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added SlidingPiece class and implemented sliding for Rook" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -548,7 +548,7 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
