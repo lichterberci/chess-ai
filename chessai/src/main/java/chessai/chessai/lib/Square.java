@@ -19,7 +19,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return String.valueOf((char) ('a' + (squareData >> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
+        return String.valueOf((char) ('A' + (squareData >> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
     }
 
     public static int getIndex(int file, int row) {
@@ -30,7 +30,7 @@ public class Square {
     }
 
     public Square(String name) {
-        this(name.charAt(0) - 'a', name.charAt(1) - '1');
+        this(Character.toLowerCase(name.charAt(0)) - 'a', name.charAt(1) - '1');
     }
 
     public Square(int index) {

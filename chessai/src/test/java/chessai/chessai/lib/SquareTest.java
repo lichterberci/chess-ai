@@ -2,7 +2,7 @@ package chessai.chessai.lib;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SquareTest {
 
@@ -12,6 +12,12 @@ class SquareTest {
             Square square = new Square(i);
             assertEquals(i, square.getIndex());
         }
+
+        assertEquals(0, new Square("A8").getIndex());
+        assertEquals(7, new Square("H8").getIndex());
+        assertEquals(8, new Square("A7").getIndex());
+        assertEquals(63, new Square("H1").getIndex());
+        assertEquals(10, new Square("C7").getIndex());
     }
 
     @Test
