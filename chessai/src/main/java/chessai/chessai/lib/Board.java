@@ -369,7 +369,7 @@ public class Board {
                 if (from.equals(new Square("a8")))
                     result.canBlackCastleQueenSide = false;
                 else if (from.equals(new Square("h8")))
-                    result.canBlackCastleQueenSide = false;
+                    result.canBlackCastleKingSide = false;
             }
         }
 
