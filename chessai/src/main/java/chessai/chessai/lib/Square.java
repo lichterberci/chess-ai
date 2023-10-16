@@ -14,12 +14,12 @@ public class Square {
     }
 
     public int getIndex() {
-        return (squareData >> 8) + ((7 - (squareData & 0xFF)) * 8);
+        return (squareData >>> 8) + ((7 - (squareData & 0xFF)) * 8);
     }
 
     @Override
     public String toString() {
-        return String.valueOf((char) ('A' + (squareData >> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
+        return String.valueOf((char) ('A' + (squareData >>> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
     }
 
     public static int getIndex(int file, int row) {
@@ -53,6 +53,6 @@ public class Square {
     }
 
     public int file() {
-        return (squareData >> 8) & 0xFF;
+        return (squareData >>> 8) & 0xFF;
     }
 }

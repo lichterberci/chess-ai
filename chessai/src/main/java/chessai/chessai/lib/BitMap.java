@@ -55,7 +55,7 @@ public class BitMap {
     }
 
     public boolean getBit(int index) {
-        return ((data >> index) & 1L) == 1L;
+        return ((data >>> index) & 1L) == 1L;
     }
 
     public BitMap setBit(int index, boolean value) {
@@ -87,11 +87,11 @@ public class BitMap {
 
         // delete bits from the files, we want to remove
         for (byte i = 0; i < offset; i++)
-            // mask for every row: 01111111
-            result = result & 0x7F7F_7F7F_7F7F_7F7FL << i;
+            // mask for every row: 11111110
+            result = result & (0xFEFE_FEFE_FEFE_FEFEL << i);
 
         // shift the whole thing
-        result >>= offset;
+        result >>>= offset; // >>> inserts a 0
 
         return new BitMap(result);
     }
@@ -102,8 +102,8 @@ public class BitMap {
 
         // delete bits from the files, we want to remove
         for (byte i = 0; i < offset; i++)
-            // mask for every row: 11111110
-            result = result & 0xFEFE_FEFE_FEFE_FEFEL >> i;
+            // mask for every row: 01111111
+            result = result & (0x7F7F_7F7F_7F7F_7F7FL >>> i);
 
         // shift the whole thing
         result <<= offset;
@@ -124,14 +124,17 @@ public class BitMap {
 
         long result = data;
 
-        result >>= ((long) offset << 3); // offset * 8
+        result >>>= ((long) offset << 3); // offset * 8
 
         return new BitMap(result);
     }
 
     public BitMap shift(int fileOffset, int rowOffset) {
 
-        BitMap fileShiftedBitMap = fileOffset == 0 ? this : fileOffset > 0 ? shiftFilesRight(fileOffset) : shiftFilesLeft(-fileOffset);
+        BitMap fileShiftedBitMap = this;
+
+        if (fileOffset != 0)
+            fileShiftedBitMap = fileOffset > 0 ? shiftFilesRight(fileOffset) : shiftFilesLeft(-fileOffset);
 
         @SuppressWarnings("UnnecessaryLocalVariable")
         BitMap rowShiftedBitMap = rowOffset > 0 ? fileShiftedBitMap.shiftRowsUp(rowOffset) : fileShiftedBitMap.shiftRowsDown(-rowOffset);

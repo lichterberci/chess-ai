@@ -8,14 +8,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Updated before commit checks">
-      <change afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BitMapTest.java" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/SquareTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/SquareTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/KingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/KingTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BitMapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BitMapTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +103,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.BitMapTest">
+  <component name="RunManager" selected="Gradle.BitMapTest.shift">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -127,6 +127,30 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;chessai.chessai.lib.BitMapTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BitMapTest.shift" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;chessai.chessai.lib.BitMapTest.shift&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -185,30 +209,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RookTest.getPseudoLegalMovesAsBitMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.pieces.RookTest.getPseudoLegalMovesAsBitMaps&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="SquareTest.toIndex" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -248,19 +248,19 @@
     <list>
       <item itemvalue="Application.Application" />
       <item itemvalue="Gradle.BitMapTest" />
+      <item itemvalue="Gradle.BitMapTest.shift" />
       <item itemvalue="Gradle.KingTest.getPseudoLegalMovesAsBitMaps" />
       <item itemvalue="Gradle.KnightTest.getPseudoLegalMovesAsBitMaps" />
-      <item itemvalue="Gradle.RookTest.getPseudoLegalMovesAsBitMaps" />
       <item itemvalue="Gradle.SquareTest.toIndex" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.BitMapTest.shift" />
+        <item itemvalue="Gradle.KingTest.getPseudoLegalMovesAsBitMaps" />
         <item itemvalue="Gradle.BitMapTest" />
         <item itemvalue="Gradle.SquareTest.toIndex" />
-        <item itemvalue="Gradle.KingTest.getPseudoLegalMovesAsBitMaps" />
         <item itemvalue="Gradle.KnightTest.getPseudoLegalMovesAsBitMaps" />
-        <item itemvalue="Gradle.RookTest.getPseudoLegalMovesAsBitMaps" />
       </list>
     </recent_temporary>
   </component>
@@ -507,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697486312840</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Solved square index problem and bitmap shift problem">
+      <option name="closed" value="true" />
+      <created>1697489605422</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1697489605422</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -526,8 +534,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Added test for board.move" />
-    <MESSAGE value="Added test case for castling" />
     <MESSAGE value="game state added but something is not right" />
     <MESSAGE value="getState works now :D" />
     <MESSAGE value="Castling rights corrected" />
@@ -551,7 +557,9 @@
     <MESSAGE value="Fixed sliding piece issue" />
     <MESSAGE value="Added pawn movement (in theory)" />
     <MESSAGE value="Updated before commit checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated before commit checks" />
+    <MESSAGE value="Solved square index problem and bitmap shift problem" />
+    <MESSAGE value="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -576,7 +584,12 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java</url>
           <line>133</line>
-          <option name="timeStamp" value="13" />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BitMapTest.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

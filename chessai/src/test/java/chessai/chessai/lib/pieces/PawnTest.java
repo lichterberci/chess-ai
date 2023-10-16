@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PawnTest {
 
     @Test
-    void getAllPossibleMovesWithCastle() throws ParseException {
+    void getAllPseudoLegalMoves() throws ParseException {
 
         Board board = new Board("2k2n2/1p2P2N/2b4P/pP1r4/3P2P1/3p4/K1R2P1p/6BN w KQkq a6 0 1");
 

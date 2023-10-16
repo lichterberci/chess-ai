@@ -59,7 +59,7 @@ public class Knight extends Piece {
 
         MoveResult result = new MoveResult();
 
-        BitMap offsetMoveMap = MOVE_TARGET_MAP.shift(-(currentFile - MOVE_TARGET_START_FILE), -(currentRow - MOVE_TARGET_START_ROW));
+        BitMap offsetMoveMap = MOVE_TARGET_MAP.shift((currentFile - MOVE_TARGET_START_FILE), (currentRow - MOVE_TARGET_START_ROW));
 
         result.moveTargets().orInPlace(offsetMoveMap.and(sameColorPieces.invert()));
         result.isResultCapture().orInPlace(offsetMoveMap.and(sameColorPieces.invert()).and(otherColorPieces));

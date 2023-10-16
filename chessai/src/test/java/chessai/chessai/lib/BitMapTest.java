@@ -2,8 +2,7 @@ package chessai.chessai.lib;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BitMapTest {
 
@@ -26,5 +25,18 @@ class BitMapTest {
         assertTrue(base.shift(-3, -3).getBit(new Square("A1").getIndex()));
         assertFalse(base.shift(-3, -4).getBit(new Square("A1").getIndex()));
         assertTrue(base.shift(4, -2).getBit(new Square("H2").getIndex()));
+
+        BitMap whiteSquares = new BitMap(0);
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                whiteSquares.setBitInPlace(i + j * 8, (i + j) % 2 == 0);
+            }
+        }
+
+        assertEquals(16, whiteSquares.shift(4, 0).getIndexesOfOnes().size());
+        assertEquals(16, whiteSquares.shift(-4, 0).getIndexesOfOnes().size());
+        assertEquals(16, whiteSquares.shift(0, 4).getIndexesOfOnes().size());
+        assertEquals(16, whiteSquares.shift(0, -4).getIndexesOfOnes().size());
     }
 }
