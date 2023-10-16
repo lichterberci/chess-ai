@@ -7,6 +7,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class King extends Piece {
+
+    private static final int MOVE_TARGET_START_FILE = 6;
+    private static final int MOVE_TARGET_START_ROW = 1;
+    private static BitMap moveTargetMap;
+
+    static {
+        moveTargetMap = new BitMap(
+                "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00000111" +
+                        "00000101" +
+                        "00000111"
+        );
+    }
+
     public King (PieceColor color) {
         super(color);
     }
@@ -14,7 +32,6 @@ public class King extends Piece {
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'K' : 'k';
     }
-
     @Override
     public List<Move> getPseudoLegalMoves(Board board) {
 
@@ -115,7 +132,21 @@ public class King extends Piece {
 
     @Override
     public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
-        return null;
+        final int currentFile = getSquare().file();
+        final int currentRow = getSquare().row();
+
+        BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+        BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+
+        MoveResult result = new MoveResult();
+
+        BitMap offsetMoveMap = moveTargetMap.shift(-(currentFile - MOVE_TARGET_START_FILE), -(currentRow - MOVE_TARGET_START_ROW));
+
+        result.moveTargets().orInPlace(offsetMoveMap.xor(sameColorPieces));
+        result.isResultCapture().orInPlace(offsetMoveMap.and(otherColorPieces));
+        result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
+
+        return result;
     }
 
     @Override

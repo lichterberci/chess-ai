@@ -8,13 +8,11 @@ public abstract class SlidingPiece extends Piece {
 
 	protected static void slide(int currentFile, int currentRow, BitMap otherColorPieces, BitMap sameColorPieces, BitMap otherColorKing, MoveResult result, int fileOffset, int rowOffset) {
 
-		final int currentSquareIndex = Square.getIndex(currentFile, currentRow);
-
 		boolean onlyAttacks = false;
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 1; i < 8; i++) {
 
-			final int squareIndex = currentSquareIndex + (fileOffset + rowOffset * 8);
+			final int squareIndex = Square.getIndex(currentFile + i * fileOffset, currentRow + i * rowOffset);
 
 			// we moved out of the board
 			if (squareIndex == -1)

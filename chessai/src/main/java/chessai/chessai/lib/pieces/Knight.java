@@ -8,13 +8,21 @@ import java.util.Optional;
 
 public class Knight extends Piece {
 
-    private static final int moveTargetStartFile = 3;
-    private static final int moveTargetStartRow = 3;
+    private static final int MOVE_TARGET_START_FILE = 5;
+    private static final int MOVE_TARGET_START_ROW = 2;
     private static BitMap moveTargetMap;
 
     static {
-        // TODO: implement offsets
-        moveTargetMap = new BitMap("");
+        moveTargetMap = new BitMap(
+                "00000000" +
+                        "00000000" +
+                        "00000000" +
+                        "00001010" +
+                        "00010001" +
+                        "00000000" +
+                        "00010001" +
+                        "00001010"
+        );
     }
 
     public Knight(PieceColor color) {
@@ -55,9 +63,11 @@ public class Knight extends Piece {
 
         MoveResult result = new MoveResult();
 
-        BitMap
+        BitMap offsetMoveMap = moveTargetMap.shift(-(currentFile - MOVE_TARGET_START_FILE), -(currentRow - MOVE_TARGET_START_ROW));
 
-        result.moveTargets().orInPlace();
+        result.moveTargets().orInPlace(offsetMoveMap.xor(sameColorPieces));
+        result.isResultCapture().orInPlace(offsetMoveMap.and(otherColorPieces));
+        result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
 
         return result;
     }

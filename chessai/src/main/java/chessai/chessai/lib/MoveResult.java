@@ -5,7 +5,6 @@ public record MoveResult(
 		BitMap isResultCapture,
 		BitMap attackTargetsWithoutEnemyKingOnBoard,
 		BitMap isResultPromotion,
-		BitMap squaresWherePromotionTakesPlace,
 		BitMap isResultDoublePawnMove,
 		BitMap isResultKingSideCastle,
 		BitMap isResultQueenSideCastle
@@ -13,7 +12,6 @@ public record MoveResult(
 
 	public MoveResult() {
 		this(new BitMap(0),
-				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),
