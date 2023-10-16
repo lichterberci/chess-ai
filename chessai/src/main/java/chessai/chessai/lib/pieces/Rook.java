@@ -54,20 +54,26 @@ public class Rook extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        return null;
+    }
+
+    @Override
     public Piece copy() {
         return new Rook(color);
     }
 
     /**
-     * @param board the board in which me want to move
-     * @param moves the list of moves that we amend
+     * @param board   the board in which me want to move
+     * @param moves   the list of moves that we amend
      * @param _square the _square we want to look at
      * @return whether we terminate the current loop
      */
     private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square _square) {
-        Optional<PieceColor> color;
 
-        if ((color = board.getColorAtSquare(_square)).isPresent()) {
+        Optional<PieceColor> color = board.getColorAtSquare(_square);
+
+        if (color.isPresent()) {
 
             if (color.get().equals(getColor()))
                 return true;

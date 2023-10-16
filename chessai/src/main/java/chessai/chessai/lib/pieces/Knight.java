@@ -35,6 +35,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        return null;
+    }
+
+    @Override
     public Piece copy() {
         return new Knight(color);
     }
@@ -46,9 +51,9 @@ public class Knight extends Piece {
 
         Square square = new Square(file, row);
 
-        Optional<PieceColor> color;
+        Optional<PieceColor> color = board.getColorAtSquare(square);
 
-        if ((color = board.getColorAtSquare(square)).isPresent()) {
+        if (color.isPresent()) {
 
             if (color.get().equals(getColor()))
                 return;

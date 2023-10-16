@@ -86,13 +86,18 @@ public class Queen extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        return null;
+    }
+
+    @Override
     public Piece copy() {
         return new Queen(color);
     }
 
     /**
-     * @param board the board in which me want to move
-     * @param moves the list of moves that we amend
+     * @param board  the board in which me want to move
+     * @param moves  the list of moves that we amend
      * @param square the square we want to look at
      * @return whether we terminate the current loop
      */

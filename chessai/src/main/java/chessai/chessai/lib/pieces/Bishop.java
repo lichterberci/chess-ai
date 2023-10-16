@@ -59,6 +59,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        return null;
+    }
+
+    @Override
     public Piece copy() {
         return new Bishop(color);
     }
@@ -70,9 +75,10 @@ public class Bishop extends Piece {
      * @return whether we terminate the current loop
      */
     private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square square) {
-        Optional<PieceColor> color;
 
-        if ((color = board.getColorAtSquare(square)).isPresent()) {
+        Optional<PieceColor> color = board.getColorAtSquare(square);
+
+        if (color.isPresent()) {
 
             if (color.get().equals(getColor()))
                 return true;

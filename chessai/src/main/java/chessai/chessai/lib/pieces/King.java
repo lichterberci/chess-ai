@@ -25,9 +25,9 @@ public class King extends Piece {
 
                 Square square = new Square(f, r);
 
-                Optional<PieceColor> color;
+                Optional<PieceColor> color = board.getColorAtSquare(square);
 
-                if ((color = board.getColorAtSquare(square)).isPresent()) {
+                if (color.isPresent()) {
 
                     if (color.get().equals(getColor()))
                         continue;
@@ -111,6 +111,11 @@ public class King extends Piece {
         }
 
         return moves;
+    }
+
+    @Override
+    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+        return null;
     }
 
     @Override
