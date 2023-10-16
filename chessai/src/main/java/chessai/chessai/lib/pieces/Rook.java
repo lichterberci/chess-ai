@@ -81,14 +81,14 @@ public class Rook extends SlidingPiece {
     }
 
     /**
-     * @param board   the board in which me want to move
-     * @param moves   the list of moves that we amend
-     * @param _square the _square we want to look at
+     * @param board         the board in which me want to move
+     * @param moves         the list of moves that we amend
+     * @param squareToCheck the squareToCheck we want to look at
      * @return whether we terminate the current loop
      */
-    private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square _square) {
+    private boolean determineWhetherItCanMoveToSquare(Board board, List<Move> moves, Square squareToCheck) {
 
-        Optional<PieceColor> color = board.getColorAtSquare(_square);
+        Optional<PieceColor> color = board.getColorAtSquare(squareToCheck);
 
         if (color.isPresent()) {
 
@@ -96,7 +96,7 @@ public class Rook extends SlidingPiece {
                 return true;
 
             moves.add(new Move(square,
-                    _square,
+                    squareToCheck,
                     null,
                     true,
                     false,
@@ -106,7 +106,7 @@ public class Rook extends SlidingPiece {
         }
 
         moves.add(new Move(square,
-                _square,
+                squareToCheck,
                 null,
                 false,
                 false,

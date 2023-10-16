@@ -7,9 +7,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class Knight extends Piece {
-    public Knight (PieceColor color) {
+
+    private static final int moveTargetStartFile = 3;
+    private static final int moveTargetStartRow = 3;
+    private static BitMap moveTargetMap;
+
+    static {
+        // TODO: implement offsets
+        moveTargetMap = new BitMap("");
+    }
+
+    public Knight(PieceColor color) {
         super(color);
     }
+
     @Override
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'N' : 'n';
@@ -36,7 +47,19 @@ public class Knight extends Piece {
 
     @Override
     public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
-        return null;
+        final int currentFile = getSquare().file();
+        final int currentRow = getSquare().row();
+
+        BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+        BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+
+        MoveResult result = new MoveResult();
+
+        BitMap
+
+        result.moveTargets().orInPlace();
+
+        return result;
     }
 
     @Override
