@@ -1,0 +1,23 @@
+
+{	java:S135™"YReduce the total number of break and continue statements in this loop to use at most one.(«’ôÁúÿÿÿÿ8àÏùÔ²1
+v	java:S135»"YReduce the total number of break and continue statements in this loop to use at most one.(º×Áâ8áÏùÔ²1
+M
+java:S1066ü"/Merge this if statement with the enclosing one.(ãÇ’Ô8âÏùÔ²1
+m	java:S117ü"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìí§8ãÏùÔ²1
+^	java:S107<"BConstructor has 18 parameters, which is greater than 7 authorized.(àà‰8ÓÕùÔ²1
+u
+java:S3776®"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(÷¥‘ƒÿÿÿÿÿ8ãÕùÔ²1
+b
+java:S3358á"DExtract this nested ternary operation into an independent statement.(Æùç 8èÕùÔ²1
+o
+java:S3776ü"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(Ìí§8ëÕùÔ²1
+p
+java:S3776Ê"RRefactor this method to reduce its Cognitive Complexity from 39 to the 15 allowed.(ñ©÷Ä8ôÕùÔ²1
+p
+java:S1871ô"MThis branch's code block is the same as the block for the branch on line 370.(ø¼Æáüÿÿÿÿ8÷ÕùÔ²1
+u
+java:S3776›"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(½…ä˜ûÿÿÿÿ8ûÕùÔ²1
+u
+java:S3776«"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(§Ç˜øÿÿÿÿ8ÖùÔ²1
+é
+java:S6541«"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 68 to 64, Complexity from 21 to 14, Nesting Level from 5 to 2, Number of Variables from 10 to 6.(§Ç˜øÿÿÿÿ8ÖùÔ²1
