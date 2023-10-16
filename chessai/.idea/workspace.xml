@@ -9,13 +9,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed sliding piece issue">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/MoveResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/MoveResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/RookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/RookTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/KnightTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/KnightTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +53,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -100,7 +102,7 @@
       <recent name="chessai.chessai.lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RookTest.getPseudoLegalMovesAsBitMaps">
+  <component name="RunManager" selected="Gradle.KnightTest.getPseudoLegalMovesAsBitMaps">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -110,7 +112,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BoardTest.getState" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="KnightTest.getPseudoLegalMovesAsBitMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -123,7 +125,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.BoardTest.getState&quot;" />
+            <option value="&quot;chessai.chessai.lib.pieces.KnightTest.getPseudoLegalMovesAsBitMaps&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -244,20 +246,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.KnightTest.getPseudoLegalMovesAsBitMaps" />
       <item itemvalue="Gradle.RookTest.getPseudoLegalMovesAsBitMaps" />
       <item itemvalue="Gradle.SquareTest" />
       <item itemvalue="Gradle.MateInOneTest.mateInOne" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
-      <item itemvalue="Gradle.BoardTest.getState" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.KnightTest.getPseudoLegalMovesAsBitMaps" />
         <item itemvalue="Gradle.RookTest.getPseudoLegalMovesAsBitMaps" />
         <item itemvalue="Gradle.SquareTest" />
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.MateInOneTest.mateInOne" />
-        <item itemvalue="Gradle.BoardTest.getState" />
       </list>
     </recent_temporary>
   </component>
@@ -480,7 +482,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697473871162</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Fixed sliding piece issue">
+      <option name="closed" value="true" />
+      <created>1697483099549</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1697483099549</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,6 +564,7 @@
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="chessai.chessai.lib.MoveResult" memberName="moveTargets" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.BitMap" memberName="data" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.Square" memberName="squareData" />
       </pinned-members>

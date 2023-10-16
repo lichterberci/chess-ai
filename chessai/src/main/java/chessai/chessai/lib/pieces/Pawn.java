@@ -204,7 +204,69 @@ public class Pawn extends Piece {
 
     @Override
     public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
-        return null;
+
+        final int currentFile = getSquare().file();
+        final int currentRow = getSquare().row();
+
+        BitMap otherColorPieces = color == PieceColor.WHITE ? board.blackPieces : board.whitePieces;
+        BitMap sameColorPieces = color == PieceColor.BLACK ? board.blackPieces : board.whitePieces;
+
+        int rowOffset = color == PieceColor.WHITE ? 1 : -1;
+
+        MoveResult result = new MoveResult();
+
+        final int oneMoveForwardIndex = Square.getIndex(currentFile, currentRow + rowOffset);
+        final int twoMoveForwardIndex = Square.getIndex(currentFile, currentRow + 2 * rowOffset);
+        final int attackToRightIndex = Square.getIndex(currentFile + 1, currentRow + rowOffset);
+        final int attackToLeftIndex = Square.getIndex(currentFile - 1, currentRow + rowOffset);
+
+        final int enPassantTargetIndex = board.enPassantTarget != null ? board.enPassantTarget.getIndex() : -1;
+
+        // single move forward
+        result.moveTargets().setBitInPlace(
+                oneMoveForwardIndex,
+                !otherColorPieces.getBit(oneMoveForwardIndex) && !sameColorPieces.getBit(oneMoveForwardIndex)
+        );
+
+        // double move
+        if ((
+                color == PieceColor.WHITE ? currentRow == 1 : currentRow == 6 // we are on the correct row
+        ) &&
+                !otherColorPieces.getBit(oneMoveForwardIndex) // nothing in front
+                && !sameColorPieces.getBit(oneMoveForwardIndex)
+                && !otherColorPieces.getBit(twoMoveForwardIndex) // nothing one square further
+                && !sameColorPieces.getBit(twoMoveForwardIndex)
+        ) {
+            result.moveTargets().setBitInPlace(twoMoveForwardIndex, true);
+            result.isResultDoublePawnMove().setBitInPlace(twoMoveForwardIndex, true);
+        }
+
+        // promotion from forward move (can also occur from capture)
+        if (color == PieceColor.WHITE ? currentRow == 6 : currentRow == 1)
+            result.isResultPromotion().setBitInPlace(oneMoveForwardIndex, true);
+
+        BitMap targetableSquaresForCapture = otherColorPieces.copy();
+
+        if (enPassantTargetIndex != -1)
+            targetableSquaresForCapture.setBitInPlace(enPassantTargetIndex, true);
+
+        if (attackToLeftIndex != -1) {
+            result.attackTargetsWithoutEnemyKingOnBoard().setBitInPlace(attackToLeftIndex, true);
+            result.isResultCapture().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
+            result.moveTargets().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
+            result.isResultEnPassant().setBitInPlace(attackToLeftIndex, attackToRightIndex == enPassantTargetIndex);
+            result.isResultPromotion().setBitInPlace(attackToLeftIndex, color == PieceColor.WHITE ? currentRow == 6 : currentRow == 1);
+        }
+
+        if (attackToRightIndex != -1) {
+            result.attackTargetsWithoutEnemyKingOnBoard().setBitInPlace(attackToRightIndex, true);
+            result.isResultCapture().setBitInPlace(attackToRightIndex, targetableSquaresForCapture.getBit(attackToRightIndex));
+            result.moveTargets().setBitInPlace(attackToRightIndex, targetableSquaresForCapture.getBit(attackToRightIndex));
+            result.isResultEnPassant().setBitInPlace(attackToRightIndex, attackToRightIndex == enPassantTargetIndex);
+            result.isResultPromotion().setBitInPlace(attackToRightIndex, color == PieceColor.WHITE ? currentRow == 6 : currentRow == 1);
+        }
+
+        return result;
     }
 
     @Override

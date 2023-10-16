@@ -10,20 +10,16 @@ public class King extends Piece {
 
     private static final int MOVE_TARGET_START_FILE = 6;
     private static final int MOVE_TARGET_START_ROW = 1;
-    private static BitMap moveTargetMap;
-
-    static {
-        moveTargetMap = new BitMap(
-                "00000000" +
-                        "00000000" +
-                        "00000000" +
-                        "00000000" +
-                        "00000000" +
-                        "00000111" +
-                        "00000101" +
-                        "00000111"
-        );
-    }
+    private static final BitMap MOVE_TARGET_MAP = new BitMap(
+            "00000000" +
+                    "00000000" +
+                    "00000000" +
+                    "00000000" +
+                    "00000000" +
+                    "00000111" +
+                    "00000101" +
+                    "00000111"
+    );
 
     public King (PieceColor color) {
         super(color);
@@ -140,10 +136,10 @@ public class King extends Piece {
 
         MoveResult result = new MoveResult();
 
-        BitMap offsetMoveMap = moveTargetMap.shift(-(currentFile - MOVE_TARGET_START_FILE), -(currentRow - MOVE_TARGET_START_ROW));
+        BitMap offsetMoveMap = MOVE_TARGET_MAP.shift(-(currentFile - MOVE_TARGET_START_FILE), -(currentRow - MOVE_TARGET_START_ROW));
 
-        result.moveTargets().orInPlace(offsetMoveMap.xor(sameColorPieces));
-        result.isResultCapture().orInPlace(offsetMoveMap.and(otherColorPieces));
+        result.moveTargets().orInPlace(offsetMoveMap.and(sameColorPieces.invert()));
+        result.isResultCapture().orInPlace(offsetMoveMap.and(sameColorPieces.invert()).and(otherColorPieces));
         result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
 
         return result;
