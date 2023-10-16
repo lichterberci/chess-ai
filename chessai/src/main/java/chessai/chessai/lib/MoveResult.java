@@ -8,5 +8,18 @@ public record MoveResult(
 		BitMap squaresWherePromotionTakesPlace,
 		BitMap isResultDoublePawnMove,
 		BitMap isResultKingSideCastle,
-		BitMap isResultQueenSideCastle) {
+		BitMap isResultQueenSideCastle
+) {
+
+	public MoveResult() {
+		this(new BitMap(0),
+				new BitMap(0),
+				new BitMap(0),
+				new BitMap(0),
+				new BitMap(0),
+				new BitMap(0),
+				new BitMap(0),
+				new BitMap(0));
+	}
+
 }
