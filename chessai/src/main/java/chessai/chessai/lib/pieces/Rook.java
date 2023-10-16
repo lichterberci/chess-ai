@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Rook extends Piece {
-    public Rook (PieceColor color) {
+public class Rook extends SlidingPiece {
+    public Rook(PieceColor color) {
         super(color);
     }
+
     @Override
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'R' : 'r';
@@ -66,71 +67,12 @@ public class Rook extends Piece {
         MoveResult result = new MoveResult();
 
         slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 0);
-
-        for (int i = currentFile + 1; i <= 7; i++) {
-            final Square square = new Square(i, currentRow);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        for (int i = currentRow - 1; i >= 0; i--) {
-            final Square square = new Square(currentFile, i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        for (int i = currentRow + 1; i <= 7; i++) {
-            final Square square = new Square(currentFile, i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 0);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, 1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, -1);
 
         return result;
 
-    }
-
-    private static void slide(int currentFile, int currentRow, BitMap otherColorPieces, BitMap sameColorPieces, BitMap otherColorKing, MoveResult result, int fileOffset, int rowOffset) {
-
-        final int currentSquareIndex = Square.getIndex(currentFile, currentRow);
-
-        boolean onlyAttacks = false;
-
-        for (int i = 0; i < 8; i++) {
-
-            final int squareIndex = currentSquareIndex + (fileOffset + rowOffset * 8);
-
-            // we moved out of the board
-            if (squareIndex == -1)
-                return;
-
-            // out friendly piece is in the way
-            if (sameColorPieces.getBit(squareIndex))
-                return;
-
-            // we can attack this square
-            result.attackTargetsWithoutEnemyKingOnBoard().setBitInPlace(squareIndex, true);
-
-            // if we are not behind the king, we can move there
-            if (!onlyAttacks)
-                result.moveTargets().setBitInPlace(squareIndex, true);
-
-            // an enemy piece is in the way
-            if (otherColorPieces.getBit(squareIndex)) {
-
-                result.moveTargets().setBitInPlace(squareIndex, true);
-                result.isResultCapture().setBitInPlace(squareIndex, true);
-
-                // if it is not the king, we return
-                if (!otherColorKing.getBit(squareIndex))
-                    return;
-
-                // if it way the enemy king, we can attack behind him as well
-                onlyAttacks = true;
-            }
-        }
     }
 
     @Override
