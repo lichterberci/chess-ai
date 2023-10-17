@@ -15,6 +15,7 @@ public class Pawn extends Piece {
         return getColor() == PieceColor.WHITE ? 'P' : 'p';
     }
 
+    @Deprecated(forRemoval = true)
     @Override
     public List<Move> getPseudoLegalMoves(Board board) {
         List<Move> moves = new ArrayList<>();
