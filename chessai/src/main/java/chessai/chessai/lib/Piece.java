@@ -12,6 +12,7 @@ public abstract class Piece {
 
     public abstract char getFENChar();
 
+    @Deprecated(forRemoval = true)
     public abstract List<Move> getPseudoLegalMoves(Board board);
 
     public abstract MoveResult getPseudoLegalMovesAsBitMaps(Board board);

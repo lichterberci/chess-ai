@@ -26,7 +26,6 @@ public class Board {
     public int fullMoveClock;
     public int halfMoveCounter;
     public List<String> previousPositions;
-
     public BitMap whitePieces;
     public BitMap blackPieces;
     public BitMap whiteKing;
@@ -35,6 +34,8 @@ public class Board {
     public BitMap blackAttackSquares;
     public BitMap whiteDoubleAttackSquares;
     public BitMap blackDoubleAttackSquares;
+    public BitMap pinMapForTheWhitePieces;
+    public BitMap pinMapForTheBlackPieces;
 
     public Board(Board other) {
         this(other.squares,
