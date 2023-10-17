@@ -142,6 +142,23 @@ public class King extends Piece {
         result.isResultCapture().orInPlace(offsetMoveMap.and(sameColorPieces.invert()).and(otherColorPieces));
         result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
 
+        // castling
+
+        BitMap piecesOnBoard = board.whitePieces.or(board.blackPieces);
+
+        if (color == PieceColor.WHITE) {
+
+            // white, king-side
+            if (
+                    board.canWhiteCastleKingSide
+                            && !piecesOnBoard.getBit(Square.getIndex("F1"))
+                            && !piecesOnBoard.getBit(Square.getIndex("G1"))
+            ) {
+
+            }
+
+        }
+
         return result;
     }
 

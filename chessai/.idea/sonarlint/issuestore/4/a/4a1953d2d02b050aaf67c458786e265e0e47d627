@@ -1,9 +1,3 @@
 
 k
-java:S2272"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(›æË€8ï‡ÓÔ²1
-a
-java:S3358z"DExtract this nested ternary operation into an independent statement.(Íé¨8÷‡ÓÔ²1
-v
-java:S2975°"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ªŞ Æùÿÿÿÿ8ÿ‡ÓÔ²1
-k
-java:S1182°"HUse super.clone() to create and seed the cloned instance to be returned.(ªŞ Æùÿÿÿÿ8ÿ‡ÓÔ²1
+java:S2272"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(¯ö´ 8°Ë­Á³1

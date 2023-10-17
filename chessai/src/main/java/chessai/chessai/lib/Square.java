@@ -25,6 +25,16 @@ public class Square {
         return String.valueOf((char) ('A' + (squareData >>> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
     }
 
+    public static int getIndex(String name) {
+        int file = Character.toLowerCase(name.charAt(0)) - 'a';
+        int row = name.charAt(1) - '1';
+
+        if (file > 7 || file < 0 || row > 7 || row < 0)
+            return -1;
+
+        return file + ((7 - row) * 8);
+    }
+
     public static int getIndex(int file, int row) {
         if (file > 7 || file < 0 || row > 7 || row < 0)
             return -1;

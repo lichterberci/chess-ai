@@ -8,9 +8,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Updated gitignore to ignore sonarlint indexes">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,24 +70,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/chess-ai/chessai/src/test/java/chessai/chessai&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="chessai.chessai.lib" />
@@ -129,7 +135,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="BitMapTest.shift" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -153,7 +159,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="KingTest.getPseudoLegalMovesAsBitMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -177,7 +183,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="KnightTest.getPseudoLegalMovesAsBitMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -201,7 +207,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="SquareTest.toIndex" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -225,7 +231,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -288,6 +294,9 @@
       <workItem from="1696587909313" duration="871000" />
       <workItem from="1696611203043" duration="12886000" />
       <workItem from="1696675091888" duration="2428000" />
+      <workItem from="1697531913500" duration="149000" />
+      <workItem from="1697538304237" duration="203000" />
+      <workItem from="1697553027529" duration="1429000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -481,47 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697473871162</updated>
     </task>
-    <task id="LOCAL-00026" summary="Fixed sliding piece issue">
+    <task id="LOCAL-00026" summary="Updated gitignore to ignore sonarlint indexes">
       <option name="closed" value="true" />
-      <created>1697483099549</created>
+      <created>1697532021103</created>
       <option name="number" value="00026" />
       <option name="presentableId" value="LOCAL-00026" />
       <option name="project" value="LOCAL" />
-      <updated>1697483099549</updated>
+      <updated>1697532021104</updated>
     </task>
-    <task id="LOCAL-00027" summary="Added pawn movement (in theory)">
-      <option name="closed" value="true" />
-      <created>1697486284891</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1697486284891</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Updated before commit checks">
-      <option name="closed" value="true" />
-      <created>1697486312840</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1697486312840</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Solved square index problem and bitmap shift problem">
-      <option name="closed" value="true" />
-      <created>1697489605422</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1697489605422</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems">
-      <option name="closed" value="true" />
-      <created>1697491035433</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1697491035433</updated>
-    </task>
-    <option name="localTasksCounter" value="31" />
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -539,7 +516,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="Added check detection" />
+    <MESSAGE value="Minor changes" />
+    <MESSAGE value="Added test for board.move" />
+    <MESSAGE value="Added test case for castling" />
     <MESSAGE value="game state added but something is not right" />
     <MESSAGE value="getState works now :D" />
     <MESSAGE value="Castling rights corrected" />
@@ -560,12 +540,8 @@
     <MESSAGE value="Augmented intelliJ warning set" />
     <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
     <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
-    <MESSAGE value="Fixed sliding piece issue" />
-    <MESSAGE value="Added pawn movement (in theory)" />
-    <MESSAGE value="Updated before commit checks" />
-    <MESSAGE value="Solved square index problem and bitmap shift problem" />
-    <MESSAGE value="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced &gt;&gt; with &gt;&gt;&gt; and solved a bunch of problems" />
+    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated gitignore to ignore sonarlint indexes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -573,12 +549,13 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="chessai.chessai.lib.MoveResult" memberName="moveTargets" />
+        <PinnedItemInfo parentTag="chessai.chessai.lib.BitMap" memberName="data" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.Square" memberName="squareData" />
       </pinned-members>
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
