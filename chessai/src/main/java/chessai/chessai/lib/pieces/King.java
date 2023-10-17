@@ -149,12 +149,43 @@ public class King extends Piece {
         if (color == PieceColor.WHITE) {
 
             // white, king-side
-            if (
-                    board.canWhiteCastleKingSide
-                            && !piecesOnBoard.getBit(Square.getIndex("F1"))
-                            && !piecesOnBoard.getBit(Square.getIndex("G1"))
+            if (board.canWhiteCastleKingSide
+                    && !piecesOnBoard.getBit(Square.getIndex("F1"))
+                    && !piecesOnBoard.getBit(Square.getIndex("G1"))
             ) {
+                result.moveTargets().setBitInPlace(Square.getIndex("G1"), true);
+                result.isResultKingSideCastle().setBitInPlace(Square.getIndex("G1"), true);
+            }
 
+            // white, queen-side
+            if (board.canWhiteCastleQueenSide
+                    && !piecesOnBoard.getBit(Square.getIndex("B1"))
+                    && !piecesOnBoard.getBit(Square.getIndex("C1"))
+                    && !piecesOnBoard.getBit(Square.getIndex("D1"))
+            ) {
+                result.moveTargets().setBitInPlace(Square.getIndex("C1"), true);
+                result.isResultQueenSideCastle().setBitInPlace(Square.getIndex("C1"), true);
+            }
+
+        } else {
+
+            // black, king-side
+            if (board.canBlackCastleKingSide
+                    && !piecesOnBoard.getBit(Square.getIndex("F8"))
+                    && !piecesOnBoard.getBit(Square.getIndex("G8"))
+            ) {
+                result.moveTargets().setBitInPlace(Square.getIndex("G8"), true);
+                result.isResultKingSideCastle().setBitInPlace(Square.getIndex("G8"), true);
+            }
+
+            // white, queen-side
+            if (board.canBlackCastleQueenSide
+                    && !piecesOnBoard.getBit(Square.getIndex("B8"))
+                    && !piecesOnBoard.getBit(Square.getIndex("C8"))
+                    && !piecesOnBoard.getBit(Square.getIndex("D8"))
+            ) {
+                result.moveTargets().setBitInPlace(Square.getIndex("C8"), true);
+                result.isResultQueenSideCastle().setBitInPlace(Square.getIndex("C8"), true);
             }
 
         }
