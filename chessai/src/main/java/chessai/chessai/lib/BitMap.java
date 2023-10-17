@@ -214,4 +214,12 @@ public class BitMap {
     public void xorInPlace(BitMap other) {
         data ^= other.data;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof BitMap otherBitMap)) return false;
+        return otherBitMap.data == data;
+    }
 }

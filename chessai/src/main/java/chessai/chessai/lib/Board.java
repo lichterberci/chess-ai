@@ -644,7 +644,6 @@ public class Board {
                 case 'k' -> canBlackCastleKingSide = true;
                 case 'q' -> canBlackCastleQueenSide = true;
                 case 'Q' -> canWhiteCastleQueenSide = true;
-                default -> throw new ParseException("Invalid castling right character!", 2);
             }
         }
 

@@ -8,11 +8,13 @@ public record MoveResult(
 		BitMap isResultEnPassant,
 		BitMap isResultDoublePawnMove,
 		BitMap isResultKingSideCastle,
-		BitMap isResultQueenSideCastle
+		BitMap isResultQueenSideCastle,
+		BitMap pinMap
 ) {
 
 	public MoveResult() {
 		this(new BitMap(0),
+				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),

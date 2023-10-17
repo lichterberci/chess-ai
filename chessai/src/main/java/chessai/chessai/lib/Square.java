@@ -14,7 +14,10 @@ public class Square {
     }
 
     public int getIndex() {
-        return (squareData >>> 8) + ((7 - (squareData & 0xFF)) * 8);
+        int result = (squareData >>> 8) + ((7 - (squareData & 0xFF)) * 8);
+        if (result > 63 || result < 0)
+            return -1;
+        return result;
     }
 
     @Override
