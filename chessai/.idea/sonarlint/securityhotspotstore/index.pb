@@ -56,3 +56,13 @@ d
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 \
 ,src/main/java/chessai/chessai/lib/Board.java,5\2\529fd6579586c8ae9ecd04f247679c0fbd30c238
+g
+7src/test/java/chessai/chessai/lib/pieces/QueenTest.java,5\2\520e414906d62dc600e88529020a552be5f5fd54
+f
+6src/test/java/chessai/chessai/lib/pieces/KingTest.java,5\4\549808ee6ea8b6016ed3924a2cac72fc57a4ceaa
+h
+8src/test/java/chessai/chessai/lib/pieces/BishopTest.java,c\2\c226998c8af1dd434b940d74db117cd7827cef68
+h
+8src/test/java/chessai/chessai/lib/pieces/KnightTest.java,a\a\aab9b4ff85841e98766aaf447aa7a90bbecf0b96
+f
+6src/test/java/chessai/chessai/lib/pieces/PawnTest.java,3\3\3321db8a1c2f2b04c00fc172607543246bd5c9b0

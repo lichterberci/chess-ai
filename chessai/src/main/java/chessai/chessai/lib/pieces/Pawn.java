@@ -252,7 +252,7 @@ public class Pawn extends Piece {
             targetableSquaresForCapture.setBitInPlace(enPassantTargetIndex, true);
 
         if (attackToLeftIndex != -1) {
-            result.attackTargetsWithoutEnemyKingOnBoard().setBitInPlace(attackToLeftIndex, true);
+            result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().setBitInPlace(attackToLeftIndex, true);
             result.isResultCapture().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
             result.moveTargets().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
             result.isResultEnPassant().setBitInPlace(attackToLeftIndex, attackToRightIndex == enPassantTargetIndex);
@@ -260,7 +260,7 @@ public class Pawn extends Piece {
         }
 
         if (attackToRightIndex != -1) {
-            result.attackTargetsWithoutEnemyKingOnBoard().setBitInPlace(attackToRightIndex, true);
+            result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().setBitInPlace(attackToRightIndex, true);
             result.isResultCapture().setBitInPlace(attackToRightIndex, targetableSquaresForCapture.getBit(attackToRightIndex));
             result.moveTargets().setBitInPlace(attackToRightIndex, targetableSquaresForCapture.getBit(attackToRightIndex));
             result.isResultEnPassant().setBitInPlace(attackToRightIndex, attackToRightIndex == enPassantTargetIndex);

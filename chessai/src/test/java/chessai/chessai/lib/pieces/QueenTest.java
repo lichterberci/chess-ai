@@ -80,7 +80,7 @@ class QueenTest {
                         "00011100" +
                         "00001010" +
                         "00000000"
-        ), result.attackTargetsWithoutEnemyKingOnBoard());
+        ), result.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
 
     }
 }

@@ -36,6 +36,8 @@ public class Board {
     public BitMap blackDoubleAttackSquares;
     public BitMap pinMapForTheWhitePieces;
     public BitMap pinMapForTheBlackPieces;
+    public BitMap checkTrackForWhiteKing;
+    public BitMap checkTrackForBlackKing;
 
     public Board(Board other) {
         this(other.squares,
@@ -55,7 +57,11 @@ public class Board {
                 other.whiteAttackSquares,
                 other.blackAttackSquares,
                 other.whiteDoubleAttackSquares,
-                other.blackDoubleAttackSquares);
+                other.blackDoubleAttackSquares,
+                other.pinMapForTheWhitePieces,
+                other.pinMapForTheBlackPieces,
+                other.checkTrackForWhiteKing,
+                other.checkTrackForBlackKing);
     }
 
     public Board(Piece[] squares,
@@ -68,7 +74,7 @@ public class Board {
                  int fullMoveClock,
                  int halfMoveCounter,
                  List<String> previousPositions,
-                 BitMap whitePieces, BitMap blackPieces, BitMap whiteKing, BitMap blackKing, BitMap whiteAttackSquares, BitMap blackAttackSquares, BitMap whiteDoubleAttackSquares, BitMap blackDoubleAttackSquares) {
+                 BitMap whitePieces, BitMap blackPieces, BitMap whiteKing, BitMap blackKing, BitMap whiteAttackSquares, BitMap blackAttackSquares, BitMap whiteDoubleAttackSquares, BitMap blackDoubleAttackSquares, BitMap pinMapForTheWhitePieces, BitMap pinMapForTheBlackPieces, BitMap checkTrackForWhiteKing, BitMap checkTrackForBlackKing) {
 
         this.squares = new Piece[64];
 
@@ -103,6 +109,10 @@ public class Board {
         this.blackAttackSquares = blackAttackSquares;
         this.whiteDoubleAttackSquares = whiteDoubleAttackSquares;
         this.blackDoubleAttackSquares = blackDoubleAttackSquares;
+        this.pinMapForTheWhitePieces = pinMapForTheWhitePieces;
+        this.pinMapForTheBlackPieces = pinMapForTheBlackPieces;
+        this.checkTrackForWhiteKing = checkTrackForWhiteKing;
+        this.checkTrackForBlackKing = checkTrackForBlackKing;
     }
 
     public Board(String fenString) throws ParseException {
@@ -250,6 +260,135 @@ public class Board {
         return canOppositeWin;
     }
 
+    public List<Move> generateLegalMovesUsingBitMapsAndUpdateBitMaps() {
+
+        BitMap enemyPieces;
+        BitMap checkTrackForOurKing;
+        BitMap enemyAttackSquares;
+        BitMap enemyDoubleAttackSquares;
+        BitMap pinMapForOurPieces;
+        BitMap ourPieces;
+        BitMap ourKing;
+        BitMap enemyPiecesGivingCheck = new BitMap(0);
+
+        if (colorToMove == PieceColor.WHITE) {
+            enemyPieces = blackPieces;
+            ourPieces = whitePieces;
+            ourKing = whiteKing;
+            checkTrackForOurKing = checkTrackForWhiteKing = new BitMap(0);
+            enemyAttackSquares = blackAttackSquares = new BitMap(0);
+            enemyDoubleAttackSquares = blackDoubleAttackSquares = new BitMap(0);
+            pinMapForOurPieces = pinMapForTheWhitePieces = new BitMap(0);
+        } else {
+            enemyPieces = whitePieces;
+            ourPieces = blackPieces;
+            ourKing = blackKing;
+            checkTrackForOurKing = checkTrackForBlackKing = new BitMap(0);
+            enemyAttackSquares = whiteAttackSquares = new BitMap(0);
+            enemyDoubleAttackSquares = whiteDoubleAttackSquares = new BitMap(0);
+            pinMapForOurPieces = pinMapForTheBlackPieces = new BitMap(0);
+        }
+
+        // generate moves for the other side, so we can determine whether we are in or will be in check
+        for (int index : enemyPieces.getIndexesOfOnes()) {
+            Piece enemyPiece = squares[index];
+
+            MoveResult moveResult = enemyPiece.getPseudoLegalMovesAsBitMaps(this);
+
+            checkTrackForOurKing.orInPlace(moveResult.checkTrack());
+            enemyDoubleAttackSquares.orInPlace(enemyAttackSquares.or(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere()));
+            enemyAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+            pinMapForOurPieces.orInPlace(moveResult.pinMap());
+
+            if (moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere().and(ourKing).isNonZero())
+                enemyPiecesGivingCheck.setBitInPlace(index, true);
+        }
+
+        // double check
+        if (enemyDoubleAttackSquares.and(ourKing).isNonZero()) {
+
+            final int ourKingIndex = ourKing.getIndexesOfOnes().get(0);
+
+            // only the king can move
+            MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMovesAsBitMaps(this);
+
+            BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
+
+            return validMoves
+                    .getIndexesOfOnes()
+                    .stream()
+                    .map(index -> new Move(
+                            ourKingIndex,
+                            index,
+                            null,
+                            moveResult.isResultCapture().getBit(index),
+                            false,
+                            SpecialMove.NONE
+                    ))
+                    .toList();
+        }
+
+        List<Move> result = new LinkedList<>();
+
+        // we are in check, so only moves are
+        // - with the king
+        // - blocking
+        // - capturing the piece giving check
+        if (enemyAttackSquares.and(ourKing).isNonZero()) {
+
+            for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
+                Piece ourPiece = squares[ourPieceIndex];
+
+                if (ourPiece instanceof King) {
+
+                    // we can capture, or run away
+
+                    MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+
+                    BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
+
+                    result.addAll(validMoves
+                            .getIndexesOfOnes()
+                            .stream()
+                            .map(index -> new Move(
+                                    ourPieceIndex,
+                                    index,
+                                    null,
+                                    moveResult.isResultCapture().getBit(index),
+                                    false,
+                                    SpecialMove.NONE
+                            ))
+                            .toList());
+
+                } else {
+
+                    // we can block or capture
+
+                    MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+
+                    BitMap validMoves = moveResult.moveTargets().and(checkTrackForOurKing);
+
+                    result.addAll(validMoves
+                            .getIndexesOfOnes()
+                            .stream()
+                            .map(index -> new Move(
+                                    ourPieceIndex,
+                                    index,
+                                    null,
+                                    moveResult.isResultCapture().getBit(index),
+                                    false,
+                                    SpecialMove.NONE
+                            ))
+                            .toList());
+                }
+
+            }
+
+        }
+
+
+        return result;
+    }
     public boolean isMoveLegal(Move _move) {
         Board boardAfterMove = makeMove(_move);
 

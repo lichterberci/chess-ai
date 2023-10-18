@@ -63,7 +63,7 @@ public class Knight extends Piece {
 
         result.moveTargets().orInPlace(offsetMoveMap.and(sameColorPieces.invert()));
         result.isResultCapture().orInPlace(offsetMoveMap.and(sameColorPieces.invert()).and(otherColorPieces));
-        result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
+        result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().orInPlace(offsetMoveMap);
 
         return result;
     }

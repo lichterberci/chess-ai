@@ -140,7 +140,7 @@ public class King extends Piece {
 
         result.moveTargets().orInPlace(offsetMoveMap.and(sameColorPieces.invert()));
         result.isResultCapture().orInPlace(offsetMoveMap.and(sameColorPieces.invert()).and(otherColorPieces));
-        result.attackTargetsWithoutEnemyKingOnBoard().orInPlace(offsetMoveMap);
+        result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().orInPlace(offsetMoveMap);
 
         // castling
 
