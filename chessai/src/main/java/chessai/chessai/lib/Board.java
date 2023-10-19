@@ -128,26 +128,12 @@ public class Board {
     }
 
     public boolean isKingInCheck(PieceColor color) {
-        if (whiteAttackSquares != null && blackAttackSquares != null) {
-            if (color == PieceColor.WHITE) {
-                return blackAttackSquares.and(whiteKing).isNonZero();
-            } else {
-                return whiteAttackSquares.and(blackKing).isNonZero();
-            }
-        }
-
-        int kingIndex = color == PieceColor.WHITE ? whiteKing.getIndexesOfOnes().get(0) : blackKing.getIndexesOfOnes().get(0);
-
-        return isKingInCheck(color, kingIndex);
-    }
-
-    public boolean isKingInCheck(PieceColor color, int kingSquareIndex) {
 
         if (whiteAttackSquares != null && blackAttackSquares != null) {
             generateLegalMovesUsingBitMapsAndUpdateBitMaps(true);
         }
 
-        return color == PieceColor.WHITE ? blackAttackSquares.getBit(kingSquareIndex) : whiteAttackSquares.getBit(kingSquareIndex);
+        return color == PieceColor.WHITE ? blackAttackSquares.and(whiteKing).isNonZero() : whiteAttackSquares.and(blackKing).isNonZero();
     }
 
     public GameState getState() {
@@ -290,14 +276,15 @@ public class Board {
                     result,
                     checkTrackForOurKing,
                     enemyPiecesGivingCheck,
-                    uncapturableEnPassantTarget);
+                    uncapturableEnPassantTarget,
+                    ourKing);
         } else {
 
             // general situation
             for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
                 Piece ourPiece = squares[ourPieceIndex];
 
-                if (ourPiece instanceof King) {
+                if (ourKing.getBit(ourPieceIndex)) {
                     generateKingMovesForGeneralSituation(ourPieceIndex,
                             enemyAttackSquares,
                             result);
@@ -517,11 +504,11 @@ public class Board {
                                                       List<Move> result,
                                                       BitMap checkTrackForOurKing,
                                                       BitMap enemyPiecesGivingCheck,
-                                                      BitMap uncapturableEnPassantTarget) {
+                                                      BitMap uncapturableEnPassantTarget, BitMap ourKing) {
         for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
             Piece ourPiece = squares[ourPieceIndex];
 
-            if (ourPiece instanceof King) {
+            if (ourKing.getBit(ourPieceIndex)) {
                 // we can capture, or run away
                 generateKingMovesForSingleCheckSituation(enemyAttackSquares,
                         result,

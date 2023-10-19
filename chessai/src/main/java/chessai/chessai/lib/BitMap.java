@@ -35,6 +35,10 @@ public class BitMap {
      */
     private long data;
 
+    public long getData() {
+        return data;
+    }
+
     public BitMap(boolean bitValue) {
         data = bitValue ? 0xFFFF_FFFF_FFFF_FFFFL : 0;
     }
