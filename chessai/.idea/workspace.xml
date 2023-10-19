@@ -10,8 +10,9 @@
   <component name="ChangeListManager">
     <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Removed unnecessary bitmaps from board">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/GameManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,7 +295,7 @@
       <workItem from="1697553027529" duration="1429000" />
       <workItem from="1697645904664" duration="3815000" />
       <workItem from="1697653436818" duration="592000" />
-      <workItem from="1697730334391" duration="4935000" />
+      <workItem from="1697730334391" duration="6435000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -544,7 +545,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697734892632</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Removed unnecessary bitmaps from board">
+      <option name="closed" value="true" />
+      <created>1697735300888</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1697735300888</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

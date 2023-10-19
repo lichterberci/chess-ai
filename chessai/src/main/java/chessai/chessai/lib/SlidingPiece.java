@@ -29,6 +29,11 @@ public abstract class SlidingPiece extends Piece {
 
 			// our friendly piece is in the way
 			if (sameColorPieces.getBit(squareIndex)) {
+
+				// we are defending this square from the enemy king, if we can
+				if (canAttack)
+					result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().setBitInPlace(squareIndex, true);
+
 				if (enPassantPawn.isZero()) // no en passants the previous move
 					return;
 				else if (!enPassantPawn.getBit(squareIndex)) // there was an en passant but not here
@@ -66,7 +71,7 @@ public abstract class SlidingPiece extends Piece {
 					// we hit a piece, we can move no further
 					canMove = false;
 
-					// if it is not the king, we return
+					// if it is not the king, we cannot attack behind it
 					if (!otherColorKing.getBit(squareIndex)) {
 						canAttack = false; // we can at least still pin this piece to the king
 					} else {

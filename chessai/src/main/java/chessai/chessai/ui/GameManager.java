@@ -79,7 +79,7 @@ public class GameManager {
                 return false;
             }
 
-            if (!boardWrapper.board.isMovePossibleAndLegal(move.get())) {
+            if (!boardWrapper.board.isMoveLegal(move.get())) {
                 return false;
             }
 
@@ -135,7 +135,6 @@ public class GameManager {
 
             selectSquare.accept(moved ? null : square);
         };
-
 
         boardController.addOnMouseClickOnSquareListener(selectOrMoveToSquare);
         boardController.addOnMouseDragEnterIntoSquareListeners(selectSquare);

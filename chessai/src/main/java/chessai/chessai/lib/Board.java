@@ -144,32 +144,10 @@ public class Board {
     public boolean isKingInCheck(PieceColor color, int kingSquareIndex) {
 
         if (whiteAttackSquares != null && blackAttackSquares != null) {
-            if (color == PieceColor.WHITE) {
-                return blackAttackSquares.getBit(kingSquareIndex);
-            } else {
-                return whiteAttackSquares.getBit(kingSquareIndex);
-            }
+            generateLegalMovesUsingBitMapsAndUpdateBitMaps(true);
         }
 
-        for (Piece piece : squares) {
-
-            if (piece == null)
-                continue;
-
-            if (piece.getColor() == color)
-                continue;
-
-            if (piece
-                    .getPseudoLegalMoves(this)
-                    .stream()
-                    .filter(Move::isCapture)
-                    .anyMatch(move -> move.to().getIndex() == kingSquareIndex)
-            ) {
-                return true;
-            }
-        }
-
-        return false;
+        return color == PieceColor.WHITE ? blackAttackSquares.getBit(kingSquareIndex) : whiteAttackSquares.getBit(kingSquareIndex);
     }
 
     public GameState getState() {
@@ -202,28 +180,17 @@ public class Board {
         if (!canRightWin && !canOppositeWin)
             return GameState.DRAW;
 
-        List<Move> moves = new LinkedList<>();
-
-        for (Piece piece : piecesWithRightColor) {
-
-            var possibleMoves = piece.getPseudoLegalMoves(this);
-
-            for (Move move : possibleMoves) {
-
-                if (isMoveLegal(move)) {
-                    moves.add(move);
-                }
-            }
-        }
-
-        boolean hasMoves = !moves.isEmpty();
+        boolean hasMoves = !generateLegalMovesUsingBitMapsAndUpdateBitMaps().isEmpty();
 
         if (hasMoves)
             return GameState.PLAYING;
 
         boolean isKingInCheck = isKingInCheck(colorToMove);
 
-        return isKingInCheck ? (colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN) : GameState.DRAW;
+        if (!isKingInCheck)
+            return GameState.DRAW;
+
+        return colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN;
     }
 
     private static boolean canRightColorWin(int numRightColorPieces, LinkedList<Piece> piecesWithRightColor) {
@@ -251,23 +218,26 @@ public class Board {
     }
 
     public List<Move> generateLegalMovesUsingBitMapsAndUpdateBitMaps() {
+        return generateLegalMovesUsingBitMapsAndUpdateBitMaps(false);
+    }
+
+    public List<Move> generateLegalMovesUsingBitMapsAndUpdateBitMaps(boolean onlyGenerateEnemyAttackMaps) {
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;
-        BitMap enemyAttackSquares;
         BitMap enemyDoubleAttackSquares;
         BitMap pinMapForOurPieces;
         BitMap ourPieces;
         BitMap ourKing;
         BitMap enemyPiecesGivingCheck = new BitMap(0);
         BitMap uncapturableEnPassantTarget = new BitMap(0);
+        BitMap enemyAttackSquares = new BitMap(0);
 
         if (colorToMove == PieceColor.WHITE) {
             enemyPieces = blackPieces;
             ourPieces = whitePieces;
             ourKing = whiteKing;
             checkTrackForOurKing = new BitMap(0);
-            enemyAttackSquares = blackAttackSquares = new BitMap(0);
             enemyDoubleAttackSquares = new BitMap(0);
             pinMapForOurPieces = new BitMap(0);
         } else {
@@ -275,7 +245,6 @@ public class Board {
             ourPieces = blackPieces;
             ourKing = blackKing;
             checkTrackForOurKing = new BitMap(0);
-            enemyAttackSquares = whiteAttackSquares = new BitMap(0);
             enemyDoubleAttackSquares = new BitMap(0);
             pinMapForOurPieces = new BitMap(0);
         }
@@ -295,6 +264,14 @@ public class Board {
             if (moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere().and(ourKing).isNonZero())
                 enemyPiecesGivingCheck.setBitInPlace(index, true);
         }
+
+        if (colorToMove == PieceColor.WHITE)
+            blackAttackSquares = enemyAttackSquares;
+        else
+            whiteAttackSquares = enemyAttackSquares;
+
+        if (onlyGenerateEnemyAttackMaps)
+            return new ArrayList<>();
 
         // double check
         if (enemyDoubleAttackSquares.and(ourKing).isNonZero()) {
@@ -643,6 +620,30 @@ public class Board {
 
         result.squares = getSquaresAfterMove(move, result, to);
 
+        updateBitMapsForMoves(move);
+
+        updateCastlingRightsForMove(move, movingPiece, result, from);
+
+        // en passant target detection
+        if (move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH)
+            result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
+
+        result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+
+        // move counts
+        if (move.isCapture() || movingPiece instanceof Pawn) {
+            result.halfMoveCounter = 0;
+            result.fullMoveClock = 0;
+        } else {
+            result.halfMoveCounter++;
+            if (result.halfMoveCounter % 2 == 0)
+                result.fullMoveClock++;
+        }
+
+        return result;
+    }
+
+    private void updateCastlingRightsForMove(Move move, Piece movingPiece, Board result, Square from) {
         if (movingPiece.getColor() == PieceColor.WHITE) {
             if (movingPiece instanceof King) {
                 result.canWhiteCastleQueenSide = false;
@@ -685,24 +686,47 @@ public class Board {
                     result.canBlackCastleKingSide = false;
 
         }
+    }
 
-        // en passant target detection
-        if (move.specialMove() == SpecialMove.DOUBLE_PAWN_PUSH)
-            result.enPassantTarget = new Square(from.file(), (from.row() + to.row()) / 2);
+    private void updateBitMapsForMoves(Move move) {
 
-        result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+        if (colorToMove == PieceColor.WHITE) {
 
-        // move counts
-        if (move.isCapture() || movingPiece instanceof Pawn) {
-            result.halfMoveCounter = 0;
-            result.fullMoveClock = 0;
+            whitePieces.setBitInPlace(move.fromIndex(), false);
+            whitePieces.setBitInPlace(move.toIndex(), true);
+
+            if (move.isEnPassant())
+                blackPieces.setBitInPlace(move.toIndex() - 8, false);
+            else if (move.isCapture())
+                blackPieces.setBitInPlace(move.toIndex(), false);
+
+            if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
+                whitePieces.setBitInPlace(Square.getIndex("H1"), false);
+                whitePieces.setBitInPlace(Square.getIndex("F1"), true);
+            } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
+                whitePieces.setBitInPlace(Square.getIndex("A1"), false);
+                whitePieces.setBitInPlace(Square.getIndex("D1"), true);
+            }
+
         } else {
-            result.halfMoveCounter++;
-            if (result.halfMoveCounter % 2 == 0)
-                result.fullMoveClock++;
+
+            blackPieces.setBitInPlace(move.fromIndex(), false);
+            blackPieces.setBitInPlace(move.toIndex(), true);
+
+            if (move.isEnPassant())
+                whitePieces.setBitInPlace(move.toIndex(), false);
+            else if (move.isCapture())
+                whiteAttackSquares.setBitInPlace(move.toIndex() + 8, false);
+
+            if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
+                blackPieces.setBitInPlace(Square.getIndex("H8"), false);
+                blackPieces.setBitInPlace(Square.getIndex("F8"), true);
+            } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
+                blackPieces.setBitInPlace(Square.getIndex("A8"), false);
+                blackPieces.setBitInPlace(Square.getIndex("D8"), true);
+            }
         }
 
-        return result;
     }
 
     private Piece[] getSquaresAfterMove(Move move, Board result, Square to) {
@@ -727,35 +751,35 @@ public class Board {
             newSquares[move.fromIndex()] = null;
         } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
-                newSquares[new Square("d1").getIndex()] = newSquares[new Square("a1").getIndex()];
-                newSquares[new Square("d1").getIndex()].setSquare(new Square("d1"));
-                newSquares[new Square("c1").getIndex()] = newSquares[new Square("e1").getIndex()];
-                newSquares[new Square("e1").getIndex()].setSquare(new Square("e1"));
-                newSquares[new Square("e1").getIndex()] = null;
-                newSquares[new Square("a1").getIndex()] = null;
+                newSquares[Square.getIndex("d1")] = newSquares[Square.getIndex("a1")];
+                newSquares[Square.getIndex("d1")].setSquare(new Square("d1"));
+                newSquares[Square.getIndex("c1")] = newSquares[Square.getIndex("e1")];
+                newSquares[Square.getIndex("e1")].setSquare(new Square("e1"));
+                newSquares[Square.getIndex("e1")] = null;
+                newSquares[Square.getIndex("a1")] = null;
             } else {
-                newSquares[new Square("d8").getIndex()] = newSquares[new Square("a8").getIndex()];
-                newSquares[new Square("d8").getIndex()].setSquare(new Square("d8"));
-                newSquares[new Square("c8").getIndex()] = newSquares[new Square("e8").getIndex()];
-                newSquares[new Square("c8").getIndex()].setSquare(new Square("c8"));
-                newSquares[new Square("e8").getIndex()] = null;
-                newSquares[new Square("a8").getIndex()] = null;
+                newSquares[Square.getIndex("d8")] = newSquares[Square.getIndex("a8")];
+                newSquares[Square.getIndex("d8")].setSquare(new Square("d8"));
+                newSquares[Square.getIndex("c8")] = newSquares[Square.getIndex("e8")];
+                newSquares[Square.getIndex("c8")].setSquare(new Square("c8"));
+                newSquares[Square.getIndex("e8")] = null;
+                newSquares[Square.getIndex("a8")] = null;
             }
         } else if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
-                newSquares[new Square("f1").getIndex()] = newSquares[new Square("h1").getIndex()];
-                newSquares[new Square("f1").getIndex()].setSquare(new Square("f1"));
-                newSquares[new Square("g1").getIndex()] = newSquares[new Square("e1").getIndex()];
-                newSquares[new Square("g1").getIndex()].setSquare(new Square("g1"));
-                newSquares[new Square("e1").getIndex()] = null;
-                newSquares[new Square("h1").getIndex()] = null;
+                newSquares[Square.getIndex("f1")] = newSquares[Square.getIndex("h1")];
+                newSquares[Square.getIndex("f1")].setSquare(new Square("f1"));
+                newSquares[Square.getIndex("g1")] = newSquares[Square.getIndex("e1")];
+                newSquares[Square.getIndex("g1")].setSquare(new Square("g1"));
+                newSquares[Square.getIndex("e1")] = null;
+                newSquares[Square.getIndex("h1")] = null;
             } else {
-                newSquares[new Square("f8").getIndex()] = newSquares[new Square("h8").getIndex()];
-                newSquares[new Square("f8").getIndex()].setSquare(new Square("f8"));
-                newSquares[new Square("g8").getIndex()] = newSquares[new Square("e8").getIndex()];
-                newSquares[new Square("g8").getIndex()].setSquare(new Square("g8"));
-                newSquares[new Square("e8").getIndex()] = null;
-                newSquares[new Square("h8").getIndex()] = null;
+                newSquares[Square.getIndex("f8")] = newSquares[Square.getIndex("h8")];
+                newSquares[Square.getIndex("f8")].setSquare(new Square("f8"));
+                newSquares[Square.getIndex("g8")] = newSquares[Square.getIndex("e8")];
+                newSquares[Square.getIndex("g8")].setSquare(new Square("g8"));
+                newSquares[Square.getIndex("e8")] = null;
+                newSquares[Square.getIndex("h8")] = null;
             }
         }
 
@@ -768,16 +792,6 @@ public class Board {
             }
         }
         return newSquares;
-    }
-
-    public boolean isMovePossibleAndLegal(Move move) {
-        if (get(move.from()) == null)
-            return false;
-
-        if (get(move.from()).getPseudoLegalMoves(this).stream().noneMatch(possibleMove -> possibleMove.equals(move)))
-            return false;
-
-        return isMoveLegal(move);
     }
 
     public Optional<Move> tryToInferMove(Square from, Square to, Class<? extends Piece> promotedPieceType) {
@@ -828,6 +842,7 @@ public class Board {
         return specialType;
     }
 
+    @Deprecated(forRemoval = true)
     public List<Move> getLegalMoves() {
 
         List<Move> pseudoLegalMoves = new LinkedList<>();
