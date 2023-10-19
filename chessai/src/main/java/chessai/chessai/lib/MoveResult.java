@@ -10,11 +10,13 @@ public record MoveResult(
 		BitMap isResultKingSideCastle,
 		BitMap isResultQueenSideCastle,
 		BitMap pinMap,
-		BitMap checkTrack
+		BitMap checkTrack,
+		BitMap isEnPassantTargetUnCapturableBecausePin
 ) {
 
 	public MoveResult() {
 		this(new BitMap(0),
+				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),
 				new BitMap(0),

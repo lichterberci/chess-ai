@@ -3,8 +3,14 @@ package chessai.chessai.lib;
 
 import org.jetbrains.annotations.Nullable;
 
-public record Move(int fromIndex, int toIndex, @Nullable Class<? extends Piece> promotionPieceType, boolean isCapture,
-                   boolean isEnPassant, @Nullable SpecialMove specialMove) {
+public record Move(
+        int fromIndex,
+        int toIndex,
+        @Nullable Class<? extends Piece> promotionPieceType,
+        boolean isCapture,
+        boolean isEnPassant,
+        @Nullable SpecialMove specialMove
+) {
     public Move (Square from, Square to, Class<? extends  Piece> promotionPieceType, boolean isCapture, boolean isEnPassant, SpecialMove specialMove) {
         this(from.getIndex(),
                 to.getIndex(),

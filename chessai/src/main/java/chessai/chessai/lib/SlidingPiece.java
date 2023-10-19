@@ -6,11 +6,12 @@ public abstract class SlidingPiece extends Piece {
 		super(color);
 	}
 
-	protected static void slide(int currentFile, int currentRow, BitMap otherColorPieces, BitMap sameColorPieces, BitMap otherColorKing, MoveResult result, int fileOffset, int rowOffset) {
+	protected static void slide(int currentFile, int currentRow, BitMap otherColorPieces, BitMap sameColorPieces, BitMap enPassantPawn, int enPassantTargetIndex, BitMap otherColorKing, MoveResult result, int fileOffset, int rowOffset) {
 
 		boolean canMove = true;
 		boolean canPin = true;
 		boolean canAttack = true;
+		boolean weArePinningOurOwnEnPassantPawn = false;
 
 		// this will be or-d to the pin map
 		// we add the current position to the pin map, so we will know that by capturing this piece, we can eliminate the pin
@@ -27,8 +28,20 @@ public abstract class SlidingPiece extends Piece {
 				return;
 
 			// our friendly piece is in the way
-			if (sameColorPieces.getBit(squareIndex))
-				return;
+			if (sameColorPieces.getBit(squareIndex)) {
+				if (enPassantPawn.isZero()) // no en passants the previous move
+					return;
+				else if (!enPassantPawn.getBit(squareIndex)) // there was an en passant but not here
+					return;
+				else if (!canMove) // we hit a second piece of our own
+					return;
+				else {
+					canPin = false;
+					canMove = false;
+					canAttack = false;
+					weArePinningOurOwnEnPassantPawn = true;
+				}
+			}
 
 			// we can attack this square
 			if (canAttack)
@@ -62,6 +75,9 @@ public abstract class SlidingPiece extends Piece {
 					}
 				} else if (canPin && otherColorKing.getBit(squareIndex)) {
 					result.pinMap().orInPlace(pinTrace);
+					return;
+				} else if (weArePinningOurOwnEnPassantPawn && otherColorKing.getBit(squareIndex)) {
+					result.isEnPassantTargetUnCapturableBecausePin().setBitInPlace(enPassantTargetIndex, true);
 					return;
 				} else {
 					return;

@@ -4,7 +4,10 @@ import chessai.chessai.lib.pieces.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public class Board {
 
@@ -270,6 +273,7 @@ public class Board {
         BitMap ourPieces;
         BitMap ourKing;
         BitMap enemyPiecesGivingCheck = new BitMap(0);
+        BitMap uncapturableEnPassantTarget = new BitMap(0);
 
         if (colorToMove == PieceColor.WHITE) {
             enemyPieces = blackPieces;
@@ -299,6 +303,7 @@ public class Board {
             enemyDoubleAttackSquares.orInPlace(enemyAttackSquares.or(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere()));
             enemyAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
             pinMapForOurPieces.orInPlace(moveResult.pinMap());
+            uncapturableEnPassantTarget.orInPlace(moveResult.isEnPassantTargetUnCapturableBecausePin());
 
             if (moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere().and(ourKing).isNonZero())
                 enemyPiecesGivingCheck.setBitInPlace(index, true);
@@ -306,26 +311,7 @@ public class Board {
 
         // double check
         if (enemyDoubleAttackSquares.and(ourKing).isNonZero()) {
-
-            final int ourKingIndex = ourKing.getIndexesOfOnes().get(0);
-
-            // only the king can move
-            MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMovesAsBitMaps(this);
-
-            BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
-
-            return validMoves
-                    .getIndexesOfOnes()
-                    .stream()
-                    .map(index -> new Move(
-                            ourKingIndex,
-                            index,
-                            null,
-                            moveResult.isResultCapture().getBit(index),
-                            false,
-                            SpecialMove.NONE
-                    ))
-                    .toList();
+            return generateMovesForDoubleCheckSituation(ourKing, enemyAttackSquares);
         }
 
         List<Move> result = new LinkedList<>();
@@ -335,136 +321,324 @@ public class Board {
         // - blocking
         // - capturing the piece giving check
         if (enemyAttackSquares.and(ourKing).isNonZero()) {
+            generateMovesForSingleCheckSituation(ourPieces,
+                    enemyAttackSquares,
+                    result,
+                    checkTrackForOurKing,
+                    enemyPiecesGivingCheck,
+                    uncapturableEnPassantTarget);
+        } else {
 
+            // general situation
             for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
                 Piece ourPiece = squares[ourPieceIndex];
 
                 if (ourPiece instanceof King) {
-
-                    // we can capture, or run away
-
-                    MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
-
-                    BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
-
-                    result.addAll(validMoves
-                            .getIndexesOfOnes()
-                            .stream()
-                            .map(index -> new Move(
-                                    ourPieceIndex,
-                                    index,
-                                    null,
-                                    moveResult.isResultCapture().getBit(index),
-                                    false,
-                                    SpecialMove.NONE
-                            ))
-                            .toList());
-
+                    generateKingMovesForGeneralSituation(ourPieceIndex,
+                            enemyAttackSquares,
+                            result);
                 } else {
-
-                    // we can block or capture
-
-                    MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
-
-                    BitMap validMoves = moveResult.moveTargets().and(checkTrackForOurKing);
-
-                    result.addAll(validMoves
-                            .getIndexesOfOnes()
-                            .stream()
-                            .map(index -> new Move(
-                                    ourPieceIndex,
-                                    index,
-                                    null,
-                                    moveResult.isResultCapture().getBit(index),
-                                    false,
-                                    SpecialMove.NONE
-                            ))
-                            .toList());
+                    generateNonKingMovesForGeneralSituation(ourPieceIndex,
+                            pinMapForOurPieces,
+                            ourPiece,
+                            result,
+                            uncapturableEnPassantTarget);
                 }
-
             }
-
         }
-
 
         return result;
     }
-    public boolean isMoveLegal(Move _move) {
-        Board boardAfterMove = makeMove(_move);
 
-        Piece movingPiece = squares[_move.from().getIndex()];
+    private void generateNonKingMovesForGeneralSituation(int ourPieceIndex,
+                                                         BitMap pinMapForOurPieces,
+                                                         Piece ourPiece,
+                                                         List<Move> result,
+                                                         BitMap uncapturableEnPassantTarget) {
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
 
-        if (!(movingPiece instanceof King)) {
-            return !boardAfterMove.isKingInCheck(colorToMove);
+        BitMap validMoveSquares = pinMapForOurPieces.getBit(ourPieceIndex) ?
+                moveResult.moveTargets().and(pinMapForOurPieces)
+                : moveResult.moveTargets();
+
+        generateNonKingMovesForWithGivenMoveMap(ourPieceIndex,
+                ourPiece,
+                result,
+                uncapturableEnPassantTarget,
+                moveResult,
+                validMoveSquares);
+    }
+
+    private void generateNonKingMovesForWithGivenMoveMap(int ourPieceIndex,
+                                                         Piece ourPiece,
+                                                         List<Move> result,
+                                                         BitMap uncapturableEnPassantTarget,
+                                                         MoveResult moveResult,
+                                                         BitMap validMoveSquares) {
+        for (int index : validMoveSquares.getIndexesOfOnes()) {
+
+            if (!(ourPiece instanceof Pawn)) {
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        null,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ));
+                continue;
+            }
+
+            if (moveResult.isResultPromotion().getBit(index)) {
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        Knight.class,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ));
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        Bishop.class,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ));
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        Rook.class,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ));
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        Queen.class,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ));
+                continue;
+            }
+
+            if (
+                    moveResult.isResultEnPassant().getBit(index)
+                            && !uncapturableEnPassantTarget.getBit(index)
+            ) {
+                result.add(new Move(
+                        ourPieceIndex,
+                        index,
+                        null,
+                        true,
+                        true,
+                        SpecialMove.NONE
+                ));
+                continue;
+            }
+
+            result.add(new Move(
+                    ourPieceIndex,
+                    index,
+                    null,
+                    moveResult.isResultCapture().getBit(index),
+                    false,
+                    moveResult.isResultDoublePawnMove().getBit(index) ? SpecialMove.DOUBLE_PAWN_PUSH : SpecialMove.NONE
+            ));
+
+        }
+    }
+
+    private void generateKingMovesForGeneralSituation(int ourPieceIndex,
+                                                      BitMap enemyAttackSquares,
+                                                      List<Move> result) {
+        MoveResult moveResult;
+        moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+
+        // we cannot move into another check, or castle from a check
+        BitMap normalMoves = moveResult.moveTargets()
+                .and(enemyAttackSquares.invert())
+                .and(moveResult.isResultKingSideCastle().invert())
+                .and(moveResult.isResultQueenSideCastle().invert());
+
+        // normal moves
+        result.addAll(normalMoves
+                .getIndexesOfOnes()
+                .stream()
+                .map(index -> new Move(
+                        ourPieceIndex,
+                        index,
+                        null,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ))
+                .toList());
+
+        // castling
+        BitMap kingSideCastlingMoves = moveResult.moveTargets().and(moveResult.isResultKingSideCastle());
+        BitMap queenSideCastlingMoves = moveResult.moveTargets().and(moveResult.isResultQueenSideCastle());
+
+        // white king side
+        if (colorToMove == PieceColor.WHITE
+                && !enemyAttackSquares.getBit(Square.getIndex("F1"))
+                && !enemyAttackSquares.getBit(Square.getIndex("G1"))
+                && kingSideCastlingMoves.isNonZero()
+        ) {
+            result.add(new Move(
+                    ourPieceIndex,
+                    Square.getIndex("G1"),
+                    null,
+                    false,
+                    false,
+                    SpecialMove.KING_SIDE_CASTLE
+            ));
         }
 
-        King blackKingOnBoard = (King) Arrays.stream(boardAfterMove.squares)
-                .filter(Objects::nonNull)
-                .filter(piece -> piece.getColor() == PieceColor.BLACK)
-                .filter(King.class::isInstance)
-                .findFirst().orElse(null);
-
-        King whiteKingOnBoard = (King) Arrays.stream(boardAfterMove.squares)
-                .filter(Objects::nonNull)
-                .filter(piece -> piece.getColor() == PieceColor.WHITE)
-                .filter(King.class::isInstance)
-                .findFirst().orElse(null);
-
-        if (whiteKingOnBoard == null || blackKingOnBoard == null)
-            return false;
-
-        int kingFileDistance = Math.abs(whiteKingOnBoard.getSquare().file() - blackKingOnBoard.getSquare().file());
-        int kingRowDistance = Math.abs(whiteKingOnBoard.getSquare().row() - blackKingOnBoard.getSquare().row());
-
-        boolean isKingInCheck = boardAfterMove.isKingInCheck(colorToMove);
-
-        // check for checks when castling
-
-        if (colorToMove == PieceColor.WHITE) {
-            if (_move.specialMove() == SpecialMove.KING_SIDE_CASTLE
-                    && (
-                    isKingInCheck(colorToMove, new Square("e1").getIndex())
-                            || isKingInCheck(colorToMove, new Square("f1").getIndex())
-                            || isKingInCheck(colorToMove, new Square("g1").getIndex())
-            )
-            ) {
-                return false;
-            }
-
-            if (_move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE
-                    && (
-                    isKingInCheck(colorToMove, new Square("c1").getIndex())
-                            || isKingInCheck(colorToMove, new Square("d1").getIndex())
-                            || isKingInCheck(colorToMove, new Square("e1").getIndex())
-            )
-            ) {
-                return false;
-            }
-        }
-        if (colorToMove == PieceColor.BLACK) {
-            if (_move.specialMove() == SpecialMove.KING_SIDE_CASTLE
-                    && (
-                    isKingInCheck(colorToMove, new Square("e8").getIndex())
-                            || isKingInCheck(colorToMove, new Square("f8").getIndex())
-                            || isKingInCheck(colorToMove, new Square("g8").getIndex())
-            )
-            ) {
-                return false;
-            }
-
-            if (_move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE
-                    && (
-                    isKingInCheck(colorToMove, new Square("c8").getIndex())
-                            || isKingInCheck(colorToMove, new Square("d8").getIndex())
-                            || isKingInCheck(colorToMove, new Square("e8").getIndex())
-            )
-            ) {
-                return false;
-            }
+        // black king side
+        if (colorToMove == PieceColor.BLACK
+                && !enemyAttackSquares.getBit(Square.getIndex("F8"))
+                && !enemyAttackSquares.getBit(Square.getIndex("G8"))
+                && kingSideCastlingMoves.isNonZero()
+        ) {
+            result.add(new Move(
+                    ourPieceIndex,
+                    Square.getIndex("G8"),
+                    null,
+                    false,
+                    false,
+                    SpecialMove.KING_SIDE_CASTLE
+            ));
         }
 
-        return !isKingInCheck && (kingFileDistance > 1 || kingRowDistance > 1);
 
+        // white queen side
+        if (colorToMove == PieceColor.WHITE
+                && !enemyAttackSquares.getBit(Square.getIndex("C1"))
+                && !enemyAttackSquares.getBit(Square.getIndex("D1"))
+                && queenSideCastlingMoves.isNonZero()
+        ) {
+            result.add(new Move(
+                    ourPieceIndex,
+                    Square.getIndex("C1"),
+                    null,
+                    false,
+                    false,
+                    SpecialMove.QUEEN_SIDE_CASTLE
+            ));
+        }
+
+        // black queen side
+        if (colorToMove == PieceColor.BLACK
+                && !enemyAttackSquares.getBit(Square.getIndex("C8"))
+                && !enemyAttackSquares.getBit(Square.getIndex("D8"))
+                && queenSideCastlingMoves.isNonZero()
+        ) {
+            result.add(new Move(
+                    ourPieceIndex,
+                    Square.getIndex("C8"),
+                    null,
+                    false,
+                    false,
+                    SpecialMove.QUEEN_SIDE_CASTLE
+            ));
+        }
+    }
+
+    private void generateMovesForSingleCheckSituation(BitMap ourPieces,
+                                                      BitMap enemyAttackSquares,
+                                                      List<Move> result,
+                                                      BitMap checkTrackForOurKing,
+                                                      BitMap enemyPiecesGivingCheck,
+                                                      BitMap uncapturableEnPassantTarget) {
+        for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
+            Piece ourPiece = squares[ourPieceIndex];
+
+            if (ourPiece instanceof King) {
+                // we can capture, or run away
+                generateKingMovesForSingleCheckSituation(enemyAttackSquares,
+                        result,
+                        ourPieceIndex);
+            } else {
+                // we can block or capture
+                generateBlockingOrCapturingMovesForSingleCheckSituation(result,
+                        checkTrackForOurKing,
+                        enemyPiecesGivingCheck,
+                        ourPieceIndex,
+                        ourPiece,
+                        uncapturableEnPassantTarget);
+            }
+
+        }
+    }
+
+    private void generateKingMovesForSingleCheckSituation(BitMap enemyAttackSquares, List<Move> result, int ourPieceIndex) {
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+
+        // we cannot move into another check, or castle from a check
+        BitMap validMoves = moveResult.moveTargets()
+                .and(enemyAttackSquares.invert())
+                .and(moveResult.isResultKingSideCastle().invert())
+                .and(moveResult.isResultQueenSideCastle().invert());
+
+        result.addAll(validMoves
+                .getIndexesOfOnes()
+                .stream()
+                .map(index -> new Move(
+                        ourPieceIndex,
+                        index,
+                        null,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ))
+                .toList());
+    }
+
+    private void generateBlockingOrCapturingMovesForSingleCheckSituation(List<Move> result,
+                                                                         BitMap checkTrackForOurKing,
+                                                                         BitMap enemyPiecesGivingCheck,
+                                                                         int ourPieceIndex,
+                                                                         Piece ourPiece,
+                                                                         BitMap uncapturableEnPassantTarget) {
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+
+        BitMap validMoves = moveResult.moveTargets().and(checkTrackForOurKing.or(enemyPiecesGivingCheck));
+
+        generateNonKingMovesForWithGivenMoveMap(ourPieceIndex, ourPiece, result, uncapturableEnPassantTarget, moveResult, validMoves);
+    }
+
+    @NotNull
+    private List<Move> generateMovesForDoubleCheckSituation(BitMap ourKing, BitMap enemyAttackSquares) {
+        final int ourKingIndex = ourKing.getIndexesOfOnes().get(0);
+
+        // only the king can move
+        MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMovesAsBitMaps(this);
+
+        BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
+
+        return validMoves
+                .getIndexesOfOnes()
+                .stream()
+                .map(index -> new Move(
+                        ourKingIndex,
+                        index,
+                        null,
+                        moveResult.isResultCapture().getBit(index),
+                        false,
+                        SpecialMove.NONE
+                ))
+                .toList();
+    }
+
+    public boolean isMoveLegal(Move move) {
+        return generateLegalMovesUsingBitMapsAndUpdateBitMaps()
+                .stream()
+                .filter(otherMove -> otherMove.equals(move))
+                .count() == 1;
     }
 
     public Board makeMove(Move move) {
@@ -513,11 +687,7 @@ public class Board {
             }
         }
 
-        if (move.isCapture()) {
-
-            // if we capture a rook, we cant castle with it
-
-            if (squares[move.to().getIndex()] instanceof Rook) {
+        if (move.isCapture() && (squares[move.to().getIndex()] instanceof Rook)) {
                 if (move.to().equals(new Square("a1")))
                     result.canWhiteCastleQueenSide = false;
                 if (move.to().equals(new Square("a8")))
@@ -526,7 +696,7 @@ public class Board {
                     result.canWhiteCastleKingSide = false;
                 if (move.to().equals(new Square("h8")))
                     result.canBlackCastleKingSide = false;
-            }
+
         }
 
         // en passant target detection
@@ -784,6 +954,7 @@ public class Board {
                 case 'k' -> canBlackCastleKingSide = true;
                 case 'q' -> canBlackCastleQueenSide = true;
                 case 'Q' -> canWhiteCastleQueenSide = true;
+                default -> System.out.printf("WARNING: '%s' is an unexpected castling character!%n", c);
             }
         }
 

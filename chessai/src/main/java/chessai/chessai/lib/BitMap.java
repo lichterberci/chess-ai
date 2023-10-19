@@ -194,6 +194,10 @@ public class BitMap {
         return data != 0;
     }
 
+    public boolean isZero() {
+        return data == 0;
+    }
+
     public void setBitInPlace(int index, boolean value) {
         long result = data;
         long mask = ~(1L << index);

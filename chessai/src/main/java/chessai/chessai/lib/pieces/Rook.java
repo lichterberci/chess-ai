@@ -66,10 +66,21 @@ public class Rook extends SlidingPiece {
 
         MoveResult result = new MoveResult();
 
-        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 1, 0);
-        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, -1, 0);
-        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, 1);
-        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, otherColorKing, result, 0, -1);
+        BitMap enPassantPawn = new BitMap(0);
+
+        if (board.enPassantTarget != null) {
+            int enPassantPawnSquareIndex = board.colorToMove == PieceColor.WHITE ?
+                    board.enPassantTarget.getIndex() - 8 // prev move was by black
+                    : board.enPassantTarget.getIndex() + 8; // prev move was by white
+            enPassantPawn.setBitInPlace(enPassantPawnSquareIndex, true);
+        }
+
+        int enPassantTargetIndex = board.enPassantTarget != null ? board.enPassantTarget.getIndex() : -1;
+
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, enPassantPawn, enPassantTargetIndex, otherColorKing, result, 1, 0);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, enPassantPawn, enPassantTargetIndex, otherColorKing, result, -1, 0);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, enPassantPawn, enPassantTargetIndex, otherColorKing, result, 0, 1);
+        slide(currentFile, currentRow, otherColorPieces, sameColorPieces, enPassantPawn, enPassantTargetIndex, otherColorKing, result, 0, -1);
 
         return result;
 
