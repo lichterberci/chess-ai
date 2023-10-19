@@ -35,12 +35,6 @@ public class Board {
     public BitMap blackKing;
     public BitMap whiteAttackSquares;
     public BitMap blackAttackSquares;
-    public BitMap whiteDoubleAttackSquares;
-    public BitMap blackDoubleAttackSquares;
-    public BitMap pinMapForTheWhitePieces;
-    public BitMap pinMapForTheBlackPieces;
-    public BitMap checkTrackForWhiteKing;
-    public BitMap checkTrackForBlackKing;
 
     public Board(Board other) {
         this(other.squares,
@@ -58,13 +52,7 @@ public class Board {
                 other.whiteKing,
                 other.blackKing,
                 other.whiteAttackSquares,
-                other.blackAttackSquares,
-                other.whiteDoubleAttackSquares,
-                other.blackDoubleAttackSquares,
-                other.pinMapForTheWhitePieces,
-                other.pinMapForTheBlackPieces,
-                other.checkTrackForWhiteKing,
-                other.checkTrackForBlackKing);
+                other.blackAttackSquares);
     }
 
     public Board(Piece[] squares,
@@ -77,7 +65,12 @@ public class Board {
                  int fullMoveClock,
                  int halfMoveCounter,
                  List<String> previousPositions,
-                 BitMap whitePieces, BitMap blackPieces, BitMap whiteKing, BitMap blackKing, BitMap whiteAttackSquares, BitMap blackAttackSquares, BitMap whiteDoubleAttackSquares, BitMap blackDoubleAttackSquares, BitMap pinMapForTheWhitePieces, BitMap pinMapForTheBlackPieces, BitMap checkTrackForWhiteKing, BitMap checkTrackForBlackKing) {
+                 BitMap whitePieces,
+                 BitMap blackPieces,
+                 BitMap whiteKing,
+                 BitMap blackKing,
+                 BitMap whiteAttackSquares,
+                 BitMap blackAttackSquares) {
 
         this.squares = new Piece[64];
 
@@ -110,12 +103,6 @@ public class Board {
         this.blackKing = blackKing;
         this.whiteAttackSquares = whiteAttackSquares;
         this.blackAttackSquares = blackAttackSquares;
-        this.whiteDoubleAttackSquares = whiteDoubleAttackSquares;
-        this.blackDoubleAttackSquares = blackDoubleAttackSquares;
-        this.pinMapForTheWhitePieces = pinMapForTheWhitePieces;
-        this.pinMapForTheBlackPieces = pinMapForTheBlackPieces;
-        this.checkTrackForWhiteKing = checkTrackForWhiteKing;
-        this.checkTrackForBlackKing = checkTrackForBlackKing;
     }
 
     public Board(String fenString) throws ParseException {
@@ -279,18 +266,18 @@ public class Board {
             enemyPieces = blackPieces;
             ourPieces = whitePieces;
             ourKing = whiteKing;
-            checkTrackForOurKing = checkTrackForWhiteKing = new BitMap(0);
+            checkTrackForOurKing = new BitMap(0);
             enemyAttackSquares = blackAttackSquares = new BitMap(0);
-            enemyDoubleAttackSquares = blackDoubleAttackSquares = new BitMap(0);
-            pinMapForOurPieces = pinMapForTheWhitePieces = new BitMap(0);
+            enemyDoubleAttackSquares = new BitMap(0);
+            pinMapForOurPieces = new BitMap(0);
         } else {
             enemyPieces = whitePieces;
             ourPieces = blackPieces;
             ourKing = blackKing;
-            checkTrackForOurKing = checkTrackForBlackKing = new BitMap(0);
+            checkTrackForOurKing = new BitMap(0);
             enemyAttackSquares = whiteAttackSquares = new BitMap(0);
-            enemyDoubleAttackSquares = whiteDoubleAttackSquares = new BitMap(0);
-            pinMapForOurPieces = pinMapForTheBlackPieces = new BitMap(0);
+            enemyDoubleAttackSquares = new BitMap(0);
+            pinMapForOurPieces = new BitMap(0);
         }
 
         // generate moves for the other side, so we can determine whether we are in or will be in check
@@ -646,7 +633,7 @@ public class Board {
         Square from = move.from();
         Square to = move.to();
 
-        Piece movingPiece = get(from);
+        Piece movingPiece = squares[from.getIndex()];
 
         if (movingPiece == null)
             return new Board(this);
@@ -666,9 +653,9 @@ public class Board {
                 result.whiteKing = whiteKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
 
             } else if (movingPiece instanceof Rook) {
-                if (from.equals(new Square("a1")))
+                if (from.getIndex() == Square.getIndex("a1"))
                     result.canWhiteCastleQueenSide = false;
-                else if (from.equals(new Square("h1")))
+                else if (from.getIndex() == Square.getIndex("h1"))
                     result.canWhiteCastleKingSide = false;
             }
         } else {
@@ -680,21 +667,21 @@ public class Board {
                 result.blackKing = blackKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
 
             } else if (movingPiece instanceof Rook) {
-                if (from.equals(new Square("a8")))
+                if (from.getIndex() == Square.getIndex("a8"))
                     result.canBlackCastleQueenSide = false;
-                else if (from.equals(new Square("h8")))
+                else if (from.getIndex() == Square.getIndex("h8"))
                     result.canBlackCastleKingSide = false;
             }
         }
 
         if (move.isCapture() && (squares[move.to().getIndex()] instanceof Rook)) {
-                if (move.to().equals(new Square("a1")))
+            if (move.to().getIndex() == Square.getIndex("a1"))
                     result.canWhiteCastleQueenSide = false;
-                if (move.to().equals(new Square("a8")))
+            if (move.to().getIndex() == Square.getIndex("a8"))
                     result.canBlackCastleQueenSide = false;
-                if (move.to().equals(new Square("h1")))
+            if (move.to().getIndex() == Square.getIndex("h1"))
                     result.canWhiteCastleKingSide = false;
-                if (move.to().equals(new Square("h8")))
+            if (move.to().getIndex() == Square.getIndex("h8"))
                     result.canBlackCastleKingSide = false;
 
         }
