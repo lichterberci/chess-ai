@@ -25,16 +25,18 @@ public class GameManager {
         return instance;
     }
 
-    public void playGame(Stage stage, PlayerType whitePlayerType, PlayerType blackPlayerType, ChessEngine whiteEngine, ChessEngine blackEngine) throws IOException, ParseException, InterruptedException {
+    public void playGame(Stage stage,
+                         PlayerType whitePlayerType,
+                         PlayerType blackPlayerType,
+                         ChessEngine whiteEngine,
+                         ChessEngine blackEngine,
+                         String initialPosition) throws IOException, ParseException, InterruptedException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("MainBoard.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
 
         stage.setTitle(MessageFormat.format("{0} vs {1}", whitePlayerType, blackPlayerType));
         stage.setScene(scene);
-
-//        String initialPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        String initialPosition = "6k1/p2rR1p1/1p1r1p1R/3P4/4QPq1/1P6/P5PK/8 w - - 1 0";
 
         BoardController boardController = fxmlLoader.getController();
 

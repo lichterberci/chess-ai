@@ -97,12 +97,12 @@ public class Board {
         this.previousPositions = new ArrayList<>();
         if (previousPositions != null)
             this.previousPositions.addAll(previousPositions);
-        this.whitePieces = whitePieces;
-        this.blackPieces = blackPieces;
-        this.whiteKing = whiteKing;
-        this.blackKing = blackKing;
-        this.whiteAttackSquares = whiteAttackSquares;
-        this.blackAttackSquares = blackAttackSquares;
+        this.whitePieces = whitePieces != null ? new BitMap(whitePieces.getData()) : null;
+        this.blackPieces = blackPieces != null ? new BitMap(blackPieces.getData()) : null;
+        this.whiteKing = whiteKing != null ? new BitMap(whiteKing.getData()) : null;
+        this.blackKing = blackKing != null ? new BitMap(blackKing.getData()) : null;
+        this.whiteAttackSquares = whiteAttackSquares != null ? new BitMap(whiteAttackSquares.getData()) : null;
+        this.blackAttackSquares = blackAttackSquares != null ? new BitMap(blackAttackSquares.getData()) : null;
     }
 
     public Board(String fenString) throws ParseException {
@@ -110,6 +110,8 @@ public class Board {
     }
 
     public Piece get(@NotNull Square square) {
+        if (square.getIndex() == -1)
+            return null;
         return squares[square.getIndex()];
     }
 
@@ -718,7 +720,7 @@ public class Board {
             result.whitePieces.setBitInPlace(move.toIndex(), true);
 
             if (move.isEnPassant())
-                result.blackPieces.setBitInPlace(move.toIndex() - 8, false);
+                result.blackPieces.setBitInPlace(move.toIndex() + 8, false);
             else if (move.isCapture())
                 result.blackPieces.setBitInPlace(move.toIndex(), false);
 
@@ -730,6 +732,11 @@ public class Board {
                 result.whitePieces.setBitInPlace(Square.getIndex("D1"), true);
             }
 
+            // we are moving the king
+            if (whiteKing.getBit(move.fromIndex())) {
+                whiteKing = new BitMap(0).setBit(move.toIndex(), true);
+            }
+
         } else {
 
             result.blackPieces.setBitInPlace(move.fromIndex(), false);
@@ -738,7 +745,7 @@ public class Board {
             if (move.isEnPassant())
                 result.whitePieces.setBitInPlace(move.toIndex(), false);
             else if (move.isCapture())
-                result.whiteAttackSquares.setBitInPlace(move.toIndex() + 8, false);
+                result.whiteAttackSquares.setBitInPlace(move.toIndex() - 8, false);
 
             if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
                 result.blackPieces.setBitInPlace(Square.getIndex("H8"), false);
@@ -746,6 +753,12 @@ public class Board {
             } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
                 result.blackPieces.setBitInPlace(Square.getIndex("A8"), false);
                 result.blackPieces.setBitInPlace(Square.getIndex("D8"), true);
+            }
+
+
+            // we are moving the king
+            if (blackKing.getBit(move.fromIndex())) {
+                blackKing = new BitMap(0).setBit(move.toIndex(), true);
             }
         }
 

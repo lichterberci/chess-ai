@@ -11,7 +11,7 @@ public class RandomEngine extends ChessEngine {
 
     @Override
     public Optional<Move> makeMove(Board board) {
-        List<Move> moves = board.getLegalMoves();
+        List<Move> moves = board.generateLegalMovesUsingBitMapsAndUpdateBitMaps();
 
         if (moves.isEmpty())
             return Optional.empty();

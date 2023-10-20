@@ -230,4 +230,26 @@ public class BitMap {
         if (!(other instanceof BitMap otherBitMap)) return false;
         return otherBitMap.data == data;
     }
+
+    @Override
+    public String toString() {
+        final String dataString = Long.toString(data, 2);
+        // get the data in binary form
+        StringBuilder sb = new StringBuilder();
+        // pad left with 0s
+        sb.append("0".repeat(Math.max(0, 64 - dataString.length())));
+        sb.append(dataString);
+        // split rows neatly
+        return String.format(
+                "BitMap(%s-%s-%s-%s-%s-%s-%s-%s)",
+                sb.substring(0, 8),
+                sb.substring(8, 16),
+                sb.substring(16, 24),
+                sb.substring(24, 32),
+                sb.substring(32, 40),
+                sb.substring(40, 48),
+                sb.substring(48, 56),
+                sb.substring(56, 64)
+        );
+    }
 }
