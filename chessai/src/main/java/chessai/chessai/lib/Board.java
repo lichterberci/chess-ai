@@ -607,7 +607,7 @@ public class Board {
 
         result.squares = getSquaresAfterMove(move, result, to);
 
-        updateBitMapsForMoves(move);
+        updateBitMapsForMoves(move, result);
 
         updateCastlingRightsForMove(move, movingPiece, result, from);
 
@@ -675,42 +675,42 @@ public class Board {
         }
     }
 
-    private void updateBitMapsForMoves(Move move) {
+    private void updateBitMapsForMoves(Move move, Board result) {
 
         if (colorToMove == PieceColor.WHITE) {
 
-            whitePieces.setBitInPlace(move.fromIndex(), false);
-            whitePieces.setBitInPlace(move.toIndex(), true);
+            result.whitePieces.setBitInPlace(move.fromIndex(), false);
+            result.whitePieces.setBitInPlace(move.toIndex(), true);
 
             if (move.isEnPassant())
-                blackPieces.setBitInPlace(move.toIndex() - 8, false);
+                result.blackPieces.setBitInPlace(move.toIndex() - 8, false);
             else if (move.isCapture())
-                blackPieces.setBitInPlace(move.toIndex(), false);
+                result.blackPieces.setBitInPlace(move.toIndex(), false);
 
             if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
-                whitePieces.setBitInPlace(Square.getIndex("H1"), false);
-                whitePieces.setBitInPlace(Square.getIndex("F1"), true);
+                result.whitePieces.setBitInPlace(Square.getIndex("H1"), false);
+                result.whitePieces.setBitInPlace(Square.getIndex("F1"), true);
             } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
-                whitePieces.setBitInPlace(Square.getIndex("A1"), false);
-                whitePieces.setBitInPlace(Square.getIndex("D1"), true);
+                result.whitePieces.setBitInPlace(Square.getIndex("A1"), false);
+                result.whitePieces.setBitInPlace(Square.getIndex("D1"), true);
             }
 
         } else {
 
-            blackPieces.setBitInPlace(move.fromIndex(), false);
-            blackPieces.setBitInPlace(move.toIndex(), true);
+            result.blackPieces.setBitInPlace(move.fromIndex(), false);
+            result.blackPieces.setBitInPlace(move.toIndex(), true);
 
             if (move.isEnPassant())
-                whitePieces.setBitInPlace(move.toIndex(), false);
+                result.whitePieces.setBitInPlace(move.toIndex(), false);
             else if (move.isCapture())
-                whiteAttackSquares.setBitInPlace(move.toIndex() + 8, false);
+                result.whiteAttackSquares.setBitInPlace(move.toIndex() + 8, false);
 
             if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
-                blackPieces.setBitInPlace(Square.getIndex("H8"), false);
-                blackPieces.setBitInPlace(Square.getIndex("F8"), true);
+                result.blackPieces.setBitInPlace(Square.getIndex("H8"), false);
+                result.blackPieces.setBitInPlace(Square.getIndex("F8"), true);
             } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
-                blackPieces.setBitInPlace(Square.getIndex("A8"), false);
-                blackPieces.setBitInPlace(Square.getIndex("D8"), true);
+                result.blackPieces.setBitInPlace(Square.getIndex("A8"), false);
+                result.blackPieces.setBitInPlace(Square.getIndex("D8"), true);
             }
         }
 

@@ -6,7 +6,16 @@ public abstract class SlidingPiece extends Piece {
 		super(color);
 	}
 
-	protected static void slide(int currentFile, int currentRow, BitMap otherColorPieces, BitMap sameColorPieces, BitMap enPassantPawn, int enPassantTargetIndex, BitMap otherColorKing, MoveResult result, int fileOffset, int rowOffset) {
+	protected static void slide(int currentFile,
+	                            int currentRow,
+	                            BitMap otherColorPieces,
+	                            BitMap sameColorPieces,
+	                            BitMap enPassantPawn,
+	                            int enPassantTargetIndex,
+	                            BitMap otherColorKing,
+	                            MoveResult result,
+	                            int fileOffset,
+	                            int rowOffset) {
 
 		boolean canMove = true;
 		boolean canPin = true;
