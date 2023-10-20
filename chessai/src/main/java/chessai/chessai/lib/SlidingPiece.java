@@ -80,12 +80,12 @@ public abstract class SlidingPiece extends Piece {
 					// we hit a piece, we can move no further
 					canMove = false;
 
-					// if it is not the king, we cannot attack behind it
-					if (!otherColorKing.getBit(squareIndex)) {
-						canAttack = false; // we can at least still pin this piece to the king
-					} else {
+					// if it is the king, we can attack behind it
+					if (otherColorKing.getBit(squareIndex)) {
 						canPin = false; // we can at least still attack behind the king
 						result.checkTrack().orInPlace(checkTrack); // we are giving check
+					} else {
+						canAttack = false; // we can at least still pin this piece to the king
 					}
 				} else if (canPin && otherColorKing.getBit(squareIndex)) {
 					result.pinMap().orInPlace(pinTrace);

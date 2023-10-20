@@ -129,11 +129,32 @@ public class Board {
 
     public boolean isKingInCheck(PieceColor color) {
 
-        if (whiteAttackSquares != null && blackAttackSquares != null) {
-            generateLegalMovesUsingBitMapsAndUpdateBitMaps(true);
+        if (whiteAttackSquares == null || blackAttackSquares == null) {
+            generateAttackMapsForBothSides();
         }
 
         return color == PieceColor.WHITE ? blackAttackSquares.and(whiteKing).isNonZero() : whiteAttackSquares.and(blackKing).isNonZero();
+    }
+
+    private void generateAttackMapsForBothSides() {
+        whiteAttackSquares = new BitMap(0);
+        blackAttackSquares = new BitMap(0);
+
+        for (int index : whitePieces.getIndexesOfOnes()) {
+            Piece whitePiece = squares[index];
+
+            MoveResult moveResult = whitePiece.getPseudoLegalMovesAsBitMaps(this);
+
+            whiteAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+        }
+
+        for (int index : blackPieces.getIndexesOfOnes()) {
+            Piece blackPiece = squares[index];
+
+            MoveResult moveResult = blackPiece.getPseudoLegalMovesAsBitMaps(this);
+
+            blackAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+        }
     }
 
     public GameState getState() {
@@ -211,7 +232,7 @@ public class Board {
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;
-        BitMap enemyDoubleAttackSquares;
+        BitMap enemyDoubleAttackSquares = new BitMap(0);
         BitMap pinMapForOurPieces;
         BitMap ourPieces;
         BitMap ourKing;
@@ -224,14 +245,12 @@ public class Board {
             ourPieces = whitePieces;
             ourKing = whiteKing;
             checkTrackForOurKing = new BitMap(0);
-            enemyDoubleAttackSquares = new BitMap(0);
             pinMapForOurPieces = new BitMap(0);
         } else {
             enemyPieces = whitePieces;
             ourPieces = blackPieces;
             ourKing = blackKing;
             checkTrackForOurKing = new BitMap(0);
-            enemyDoubleAttackSquares = new BitMap(0);
             pinMapForOurPieces = new BitMap(0);
         }
 

@@ -79,7 +79,7 @@ class QueenTest {
                         "11110111" +
                         "00011100" +
                         "00101010" +
-                        "00000000"
+                        "00001000"
         ).getData(), result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().getData());
 
     }
