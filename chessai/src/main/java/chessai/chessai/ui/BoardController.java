@@ -227,4 +227,52 @@ public class BoardController {
         parentSquare.getChildren().add(selectionPane);
         selectionPane.toBack();
     }
+
+    public void drawPossibleMoveTargets(List<Square> targets, boolean fromWhitesPerspective, boolean movesWithSelectedPiece) {
+
+        board.getChildren().forEach(square -> {
+            ((Pane) square).getChildren()
+                    .removeAll(((Pane) square).getChildren()
+                            .filtered(child -> child
+                                    .getId()
+                                    .equals(movesWithSelectedPiece ? "selectedPieceMoveTarget" : "moveTarget"))
+                    );
+        });
+
+        if (targets.isEmpty())
+            return;
+
+        board.getChildren()
+                .stream()
+                .filter(square -> targets.stream().anyMatch(
+                                target -> square
+                                        .getId()
+                                        .equals(
+                                                "Square_%d_%d"
+                                                        .formatted(
+                                                                target.file(),
+                                                                fromWhitesPerspective ?
+                                                                        7 - target.row()
+                                                                        : target.row()
+                                                        )
+                                        )
+                        )
+                )
+                .map(Pane.class::cast)
+                .forEach(pane -> {
+                    Pane moveTargetPane = new Pane();
+
+                    moveTargetPane.setBackground(Background.fill(movesWithSelectedPiece ?
+                            Color.PURPLE.deriveColor(0, 1, 1, 0.7)
+                            : Color.LIGHTGREEN.deriveColor(0, 1, 1, 0.7))
+                    );
+                    moveTargetPane.setId(movesWithSelectedPiece ? "selectedPieceMoveTarget" : "moveTarget");
+                    moveTargetPane.setPrefWidth(200);
+                    moveTargetPane.setPrefHeight(200);
+
+                    pane.getChildren().add(moveTargetPane);
+                    moveTargetPane.toBack();
+
+                });
+    }
 }

@@ -784,6 +784,7 @@ public class Board {
             }
 
             newSquares[move.fromIndex()] = null;
+
         } else if (move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE) {
             if (colorToMove == PieceColor.WHITE) {
                 newSquares[Square.getIndex("d1")] = newSquares[Square.getIndex("a1")];
@@ -818,7 +819,9 @@ public class Board {
             }
         }
 
-        if (move.promotionPieceType() != null) {
+        final boolean isPawnOnLastRow = colorToMove == PieceColor.WHITE ? move.from().row() == 6 : move.from().row() == 1;
+
+        if (move.promotionPieceType() != null && squares[move.fromIndex()] instanceof Pawn && isPawnOnLastRow) {
             try {
                 newSquares[move.toIndex()] = move.promotionPieceType().getConstructor(PieceColor.class).newInstance(colorToMove);
                 newSquares[move.toIndex()].setSquare(to.copy());
@@ -841,13 +844,18 @@ public class Board {
         if (movingPiece == null || movingPiece.getColor() != colorToMove)
             return Optional.empty();
 
-        boolean isPotentiallyEnPassant = movingPiece instanceof Pawn && pieceOnDestinationSquare == null && Math.abs(from.file() - to.file()) == 1;
+        boolean isPotentiallyEnPassant = movingPiece instanceof Pawn && to.equals(enPassantTarget) && pieceOnDestinationSquare == null;
 
         boolean isPotentiallyNonEnPassantCapture = pieceOnDestinationSquare != null && pieceOnDestinationSquare.color != colorToMove;
 
         SpecialMove specialType = getInferredSpecialType(from, to, movingPiece);
 
-        return Optional.of(new Move(from, to, promotedPieceType, isPotentiallyNonEnPassantCapture || isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
+        boolean isPotentialPromotion = movingPiece instanceof Pawn && colorToMove == PieceColor.WHITE ? from.row() == 6 : from.row() == 1;
+
+        System.out.println("Our move:");
+        System.out.println(new Move(from, to, isPotentialPromotion ? promotedPieceType : null, isPotentiallyNonEnPassantCapture || isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
+
+        return Optional.of(new Move(from, to, isPotentialPromotion ? promotedPieceType : null, isPotentiallyNonEnPassantCapture || isPotentiallyEnPassant, isPotentiallyEnPassant, specialType));
     }
 
     @NotNull
@@ -874,6 +882,7 @@ public class Board {
             specialType = SpecialMove.KING_SIDE_CASTLE;
         if (isPotentialQueenSideCastle)
             specialType = SpecialMove.QUEEN_SIDE_CASTLE;
+
         return specialType;
     }
 

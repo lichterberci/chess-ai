@@ -3,6 +3,7 @@ package chessai.chessai.ui;
 import chessai.chessai.MainApplication;
 import chessai.chessai.engine.ChessEngine;
 import chessai.chessai.lib.*;
+import chessai.chessai.lib.pieces.Queen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -58,6 +60,67 @@ public class GameManager {
         Consumer<Square> selectSquare = (square) -> {
             selectedSquareWrapper.selectedSquare = square;
             boardController.drawSelection(square, true);
+            if (square != null) {
+//                boardController.drawPossibleMoveTargets(
+//                        boardWrapper.board
+//                                .generateLegalMovesUsingBitMapsAndUpdateBitMaps()
+//                                .stream()
+//                                .map(Move::to)
+//                                .toList(),
+//                        true,
+//                        false);
+//                boardController.drawPossibleMoveTargets(
+//                        boardWrapper.board
+//                                .generateLegalMovesUsingBitMapsAndUpdateBitMaps()
+//                                .stream()
+//                                .filter(move -> move.from().equals(selectedSquareWrapper.selectedSquare))
+//                                .map(Move::to)
+//                                .toList(),
+//                        true,
+//                        true);
+                if (boardWrapper.board.colorToMove == PieceColor.WHITE) {
+                    boardController.drawPossibleMoveTargets(
+                            boardWrapper.board
+                                    .whiteKing
+                                    .getIndexesOfOnes()
+                                    .stream()
+                                    .map(Square::new)
+                                    .toList(),
+                            true,
+                            true);
+                    boardController.drawPossibleMoveTargets(
+                            boardWrapper.board
+                                    .whitePieces
+                                    .getIndexesOfOnes()
+                                    .stream()
+                                    .map(Square::new)
+                                    .toList(),
+                            true,
+                            false);
+                } else {
+                    boardController.drawPossibleMoveTargets(
+                            boardWrapper.board
+                                    .blackKing
+                                    .getIndexesOfOnes()
+                                    .stream()
+                                    .map(Square::new)
+                                    .toList(),
+                            true,
+                            true);
+                    boardController.drawPossibleMoveTargets(
+                            boardWrapper.board
+                                    .blackPieces
+                                    .getIndexesOfOnes()
+                                    .stream()
+                                    .map(Square::new)
+                                    .toList(),
+                            true,
+                            false);
+                }
+            } else {
+                boardController.drawPossibleMoveTargets(new ArrayList<>(), true, true);
+                boardController.drawPossibleMoveTargets(new ArrayList<>(), true, false);
+            }
         };
 
         Function<Square, Boolean> tryToMoveToSquare = (square) -> {
@@ -65,7 +128,7 @@ public class GameManager {
             if (selectedSquareWrapper.selectedSquare == null)
                 return false;
 
-            Optional<Move> move = boardWrapper.board.tryToInferMove(selectedSquareWrapper.selectedSquare, square, null);
+            Optional<Move> move = boardWrapper.board.tryToInferMove(selectedSquareWrapper.selectedSquare, square, Queen.class);
 
             if (move.isEmpty()) {
                 selectSquare.accept(null);
@@ -86,6 +149,10 @@ public class GameManager {
             }
 
             boardWrapper.board = boardWrapper.board.makeMove(move.get());
+
+            System.out.println(boardWrapper.board.colorToMove == PieceColor.WHITE ? "white to move:" : "black to move:");
+            System.out.println("white attack map: " + boardWrapper.board.whiteAttackSquares);
+            System.out.println("black attack map: " + boardWrapper.board.blackAttackSquares);
 
             try {
                 boardController.drawBoard(boardWrapper.board, true);

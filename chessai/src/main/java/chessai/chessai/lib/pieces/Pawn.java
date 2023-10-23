@@ -255,7 +255,7 @@ public class Pawn extends Piece {
             result.attackTargetsWhilePretendingTheEnemyKingIsNotThere().setBitInPlace(attackToLeftIndex, true);
             result.isResultCapture().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
             result.moveTargets().setBitInPlace(attackToLeftIndex, targetableSquaresForCapture.getBit(attackToLeftIndex));
-            result.isResultEnPassant().setBitInPlace(attackToLeftIndex, attackToRightIndex == enPassantTargetIndex);
+            result.isResultEnPassant().setBitInPlace(attackToLeftIndex, attackToLeftIndex == enPassantTargetIndex);
             result.isResultPromotion().setBitInPlace(attackToLeftIndex, color == PieceColor.WHITE ? currentRow == 6 : currentRow == 1);
         }
 

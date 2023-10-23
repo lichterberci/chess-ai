@@ -19,12 +19,8 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 Å
 Q.idea/sonarlint/securityhotspotstore/9/f/9ff2cd56d980e681a42da9ef61bb70695d2cbffc,e\f\ef5e2c65a390d5442900110c98749f70d7162070
-å
-\.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56_[Changes]/shelved.patch,0\4\04e571598e4888e93d56520931afac4db3f68b00
 w
 G.idea/sonarlint/issuestore/4/8/481190c87cb9b73935404546c9ddac94b5eee961,1\5\15747ce324609f75817a25e435e306c38d14a5d8
-Ç
-R.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56__Changes_.xml,5\1\51c69f83f2fb40cc2fef916018c7972af5e47928
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 \
@@ -66,3 +62,9 @@ h
 8src/test/java/chessai/chessai/lib/pieces/KnightTest.java,a\a\aab9b4ff85841e98766aaf447aa7a90bbecf0b96
 f
 6src/test/java/chessai/chessai/lib/pieces/PawnTest.java,3\3\3321db8a1c2f2b04c00fc172607543246bd5c9b0
+f
+6src/main/java/chessai/chessai/engine/RandomEngine.java,c\0\c0ec97bfc9546169edaf42528721d7ca405ca884
+b
+2src/main/java/chessai/chessai/MainApplication.java,b\d\bd4a39984386d800f610296b416b4141d5c353d1
+a
+1src/main/java/chessai/chessai/ui/GameManager.java,9\7\97509abdd86302a07162af5f3ce58b8c228a8b4c
