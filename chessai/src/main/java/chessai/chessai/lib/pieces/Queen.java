@@ -16,7 +16,7 @@ public class Queen extends SlidingPiece {
 	}
 
     @Override
-    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+    public MoveResult getPseudoLegalMoves(Board board) {
 	    final int currentFile = getSquare().file();
 	    final int currentRow = getSquare().row();
 
@@ -26,7 +26,7 @@ public class Queen extends SlidingPiece {
 
 	    MoveResult result = new MoveResult();
 
-        BitMap enPassantPawn = new BitMap(0);
+	    BitMap enPassantPawn = new BitMap(0);
 
         if (board.enPassantTarget != null) {
             int enPassantPawnSquareIndex = board.colorToMove == PieceColor.WHITE ?

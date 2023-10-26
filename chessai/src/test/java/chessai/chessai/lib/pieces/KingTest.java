@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class KingTest {
 
     @Test
-    void getPseudoLegalMovesAsBitMaps() throws ParseException {
+    void getPseudoLegalMoves() throws ParseException {
 
         Board board = new Board("1q6/2kb4/2RR4/8/4Q3/8/2K3r1/8 w - - 0 1");
 
@@ -23,7 +23,7 @@ class KingTest {
 
         assertDoesNotThrow(() -> ref.king = (King) board.get(new Square("c7")));
 
-        MoveResult result = ref.king.getPseudoLegalMovesAsBitMaps(board);
+        MoveResult result = ref.king.getPseudoLegalMoves(board);
 
         assertEquals(6, result.moveTargets().getIndexesOfOnes().size());
 

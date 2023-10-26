@@ -2,7 +2,6 @@ package chessai.chessai.lib.pieces;
 
 import chessai.chessai.lib.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,50 +16,7 @@ public class Bishop extends SlidingPiece {
     }
 
     @Override
-    public List<Move> getPseudoLegalMoves(Board board) {
-        final int currentFile = getSquare().file();
-        final int currentRow = getSquare().row();
-
-        List<Move> moves = new ArrayList<>();
-
-
-        // up, right
-        for (int i = 1; i < Math.min(8 - currentFile, 8 - currentRow); i++) {
-            final Square square = new Square(currentFile + i, currentRow + i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        // up, left
-        for (int i = 1; i < Math.min(currentFile + 1, 8 - currentRow); i++) {
-            final Square square = new Square(currentFile - i, currentRow + i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        // down, left
-        for (int i = 1; i < Math.min(currentFile + 1, currentRow + 1); i++) {
-            final Square square = new Square(currentFile - i, currentRow - i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        // down, right
-        for (int i = 1; i < Math.min(8 - currentFile, currentRow + 1); i++) {
-            final Square square = new Square(currentFile + i, currentRow - i);
-
-            if (determineWhetherItCanMoveToSquare(board, moves, square))
-                break;
-        }
-
-        return moves;
-    }
-
-    @Override
-    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+    public MoveResult getPseudoLegalMoves(Board board) {
         final int currentFile = getSquare().file();
         final int currentRow = getSquare().row();
 

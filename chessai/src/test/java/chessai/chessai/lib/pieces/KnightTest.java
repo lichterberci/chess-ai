@@ -23,7 +23,7 @@ class KnightTest {
 
         assertDoesNotThrow(() -> ref.knight = (Knight) board.get(new Square("e3")));
 
-        MoveResult result = ref.knight.getPseudoLegalMovesAsBitMaps(board);
+        MoveResult result = ref.knight.getPseudoLegalMoves(board);
 
         assertEquals(7, result.moveTargets().getIndexesOfOnes().size());
     }

@@ -145,7 +145,7 @@ public class Board {
         for (int index : whitePieces.getIndexesOfOnes()) {
             Piece whitePiece = squares[index];
 
-            MoveResult moveResult = whitePiece.getPseudoLegalMovesAsBitMaps(this);
+            MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
 
             whiteAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
         }
@@ -153,7 +153,7 @@ public class Board {
         for (int index : blackPieces.getIndexesOfOnes()) {
             Piece blackPiece = squares[index];
 
-            MoveResult moveResult = blackPiece.getPseudoLegalMovesAsBitMaps(this);
+            MoveResult moveResult = blackPiece.getPseudoLegalMoves(this);
 
             blackAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
         }
@@ -260,7 +260,7 @@ public class Board {
         for (int index : enemyPieces.getIndexesOfOnes()) {
             Piece enemyPiece = squares[index];
 
-            MoveResult moveResult = enemyPiece.getPseudoLegalMovesAsBitMaps(this);
+            MoveResult moveResult = enemyPiece.getPseudoLegalMoves(this);
 
             checkTrackForOurKing.orInPlace(moveResult.checkTrack());
             enemyDoubleAttackSquares.orInPlace(enemyAttackSquares.and(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere()));
@@ -343,7 +343,7 @@ public class Board {
                                                          Piece ourPiece,
                                                          List<Move> result,
                                                          BitMap uncapturableEnPassantTarget) {
-        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         BitMap validMoveSquares = pinMapForOurPieces.getBit(ourPieceIndex) ?
                 moveResult.moveTargets().and(pinMapForOurPieces)
@@ -448,7 +448,7 @@ public class Board {
                                                       BitMap enemyAttackSquares,
                                                       List<Move> result) {
         MoveResult moveResult;
-        moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+        moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         // we cannot move into another check, or castle from a check
         BitMap normalMoves = moveResult.moveTargets()
@@ -568,7 +568,7 @@ public class Board {
     }
 
     private void generateKingMovesForSingleCheckSituation(BitMap enemyAttackSquares, List<Move> result, int ourPieceIndex) {
-        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         // we cannot move into another check, or castle from a check
         BitMap validMoves = moveResult.moveTargets()
@@ -596,7 +596,7 @@ public class Board {
                                                                          int ourPieceIndex,
                                                                          Piece ourPiece,
                                                                          BitMap uncapturableEnPassantTarget) {
-        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMovesAsBitMaps(this);
+        MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         BitMap validMoves = moveResult.moveTargets().and(checkTrackForOurKing.or(enemyPiecesGivingCheck));
 
@@ -608,7 +608,7 @@ public class Board {
         final int ourKingIndex = ourKing.getIndexesOfOnes().get(0);
 
         // only the king can move
-        MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMovesAsBitMaps(this);
+        MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMoves(this);
 
         BitMap validMoves = moveResult.moveTargets().and(enemyAttackSquares.invert());
 

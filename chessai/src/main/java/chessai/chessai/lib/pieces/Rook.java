@@ -13,7 +13,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public MoveResult getPseudoLegalMovesAsBitMaps(Board board) {
+    public MoveResult getPseudoLegalMoves(Board board) {
 
         final int currentFile = getSquare().file();
         final int currentRow = getSquare().row();

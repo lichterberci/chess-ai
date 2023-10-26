@@ -10,7 +10,7 @@ public abstract class Piece {
 
     public abstract char getFENChar();
 
-    public abstract MoveResult getPseudoLegalMovesAsBitMaps(Board board);
+    public abstract MoveResult getPseudoLegalMoves(Board board);
 
     public Square getSquare() {
         return square;

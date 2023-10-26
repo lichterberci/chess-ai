@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -127,5 +128,62 @@ class BoardTest {
                 .count();
 
         assertEquals(1, legalMovesFromD5);
+    }
+
+    @Test
+    void castlingIsDoneCorrecly() throws ParseException {
+        Board boardWithWhiteToMove = new Board("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
+
+        Optional<Move> whiteShortCastle = boardWithWhiteToMove.getLegalMoves().stream()
+                .filter(move -> move.specialMove() == SpecialMove.KING_SIDE_CASTLE).findFirst();
+
+        assertTrue(whiteShortCastle.isPresent());
+
+        Board boardAfterWhiteShortCastle = boardWithWhiteToMove.makeMove(whiteShortCastle.get());
+
+        assertNull(boardAfterWhiteShortCastle.get(new Square("e1")));
+        assertNull(boardAfterWhiteShortCastle.get(new Square("h1")));
+        assertInstanceOf(King.class, boardAfterWhiteShortCastle.get(new Square("g1")));
+        assertInstanceOf(Rook.class, boardAfterWhiteShortCastle.get(new Square("f1")));
+
+        Optional<Move> whiteLongCastle = boardWithWhiteToMove.getLegalMoves().stream()
+                .filter(move -> move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE).findFirst();
+
+        assertTrue(whiteLongCastle.isPresent());
+
+        Board boardAfterWhiteLongCastle = boardWithWhiteToMove.makeMove(whiteLongCastle.get());
+
+        assertNull(boardAfterWhiteLongCastle.get(new Square("a1")));
+        assertNull(boardAfterWhiteLongCastle.get(new Square("b1")));
+        assertNull(boardAfterWhiteLongCastle.get(new Square("e1")));
+        assertInstanceOf(King.class, boardAfterWhiteLongCastle.get(new Square("c1")));
+        assertInstanceOf(Rook.class, boardAfterWhiteLongCastle.get(new Square("d1")));
+
+        Board boardWithBlackToMove = new Board("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1");
+
+        Optional<Move> blackShortCastle = boardWithBlackToMove.getLegalMoves().stream()
+                .filter(move -> move.specialMove() == SpecialMove.KING_SIDE_CASTLE).findFirst();
+
+        assertTrue(blackShortCastle.isPresent());
+
+        Board boardAfterBlackShortCastle = boardWithBlackToMove.makeMove(blackShortCastle.get());
+
+        assertNull(boardAfterBlackShortCastle.get(new Square("e8")));
+        assertNull(boardAfterBlackShortCastle.get(new Square("h8")));
+        assertInstanceOf(King.class, boardAfterBlackShortCastle.get(new Square("g8")));
+        assertInstanceOf(Rook.class, boardAfterBlackShortCastle.get(new Square("f8")));
+
+        Optional<Move> blackLongCastle = boardWithBlackToMove.getLegalMoves().stream()
+                .filter(move -> move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE).findFirst();
+
+        assertTrue(blackLongCastle.isPresent());
+
+        Board boardAfterBlackLongCastle = boardWithBlackToMove.makeMove(blackLongCastle.get());
+
+        assertNull(boardAfterBlackLongCastle.get(new Square("a8")));
+        assertNull(boardAfterBlackLongCastle.get(new Square("b8")));
+        assertNull(boardAfterBlackLongCastle.get(new Square("e8")));
+        assertInstanceOf(King.class, boardAfterBlackLongCastle.get(new Square("c8")));
+        assertInstanceOf(Rook.class, boardAfterBlackLongCastle.get(new Square("d8")));
     }
 }
