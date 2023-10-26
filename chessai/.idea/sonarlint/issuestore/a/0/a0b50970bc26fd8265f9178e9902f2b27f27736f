@@ -1,13 +1,17 @@
 
-E	java:S1065"+Replace this use of System.out by a logger.(€³»ƒøÿÿÿÿ
-_
-java:S3358n"DExtract this nested ternary operation into an independent statement.(·œÜùÿÿÿÿ
-B
-java:S1602x",Remove useless curly braces around statement(“Â„¶
-R	java:S125’"<This block of commented-out lines of code should be removed.(ã©†©
-_
-java:S1612©"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ
-C
-java:S1602Ç",Remove useless curly braces around statement(”…æÇ
-_
-java:S1612Ø"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ
+k
+java:S1192¨"MDefine a constant instead of duplicating this literal "Square_%d_%d" 3 times.(ú·è÷8Š§§êµ1
+L	java:S1065"+Replace this use of System.out by a logger.(€³»ƒøÿÿÿÿ8µ§§êµ1
+f
+java:S3358n"DExtract this nested ternary operation into an independent statement.(·œÜùÿÿÿÿ8¸§§êµ1
+I
+java:S1602x",Remove useless curly braces around statement(“Â„¶8¹§§êµ1
+Y	java:S125’"<This block of commented-out lines of code should be removed.(ã©†©8º§§êµ1
+f
+java:S1612©"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ8¼§§êµ1
+J
+java:S1602Ç",Remove useless curly braces around statement(”…æÇ8À§§êµ1
+f
+java:S1612Ø"CReplace this lambda with method reference 'Pane.class::isInstance'.(™•·Ïÿÿÿÿÿ8Á§§êµ1
+J
+java:S1602é",Remove useless curly braces around statement(”…æÇ8Â§§êµ1

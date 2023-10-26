@@ -1,5 +1,5 @@
 
 n
-java:S1206Û"PThis class overrides "equals()" and should therefore also override "hashCode()".(°Ñµ˜8úÞ»û³1
+java:S1206ã"PThis class overrides "equals()" and should therefore also override "hashCode()".(°Ñµ˜8ìøšà´1
 k
-java:S2272"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(¯ö´ 8þÞ»û³1
+java:S2272"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(¯ö´ 8îøšà´1
