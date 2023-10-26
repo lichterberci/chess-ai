@@ -9,9 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Resolved kingmap issues">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Mate in two is found :)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInOneTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInOneTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +50,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -65,26 +69,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/chess-ai/chessai/src/test/java/chessai/chessai&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="chessai.chessai.lib" />
@@ -101,7 +105,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Gradle.MateInTwoTest">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -183,6 +187,30 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="MateInTwoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;chessai.chessai.engine.mates.MateInTwoTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="PawnTest.getAllPseudoLegalMoves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,30 +225,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;chessai.chessai.lib.pieces.PawnTest.getAllPseudoLegalMoves&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="QueenTest.testThatPinsAreWorkingProperly" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.pieces.QueenTest.testThatPinsAreWorkingProperly&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -248,17 +252,17 @@
       <item itemvalue="Gradle.BoardTest.castlingIsDoneCorrecly" />
       <item itemvalue="Gradle.BoardTest.enPassantPin" />
       <item itemvalue="Gradle.BoardTest.getState" />
+      <item itemvalue="Gradle.MateInTwoTest" />
       <item itemvalue="Gradle.PawnTest.getAllPseudoLegalMoves" />
-      <item itemvalue="Gradle.QueenTest.testThatPinsAreWorkingProperly" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MateInTwoTest" />
         <item itemvalue="Gradle.BoardTest.castlingIsDoneCorrecly" />
         <item itemvalue="Gradle.BoardTest.enPassantPin" />
         <item itemvalue="Gradle.PawnTest.getAllPseudoLegalMoves" />
         <item itemvalue="Gradle.BoardTest.getState" />
-        <item itemvalue="Gradle.QueenTest.testThatPinsAreWorkingProperly" />
       </list>
     </recent_temporary>
   </component>
@@ -294,7 +298,7 @@
       <workItem from="1697531913500" duration="149000" />
       <workItem from="1697538304237" duration="203000" />
       <workItem from="1697553027529" duration="1429000" />
-      <workItem from="1698335575022" duration="7111000" />
+      <workItem from="1698335575022" duration="7905000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -560,7 +564,31 @@
       <option name="project" value="LOCAL" />
       <updated>1698342293652</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Fixed bitmap issues">
+      <option name="closed" value="true" />
+      <created>1698342758927</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1698342758927</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Mate in two is found :)">
+      <option name="closed" value="true" />
+      <created>1698343252541</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1698343252541</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Mate in two is found :)">
+      <option name="closed" value="true" />
+      <created>1698343319459</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1698343319459</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -578,8 +606,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added GameManager and simplified resource loading" />
-    <MESSAGE value="Board clearing fixed" />
     <MESSAGE value="Game is almost fully playable (promotions needed)" />
     <MESSAGE value="Selection works" />
     <MESSAGE value="Selection works and random engine added" />
@@ -603,7 +629,9 @@
     <MESSAGE value="Updated method names" />
     <MESSAGE value="Removed some more old code and added some tests" />
     <MESSAGE value="Resolved kingmap issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resolved kingmap issues" />
+    <MESSAGE value="Fixed bitmap issues" />
+    <MESSAGE value="Mate in two is found :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mate in two is found :)" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

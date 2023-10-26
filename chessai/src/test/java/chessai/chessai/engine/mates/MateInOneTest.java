@@ -11,10 +11,10 @@ import java.text.ParseException;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class MateInOneTest {
+class MateInOneTest {
 
 	@Test
-	public void mateInOne() throws ParseException {
+	void mateInOne() throws ParseException {
 
 		Board board = new Board("7k/p2rR1p1/1p1r1p2/3P4/4QPq1/1P6/P5PK/8 w - - 1 1");
 

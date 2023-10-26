@@ -282,7 +282,7 @@ public class Board {
 
         // double check
         if (enemyDoubleAttackSquares.and(ourKing).isNonZero()) {
-            System.out.printf("%s is in double check%n", colorToMove);
+//            System.out.printf("%s is in double check%n", colorToMove);
             return generateMovesForDoubleCheckSituation(ourKing, enemyAttackSquares);
         }
 
@@ -293,7 +293,7 @@ public class Board {
         // - blocking
         // - capturing the piece giving check
         if (enemyAttackSquares.and(ourKing).isNonZero()) {
-            System.out.printf("%s is in check%n", colorToMove);
+//            System.out.printf("%s is in check%n", colorToMove);
             generateMovesForSingleCheckSituation(ourPieces,
                     enemyAttackSquares,
                     result,
@@ -302,7 +302,7 @@ public class Board {
                     uncapturableEnPassantTarget,
                     ourKing);
         } else {
-            System.out.printf("%s has a general situation%n", colorToMove);
+//            System.out.printf("%s has a general situation%n", colorToMove);
             // general situation
             generateMovesForGeneralSituation(pinMapForOurPieces,
                     ourPieces,

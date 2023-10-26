@@ -95,13 +95,13 @@ public class MonteCarloEngine extends ChessEngine {
             selectedNodeToExplore.generateEmptyChildren();
 
             unexploredNodes.addAll(selectedNodeToExplore.children);
-
-            System.out.printf(
-                    "exploring node %d - parent: %s - fen: %s -  %n",
-                    i,
-                    selectedNodeToExplore.parent.hashCode(),
-                    selectedNodeToExplore.state.getFENString()
-            );
+//
+//            System.out.printf(
+//                    "exploring node %d - parent: %s - fen: %s -  %n",
+//                    i,
+//                    selectedNodeToExplore.parent.hashCode(),
+//                    selectedNodeToExplore.state.getFENString()
+//            );
 
 //             simulation
 
