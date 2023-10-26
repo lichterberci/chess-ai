@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Removed some more old code and added some tests">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Resolved kingmap issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/BitMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +101,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.BoardTest.castlingIsDoneCorrecly">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -295,7 +294,7 @@
       <workItem from="1697531913500" duration="149000" />
       <workItem from="1697538304237" duration="203000" />
       <workItem from="1697553027529" duration="1429000" />
-      <workItem from="1698335575022" duration="6676000" />
+      <workItem from="1698335575022" duration="7111000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -553,7 +552,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698341382366</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Resolved kingmap issues">
+      <option name="closed" value="true" />
+      <created>1698342293652</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1698342293652</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -571,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated onCommit actions" />
     <MESSAGE value="Added GameManager and simplified resource loading" />
     <MESSAGE value="Board clearing fixed" />
     <MESSAGE value="Game is almost fully playable (promotions needed)" />
@@ -596,7 +602,8 @@
     <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
     <MESSAGE value="Updated method names" />
     <MESSAGE value="Removed some more old code and added some tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed some more old code and added some tests" />
+    <MESSAGE value="Resolved kingmap issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolved kingmap issues" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

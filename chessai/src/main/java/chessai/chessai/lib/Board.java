@@ -737,9 +737,9 @@ public class Board {
             result.blackPieces.setBitInPlace(move.toIndex(), true);
 
             if (move.isEnPassant())
-                result.whitePieces.setBitInPlace(move.toIndex(), false);
+                result.whitePieces.setBitInPlace(move.toIndex() - 8, false);
             else if (move.isCapture())
-                result.whiteAttackSquares.setBitInPlace(move.toIndex() - 8, false);
+                result.whitePieces.setBitInPlace(move.toIndex(), false);
 
             if (move.specialMove() == SpecialMove.KING_SIDE_CASTLE) {
                 result.blackPieces.setBitInPlace(Square.getIndex("H8"), false);
