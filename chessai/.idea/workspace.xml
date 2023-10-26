@@ -9,18 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed en passant pinning and removed deprecated methods">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Updated method names">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +296,7 @@
       <workItem from="1697531913500" duration="149000" />
       <workItem from="1697538304237" duration="203000" />
       <workItem from="1697553027529" duration="1429000" />
-      <workItem from="1698335575022" duration="4322000" />
+      <workItem from="1698335575022" duration="4716000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -537,7 +530,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698335664250</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Fixed en passant pinning and removed deprecated methods">
+      <option name="closed" value="true" />
+      <created>1698339935824</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1698339935824</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +556,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="getState works now :D" />
     <MESSAGE value="Castling rights corrected" />
     <MESSAGE value="Updated onCommit actions" />
     <MESSAGE value="Added GameManager and simplified resource loading" />
@@ -580,18 +580,14 @@
     <MESSAGE value="Double check is now correctly determined" />
     <MESSAGE value="Random bullshit that sonarlint added" />
     <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed en passant pinning and removed deprecated methods" />
+    <MESSAGE value="Updated method names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated method names" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
-          <line>720</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java</url>
           <line>124</line>

@@ -122,7 +122,7 @@ class BoardTest {
         // pinned en passant
         Board pinnedEnPassantBoard = new Board("4k3/8/8/2KPp2r/8/8/8/8 w - e6 0 1");
 
-        long legalMovesFromD5 = pinnedEnPassantBoard.generateLegalMovesUsingBitMapsAndUpdateBitMaps()
+        long legalMovesFromD5 = pinnedEnPassantBoard.getLegalMoves()
                 .stream().filter(move -> move.fromIndex() == Square.getIndex("d5"))
                 .count();
 

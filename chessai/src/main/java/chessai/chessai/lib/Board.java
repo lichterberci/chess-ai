@@ -189,7 +189,7 @@ public class Board {
         if (!canRightWin && !canOppositeWin)
             return GameState.DRAW;
 
-        boolean hasMoves = !generateLegalMovesUsingBitMapsAndUpdateBitMaps().isEmpty();
+        boolean hasMoves = !getLegalMoves().isEmpty();
 
         if (hasMoves)
             return GameState.PLAYING;
@@ -226,11 +226,11 @@ public class Board {
         return canOppositeWin;
     }
 
-    public List<Move> generateLegalMovesUsingBitMapsAndUpdateBitMaps() {
-        return generateLegalMovesUsingBitMapsAndUpdateBitMaps(false);
+    public List<Move> getLegalMoves() {
+        return getLegalMoves(false);
     }
 
-    public List<Move> generateLegalMovesUsingBitMapsAndUpdateBitMaps(boolean onlyGenerateEnemyAttackMaps) {
+    public List<Move> getLegalMoves(boolean onlyGenerateEnemyAttackMaps) {
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;
@@ -627,10 +627,7 @@ public class Board {
     }
 
     public boolean isMoveLegal(Move move) {
-        return generateLegalMovesUsingBitMapsAndUpdateBitMaps()
-                .stream()
-                .filter(otherMove -> otherMove.equals(move))
-                .count() == 1;
+        return getLegalMoves().contains(move);
     }
 
     public Board makeMove(Move move) {
