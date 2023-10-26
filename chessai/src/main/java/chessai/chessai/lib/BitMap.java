@@ -233,7 +233,7 @@ public class BitMap {
 
     @Override
     public String toString() {
-        final String dataString = Long.toString(data, 2);
+        final String dataString = Long.toUnsignedString(data, 2);
         // get the data in binary form
         StringBuilder sb = new StringBuilder();
         // pad left with 0s

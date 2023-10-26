@@ -674,10 +674,6 @@ public class Board {
                 result.canWhiteCastleQueenSide = false;
                 result.canWhiteCastleKingSide = false;
 
-                // update king bitmap
-
-                result.whiteKing = whiteKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
-
             } else if (movingPiece instanceof Rook) {
                 if (from.getIndex() == Square.getIndex("a1"))
                     result.canWhiteCastleQueenSide = false;
@@ -688,9 +684,6 @@ public class Board {
             if (movingPiece instanceof King) {
                 result.canBlackCastleQueenSide = false;
                 result.canBlackCastleKingSide = false;
-
-                // update king position in king bitmap
-                result.blackKing = blackKing.setBit(move.fromIndex(), false).setBit(move.toIndex(), true);
 
             } else if (movingPiece instanceof Rook) {
                 if (from.getIndex() == Square.getIndex("a8"))
@@ -735,7 +728,7 @@ public class Board {
 
             // we are moving the king
             if (whiteKing.getBit(move.fromIndex())) {
-                whiteKing = new BitMap(0).setBit(move.toIndex(), true);
+                result.whiteKing = new BitMap(0).setBit(move.toIndex(), true);
             }
 
         } else {
@@ -759,7 +752,7 @@ public class Board {
 
             // we are moving the king
             if (blackKing.getBit(move.fromIndex())) {
-                blackKing = new BitMap(0).setBit(move.toIndex(), true);
+                result.blackKing = new BitMap(0).setBit(move.toIndex(), true);
             }
         }
 
@@ -928,15 +921,15 @@ public class Board {
 
                     if (Character.isUpperCase(c)) {
                         // white
-                        whitePieces = whitePieces.setBit(numSquaresDone - 1, true);
+                        whitePieces.setBitInPlace(numSquaresDone - 1, true);
 
                         if (c == 'K')
-                            whiteKing = whiteKing.setBit(numSquaresDone - 1, true);
+                            whiteKing.setBitInPlace(numSquaresDone - 1, true);
                     } else {
-                        blackPieces = blackPieces.setBit(numSquaresDone - 1, true);
+                        blackPieces.setBitInPlace(numSquaresDone - 1, true);
 
                         if (c == 'k')
-                            blackKing = blackKing.setBit(numSquaresDone - 1, true);
+                            blackKing.setBitInPlace(numSquaresDone - 1, true);
                     }
                 } catch (IllegalStateException e) {
                     ParseException newException = new ParseException("Piece not recognized!", i);
