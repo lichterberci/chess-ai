@@ -377,6 +377,11 @@ public class Board {
                 continue;
             }
 
+            // we cannot move there, because it would be a pinned en passant
+            if (uncapturableEnPassantTarget.getBit(index)) {
+                continue;
+            }
+
             if (moveResult.isResultPromotion().getBit(index)) {
                 result.add(new Move(
                         ourPieceIndex,
@@ -415,7 +420,6 @@ public class Board {
 
             if (
                     moveResult.isResultEnPassant().getBit(index)
-                            && !uncapturableEnPassantTarget.getBit(index)
             ) {
                 result.add(new Move(
                         ourPieceIndex,
@@ -884,28 +888,6 @@ public class Board {
             specialType = SpecialMove.QUEEN_SIDE_CASTLE;
 
         return specialType;
-    }
-
-    @Deprecated(forRemoval = true)
-    public List<Move> getLegalMoves() {
-
-        List<Move> pseudoLegalMoves = new LinkedList<>();
-
-        for (Piece piece : squares) {
-            if (piece != null && piece.getColor() == colorToMove) {
-                pseudoLegalMoves.addAll(piece.getPseudoLegalMoves(this));
-            }
-        }
-
-        List<Move> legalMoves = new LinkedList<>();
-
-        for (Move move : pseudoLegalMoves) {
-            if (isMoveLegal(move)) {
-                legalMoves.add(move);
-            }
-        }
-
-        return legalMoves;
     }
 
     public void setFromFENString(@NotNull String fenString) throws ParseException {

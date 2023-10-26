@@ -2,7 +2,6 @@ package chessai.chessai.lib.pieces;
 
 import chessai.chessai.lib.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,25 +27,6 @@ public class Knight extends Piece {
     @Override
     public char getFENChar() {
         return getColor() == PieceColor.WHITE ? 'N' : 'n';
-    }
-
-    @Override
-    public List<Move> getPseudoLegalMoves(Board board) {
-        List<Move> moves = new ArrayList<>();
-
-        final int currentFile = getSquare().file();
-        final int currentRow = getSquare().row();
-
-        checkSquare(board, moves, currentFile + 2, currentRow - 1);
-        checkSquare(board, moves, currentFile + 2, currentRow + 1);
-        checkSquare(board, moves, currentFile - 2, currentRow - 1);
-        checkSquare(board, moves, currentFile - 2, currentRow + 1);
-        checkSquare(board, moves, currentFile + 1, currentRow - 2);
-        checkSquare(board, moves, currentFile + 1, currentRow + 2);
-        checkSquare(board, moves, currentFile - 1, currentRow - 2);
-        checkSquare(board, moves, currentFile - 1, currentRow + 2);
-
-        return moves;
     }
 
     @Override

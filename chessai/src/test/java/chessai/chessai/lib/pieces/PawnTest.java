@@ -23,6 +23,5 @@ class PawnTest {
         assertEquals(0, board.get(new Square("d4")).getPseudoLegalMovesAsBitMaps(board).moveTargets().getIndexesOfOnes().size());
         assertEquals(2, board.get(new Square("d3")).getPseudoLegalMovesAsBitMaps(board).moveTargets().getIndexesOfOnes().size());
         assertEquals(1, board.get(new Square("h2")).getPseudoLegalMovesAsBitMaps(board).moveTargets().getIndexesOfOnes().size());
-
     }
 }

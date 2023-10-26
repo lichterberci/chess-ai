@@ -2,21 +2,25 @@
 <project version="4">
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_TEST_SOURCES" value="false" />
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
     <option name="SCOPE_TYPE" value="4" />
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added visual debugging aid but it is still buggy as hell">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__16__12_56__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__17__10_35_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__10__17__22_36_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/0/a0b50970bc26fd8265f9178e9902f2b27f27736f" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/0/a0b50970bc26fd8265f9178e9902f2b27f27736f" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed en passant pinning and removed deprecated methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Piece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/SlidingPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Pawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/pieces/Rook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/pieces/PawnTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,24 +74,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/chess-ai/chessai/src/test/java/chessai/chessai&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="chessai.chessai.lib" />
@@ -104,7 +110,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Gradle.BoardTest.enPassantPin">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -114,7 +120,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BitMapTest.shift" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BoardTest.enPassantPin" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -127,7 +133,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.BitMapTest.shift&quot;" />
+            <option value="&quot;chessai.chessai.lib.BoardTest.enPassantPin&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -135,10 +141,10 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="KingTest.getPseudoLegalMovesAsBitMaps" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BoardTest.getState" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -151,7 +157,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.pieces.KingTest.getPseudoLegalMovesAsBitMaps&quot;" />
+            <option value="&quot;chessai.chessai.lib.BoardTest.getState&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -159,7 +165,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="PawnTest.getAllPseudoLegalMoves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -248,20 +254,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.BoardTest.enPassantPin" />
+      <item itemvalue="Gradle.BoardTest.getState" />
       <item itemvalue="Gradle.PawnTest.getAllPseudoLegalMoves" />
       <item itemvalue="Gradle.QueenTest.testThatAttackMapsWorkProperly" />
       <item itemvalue="Gradle.QueenTest.testThatPinsAreWorkingProperly" />
-      <item itemvalue="Gradle.BitMapTest.shift" />
-      <item itemvalue="Gradle.KingTest.getPseudoLegalMovesAsBitMaps" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.BoardTest.enPassantPin" />
+        <item itemvalue="Gradle.PawnTest.getAllPseudoLegalMoves" />
+        <item itemvalue="Gradle.BoardTest.getState" />
         <item itemvalue="Gradle.QueenTest.testThatPinsAreWorkingProperly" />
         <item itemvalue="Gradle.QueenTest.testThatAttackMapsWorkProperly" />
-        <item itemvalue="Gradle.PawnTest.getAllPseudoLegalMoves" />
-        <item itemvalue="Gradle.BitMapTest.shift" />
-        <item itemvalue="Gradle.KingTest.getPseudoLegalMovesAsBitMaps" />
       </list>
     </recent_temporary>
   </component>
@@ -297,7 +303,7 @@
       <workItem from="1697531913500" duration="149000" />
       <workItem from="1697538304237" duration="203000" />
       <workItem from="1697553027529" duration="1429000" />
-      <workItem from="1698335575022" duration="36000" />
+      <workItem from="1698335575022" duration="4322000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -523,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697786627198</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Random bullshit that sonarlint added">
+      <option name="closed" value="true" />
+      <created>1698335664250</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1698335664250</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,8 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added test case for castling" />
-    <MESSAGE value="game state added but something is not right" />
     <MESSAGE value="getState works now :D" />
     <MESSAGE value="Castling rights corrected" />
     <MESSAGE value="Updated onCommit actions" />
@@ -566,7 +578,9 @@
     <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
-    <option name="LAST_COMMIT_MESSAGE" value="Double check is now correctly determined" />
+    <MESSAGE value="Random bullshit that sonarlint added" />
+    <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed en passant pinning and removed deprecated methods" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -575,8 +589,31 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
-          <line>716</line>
+          <line>720</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
+          <line>423</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java</url>
+          <line>125</line>
+          <properties>
+            <option name="lambda-ordinal" value="0" />
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java</url>
+          <line>421</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

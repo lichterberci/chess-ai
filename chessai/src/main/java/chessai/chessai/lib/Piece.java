@@ -1,7 +1,5 @@
 package chessai.chessai.lib;
 
-import java.util.List;
-
 public abstract class Piece {
     protected PieceColor color;
     protected Square square;
@@ -11,9 +9,6 @@ public abstract class Piece {
     }
 
     public abstract char getFENChar();
-
-    @Deprecated(forRemoval = true)
-    public abstract List<Move> getPseudoLegalMoves(Board board);
 
     public abstract MoveResult getPseudoLegalMovesAsBitMaps(Board board);
 

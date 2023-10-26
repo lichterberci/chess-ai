@@ -84,7 +84,7 @@ class BoardTest {
         assertEquals(GameState.WHITE_WIN, new Board("8/8/8/8/kQK5/8/8/8 b - - 0 1").getState());
         assertEquals(GameState.DRAW, new Board("8/8/8/8/8/1Q6/2K5/k7 b - - 0 1").getState());
         assertEquals(GameState.PLAYING, new Board("8/8/8/8/8/1Q6/2K5/k7 w - - 0 1").getState());
-
+        assertEquals(GameState.DRAW, new Board("8/8/8/2q5/K1k5/8/8/8 w - - 0 1").getState());
     }
 
     @Test
@@ -115,5 +115,17 @@ class BoardTest {
         assertNotNull(rookAfterLongCastle);
         assertEquals(2, kingAfterLongCastle.getSquare().file());
         assertEquals(3, rookAfterLongCastle.getSquare().file());
+    }
+
+    @Test
+    void enPassantPin() throws ParseException {
+        // pinned en passant
+        Board pinnedEnPassantBoard = new Board("4k3/8/8/2KPp2r/8/8/8/8 w - e6 0 1");
+
+        long legalMovesFromD5 = pinnedEnPassantBoard.generateLegalMovesUsingBitMapsAndUpdateBitMaps()
+                .stream().filter(move -> move.fromIndex() == Square.getIndex("d5"))
+                .count();
+
+        assertEquals(1, legalMovesFromD5);
     }
 }
