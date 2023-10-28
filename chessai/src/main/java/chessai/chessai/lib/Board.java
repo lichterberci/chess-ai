@@ -77,13 +77,14 @@ public class Board {
         for (int i = 0; i < 64; i++) {
             if (squares[i] == null)
                 continue;
-            try {
-//                this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
-                this.squares[i] = squares[i].copy();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
+
+            this.squares[i] = squares[i].copy();
             this.squares[i].setSquare(new Square(i));
+//            try {
+//                this.squares[i] = squares[i].getClass().getConstructor(PieceColor.class).newInstance(squares[i].getColor());
+//            } catch (Exception e) {
+//                System.err.println(e.getMessage());
+//            }
         }
 
         this.colorToMove = colorToMove;
@@ -748,7 +749,6 @@ public class Board {
                 result.blackPieces.setBitInPlace(Square.getIndex("A8"), false);
                 result.blackPieces.setBitInPlace(Square.getIndex("D8"), true);
             }
-
 
             // we are moving the king
             if (blackKing.getBit(move.fromIndex())) {

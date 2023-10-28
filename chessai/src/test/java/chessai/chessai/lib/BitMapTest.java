@@ -39,4 +39,18 @@ class BitMapTest {
         assertEquals(16, whiteSquares.shift(0, 4).getIndexesOfOnes().size());
         assertEquals(16, whiteSquares.shift(0, -4).getIndexesOfOnes().size());
     }
+
+    @Test
+    void getIndexesOfOnes() {
+
+        BitMap bitMap = new BitMap(0);
+
+        for (int i = 0; i < 64; i++) {
+            if (i % 2 == 0)
+                bitMap.setBitInPlace(i, true);
+        }
+
+        assertEquals(32, bitMap.getIndexesOfOnes().size());
+
+    }
 }

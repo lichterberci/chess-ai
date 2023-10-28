@@ -68,3 +68,9 @@ b
 2src/main/java/chessai/chessai/MainApplication.java,b\d\bd4a39984386d800f610296b416b4141d5c353d1
 f
 6src/main/java/chessai/chessai/engine/RandomEngine.java,c\0\c0ec97bfc9546169edaf42528721d7ca405ca884
+f
+6src/test/java/chessai/chessai/lib/pieces/RookTest.java,b\0\b0fde9320131a96f4619a4e3f7490904ab6413be
+m
+=src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java,2\f\2fa8b27a9b689e7ea070c9b57f2c6b822a8b92fb
+m
+=src/test/java/chessai/chessai/engine/mates/MateInOneTest.java,2\a\2a7a9958e264376ab6eb1ef36d08cba8baed1e3c

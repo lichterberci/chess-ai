@@ -1,7 +1,7 @@
 package chessai.chessai.lib;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -152,14 +152,26 @@ public class BitMap {
 
     public List<Integer> getIndexesOfOnes() {
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> result = new LinkedList<>();
 
+        long shiftedData = data;
         for (int i = 0; i < 64; i++) {
-            if (getBit(i))
+            if ((shiftedData & 1L) != 0)
                 result.add(i);
+            shiftedData >>>= 1;
         }
 
         return result;
+    }
+
+    public int getFirstIndexOfOne() {
+        long shiftedData = data;
+        for (int i = 0; i < 64; i++) {
+            if ((shiftedData & 1L) != 0)
+                return i;
+            shiftedData >>>= 1;
+        }
+        return -1;
     }
 
     public BitMap and(BitMap other) {

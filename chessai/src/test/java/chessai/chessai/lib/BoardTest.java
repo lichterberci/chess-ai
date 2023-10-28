@@ -186,4 +186,12 @@ class BoardTest {
         assertInstanceOf(King.class, boardAfterBlackLongCastle.get(new Square("c8")));
         assertInstanceOf(Rook.class, boardAfterBlackLongCastle.get(new Square("d8")));
     }
+
+    @Test
+    void canFindLegalMovesWithoutThrowing() throws ParseException {
+
+        Board board = new Board("r1bqkbnr/pppp1pp1/2n1p2p/8/2BPP3/5Q2/PPP2PPP/RNB1K1NR b KQkq - 0 1");
+
+        assertDoesNotThrow(() -> board.getLegalMoves());
+    }
 }

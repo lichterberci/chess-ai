@@ -12,14 +12,12 @@ import java.util.stream.IntStream;
 public class MonteCarloEngine extends ChessEngine {
 
     private static class TreeNode {
-        Board state;
-        TreeNode parent;
-        List<TreeNode> children = new ArrayList<>();
-        int numSimulationsRanByThisNode = 0;
-        int numWins = 0; // +1
-        int numDraws = 0; // +0.5
-        int numSimulationsRanByParentNode = 0;
-        double score;
+        private final Board state;
+        private final TreeNode parent;
+        private List<TreeNode> children = new ArrayList<>();
+        private int numSimulationsRanByThisNode = 0;
+        private int numWins = 0; // +1
+        private int numDraws = 0; // +0.5
 
         TreeNode(Board state, TreeNode parent) {
             this.state = state;
@@ -38,15 +36,16 @@ public class MonteCarloEngine extends ChessEngine {
             return legalMoves;
         }
 
-        void updateScore(double explorationParameter) {
+        public double getScore(double explorationParameter) {
 
             if (numSimulationsRanByThisNode == 0) {
-                score = 0;
-                return;
+                return Double.POSITIVE_INFINITY;
             }
 
-            score = ((double) numWins /*+ numDraws / 2.0*/) / numSimulationsRanByThisNode
-                    + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByParentNode) / numSimulationsRanByThisNode);
+            final int numSimulationsRanByTheParentNode = parent != null ? parent.numSimulationsRanByThisNode : 0;
+
+            return ((double) numWins + numDraws / 2.0) / numSimulationsRanByThisNode
+                    + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
         }
     }
 
@@ -71,7 +70,7 @@ public class MonteCarloEngine extends ChessEngine {
         if (root.children.isEmpty())
             return Optional.empty();
 
-        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
+//        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
 
         // search
 
@@ -79,47 +78,30 @@ public class MonteCarloEngine extends ChessEngine {
 
             // selection
 
-            unexploredNodes.forEach(node -> node.updateScore(explorationParameter));
+            TreeNode traversingNode = root;
 
-            if (unexploredNodes.isEmpty())
-                break;
+            // we traverse down the tree, always choosing the child with the highest score
+            while (!traversingNode.children.isEmpty()) {
 
-            TreeNode selectedNodeToExplore = unexploredNodes.stream()
-                    .max(Comparator.comparingDouble(node -> node.score))
-                    .get();
+                Optional<TreeNode> nextNode = traversingNode.children.stream()
+                        .max(Comparator.comparingDouble(node -> node.getScore(explorationParameter)));
+
+                if (nextNode.isEmpty())
+                    break;
+
+                traversingNode = nextNode.get();
+            }
+
+            final TreeNode selectedNodeToExplore = traversingNode;
 
             // exploration
 
-            unexploredNodes.remove(selectedNodeToExplore);
-
             selectedNodeToExplore.generateEmptyChildren();
 
-            unexploredNodes.addAll(selectedNodeToExplore.children);
-//
-//            System.out.printf(
-//                    "exploring node %d - parent: %s - fen: %s -  %n",
-//                    i,
-//                    selectedNodeToExplore.parent.hashCode(),
-//                    selectedNodeToExplore.state.getFENString()
-//            );
-
-//             simulation
+            // simulation
 
             AtomicInteger numWinsToAdd = new AtomicInteger();
             AtomicInteger numDrawsToAdd = new AtomicInteger();
-
-//            for (int j = 0; j < numSimulations; j++) {
-//
-////                System.out.println("    running simulation " + j);
-//
-//                GameState result = simulate(selectedNodeToExplore.state);
-//
-//                if (result == GameState.DRAW)
-//                    numDrawsToAdd++;
-//                    // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
-//                else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
-//                    numWinsToAdd++;
-//            }
 
             IntStream.range(0, numSimulations).parallel().forEach(j -> {
 
@@ -139,19 +121,15 @@ public class MonteCarloEngine extends ChessEngine {
 
             // backpropagation
 
-            selectedNodeToExplore.children.forEach(child -> child.numSimulationsRanByParentNode += numSimulations);
+            TreeNode backTraversingCurrentNode = selectedNodeToExplore.parent;
 
-            TreeNode currentNode = selectedNodeToExplore.parent;
+            while (backTraversingCurrentNode != null) {
 
-            while (currentNode != null) {
+                backTraversingCurrentNode.numWins += numWinsToAdd.get();
+                backTraversingCurrentNode.numDraws += numDrawsToAdd.get();
+                backTraversingCurrentNode.numSimulationsRanByThisNode += numSimulations;
 
-                currentNode.numWins += numWinsToAdd.get();
-                currentNode.numDraws += numDrawsToAdd.get();
-                currentNode.numSimulationsRanByThisNode += numSimulations;
-                if (currentNode.parent != null)
-                    currentNode.numSimulationsRanByParentNode += numSimulations;
-
-                currentNode = currentNode.parent;
+                backTraversingCurrentNode = backTraversingCurrentNode.parent;
             }
         }
 
