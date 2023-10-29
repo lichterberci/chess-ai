@@ -695,7 +695,8 @@ public class Board {
         Piece movingPiece = squares[from.getIndex()];
 
         if (movingPiece == null)
-            throw new IllegalStateException("Moving piece is null!");
+//            throw new IllegalStateException("Moving piece is null!");
+            return new Board(this);
 
         if (blackKing.getBit(move.toIndex()) || whiteKing.getBit(move.toIndex())) {
             throw new IllegalArgumentException("We are trying to capture the king!");
@@ -732,40 +733,42 @@ public class Board {
     }
 
     private void updateCastlingRightsForMove(Move move, Piece movingPiece, Board result, Square from) {
+
         if (movingPiece.getColor() == PieceColor.WHITE) {
+
             if (movingPiece instanceof King) {
                 result.canWhiteCastleQueenSide = false;
                 result.canWhiteCastleKingSide = false;
-
             } else if (movingPiece instanceof Rook) {
                 if (from.getIndex() == Square.getIndex("a1"))
                     result.canWhiteCastleQueenSide = false;
                 else if (from.getIndex() == Square.getIndex("h1"))
                     result.canWhiteCastleKingSide = false;
             }
+
         } else {
+
             if (movingPiece instanceof King) {
                 result.canBlackCastleQueenSide = false;
                 result.canBlackCastleKingSide = false;
-
             } else if (movingPiece instanceof Rook) {
                 if (from.getIndex() == Square.getIndex("a8"))
                     result.canBlackCastleQueenSide = false;
                 else if (from.getIndex() == Square.getIndex("h8"))
                     result.canBlackCastleKingSide = false;
             }
+
         }
 
-        if (move.isCapture() && (squares[move.to().getIndex()] instanceof Rook)) {
-            if (move.to().getIndex() == Square.getIndex("a1"))
+        if (move.isCapture() && (squares[move.toIndex()] instanceof Rook)) {
+            if (move.toIndex() == Square.getIndex("a1"))
                     result.canWhiteCastleQueenSide = false;
-            if (move.to().getIndex() == Square.getIndex("a8"))
+            if (move.toIndex() == Square.getIndex("a8"))
                     result.canBlackCastleQueenSide = false;
-            if (move.to().getIndex() == Square.getIndex("h1"))
+            if (move.toIndex() == Square.getIndex("h1"))
                     result.canWhiteCastleKingSide = false;
-            if (move.to().getIndex() == Square.getIndex("h8"))
+            if (move.toIndex() == Square.getIndex("h8"))
                     result.canBlackCastleKingSide = false;
-
         }
     }
 
