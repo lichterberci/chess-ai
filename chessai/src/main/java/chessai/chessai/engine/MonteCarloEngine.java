@@ -44,8 +44,8 @@ public class MonteCarloEngine extends ChessEngine {
 
             final int numSimulationsRanByTheParentNode = parent != null ? parent.numSimulationsRanByThisNode : 0;
 
-            return ((double) numWins + numDraws / 2.0) / numSimulationsRanByThisNode
-                    + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
+            return ((double) numWins + numDraws * 0.5) / numSimulationsRanByThisNode
+		            + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
         }
     }
 
@@ -105,7 +105,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             IntStream.range(0, numSimulations).parallel().forEach(j -> {
 
-                GameState result = simulate(selectedNodeToExplore.state);
+	            GameState result = simulate(new Board(selectedNodeToExplore.state));
 
                 if (result == GameState.DRAW)
                     numDrawsToAdd.getAndIncrement();
@@ -135,26 +135,26 @@ public class MonteCarloEngine extends ChessEngine {
 
         // pick the child with the most simulations
 
-        Move result = null;
-//        int maxSimulations = -1;
+	    Move result = null;
+	    int maxSimulations = -1;
 //        double maxScore = Double.MIN_VALUE;
-        double bestWinRate = -1;
+//        double bestWinRate = -1;
 
         for (int i = 0; i < root.children.size(); i++) {
 
-            TreeNode child = root.children.get(i);
+	        TreeNode child = root.children.get(i);
 
-            double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
+//            double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
 
-            System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===> " + winRate + " (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
+	        System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===>  (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
+//
+//            if (Double.isNaN(winRate))
+//                continue;
 
-            if (Double.isNaN(winRate))
-                continue;
-
-            if (winRate > bestWinRate) {
-                result = legalMovesByRoot.get(i);
-                bestWinRate = winRate;
-            }
+//            if (winRate > bestWinRate) {
+//                result = legalMovesByRoot.get(i);
+//                bestWinRate = winRate;
+//            }
 
 //            System.out.println(child.score);
 
@@ -163,6 +163,11 @@ public class MonteCarloEngine extends ChessEngine {
 //                result = legalMovesByRoot.get(i);
 //                maxScore = child.score;
 //            }
+
+	        if (child.numSimulationsRanByThisNode > maxSimulations) {
+		        maxSimulations = child.numSimulationsRanByThisNode;
+		        result = legalMovesByRoot.get(i);
+	        }
         }
 
         if (result == null) {

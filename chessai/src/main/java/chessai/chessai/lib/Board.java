@@ -606,7 +606,7 @@ public class Board {
 
     @NotNull
     private List<Move> generateMovesForDoubleCheckSituation(BitMap ourKing, BitMap enemyAttackSquares) {
-        final int ourKingIndex = ourKing.getIndexesOfOnes().get(0);
+        final int ourKingIndex = ourKing.getFirstIndexOfOne();
 
         // only the king can move
         MoveResult moveResult = squares[ourKingIndex].getPseudoLegalMoves(this);
