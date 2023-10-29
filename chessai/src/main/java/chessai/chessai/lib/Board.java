@@ -36,6 +36,9 @@ public class Board {
     public BitMap whiteAttackSquares;
     public BitMap blackAttackSquares;
 
+    private GameState cachedGameState;
+    private List<Move> cachedLegalMoves;
+
     public Board(Board other) {
         this(other.squares,
                 other.colorToMove,
@@ -52,7 +55,9 @@ public class Board {
                 other.whiteKing,
                 other.blackKing,
                 other.whiteAttackSquares,
-                other.blackAttackSquares);
+                other.blackAttackSquares,
+                other.cachedLegalMoves,
+                other.cachedGameState);
     }
 
     public Board(Piece[] squares,
@@ -70,7 +75,7 @@ public class Board {
                  BitMap whiteKing,
                  BitMap blackKing,
                  BitMap whiteAttackSquares,
-                 BitMap blackAttackSquares) {
+                 BitMap blackAttackSquares, List<Move> cachedLegalMoves, GameState cachedGameState) {
 
         this.squares = new Piece[64];
 
@@ -104,6 +109,8 @@ public class Board {
         this.blackKing = blackKing != null ? new BitMap(blackKing.getData()) : null;
         this.whiteAttackSquares = whiteAttackSquares != null ? new BitMap(whiteAttackSquares.getData()) : null;
         this.blackAttackSquares = blackAttackSquares != null ? new BitMap(blackAttackSquares.getData()) : null;
+        this.cachedLegalMoves = cachedLegalMoves != null ? new ArrayList<>(cachedLegalMoves) : null;
+        this.cachedGameState = cachedGameState;
     }
 
     public Board(String fenString) throws ParseException {
@@ -162,8 +169,13 @@ public class Board {
 
     public GameState getState() {
 
-        if (halfMoveCounter >= 100)
+        if (cachedGameState != null)
+            return cachedGameState;
+
+        if (halfMoveCounter >= 100) {
+            cachedGameState = GameState.DRAW;
             return GameState.DRAW;
+        }
 
         LinkedList<Piece> piecesWithRightColor = new LinkedList<>();
         LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
@@ -181,26 +193,38 @@ public class Board {
         int numRightColorPieces = piecesWithRightColor.size();
         int numOppositeColorPieces = piecesWithOppositeColor.size();
 
-        if (numRightColorPieces == 1 && numOppositeColorPieces == 1)
+        if (numRightColorPieces == 1 && numOppositeColorPieces == 1) {
+            cachedGameState = GameState.DRAW;
             return GameState.DRAW;
+        }
 
         boolean canRightWin = canRightColorWin(numRightColorPieces, piecesWithRightColor);
         boolean canOppositeWin = canOppositeColorWin(numOppositeColorPieces, piecesWithOppositeColor);
 
-        if (!canRightWin && !canOppositeWin)
+        if (!canRightWin && !canOppositeWin) {
+            cachedGameState = GameState.DRAW;
             return GameState.DRAW;
+        }
 
         boolean hasMoves = !getLegalMoves().isEmpty();
 
-        if (hasMoves)
+        if (hasMoves) {
+            cachedGameState = GameState.PLAYING;
             return GameState.PLAYING;
+        }
 
         boolean isKingInCheck = isKingInCheck(colorToMove);
 
-        if (!isKingInCheck)
+        if (!isKingInCheck) {
+            cachedGameState = GameState.DRAW;
             return GameState.DRAW;
+        }
 
-        return colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN;
+        GameState result = colorToMove == PieceColor.WHITE ? GameState.BLACK_WIN : GameState.WHITE_WIN;
+
+        cachedGameState = result;
+
+        return result;
     }
 
     private static boolean canRightColorWin(int numRightColorPieces, LinkedList<Piece> piecesWithRightColor) {
@@ -232,6 +256,9 @@ public class Board {
     }
 
     public List<Move> getLegalMoves(boolean onlyGenerateEnemyAttackMaps) {
+
+        if (cachedLegalMoves != null)
+            return cachedLegalMoves;
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;
@@ -287,6 +314,8 @@ public class Board {
             return generateMovesForDoubleCheckSituation(ourKing, enemyAttackSquares);
         }
 
+        int ourKingIndex = ourKing.getFirstIndexOfOne();
+
         List<Move> result = new LinkedList<>();
 
         // we are in check, so only moves are
@@ -301,7 +330,9 @@ public class Board {
                     checkTrackForOurKing,
                     enemyPiecesGivingCheck,
                     uncapturableEnPassantTarget,
-                    ourKing);
+                    ourKing,
+                    pinMapForOurPieces,
+                    ourKingIndex);
         } else {
 //            System.out.printf("%s has a general situation%n", colorToMove);
             // general situation
@@ -310,8 +341,10 @@ public class Board {
                     ourKing,
                     uncapturableEnPassantTarget,
                     enemyAttackSquares,
-                    result);
+                    result, ourKingIndex);
         }
+
+        cachedLegalMoves = result;
 
         return result;
     }
@@ -321,7 +354,7 @@ public class Board {
                                                   BitMap ourKing,
                                                   BitMap uncapturableEnPassantTarget,
                                                   BitMap enemyAttackSquares,
-                                                  List<Move> result) {
+                                                  List<Move> result, int ourKingIndex) {
         for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
             Piece ourPiece = squares[ourPieceIndex];
 
@@ -334,7 +367,8 @@ public class Board {
                         pinMapForOurPieces,
                         ourPiece,
                         result,
-                        uncapturableEnPassantTarget);
+                        uncapturableEnPassantTarget,
+                        ourKingIndex);
             }
         }
     }
@@ -343,11 +377,12 @@ public class Board {
                                                          BitMap pinMapForOurPieces,
                                                          Piece ourPiece,
                                                          List<Move> result,
-                                                         BitMap uncapturableEnPassantTarget) {
+                                                         BitMap uncapturableEnPassantTarget,
+                                                         int ourKingIndex) {
         MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         BitMap validMoveSquares = pinMapForOurPieces.getBit(ourPieceIndex) ?
-                moveResult.moveTargets().and(pinMapForOurPieces)
+                moveResult.moveTargets().and(pinMapForOurPieces).and(BitMap.getLineThroughSquares(ourKingIndex, ourPieceIndex))
                 : moveResult.moveTargets();
 
         generateNonKingMovesForWithGivenMoveMap(ourPieceIndex,
@@ -364,7 +399,10 @@ public class Board {
                                                          BitMap uncapturableEnPassantTarget,
                                                          MoveResult moveResult,
                                                          BitMap validMoveSquares) {
-        for (int index : validMoveSquares.getIndexesOfOnes()) {
+        for (int index = 0; index < 64; index++) {
+
+            if (!validMoveSquares.getBit(index))
+                continue;
 
             if (!(ourPiece instanceof Pawn)) {
                 result.add(new Move(
@@ -477,9 +515,9 @@ public class Board {
 
         // white king side
         if (colorToMove == PieceColor.WHITE
+                && kingSideCastlingMoves.isNonZero()
                 && !enemyAttackSquares.getBit(Square.getIndex("F1"))
                 && !enemyAttackSquares.getBit(Square.getIndex("G1"))
-                && kingSideCastlingMoves.isNonZero()
         ) {
             result.add(new Move(
                     ourPieceIndex,
@@ -493,9 +531,9 @@ public class Board {
 
         // black king side
         if (colorToMove == PieceColor.BLACK
+                && kingSideCastlingMoves.isNonZero()
                 && !enemyAttackSquares.getBit(Square.getIndex("F8"))
                 && !enemyAttackSquares.getBit(Square.getIndex("G8"))
-                && kingSideCastlingMoves.isNonZero()
         ) {
             result.add(new Move(
                     ourPieceIndex,
@@ -510,9 +548,9 @@ public class Board {
 
         // white queen side
         if (colorToMove == PieceColor.WHITE
+                && queenSideCastlingMoves.isNonZero()
                 && !enemyAttackSquares.getBit(Square.getIndex("C1"))
                 && !enemyAttackSquares.getBit(Square.getIndex("D1"))
-                && queenSideCastlingMoves.isNonZero()
         ) {
             result.add(new Move(
                     ourPieceIndex,
@@ -526,9 +564,9 @@ public class Board {
 
         // black queen side
         if (colorToMove == PieceColor.BLACK
+                && queenSideCastlingMoves.isNonZero()
                 && !enemyAttackSquares.getBit(Square.getIndex("C8"))
                 && !enemyAttackSquares.getBit(Square.getIndex("D8"))
-                && queenSideCastlingMoves.isNonZero()
         ) {
             result.add(new Move(
                     ourPieceIndex,
@@ -546,7 +584,10 @@ public class Board {
                                                       List<Move> result,
                                                       BitMap checkTrackForOurKing,
                                                       BitMap enemyPiecesGivingCheck,
-                                                      BitMap uncapturableEnPassantTarget, BitMap ourKing) {
+                                                      BitMap uncapturableEnPassantTarget,
+                                                      BitMap ourKing,
+                                                      BitMap pinMapForOurPieces,
+                                                      int ourKingIndex) {
         for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
             Piece ourPiece = squares[ourPieceIndex];
 
@@ -562,7 +603,9 @@ public class Board {
                         enemyPiecesGivingCheck,
                         ourPieceIndex,
                         ourPiece,
-                        uncapturableEnPassantTarget);
+                        uncapturableEnPassantTarget,
+                        pinMapForOurPieces,
+                        ourKingIndex);
             }
 
         }
@@ -596,10 +639,21 @@ public class Board {
                                                                          BitMap enemyPiecesGivingCheck,
                                                                          int ourPieceIndex,
                                                                          Piece ourPiece,
-                                                                         BitMap uncapturableEnPassantTarget) {
+                                                                         BitMap uncapturableEnPassantTarget,
+                                                                         BitMap pinMapForOurPieces,
+                                                                         int ourKingIndex) {
+
         MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
-        BitMap validMoves = moveResult.moveTargets().and(checkTrackForOurKing.or(enemyPiecesGivingCheck));
+        BitMap validMoves = moveResult.moveTargets()
+                .and(checkTrackForOurKing.or(enemyPiecesGivingCheck));
+
+        if (pinMapForOurPieces.getBit(ourPieceIndex)) {
+            // we can only move one the pin track
+            validMoves.andInPlace(pinMapForOurPieces);
+            // we have to remain on our pin track and not "jump" to another one
+            validMoves.andInPlace(BitMap.getLineThroughSquares(ourKingIndex, ourPieceIndex));
+        }
 
         generateNonKingMovesForWithGivenMoveMap(ourPieceIndex, ourPiece, result, uncapturableEnPassantTarget, moveResult, validMoves);
     }
@@ -628,6 +682,8 @@ public class Board {
     }
 
     public boolean isMoveLegal(Move move) {
+        if (cachedLegalMoves != null)
+            return cachedLegalMoves.contains(move);
         return getLegalMoves().contains(move);
     }
 
@@ -639,7 +695,11 @@ public class Board {
         Piece movingPiece = squares[from.getIndex()];
 
         if (movingPiece == null)
-            return new Board(this);
+            throw new IllegalStateException("Moving piece is null!");
+
+        if (blackKing.getBit(move.toIndex()) || whiteKing.getBit(move.toIndex())) {
+            throw new IllegalArgumentException("We are trying to capture the king!");
+        }
 
         Board result = new Board(this);
         result.enPassantTarget = null;
@@ -665,6 +725,8 @@ public class Board {
             if (result.halfMoveCounter % 2 == 0)
                 result.fullMoveClock++;
         }
+
+//        result.previousPositions.add(getFENPositionString());
 
         return result;
     }
@@ -784,7 +846,7 @@ public class Board {
                 newSquares[Square.getIndex("d1")] = newSquares[Square.getIndex("a1")];
                 newSquares[Square.getIndex("d1")].setSquare(new Square("d1"));
                 newSquares[Square.getIndex("c1")] = newSquares[Square.getIndex("e1")];
-                newSquares[Square.getIndex("e1")].setSquare(new Square("e1"));
+                newSquares[Square.getIndex("c1")].setSquare(new Square("c1"));
                 newSquares[Square.getIndex("e1")] = null;
                 newSquares[Square.getIndex("a1")] = null;
             } else {

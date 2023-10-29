@@ -48,13 +48,23 @@ public class BitMap {
     }
 
     public BitMap(String inputString) {
+        this(inputString, true);
+    }
+
+    public BitMap(String inputString, boolean startWithZeroIndex) {
         if (inputString.length() != 64)
             throw new IllegalArgumentException("inputString must have 64 characters!");
 
         data = 0L;
 
-        for (int i = 0; i < 64; i++) {
-            data |= (long) (inputString.charAt(i) == '1' ? 1 : 0) << i;
+        if (startWithZeroIndex) {
+            for (int i = 0; i < 64; i++) {
+                data |= (long) (inputString.charAt(i) == '1' ? 1 : 0) << i;
+            }
+        } else {
+            for (int i = 63; i >= 0; i--) {
+                data |= (long) (inputString.charAt(i) == '1' ? 1 : 0) << i;
+            }
         }
     }
 
@@ -152,7 +162,7 @@ public class BitMap {
 
     public List<Integer> getIndexesOfOnes() {
 
-        List<Integer> result = new LinkedList<>();
+        LinkedList<Integer> result = new LinkedList<>();
 
         long shiftedData = data;
         for (int i = 0; i < 64; i++) {
@@ -235,6 +245,49 @@ public class BitMap {
         data ^= other.data;
     }
 
+    public static BitMap getLineThroughSquares(int index1, int index2) {
+
+        int row1 = Square.getRow(index1);
+        int row2 = Square.getRow(index2);
+        int file1 = Square.getFile(index1);
+        int file2 = Square.getFile(index2);
+
+        int deltaRow = row1 - row2;
+        int deltaFile = file1 - file2;
+
+        int absDeltaRow = Math.abs(deltaRow);
+        int absDeltaFile = Math.abs(deltaFile);
+
+        BitMap result = new BitMap(0);
+
+        if (absDeltaRow == 0) {
+            // it is a file
+            for (int i = 0; i < 8; i++) {
+                result.setBitInPlace(Square.getIndex(i, row1), true);
+            }
+        } else if (absDeltaFile == 0) {
+            // it is a row
+            for (int i = 0; i < 8; i++) {
+                result.setBitInPlace(Square.getIndex(file1, i), true);
+            }
+        } else if (absDeltaFile == absDeltaRow) {
+            // it is a diagonal
+            int rowSign = (int) Math.signum(deltaRow);
+            int fileSign = (int) Math.signum(deltaFile);
+
+            for (int i = -8; i < 8; i++) {
+                int index = Square.getIndex(file1 + i * fileSign, row1 + i * rowSign);
+
+                if (index != -1)
+                    result.setBitInPlace(index, true);
+            }
+        } else {
+            throw new IllegalArgumentException("There are no good lines connecting these indexes!");
+        }
+
+        return result;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;
@@ -254,6 +307,27 @@ public class BitMap {
         // split rows neatly
         return String.format(
                 "BitMap(%s-%s-%s-%s-%s-%s-%s-%s)",
+                sb.substring(0, 8),
+                sb.substring(8, 16),
+                sb.substring(16, 24),
+                sb.substring(24, 32),
+                sb.substring(32, 40),
+                sb.substring(40, 48),
+                sb.substring(48, 56),
+                sb.substring(56, 64)
+        );
+    }
+
+    public String toMultilineString() {
+        final String dataString = Long.toUnsignedString(data, 2);
+        // get the data in binary form
+        StringBuilder sb = new StringBuilder();
+        // pad left with 0s
+        sb.append("0".repeat(Math.max(0, 64 - dataString.length())));
+        sb.append(dataString);
+        // split rows neatly
+        return String.format(
+                "%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s",
                 sb.substring(0, 8),
                 sb.substring(8, 16),
                 sb.substring(16, 24),

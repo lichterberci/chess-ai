@@ -53,4 +53,33 @@ class BitMapTest {
         assertEquals(32, bitMap.getIndexesOfOnes().size());
 
     }
+
+    @Test
+    void getFirstIndexOfOne() {
+
+        for (int i = 0; i < 64; i++) {
+
+            BitMap bitMap = new BitMap(0).setBit(i, true);
+            assertEquals(i, bitMap.getFirstIndexOfOne());
+
+        }
+
+    }
+
+    @Test
+    void getLineThroughSquares() {
+
+        int indexOfA3 = Square.getIndex("a3");
+        int indexOfC6 = Square.getIndex("c6");
+
+        assertThrows(IllegalArgumentException.class, () -> BitMap.getLineThroughSquares(indexOfA3, indexOfC6));
+        assertDoesNotThrow(() -> BitMap.getLineThroughSquares(Square.getIndex("a3"), Square.getIndex("c5")));
+
+        BitMap lineMap = BitMap.getLineThroughSquares(Square.getIndex("a3"), Square.getIndex("c5"));
+
+        assertEquals(lineMap, new BitMap("00000100" + "00001000" + "00010000" + "00100000" + "01000000" + "10000000" + "00000000" + "00000000", true));
+
+        assertTrue(lineMap.getBit(Square.getIndex("b4")));
+        assertTrue(lineMap.getBit(Square.getIndex("e7")));
+    }
 }

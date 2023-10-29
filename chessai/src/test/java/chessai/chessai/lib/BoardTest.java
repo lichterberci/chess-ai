@@ -95,10 +95,10 @@ class BoardTest {
 
         // O - O
 
-        board = board.makeMove(new Move(new Square("e1"), new Square("a1"), null, false, false, SpecialMove.KING_SIDE_CASTLE));
+        Board boardAfterShortCastle = board.makeMove(new Move(new Square("e1"), new Square("g1"), null, false, false, SpecialMove.KING_SIDE_CASTLE));
 
-        Piece kingAfterCastle = board.get(new Square("g1"));
-        Piece rookAfterCastle = board.get(new Square("f1"));
+        Piece kingAfterCastle = boardAfterShortCastle.get(new Square("g1"));
+        Piece rookAfterCastle = boardAfterShortCastle.get(new Square("f1"));
 
         assertNotNull(kingAfterCastle);
         assertNotNull(rookAfterCastle);
@@ -107,10 +107,10 @@ class BoardTest {
 
         // O - O - O
 
-        board = board.makeMove(new Move(new Square("a1"), new Square("a1"), null, false, false, SpecialMove.QUEEN_SIDE_CASTLE));
+        Board boardAfterLongCastle = board.makeMove(new Move(new Square("e1"), new Square("c1"), null, false, false, SpecialMove.QUEEN_SIDE_CASTLE));
 
-        Piece kingAfterLongCastle = board.get(new Square("c8"));
-        Piece rookAfterLongCastle = board.get(new Square("d8"));
+        Piece kingAfterLongCastle = boardAfterLongCastle.get(new Square("c1"));
+        Piece rookAfterLongCastle = boardAfterLongCastle.get(new Square("d1"));
 
         assertNotNull(kingAfterLongCastle);
         assertNotNull(rookAfterLongCastle);
@@ -185,6 +185,26 @@ class BoardTest {
         assertNull(boardAfterBlackLongCastle.get(new Square("e8")));
         assertInstanceOf(King.class, boardAfterBlackLongCastle.get(new Square("c8")));
         assertInstanceOf(Rook.class, boardAfterBlackLongCastle.get(new Square("d8")));
+    }
+
+    @Test
+    void cannotCastleFromAndThroughCheckOrTroughOwnPiece() throws ParseException {
+
+        Board fromCheckBoard = new Board("1k2r3/8/8/8/8/8/3P1P2/R3KR1R w KQ - 0 1");
+
+        assertEquals(1, fromCheckBoard.getLegalMoves().size());
+
+        Board throughCheckBoard = new Board("1k6/8/8/8/2r5/8/3PPP2/R3KR1R w KQ - 0 1");
+
+        assertEquals(1, throughCheckBoard.getLegalMoves().stream().filter(move -> move.from().equals(new Square("e1"))).count());
+
+        Board throughCheckBoard2 = new Board("1k6/8/8/8/3r4/8/4PP2/R3KR1R w KQ - 0 1");
+
+        assertEquals(0, throughCheckBoard2.getLegalMoves().stream().filter(move -> move.from().equals(new Square("e1"))).count());
+
+        Board throughOwnPieceBoard = new Board("1k6/8/8/8/2r5/8/PPPPPP2/R1B1KR1R w KQ - 0 1");
+
+        assertEquals(1, throughOwnPieceBoard.getLegalMoves().stream().filter(move -> move.from().equals(new Square("e1"))).count());
     }
 
     @Test

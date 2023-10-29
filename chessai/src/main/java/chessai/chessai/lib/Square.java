@@ -20,6 +20,14 @@ public class Square {
         return result;
     }
 
+    public static int getRow(int index) {
+        return 7 - (index / 8);
+    }
+
+    public static int getFile(int index) {
+        return index % 8;
+    }
+
     @Override
     public String toString() {
         return String.valueOf((char) ('A' + (squareData >>> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);

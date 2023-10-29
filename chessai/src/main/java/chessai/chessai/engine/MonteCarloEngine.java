@@ -44,15 +44,15 @@ public class MonteCarloEngine extends ChessEngine {
 
             final int numSimulationsRanByTheParentNode = parent != null ? parent.numSimulationsRanByThisNode : 0;
 
-            return ((double) numWins + numDraws * 0.5) / numSimulationsRanByThisNode
+            return (numWins + numDraws * 0.5) / numSimulationsRanByThisNode
 		            + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
         }
     }
 
-    private Random random;
-    private double explorationParameter;
-    private int numSimulations;
-    private int numNodesToCheck;
+    private final Random random;
+    private final double explorationParameter;
+    private final int numSimulations;
+    private final int numNodesToCheck;
 
     public MonteCarloEngine(int seed, double explorationParameter, int numSimulations, int numNodesToCheck) {
         random = new Random(seed);
@@ -67,8 +67,16 @@ public class MonteCarloEngine extends ChessEngine {
         TreeNode root = new TreeNode(board, null);
         List<Move> legalMovesByRoot = root.generateEmptyChildren();
 
+        // no moves
         if (root.children.isEmpty())
             return Optional.empty();
+
+        // forced move
+        if (root.children.size() == 1) {
+            Move result = legalMovesByRoot.get(0);
+            System.out.printf("Forced move: %s ---> %s%n", result.from(), result.to());
+            return Optional.of(result);
+        }
 
 //        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
 
@@ -102,10 +110,13 @@ public class MonteCarloEngine extends ChessEngine {
 
             AtomicInteger numWinsToAdd = new AtomicInteger();
             AtomicInteger numDrawsToAdd = new AtomicInteger();
+//
+//            int numWinsToAdd = 0;
+//            int numDrawsToAdd = 0;
 
             IntStream.range(0, numSimulations).parallel().forEach(j -> {
 
-	            GameState result = simulate(new Board(selectedNodeToExplore.state));
+                GameState result = simulate(selectedNodeToExplore.state);
 
                 if (result == GameState.DRAW)
                     numDrawsToAdd.getAndIncrement();
@@ -114,6 +125,18 @@ public class MonteCarloEngine extends ChessEngine {
                     numWinsToAdd.getAndIncrement();
 
             });
+
+//            for (int j = 0; j < numSimulations; j++) {
+//
+//                GameState result = simulate(new Board(selectedNodeToExplore.state));
+//
+//                if (result == GameState.DRAW)
+//                    numDrawsToAdd += 1;
+//                    // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
+//                else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
+//                    numWinsToAdd += 1;
+//
+//            }
 
             selectedNodeToExplore.numSimulationsRanByThisNode += numSimulations;
             selectedNodeToExplore.numWins = numWinsToAdd.get();
