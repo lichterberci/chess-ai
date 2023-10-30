@@ -9,13 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed empty move error and fixed monte carlo search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +102,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MateInTwoTest.findMateInTwo">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -303,7 +299,7 @@
       <workItem from="1697653436818" duration="592000" />
       <workItem from="1697730334391" duration="6850000" />
       <workItem from="1698605874145" duration="1500000" />
-      <workItem from="1698653255249" duration="2272000" />
+      <workItem from="1698653255249" duration="2390000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -585,13 +581,13 @@
       <option name="project" value="LOCAL" />
       <updated>1698607053912</updated>
     </task>
-    <task id="LOCAL-00037" summary="Mate in two is found :)">
+    <task id="LOCAL-00037" summary="Fixed empty move error and fixed monte carlo search">
       <option name="closed" value="true" />
-      <created>1698343319459</created>
+      <created>1698655617483</created>
       <option name="number" value="00037" />
       <option name="presentableId" value="LOCAL-00037" />
       <option name="project" value="LOCAL" />
-      <updated>1698343319459</updated>
+      <updated>1698655617483</updated>
     </task>
     <task id="LOCAL-00038" summary="Mate in two is found :)">
       <option name="closed" value="true" />
@@ -617,7 +613,7 @@
       <option name="project" value="LOCAL" />
       <updated>1698507172783</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +631,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Selection works" />
     <MESSAGE value="Selection works and random engine added" />
     <MESSAGE value="Drag and drop implemented" />
     <MESSAGE value="Added javadoc cuz y not" />
@@ -660,7 +655,8 @@
     <MESSAGE value="Worked on resolving the issue of pin track jumping" />
     <MESSAGE value="All tests pass, fixed linemap issue" />
     <MESSAGE value="Minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
+    <MESSAGE value="Fixed empty move error and fixed monte carlo search" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed empty move error and fixed monte carlo search" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -669,7 +665,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java</url>
-          <line>240</line>
+          <line>242</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
