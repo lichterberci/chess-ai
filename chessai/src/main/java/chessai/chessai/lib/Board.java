@@ -695,15 +695,17 @@ public class Board {
         Piece movingPiece = squares[from.getIndex()];
 
         if (movingPiece == null)
-//            throw new IllegalStateException("Moving piece is null!");
-            return new Board(this);
+            throw new IllegalStateException("Moving piece is null!");
 
         if (blackKing.getBit(move.toIndex()) || whiteKing.getBit(move.toIndex())) {
             throw new IllegalArgumentException("We are trying to capture the king!");
         }
 
         Board result = new Board(this);
+
         result.enPassantTarget = null;
+        result.cachedGameState = null;
+        result.cachedLegalMoves = null;
 
         result.squares = getSquaresAfterMove(move, result, to);
 
@@ -727,7 +729,7 @@ public class Board {
                 result.fullMoveClock++;
         }
 
-//        result.previousPositions.add(getFENPositionString());
+        result.previousPositions.add(getFENPositionString());
 
         return result;
     }

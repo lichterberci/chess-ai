@@ -21,6 +21,7 @@ public record Move(
         );
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
@@ -38,5 +39,10 @@ public record Move(
 
     public Square to() {
         return new Square(toIndex);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Move(from=%s, to=%s, isCapture=%s, isEnPassant=%s, specialMove=%s)", from(), to(), isCapture, isEnPassant, specialMove);
     }
 }

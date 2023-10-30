@@ -19,9 +19,17 @@ public class MonteCarloEngine extends ChessEngine {
         private int numWins = 0; // +1
         private int numDraws = 0; // +0.5
 
-        TreeNode(Board state, TreeNode parent) {
+        private String debugName;
+
+        @Override
+        public String toString() {
+            return debugName;
+        }
+
+        TreeNode(Board state, TreeNode parent, Move move) {
             this.state = state;
             this.parent = parent;
+            this.debugName = "%s (%s)".formatted(move, state.getFENString());
         }
 
         List<Move> generateEmptyChildren() {
@@ -30,7 +38,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             this.children = legalMoves
                     .stream()
-                    .map(move -> new TreeNode(state.makeMove(move), this))
+                    .map(move -> new TreeNode(state.makeMove(move), this, move))
                     .toList();
 
             return legalMoves;
@@ -64,7 +72,7 @@ public class MonteCarloEngine extends ChessEngine {
     @Override
     public Optional<Move> makeMove(Board board) {
 
-        TreeNode root = new TreeNode(board, null);
+        TreeNode root = new TreeNode(board, null, null);
         List<Move> legalMovesByRoot = root.generateEmptyChildren();
 
         // no moves
@@ -114,17 +122,54 @@ public class MonteCarloEngine extends ChessEngine {
 //            int numWinsToAdd = 0;
 //            int numDrawsToAdd = 0;
 
-            IntStream.range(0, numSimulations).parallel().forEach(j -> {
+            TreeNode backTraversingCurrentNode;
 
-                GameState result = simulate(selectedNodeToExplore.state);
+            if (selectedNodeToExplore.state.getState() == GameState.PLAYING) {
 
-                if (result == GameState.DRAW)
-                    numDrawsToAdd.getAndIncrement();
-                    // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
-                else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
-                    numWinsToAdd.getAndIncrement();
+                // we select 1 child, and play from there
 
-            });
+                TreeNode selectedChild = selectedNodeToExplore.children.get(random.nextInt(selectedNodeToExplore.children.size()));
+
+                IntStream.range(0, numSimulations).parallel().forEach(j -> {
+
+                    GameState result = simulate(selectedChild.state);
+
+                    if (result == GameState.DRAW)
+                        numDrawsToAdd.getAndIncrement();
+                        // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
+                    else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
+                        numWinsToAdd.getAndIncrement();
+
+                });
+
+                // we start the back propagation from the child node
+
+                selectedChild.numSimulationsRanByThisNode += numSimulations;
+                selectedChild.numWins += numWinsToAdd.get();
+                selectedChild.numDraws += numDrawsToAdd.get();
+
+                backTraversingCurrentNode = selectedChild.parent;
+            } else {
+
+                // our selected node is in a terminal state
+
+                switch (selectedNodeToExplore.state.getState()) {
+                    case WHITE_WIN ->
+                            numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.WHITE ? numSimulations : 0);
+                    case BLACK_WIN ->
+                            numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.BLACK ? numSimulations : 0);
+                    case DRAW -> numDrawsToAdd.getAndAdd(numSimulations);
+                    default -> throw new IllegalArgumentException("Unexpected value for game state!");
+                }
+
+                // we start the back propagation from our selected node
+
+                selectedNodeToExplore.numSimulationsRanByThisNode += numSimulations;
+                selectedNodeToExplore.numWins += numWinsToAdd.get();
+                selectedNodeToExplore.numDraws += numDrawsToAdd.get();
+
+                backTraversingCurrentNode = selectedNodeToExplore.parent;
+            }
 
 //            for (int j = 0; j < numSimulations; j++) {
 //
@@ -138,13 +183,8 @@ public class MonteCarloEngine extends ChessEngine {
 //
 //            }
 
-            selectedNodeToExplore.numSimulationsRanByThisNode += numSimulations;
-            selectedNodeToExplore.numWins = numWinsToAdd.get();
-            selectedNodeToExplore.numDraws = numDrawsToAdd.get();
 
             // backpropagation
-
-            TreeNode backTraversingCurrentNode = selectedNodeToExplore.parent;
 
             while (backTraversingCurrentNode != null) {
 

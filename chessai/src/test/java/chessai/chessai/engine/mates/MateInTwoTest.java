@@ -19,7 +19,7 @@ class MateInTwoTest {
     @Test
     void findMateInTwo() throws ParseException {
 
-        ChessEngine engine = new MonteCarloEngine(0, 1.4142, 500, 150);
+        ChessEngine engine = new MonteCarloEngine(0, 1, 500, 150);
 
         Board board1 = new Board("6k1/p2rR1p1/1p1r1p1R/3P4/4QPq1/1P6/P5PK/8 w - - 1 1");
 

@@ -9,14 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="All tests pass, fixed linemap issue">
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +106,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Tests">
+  <component name="RunManager" selected="Gradle.MateInTwoTest.findMateInTwo">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -189,7 +188,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="MateInTwoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="MateInOneTest.mateInOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -202,7 +201,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.engine.mates.MateInTwoTest&quot;" />
+            <option value="&quot;chessai.chessai.engine.mates.MateInOneTest.mateInOne&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -251,20 +250,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.MateInOneTest.mateInOne" />
       <item itemvalue="Gradle.BitMapTest.getFirstIndexOfOne" />
       <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
       <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
-      <item itemvalue="Gradle.MateInTwoTest" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
+        <item itemvalue="Gradle.MateInOneTest.mateInOne" />
         <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
         <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
         <item itemvalue="Gradle.BitMapTest.getFirstIndexOfOne" />
-        <item itemvalue="Gradle.MateInTwoTest" />
       </list>
     </recent_temporary>
   </component>
@@ -303,7 +302,8 @@
       <workItem from="1697645904664" duration="3815000" />
       <workItem from="1697653436818" duration="592000" />
       <workItem from="1697730334391" duration="6850000" />
-      <workItem from="1698605874145" duration="993000" />
+      <workItem from="1698605874145" duration="1500000" />
+      <workItem from="1698653255249" duration="2272000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -577,13 +577,13 @@
       <option name="project" value="LOCAL" />
       <updated>1698583248246</updated>
     </task>
-    <task id="LOCAL-00036" summary="Mate in two is found :)">
+    <task id="LOCAL-00036" summary="Minor changes">
       <option name="closed" value="true" />
-      <created>1698343252541</created>
+      <created>1698607053912</created>
       <option name="number" value="00036" />
       <option name="presentableId" value="LOCAL-00036" />
       <option name="project" value="LOCAL" />
-      <updated>1698343252541</updated>
+      <updated>1698607053912</updated>
     </task>
     <task id="LOCAL-00037" summary="Mate in two is found :)">
       <option name="closed" value="true" />
@@ -617,7 +617,7 @@
       <option name="project" value="LOCAL" />
       <updated>1698507172783</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -635,7 +635,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Game is almost fully playable (promotions needed)" />
     <MESSAGE value="Selection works" />
     <MESSAGE value="Selection works and random engine added" />
     <MESSAGE value="Drag and drop implemented" />
@@ -660,11 +659,21 @@
     <MESSAGE value="Fixing some bugs, removing deprecated code..." />
     <MESSAGE value="Worked on resolving the issue of pin track jumping" />
     <MESSAGE value="All tests pass, fixed linemap issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="All tests pass, fixed linemap issue" />
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java</url>
+          <line>240</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.stream.ReferencePipeline$Head" memberName="combinedFlags" />
