@@ -9,9 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Images are displayed">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed MCTS and optimized some things">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +136,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="BitMapTest.getLineThroughSquares" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -158,7 +160,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -182,7 +184,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInOneTest.mateInOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -206,7 +208,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -230,7 +232,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -296,11 +298,10 @@
       <workItem from="1697531913500" duration="149000" />
       <workItem from="1697538304237" duration="203000" />
       <workItem from="1697553027529" duration="1429000" />
-      <workItem from="1697645904664" duration="3815000" />
-      <workItem from="1697653436818" duration="592000" />
-      <workItem from="1697730334391" duration="6850000" />
-      <workItem from="1698605874145" duration="1500000" />
-      <workItem from="1698653255249" duration="8928000" />
+      <workItem from="1698335575022" duration="8235000" />
+      <workItem from="1698409349664" duration="225000" />
+      <workItem from="1698483976298" duration="102000" />
+      <workItem from="1698503047911" duration="4564000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -614,7 +615,7 @@
       <option name="project" value="LOCAL" />
       <updated>1698507172783</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -632,6 +633,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Selection works and random engine added" />
+    <MESSAGE value="Drag and drop implemented" />
     <MESSAGE value="Added javadoc cuz y not" />
     <MESSAGE value="Put javadocs into seperate folder" />
     <MESSAGE value="Added monte carlo tree search" />
@@ -643,21 +646,19 @@
     <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
     <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
     <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
-    <MESSAGE value="added castling" />
-    <MESSAGE value="added pins" />
-    <MESSAGE value="redid tests" />
-    <MESSAGE value="added pinmaps for Board, added @Deprecated to getPseudoLegalMoves method on Piece" />
-    <MESSAGE value="started working on generateLegalMovesWithBitMaps" />
-    <MESSAGE value="finished move generation (on paper)" />
-    <MESSAGE value="Removed unnecessary bitmaps from board" />
-    <MESSAGE value="Fixing some bugs, removing deprecated code..." />
-    <MESSAGE value="Worked on resolving the issue of pin track jumping" />
-    <MESSAGE value="All tests pass, fixed linemap issue" />
-    <MESSAGE value="Minor changes" />
-    <MESSAGE value="Fixed empty move error and fixed monte carlo search" />
-    <MESSAGE value="Monte carlo MVP is ready, time to migrate UI" />
-    <MESSAGE value="Images are displayed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Images are displayed" />
+    <MESSAGE value="Fixed some bugs, but it is not yet near..." />
+    <MESSAGE value="All tests pass!!!" />
+    <MESSAGE value="Double check is now correctly determined" />
+    <MESSAGE value="Random bullshit that sonarlint added" />
+    <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
+    <MESSAGE value="Updated method names" />
+    <MESSAGE value="Removed some more old code and added some tests" />
+    <MESSAGE value="Resolved kingmap issues" />
+    <MESSAGE value="Fixed bitmap issues" />
+    <MESSAGE value="Mate in two is found :)" />
+    <MESSAGE value="Workspace changes" />
+    <MESSAGE value="Fixed MCTS and optimized some things" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed MCTS and optimized some things" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
