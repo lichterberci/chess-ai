@@ -7,7 +7,6 @@ import chessai.chessai.lib.PieceColor;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -17,6 +16,10 @@ public class BoardPanel extends JPanel {
     private JPanel[] squarePanels;
 
     public BoardPanel(Color whiteTileColor, Color blackTileColor, boolean whiteIsAtTheBottom, int squareSize) {
+        this(whiteTileColor, blackTileColor, whiteIsAtTheBottom, squareSize, null);
+    }
+
+    public BoardPanel(Color whiteTileColor, Color blackTileColor, boolean whiteIsAtTheBottom, int squareSize, Board board) {
 
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
         this.squareSize = squareSize;
@@ -25,14 +28,16 @@ public class BoardPanel extends JPanel {
 
         drawBoardAndSetUpSquares(whiteTileColor, blackTileColor);
 
+        if (board != null)
+            drawPosition(board);
     }
 
     private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor) {
 
         squarePanels = new JPanel[64];
 
-        for (int file = 0; file < 8; file++) {
-            for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < 8; row++) {
+            for (int file = 0; file < 8; file++) {
 
                 int index = row * 8 + file;
 
@@ -42,6 +47,8 @@ public class BoardPanel extends JPanel {
                 final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
 
                 squarePanel.setBackground(shouldSquareBeColoredWhite ? whiteTileColor : blackTileColor);
+                squarePanel.setAlignmentY(CENTER_ALIGNMENT);
+                squarePanel.setAlignmentX(CENTER_ALIGNMENT);
 
                 this.add(squarePanel);
 
@@ -51,11 +58,11 @@ public class BoardPanel extends JPanel {
 
     }
 
-    public void drawPosition(Board board) throws IOException {
+    public void drawPosition(Board board) {
 
         for (int i = 0; i < 64; i++) {
 
-            Piece piece = board.get(i);
+            Piece piece = board.get(this.whiteIsAtTheBottom ? i : 63 - i);
 
             if (piece == null)
                 continue;
@@ -67,19 +74,29 @@ public class BoardPanel extends JPanel {
 
             URL imageResource = getClass().getResource(urlString);
 
-            if (imageResource == null)
-                throw new FileNotFoundException("Image resource path is null! (%s)".formatted(urlString));
+            if (imageResource == null) {
+                System.err.printf("Image resource path is null! (%s)%n", urlString);
+                continue;
+            }
 
-            var image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_SMOOTH);
+            Image image;
 
-            var imageComponent = new JPanel() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    g.drawImage(image, squareSize, squareSize, null);
-                }
-            };
+            try {
+                image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_AREA_AVERAGING);
+            } catch (IOException e) {
+                System.err.printf("Image resource path is null! (%s)%n", urlString);
+                continue;
+            }
 
-//            imageComponent.paintComponent(getGraphics());
+            var imageComponent = new JLabel("A");
+//            imageComponent.setIcon(new ImageIcon(image));
+            imageComponent.setSize(new Dimension(squareSize, squareSize));
+            imageComponent.setHorizontalAlignment(SwingConstants.CENTER);
+            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
+            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
+            imageComponent.setHorizontalTextPosition(SwingConstants.CENTER);
+            imageComponent.setBackground(Color.RED);
+
             imageComponent.setVisible(true);
 
             squarePanels[i].add(imageComponent);

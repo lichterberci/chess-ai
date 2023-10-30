@@ -9,9 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Changed mate in 2 test's hyperparams a bit">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/a/4a1953d2d02b050aaf67c458786e265e0e47d627" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +109,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MateInTwoTest">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -137,7 +143,7 @@
       <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="MateInOneTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -150,7 +156,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece&quot;" />
+            <option value="&quot;chessai.chessai.engine.mates.MateInOneTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -158,7 +164,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInOneTest.mateInOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -247,20 +253,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.MateInOneTest" />
       <item itemvalue="Gradle.MateInTwoTest" />
       <item itemvalue="Gradle.MateInOneTest.mateInOne" />
       <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
-      <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MateInOneTest" />
         <item itemvalue="Gradle.MateInTwoTest" />
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.MateInOneTest.mateInOne" />
         <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
-        <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
       </list>
     </recent_temporary>
   </component>
@@ -300,6 +306,7 @@
       <workItem from="1698409349664" duration="225000" />
       <workItem from="1698483976298" duration="102000" />
       <workItem from="1698503047911" duration="4564000" />
+      <workItem from="1698697079541" duration="2434000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -621,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698683677917</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Changed mate in 2 test's hyperparams a bit">
+      <option name="closed" value="true" />
+      <created>1698684012293</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1698684012293</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -639,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Drag and drop implemented" />
     <MESSAGE value="Added javadoc cuz y not" />
     <MESSAGE value="Put javadocs into seperate folder" />
     <MESSAGE value="Added monte carlo tree search" />
@@ -664,7 +678,8 @@
     <MESSAGE value="Workspace changes" />
     <MESSAGE value="Fixed MCTS and optimized some things" />
     <MESSAGE value="Minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
+    <MESSAGE value="Changed mate in 2 test's hyperparams a bit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed mate in 2 test's hyperparams a bit" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

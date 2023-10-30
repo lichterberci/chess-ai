@@ -1,14 +1,10 @@
 
 [
 +src/main/java/chessai/chessai/lib/Move.java,4\8\481190c87cb9b73935404546c9ddac94b5eee961
-a
-1src/main/java/chessai/chessai/ui/GameManager.java,9\7\97509abdd86302a07162af5f3ce58b8c228a8b4c
 c
 3src/main/java/chessai/chessai/lib/pieces/Queen.java,a\3\a31cb6a25ad445e386b17d712f70edf2b9e00cc2
 c
 3src/main/java/chessai/chessai/lib/SlidingPiece.java,5\7\5752c7e97cf9d2ac3ddc89b2ec7ce95ab5ce6698
-b
-2src/main/java/chessai/chessai/MainApplication.java,b\d\bd4a39984386d800f610296b416b4141d5c353d1
 g
 7src/test/java/chessai/chessai/lib/pieces/QueenTest.java,5\2\520e414906d62dc600e88529020a552be5f5fd54
 b
@@ -27,3 +23,5 @@ m
 ,src/main/java/chessai/chessai/lib/Board.java,5\2\529fd6579586c8ae9ecd04f247679c0fbd30c238
 j
 :src/main/java/chessai/chessai/engine/MonteCarloEngine.java,9\5\9526e5f94c596518bf628d3b838151683c8c5689
+m
+=src/test/java/chessai/chessai/engine/mates/MateInOneTest.java,2\a\2a7a9958e264376ab6eb1ef36d08cba8baed1e3c
