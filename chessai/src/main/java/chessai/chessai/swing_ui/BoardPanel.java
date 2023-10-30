@@ -4,8 +4,10 @@ import chessai.chessai.lib.Board;
 import chessai.chessai.lib.Piece;
 import chessai.chessai.lib.PieceColor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -65,12 +67,22 @@ public class BoardPanel extends JPanel {
 
             URL imageResource = getClass().getResource(urlString);
 
-            System.out.println(urlString);
-            System.out.println(imageResource);
+            if (imageResource == null)
+                throw new FileNotFoundException("Image resource path is null! (%s)".formatted(urlString));
 
-            JLabel labelWithImage = new JLabel(new ImageIcon(imageResource));
+            var image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_SMOOTH);
 
-            squarePanels[i].add(labelWithImage);
+            var imageComponent = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    g.drawImage(image, squareSize, squareSize, null);
+                }
+            };
+
+//            imageComponent.paintComponent(getGraphics());
+            imageComponent.setVisible(true);
+
+            squarePanels[i].add(imageComponent);
         }
 
     }

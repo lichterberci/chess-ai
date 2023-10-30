@@ -9,32 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Monte carlo MVP is ready, time to migrate UI">
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/MainApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Images are displayed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javadocs/chessai.chessai/chessai/chessai/MainApplication.html" beforeDir="false" afterPath="$PROJECT_DIR$/javadocs/chessai.chessai/chessai/chessai/MainApplication.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/ui/PlayerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/PlayerType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/MainBoard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/MainPieceSet.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/MainPieceSet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bB.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bB.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bK.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bK.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bN.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bN.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bP.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bP.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bQ.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bQ.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/bR.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/bR.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wB.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wB.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wK.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wK.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wN.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wN.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wP.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wP.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wQ.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wQ.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/pieces/wR.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces/wR.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -323,7 +300,7 @@
       <workItem from="1697653436818" duration="592000" />
       <workItem from="1697730334391" duration="6850000" />
       <workItem from="1698605874145" duration="1500000" />
-      <workItem from="1698653255249" duration="7736000" />
+      <workItem from="1698653255249" duration="8928000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -621,13 +598,13 @@
       <option name="project" value="LOCAL" />
       <updated>1698656063399</updated>
     </task>
-    <task id="LOCAL-00039" summary="Workspace changes">
+    <task id="LOCAL-00039" summary="Images are displayed">
       <option name="closed" value="true" />
-      <created>1698343681231</created>
+      <created>1698661052147</created>
       <option name="number" value="00039" />
       <option name="presentableId" value="LOCAL-00039" />
       <option name="project" value="LOCAL" />
-      <updated>1698343681231</updated>
+      <updated>1698661052147</updated>
     </task>
     <task id="LOCAL-00040" summary="Fixed MCTS and optimized some things">
       <option name="closed" value="true" />
@@ -637,7 +614,7 @@
       <option name="project" value="LOCAL" />
       <updated>1698507172783</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,7 +632,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Drag and drop implemented" />
     <MESSAGE value="Added javadoc cuz y not" />
     <MESSAGE value="Put javadocs into seperate folder" />
     <MESSAGE value="Added monte carlo tree search" />
@@ -680,7 +656,8 @@
     <MESSAGE value="Minor changes" />
     <MESSAGE value="Fixed empty move error and fixed monte carlo search" />
     <MESSAGE value="Monte carlo MVP is ready, time to migrate UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Monte carlo MVP is ready, time to migrate UI" />
+    <MESSAGE value="Images are displayed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Images are displayed" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
