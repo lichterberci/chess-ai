@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed MCTS and optimized some things">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +103,7 @@
       <recent name="chessai.chessai.lib.pieces" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Gradle.MateInTwoTest">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -114,30 +112,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="BitMapTest.getFirstIndexOfOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.BitMapTest.getFirstIndexOfOne&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
     </configuration>
     <configuration name="BitMapTest.getLineThroughSquares" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -211,6 +185,30 @@
       <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="MateInTwoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;chessai.chessai.engine.mates.MateInTwoTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -249,8 +247,8 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.MateInTwoTest" />
       <item itemvalue="Gradle.MateInOneTest.mateInOne" />
-      <item itemvalue="Gradle.BitMapTest.getFirstIndexOfOne" />
       <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
       <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
@@ -258,11 +256,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MateInTwoTest" />
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.MateInOneTest.mateInOne" />
         <item itemvalue="Gradle.BitMapTest.getLineThroughSquares" />
         <item itemvalue="Gradle.BoardTest.cannotCastleFromAndThroughCheckOrTroughOwnPiece" />
-        <item itemvalue="Gradle.BitMapTest.getFirstIndexOfOne" />
       </list>
     </recent_temporary>
   </component>
@@ -615,7 +613,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698507172783</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Minor changes">
+      <option name="closed" value="true" />
+      <created>1698683677917</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1698683677917</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -633,7 +639,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Selection works and random engine added" />
     <MESSAGE value="Drag and drop implemented" />
     <MESSAGE value="Added javadoc cuz y not" />
     <MESSAGE value="Put javadocs into seperate folder" />
@@ -658,7 +663,8 @@
     <MESSAGE value="Mate in two is found :)" />
     <MESSAGE value="Workspace changes" />
     <MESSAGE value="Fixed MCTS and optimized some things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed MCTS and optimized some things" />
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -682,7 +688,7 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
