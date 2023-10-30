@@ -1,6 +1,5 @@
-package chessai.chessai.ui;
+package chessai.chessai.javafxUI.ui;
 
-import chessai.chessai.MainApplication;
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.Piece;
 import chessai.chessai.lib.PieceColor;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Deprecated
 public class BoardController {
 
     @FXML

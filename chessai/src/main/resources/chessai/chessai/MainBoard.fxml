@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chessai.chessai.ui.BoardController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="chessai.chessai.javafxUI.ui.BoardController">
     <AnchorPane fx:id="boardHolder" minHeight="100" minWidth="100" prefHeight="1000" prefWidth="1000">
         <GridPane fx:id="board" alignment="CENTER">
             <columnConstraints>

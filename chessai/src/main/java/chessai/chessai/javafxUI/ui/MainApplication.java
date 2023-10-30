@@ -1,15 +1,14 @@
-package chessai.chessai;
+package chessai.chessai.javafxUI.ui;
 
 import chessai.chessai.engine.ChessEngine;
 import chessai.chessai.engine.MonteCarloEngine;
-import chessai.chessai.ui.GameManager;
-import chessai.chessai.ui.PlayerType;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;
 
+@Deprecated
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, ParseException, InterruptedException {

@@ -1,6 +1,5 @@
-package chessai.chessai.ui;
+package chessai.chessai.javafxUI.ui;
 
-import chessai.chessai.MainApplication;
 import chessai.chessai.engine.ChessEngine;
 import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.Queen;
@@ -17,6 +16,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@Deprecated
 public class GameManager {
 
     private static GameManager instance;

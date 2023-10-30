@@ -1,4 +1,4 @@
-package chessai.chessai.ui;
+package chessai.chessai.javafxUI.ui;
 
 public enum PlayerType {
     HUMAN, ENGINE

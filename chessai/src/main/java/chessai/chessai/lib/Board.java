@@ -123,6 +123,11 @@ public class Board {
         return squares[square.getIndex()];
     }
 
+    public Piece get(int index) {
+        if (index == -1)
+            return null;
+        return squares[index];
+    }
     public Optional<PieceColor> getColorAtSquare(Square square) {
         if (squares[square.getIndex()] == null)
             return Optional.empty();
