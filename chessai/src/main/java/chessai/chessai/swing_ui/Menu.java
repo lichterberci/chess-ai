@@ -21,11 +21,12 @@ public class Menu {
 	        BoardPanel board = new BoardPanel(
 			        new Color(237, 214, 179, 255),
 			        new Color(179, 134, 98, 255),
-			        true,
+			        false,
 			        100);
 	        board.setVisible(true);
 	        try {
 		        board.drawPosition(new Board("r1bqkbnr/pppp1pp1/2n1p2p/8/2BPP3/5Q2/PPP2PPP/RNB1K1NR b KQkq - 0 1"));
+		        board.drawPosition(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
 	        } catch (ParseException ex) {
 		        throw new RuntimeException(ex);
 	        }

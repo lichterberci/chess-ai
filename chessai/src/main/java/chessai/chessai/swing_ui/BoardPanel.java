@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class BoardPanel extends JPanel {
+    private final Color whiteTileColor;
+    private final Color blackTileColor;
     private final boolean whiteIsAtTheBottom;
     private final int squareSize;
     private JPanel[] squarePanels;
@@ -21,6 +23,8 @@ public class BoardPanel extends JPanel {
 
     public BoardPanel(Color whiteTileColor, Color blackTileColor, boolean whiteIsAtTheBottom, int squareSize, Board board) {
 
+        this.whiteTileColor = whiteTileColor;
+        this.blackTileColor = blackTileColor;
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
         this.squareSize = squareSize;
 
@@ -61,6 +65,11 @@ public class BoardPanel extends JPanel {
     public void drawPosition(Board board) {
 
         for (int i = 0; i < 64; i++) {
+            // WARNING: this removes all children, not only the chess pieces
+            this.squarePanels[i].removeAll();
+        }
+
+        for (int i = 0; i < 64; i++) {
 
             Piece piece = board.get(this.whiteIsAtTheBottom ? i : 63 - i);
 
@@ -82,19 +91,18 @@ public class BoardPanel extends JPanel {
             Image image;
 
             try {
-                image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_AREA_AVERAGING);
+                image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_SMOOTH);
             } catch (IOException e) {
                 System.err.printf("Image resource path is null! (%s)%n", urlString);
                 continue;
             }
 
-            var imageComponent = new JLabel("A");
-//            imageComponent.setIcon(new ImageIcon(image));
+            var imageComponent = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
             imageComponent.setSize(new Dimension(squareSize, squareSize));
-            imageComponent.setHorizontalAlignment(SwingConstants.CENTER);
-            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
-            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
-            imageComponent.setHorizontalTextPosition(SwingConstants.CENTER);
+//            imageComponent.setHorizontalAlignment(SwingConstants.CENTER);
+//            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
+//            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
+//            imageComponent.setHorizontalTextPosition(SwingConstants.CENTER);
             imageComponent.setBackground(Color.RED);
 
             imageComponent.setVisible(true);
