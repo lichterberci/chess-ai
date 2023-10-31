@@ -103,7 +103,9 @@ public class BoardPanel extends JPanel {
 //            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
 //            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
 //            imageComponent.setHorizontalTextPosition(SwingConstants.CENTER);
-            imageComponent.setBackground(Color.RED);
+            imageComponent.setIconTextGap(0);
+            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
+            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
 
             imageComponent.setVisible(true);
 
