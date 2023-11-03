@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 public class BoardPanel extends JPanel {
     private final Color whiteTileColor;
     private final Color blackTileColor;
+    private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
     private final int squareSize;
     private JPanel[] squarePanels;
@@ -26,14 +27,15 @@ public class BoardPanel extends JPanel {
     private final List<Consumer<Square>> onSquareDragStartListeners;
     private final List<Consumer<Square>> onSquareDragEndListeners;
 
-    public BoardPanel(Color whiteTileColor, Color blackTileColor, boolean whiteIsAtTheBottom, int squareSize) {
-        this(whiteTileColor, blackTileColor, whiteIsAtTheBottom, squareSize, null);
+    public BoardPanel(Color whiteTileColor, Color blackTileColor, Color selectedSquareColor, boolean whiteIsAtTheBottom, int squareSize) {
+        this(whiteTileColor, blackTileColor, selectedSquareColor, whiteIsAtTheBottom, squareSize, null);
     }
 
-    public BoardPanel(Color whiteTileColor, Color blackTileColor, boolean whiteIsAtTheBottom, int squareSize, Board board) {
+    public BoardPanel(Color whiteTileColor, Color blackTileColor, Color selectedSquareColor, boolean whiteIsAtTheBottom, int squareSize, Board board) {
 
         this.whiteTileColor = whiteTileColor;
         this.blackTileColor = blackTileColor;
+        this.selectedSquareColor = selectedSquareColor;
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
         this.squareSize = squareSize;
 
@@ -144,6 +146,26 @@ public class BoardPanel extends JPanel {
             imageComponent.setVisible(true);
 
             squarePanels[i].add(imageComponent);
+            squarePanels[i].repaint();
+        }
+    }
+
+    public void selectSquare(Square square) {
+
+        int selectedIndex = square == null ? -1 : square.getIndex();
+
+        if (!this.whiteIsAtTheBottom)
+            selectedIndex = 63 - selectedIndex; // flip the board if needed (-1 will be invalid this way too)
+
+        for (int row = 0; row < 8; row++) {
+            for (int file = 0; file < 8; file++) {
+
+                final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
+
+                Color tileColor = shouldSquareBeColoredWhite ? whiteTileColor : blackTileColor;
+
+                squarePanels[row * 8 + file].setBackground(row * 8 + file != selectedIndex ? tileColor : selectedSquareColor);
+            }
         }
     }
 
