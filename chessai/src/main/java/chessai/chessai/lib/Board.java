@@ -907,6 +907,8 @@ public class Board {
 
         Piece pieceOnDestinationSquare = get(to);
 
+        System.out.println(movingPiece + " " + colorToMove);
+
         if (movingPiece == null || movingPiece.getColor() != colorToMove)
             return Optional.empty();
 

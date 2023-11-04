@@ -1,5 +1,19 @@
 
 o
-java:S3776I"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(‹ò¡8ÛÖˆş·1
+java:S3776I"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(‹ò¡8 ”¾‹¸1
+L	java:S106U"+Replace this use of System.out by a logger.(ÇÏñîûÿÿÿÿ8È¼··1
+X	java:S125Y"<This block of commented-out lines of code should be removed.(äîúÍ8¥”¾‹¸1
+]	java:S125z"<This block of commented-out lines of code should be removed.(ˆ·“Ïüÿÿÿÿ8¨”¾‹¸1
+^	java:S125®"<This block of commented-out lines of code should be removed.(Òè°üÿÿÿÿ8®”¾‹¸1
+Y	java:S125Ë"<This block of commented-out lines of code should be removed.(Ìçç8È¼··1
+M	java:S106Ô"+Replace this use of System.out by a logger.(üÏˆñıÿÿÿÿ8È¼··1
+Y	java:S125Ò"<This block of commented-out lines of code should be removed.(Ç±8È¼··1
+^	java:S125Ö"<This block of commented-out lines of code should be removed.(ñôìúÿÿÿÿ8È¼··1
+Y	java:S125Ù"<This block of commented-out lines of code should be removed.(ÓÂ´¥8È¼··1
+Y	java:S125Ş"<This block of commented-out lines of code should be removed.(¥Ñ†•8È¼··1
+^	java:S125à"<This block of commented-out lines of code should be removed.(«ßÓıÿÿÿÿ8È¼··1
+G	java:S106í"+Replace this use of System.out by a logger.(–¢`8È¼··1
+M	java:S106ñ"+Replace this use of System.out by a logger.(´‡øùÿÿÿÿ8²”¾‹¸1
+^	java:S125ƒ"<This block of commented-out lines of code should be removed.(Ëšß¯øÿÿÿÿ8•È¼··1
 ã
-java:S6541I"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 75 to 64, Complexity from 16 to 14, Nesting Level from 4 to 2, Number of Variables from 18 to 6.(‹ò¡8êÖˆş·1
+java:S6541I"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 75 to 64, Complexity from 16 to 14, Nesting Level from 4 to 2, Number of Variables from 18 to 6.(‹ò¡8½ ¾‹¸1
