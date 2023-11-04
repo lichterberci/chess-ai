@@ -928,16 +928,17 @@ public class Board {
 
     @NotNull
     private SpecialMove getInferredSpecialType(Square from, Square to, Piece movingPiece) {
+
         boolean isPotentialKingSideCastle = colorToMove == PieceColor.WHITE ? (
-                from.equals(new Square("e1")) && to.equals(new Square("g1"))
+                from.equals(new Square("e1")) && to.equals(new Square("g1")) && movingPiece instanceof King
         ) : (
-                from.equals(new Square("e8")) && to.equals(new Square("g8"))
+                from.equals(new Square("e8")) && to.equals(new Square("g8")) && movingPiece instanceof King
         );
 
         boolean isPotentialQueenSideCastle = colorToMove == PieceColor.WHITE ? (
-                from.equals(new Square("e1")) && to.equals(new Square("c1"))
+                from.equals(new Square("e1")) && to.equals(new Square("c1")) && movingPiece instanceof King
         ) : (
-                from.equals(new Square("e8")) && to.equals(new Square("c8"))
+                from.equals(new Square("e8")) && to.equals(new Square("c8")) && movingPiece instanceof King
         );
 
         boolean isPotentialDoublePawnMove = movingPiece instanceof Pawn && Math.abs(from.row() - to.row()) == 2;

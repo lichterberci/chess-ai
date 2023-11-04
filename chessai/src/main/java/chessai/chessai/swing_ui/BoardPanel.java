@@ -74,7 +74,6 @@ public class BoardPanel extends JPanel {
                 squarePanel.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        System.out.println("clicked " + BoardPanel.this.onSquareDragEndListeners.size());
                         BoardPanel.this.onSquareClickListeners.forEach(listener -> listener.accept(square));
                     }
 
@@ -108,6 +107,7 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < 64; i++) {
 
             Piece piece = board.get(this.whiteIsAtTheBottom ? i : 63 - i);
+            Square square = new Square(this.whiteIsAtTheBottom ? i : 63 - i);
 
             if (piece == null)
                 continue;
@@ -143,6 +143,22 @@ public class BoardPanel extends JPanel {
             imageComponent.setIconTextGap(0);
             imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
             imageComponent.setVerticalAlignment(SwingConstants.CENTER);
+            imageComponent.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    BoardPanel.this.onSquareClickListeners.forEach(listener -> listener.accept(square));
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    BoardPanel.this.onSquareDragStartListeners.forEach(listener -> listener.accept(square));
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    BoardPanel.this.onSquareDragEndListeners.forEach(listener -> listener.accept(square));
+                }
+            });
             imageComponent.setVisible(true);
 
             squarePanels[i].add(imageComponent);
@@ -167,6 +183,8 @@ public class BoardPanel extends JPanel {
                 squarePanels[row * 8 + file].setBackground(row * 8 + file != selectedIndex ? tileColor : selectedSquareColor);
             }
         }
+
+        repaint();
     }
 
     public List<Consumer<Square>> getOnSquareClickListeners() {

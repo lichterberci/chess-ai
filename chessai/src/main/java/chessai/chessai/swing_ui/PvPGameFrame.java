@@ -12,8 +12,8 @@ import java.text.ParseException;
 public class PvPGameFrame extends JFrame {
 
 	private final BoardPanel boardPanel;
-	private Board board;
-	private Square selectedSquare;
+	private transient Board board;
+	private transient Square selectedPiece;
 
 	public PvPGameFrame() {
 
@@ -54,53 +54,57 @@ public class PvPGameFrame extends JFrame {
 		boardPanel.repaint();
 	}
 
-	private void tryToMakeMove(Move move) {
+	private boolean tryToMakeMove(Move move) {
 
 		if (move == null)
-			return;
+			return false;
 
 		if (!board.isMoveLegal(move))
-			return;
+			return false;
 
 		makeMove(move);
+
+		return true;
 	}
 
 	private void onSquareClick(Square square) {
 
-		System.out.println("Click " + square);
-
-		if (selectedSquare == null) {
-			selectedSquare = square;
-			boardPanel.selectSquare(square);
+		if (selectedPiece == null
+				&& board.get(square) != null
+				&& board.get(square).getColor() == board.colorToMove
+		) {
+			selectPieceOnBoard(square);
 			return;
 		}
 
-		if (board.get(selectedSquare) == null) {
-			// we previously selected an empty square
-			selectedSquare = square;
-			boardPanel.selectSquare(square);
+		if (selectedPiece == null)
 			return;
-		}
-
-
-		if (board.get(selectedSquare).getColor() != board.colorToMove) {
-			// we previously selected a piece of the opposite color
-			selectedSquare = square;
-			boardPanel.selectSquare(square);
-			return;
-		}
 
 		// TODO: add promotion piece selection
-		tryToMakeMove(board.tryToInferMove(selectedSquare, square, Queen.class).orElse(null));
+		final boolean couldMakeMove = tryToMakeMove(board.tryToInferMove(selectedPiece, square, Queen.class).orElse(null));
 
-		selectedSquare = null;
+		if (couldMakeMove) {
+			selectPieceOnBoard(null);
+			return;
+		}
+
+		if (board.get(square) != null && board.get(square).getColor() == board.colorToMove)
+			selectPieceOnBoard(square); // clicked on another friendly piece
+		else
+			selectPieceOnBoard(null); // clicked on a random square
+	}
+
+	private void selectPieceOnBoard(Square square) {
+		selectedPiece = square;
+		boardPanel.selectSquare(square);
+		boardPanel.repaint();
 	}
 
 	private void onSquareDragStart(Square square) {
 
 		System.out.println("Drag start " + square);
 
-		selectedSquare = square;
+		selectedPiece = square;
 	}
 
 	private void onSquareDragEnd(Square square) {
@@ -108,6 +112,6 @@ public class PvPGameFrame extends JFrame {
 		System.out.println("Drag end " + square);
 
 		// TODO: add promotion piece selection
-		tryToMakeMove(board.tryToInferMove(selectedSquare, square, Queen.class).orElse(null));
+		tryToMakeMove(board.tryToInferMove(selectedPiece, square, Queen.class).orElse(null));
 	}
 }
