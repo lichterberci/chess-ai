@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Images are displayed">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
     </list>
@@ -300,7 +304,8 @@
       <workItem from="1697653436818" duration="592000" />
       <workItem from="1697730334391" duration="6850000" />
       <workItem from="1698605874145" duration="1500000" />
-      <workItem from="1698653255249" duration="8928000" />
+      <workItem from="1698653255249" duration="9554000" />
+      <workItem from="1699092280948" duration="296000" />
     </task>
     <task id="LOCAL-00002" summary="Continued setup for lib">
       <option name="closed" value="true" />
@@ -606,15 +611,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698661052147</updated>
     </task>
-    <task id="LOCAL-00040" summary="Fixed MCTS and optimized some things">
+    <task id="LOCAL-00040" summary="Minor changes">
       <option name="closed" value="true" />
-      <created>1698507172783</created>
+      <created>1698683013566</created>
       <option name="number" value="00040" />
       <option name="presentableId" value="LOCAL-00040" />
       <option name="project" value="LOCAL" />
-      <updated>1698507172783</updated>
+      <updated>1698683013566</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,11 +658,11 @@
     <MESSAGE value="Fixing some bugs, removing deprecated code..." />
     <MESSAGE value="Worked on resolving the issue of pin track jumping" />
     <MESSAGE value="All tests pass, fixed linemap issue" />
-    <MESSAGE value="Minor changes" />
     <MESSAGE value="Fixed empty move error and fixed monte carlo search" />
     <MESSAGE value="Monte carlo MVP is ready, time to migrate UI" />
     <MESSAGE value="Images are displayed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Images are displayed" />
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

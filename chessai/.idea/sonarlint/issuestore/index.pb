@@ -1,14 +1,10 @@
 
 [
 +src/main/java/chessai/chessai/lib/Move.java,4\8\481190c87cb9b73935404546c9ddac94b5eee961
-a
-1src/main/java/chessai/chessai/ui/GameManager.java,9\7\97509abdd86302a07162af5f3ce58b8c228a8b4c
 c
 3src/main/java/chessai/chessai/lib/pieces/Queen.java,a\3\a31cb6a25ad445e386b17d712f70edf2b9e00cc2
 c
 3src/main/java/chessai/chessai/lib/SlidingPiece.java,5\7\5752c7e97cf9d2ac3ddc89b2ec7ce95ab5ce6698
-b
-2src/main/java/chessai/chessai/MainApplication.java,b\d\bd4a39984386d800f610296b416b4141d5c353d1
 g
 7src/test/java/chessai/chessai/lib/pieces/QueenTest.java,5\2\520e414906d62dc600e88529020a552be5f5fd54
 b
@@ -27,3 +23,19 @@ m
 ,src/main/java/chessai/chessai/lib/Board.java,5\2\529fd6579586c8ae9ecd04f247679c0fbd30c238
 j
 :src/main/java/chessai/chessai/engine/MonteCarloEngine.java,9\5\9526e5f94c596518bf628d3b838151683c8c5689
+m
+=src/test/java/chessai/chessai/engine/mates/MateInOneTest.java,2\a\2a7a9958e264376ab6eb1ef36d08cba8baed1e3c
+n
+>src/main/java/chessai/chessai/javafxUI/ui/BoardController.java,4\8\481d0cce522df93294c722e4d1880bf9d10ab212
+j
+:src/main/java/chessai/chessai/javafxUI/ui/GameManager.java,1\5\1553b64b5330b45dbebd0787be6e95467d0f36b0
+n
+>src/main/java/chessai/chessai/javafxUI/ui/MainApplication.java,9\0\90679ce0e9ca70d3f0fc132220edc25b3c50ecd7
+k
+;src/main/java/chessai/chessai/swing_ui/MainApplication.java,1\1\11b36b960781a9d0d40a7bf9dd1369c29ff06ab1
+`
+0src/main/java/chessai/chessai/swing_ui/Menu.java,1\2\120c7b71494c333e04799f32a39cf7c3a7d1cb3e
+i
+9src/main/java/chessai/chessai/javafxUI/ui/PlayerType.java,2\f\2fdd4f423bf57262d2aa1f96a141d4b4ec39579d
+f
+6src/main/java/chessai/chessai/swing_ui/BoardPanel.java,5\b\5b7a53119775d7f5293b753f3a47454e731ee3f6
