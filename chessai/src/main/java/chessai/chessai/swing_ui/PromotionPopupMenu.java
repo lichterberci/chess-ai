@@ -20,7 +20,8 @@ public class PromotionPopupMenu extends JPopupMenu {
     private final transient Consumer<Class<? extends Piece>> action;
 
     public PromotionPopupMenu(Consumer<Class<? extends Piece>> action, PieceColor pieceColor) {
-        super("Piece type");
+
+        this.setLayout(new GridLayout(4, 1, 0, 0));
 
         this.action = action;
 
@@ -28,11 +29,12 @@ public class PromotionPopupMenu extends JPopupMenu {
         addMenuItem("Rook", Rook.class, pieceColor);
         addMenuItem("Bishop", Bishop.class, pieceColor);
         addMenuItem("Knight", Knight.class, pieceColor);
+
+        this.pack();
     }
 
     private void addMenuItem(String altText, Class<? extends Piece> promotionClass, PieceColor pieceColor) {
         JMenuItem queenItem = new JMenuItem();
-        queenItem.setSize(new Dimension(100, 100));
 
         Image queenImage = null;
 
@@ -48,11 +50,15 @@ public class PromotionPopupMenu extends JPopupMenu {
         else
             queenItem.setText(altText);
 
-        queenItem.setAlignmentX(CENTER_ALIGNMENT);
-        queenItem.setAlignmentY(CENTER_ALIGNMENT);
+        queenItem.setHorizontalAlignment(SwingConstants.CENTER);
+        queenItem.setVerticalAlignment(SwingConstants.CENTER);
+        queenItem.setVerticalTextPosition(SwingConstants.CENTER);
+        queenItem.setHorizontalTextPosition(SwingConstants.CENTER);
+        queenItem.setVisible(true);
         queenItem.addActionListener(e -> this.action.accept(promotionClass));
+        queenItem.setBorderPainted(false);
 
-        this.add(queenItem);
+        this.add(queenItem, BorderLayout.CENTER);
     }
 
     private Image loadImage(Piece piece) {
@@ -72,7 +78,7 @@ public class PromotionPopupMenu extends JPopupMenu {
         Image image;
 
         try {
-            image = ImageIO.read(imageResource).getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            image = ImageIO.read(imageResource).getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             System.err.printf("Image resource path is null! (%s)%n", urlString);
             return null;
