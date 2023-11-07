@@ -21,7 +21,6 @@ public class BoardPanel extends JPanel {
     private final Color blackTileColor;
     private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
-    private final int squareSize;
     private JPanel[] squarePanels;
     private final List<Consumer<Square>> onSquareClickListeners;
     private final List<Consumer<Square>> onSquareDragStartListeners;
@@ -37,21 +36,19 @@ public class BoardPanel extends JPanel {
         this.blackTileColor = blackTileColor;
         this.selectedSquareColor = selectedSquareColor;
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
-        this.squareSize = squareSize;
-
         this.onSquareClickListeners = new LinkedList<>();
         this.onSquareDragEndListeners = new LinkedList<>();
         this.onSquareDragStartListeners = new LinkedList<>();
 
         this.setLayout(new GridLayout(8, 8));
 
-        drawBoardAndSetUpSquares(whiteTileColor, blackTileColor);
+        drawBoardAndSetUpSquares(whiteTileColor, blackTileColor, squareSize);
 
         if (board != null)
             drawPosition(board);
     }
 
-    private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor) {
+    private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor, int squareSize) {
 
         squarePanels = new JPanel[64];
 
@@ -63,13 +60,15 @@ public class BoardPanel extends JPanel {
                 final Square square = new Square(index);
 
                 JPanel squarePanel = new JPanel();
-                squarePanel.setPreferredSize(new Dimension(squareSize, squareSize));
+                squarePanel.setSize(new Dimension(squareSize, squareSize));
 
                 final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
 
                 squarePanel.setBackground(shouldSquareBeColoredWhite ? whiteTileColor : blackTileColor);
                 squarePanel.setAlignmentY(CENTER_ALIGNMENT);
                 squarePanel.setAlignmentX(CENTER_ALIGNMENT);
+
+                squarePanel.setLayout(new BorderLayout());
 
                 squarePanel.addMouseListener(new MouseAdapter() {
                     @Override
@@ -102,9 +101,12 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < 64; i++) {
             // WARNING: this removes all children, not only the chess pieces
             this.squarePanels[i].removeAll();
+            this.squarePanels[i].validate();
         }
 
         for (int i = 0; i < 64; i++) {
+
+            final int squareSize = squarePanels[i].getWidth();
 
             Piece piece = board.get(this.whiteIsAtTheBottom ? i : 63 - i);
             Square square = new Square(this.whiteIsAtTheBottom ? i : 63 - i);
@@ -136,13 +138,6 @@ public class BoardPanel extends JPanel {
 
             var imageComponent = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
             imageComponent.setSize(new Dimension(squareSize, squareSize));
-            imageComponent.setHorizontalAlignment(SwingConstants.CENTER);
-            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
-            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
-            imageComponent.setHorizontalTextPosition(SwingConstants.CENTER);
-            imageComponent.setIconTextGap(0);
-            imageComponent.setVerticalTextPosition(SwingConstants.CENTER);
-            imageComponent.setVerticalAlignment(SwingConstants.CENTER);
             imageComponent.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -159,10 +154,11 @@ public class BoardPanel extends JPanel {
                     BoardPanel.this.onSquareDragEndListeners.forEach(listener -> listener.accept(square));
                 }
             });
+            imageComponent.setAlignmentX(CENTER_ALIGNMENT);
+            imageComponent.setAlignmentY(CENTER_ALIGNMENT);
             imageComponent.setVisible(true);
 
-            squarePanels[i].add(imageComponent);
-            squarePanels[i].repaint();
+            squarePanels[i].add(imageComponent, BorderLayout.CENTER);
         }
     }
 
