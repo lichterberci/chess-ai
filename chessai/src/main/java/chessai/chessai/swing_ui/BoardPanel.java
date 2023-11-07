@@ -22,6 +22,7 @@ public class BoardPanel extends JPanel {
     private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
     private JPanel[] squarePanels;
+    private Board positionDisplayed;
     private final List<Consumer<Square>> onSquareClickListeners;
     private final List<Consumer<Square>> onSquareDragStartListeners;
     private final List<Consumer<Square>> onSquareDragEndListeners;
@@ -40,6 +41,7 @@ public class BoardPanel extends JPanel {
         this.onSquareDragEndListeners = new LinkedList<>();
         this.onSquareDragStartListeners = new LinkedList<>();
 
+        this.setSize(squareSize * 8, squareSize * 8);
         this.setLayout(new GridLayout(8, 8));
 
         drawBoardAndSetUpSquares(whiteTileColor, blackTileColor, squareSize);
@@ -98,6 +100,10 @@ public class BoardPanel extends JPanel {
 
     public void drawPosition(Board board) {
 
+        if (board != null) {
+            positionDisplayed = new Board(board);
+        }
+
         for (int i = 0; i < 64; i++) {
             // WARNING: this removes all children, not only the chess pieces
             this.squarePanels[i].removeAll();
@@ -108,7 +114,7 @@ public class BoardPanel extends JPanel {
 
             final int squareSize = squarePanels[i].getWidth();
 
-            Piece piece = board.get(this.whiteIsAtTheBottom ? i : 63 - i);
+            Piece piece = positionDisplayed.get(this.whiteIsAtTheBottom ? i : 63 - i);
             Square square = new Square(this.whiteIsAtTheBottom ? i : 63 - i);
 
             if (piece == null)
@@ -129,7 +135,7 @@ public class BoardPanel extends JPanel {
             Image image;
 
             try {
-                image = ImageIO.read(imageResource).getScaledInstance(squareSize, squareSize, Image.SCALE_SMOOTH);
+                image = ImageIO.read(imageResource).getScaledInstance((int) (squareSize * 0.95), (int) (squareSize * 0.95), Image.SCALE_SMOOTH);
 //                image = ImageIO.read(imageResource);
             } catch (IOException e) {
                 System.err.printf("Image resource path is null! (%s)%n", urlString);

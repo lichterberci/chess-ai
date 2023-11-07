@@ -9,11 +9,10 @@ public class Menu {
 
     public Menu() {
 
-        window = new JFrame();
-        window.setTitle("Chess AI");
+        window = new JFrame("Chess AI");
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        JButton playVsEngineBtn = new JButton("Play vs engine");
+        JButton playVsEngineBtn = new JButton("Human vs Human");
         playVsEngineBtn.addActionListener(e -> {
 	        var pvpFrame = new PvPGameFrame();
 	        pvpFrame.setVisible(true);

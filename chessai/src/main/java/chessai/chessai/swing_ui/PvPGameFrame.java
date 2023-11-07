@@ -15,14 +15,20 @@ public class PvPGameFrame extends JFrame {
 	private transient Square selectedPiece;
 
 	public PvPGameFrame() {
-		super();
+		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+	}
 
+	public PvPGameFrame(String startFen) {
+		super("Human vs human");
+
+		this.setLayout(new BorderLayout());
+		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
-//			board = new Board("r1bqkbnr/pppp1pp1/2n1p2p/8/2BPP3/5Q2/PPP2PPP/RNB1K1NR b KQkq - 0 1");
-			board = new Board("k7/4P3/K7/8/6n1/6N1/2p5/8 w - - 0 1");
+			board = new Board(startFen);
 		} catch (ParseException e) {
+			System.err.println(e.getMessage());
 			throw new RuntimeException(e);
 		}
 
@@ -35,15 +41,16 @@ public class PvPGameFrame extends JFrame {
 		);
 
 		boardPanel.drawPosition(board);
+		boardPanel.selectSquare(null);
 		boardPanel.repaint();
 
 		boardPanel.addOnSquareClickListeners(this::onSquareClick);
-//		boardPanel.addOnSquareDragStartListeners(this::onSquareDragStart);
-//		boardPanel.addOnSquareDragEndListeners(this::onSquareDragEnd);
 
-		this.add(boardPanel);
+		this.add(boardPanel, BorderLayout.CENTER);
 
 		boardPanel.setVisible(true);
+
+		this.pack();
 	}
 
 	private void makeMove(Move move) {

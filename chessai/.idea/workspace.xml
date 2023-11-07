@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="It is sort of working now">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="PvP works fine now">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -297,15 +298,7 @@
       <workItem from="1698697079541" duration="2501000" />
       <workItem from="1698757747299" duration="2193000" />
       <workItem from="1699000536746" duration="6145000" />
-      <workItem from="1699379147998" duration="7371000" />
-    </task>
-    <task id="LOCAL-00003" summary="Started work on legal and possible moves">
-      <option name="closed" value="true" />
-      <created>1695459657415</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1695459657415</updated>
+      <workItem from="1699379147998" duration="9670000" />
     </task>
     <task id="LOCAL-00004" summary="Added check detection">
       <option name="closed" value="true" />
@@ -691,7 +684,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699385630866</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Added game ended modal">
+      <option name="closed" value="true" />
+      <created>1699388303921</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1699388303921</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -709,8 +710,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
-    <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
     <MESSAGE value="Random bullshit that sonarlint added" />
@@ -734,7 +733,9 @@
     <MESSAGE value="Fixed image alignment issues" />
     <MESSAGE value="Promotion works now" />
     <MESSAGE value="It is sort of working now" />
-    <option name="LAST_COMMIT_MESSAGE" value="It is sort of working now" />
+    <MESSAGE value="Added game ended modal" />
+    <MESSAGE value="PvP works fine now" />
+    <option name="LAST_COMMIT_MESSAGE" value="PvP works fine now" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
