@@ -45,4 +45,15 @@ public record Move(
     public String toString() {
         return String.format("Move(from=%s, to=%s, isCapture=%s, isEnPassant=%s, specialMove=%s)", from(), to(), isCapture, isEnPassant, specialMove);
     }
+
+    public Move withPromotionType(Class<? extends Piece> pieceType) {
+        return new Move(
+                fromIndex,
+                toIndex,
+                pieceType,
+                isCapture,
+                isEnPassant,
+                specialMove
+        );
+    }
 }

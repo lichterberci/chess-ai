@@ -2,12 +2,14 @@ package chessai.chessai.swing_ui;
 
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.Move;
+import chessai.chessai.lib.Piece;
 import chessai.chessai.lib.Square;
 import chessai.chessai.lib.pieces.Queen;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
+import java.util.function.Consumer;
 
 public class PvPGameFrame extends JFrame {
 
@@ -18,7 +20,8 @@ public class PvPGameFrame extends JFrame {
 	public PvPGameFrame() {
 
 		try {
-			board = new Board("r1bqkbnr/pppp1pp1/2n1p2p/8/2BPP3/5Q2/PPP2PPP/RNB1K1NR b KQkq - 0 1");
+//			board = new Board("r1bqkbnr/pppp1pp1/2n1p2p/8/2BPP3/5Q2/PPP2PPP/RNB1K1NR b KQkq - 0 1");
+			board = new Board("8/k3P3/8/K7/6n1/6N1/2p5/8 w - - 0 1");
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
@@ -27,7 +30,7 @@ public class PvPGameFrame extends JFrame {
 				new Color(237, 214, 179, 255),
 				new Color(179, 134, 98, 255),
 				new Color(255, 28, 28, 147),
-				false,
+				true,
 				100
 		);
 
@@ -62,7 +65,21 @@ public class PvPGameFrame extends JFrame {
 		if (!board.isMoveLegal(move))
 			return false;
 
-		makeMove(move);
+		Consumer<Class<? extends Piece>> makeMoveWithPromotionPieceType = pieceType -> {
+			makeMove(move.withPromotionType(pieceType));
+		};
+
+		if (board.shouldMoveBePromotion(move)) {
+
+			var promotionPopupMenu = new PromotionPopupMenu(makeMoveWithPromotionPieceType, board.colorToMove);
+			promotionPopupMenu.setVisible(true);
+			promotionPopupMenu.show(this, MouseInfo.getPointerInfo().getLocation().x - this.getX(), MouseInfo.getPointerInfo().getLocation().y - this.getY());
+
+		} else {
+
+			makeMoveWithPromotionPieceType.accept(null);
+
+		}
 
 		return true;
 	}
@@ -80,7 +97,6 @@ public class PvPGameFrame extends JFrame {
 		if (selectedPiece == null)
 			return;
 
-		// TODO: add promotion piece selection
 		final boolean couldMakeMove = tryToMakeMove(board.tryToInferMove(selectedPiece, square, Queen.class).orElse(null));
 
 		if (couldMakeMove) {
@@ -111,7 +127,6 @@ public class PvPGameFrame extends JFrame {
 
 		System.out.println("Drag end " + square);
 
-		// TODO: add promotion piece selection
 		tryToMakeMove(board.tryToInferMove(selectedPiece, square, Queen.class).orElse(null));
 	}
 }

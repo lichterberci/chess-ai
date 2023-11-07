@@ -1138,6 +1138,19 @@ public class Board {
 
         return sb.toString();
     }
+
+    public boolean shouldMoveBePromotion(Move move) {
+
+        Piece movingPiece = get(move.fromIndex());
+
+        if (!(movingPiece instanceof Pawn))
+            return false;
+
+        if (movingPiece.getColor() == PieceColor.WHITE)
+            return move.from().row() == 6 && move.to().row() == 7;
+        else
+            return move.from().row() == 1 && move.to().row() == 0;
+    }
 }
 
 
