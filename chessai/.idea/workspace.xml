@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="PvP works fine now">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="It is somewhat playable and looks somewhat good">
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +137,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInOneTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -161,7 +161,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInOneTest.mateInOne" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -185,7 +185,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -209,7 +209,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -233,7 +233,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -298,7 +298,22 @@
       <workItem from="1698697079541" duration="2501000" />
       <workItem from="1698757747299" duration="2193000" />
       <workItem from="1699000536746" duration="6145000" />
-      <workItem from="1699379147998" duration="9670000" />
+    </task>
+    <task id="LOCAL-00002" summary="Continued setup for lib">
+      <option name="closed" value="true" />
+      <created>1695297433787</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1695297433787</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Started work on legal and possible moves">
+      <option name="closed" value="true" />
+      <created>1695459657415</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1695459657415</updated>
     </task>
     <task id="LOCAL-00004" summary="Added check detection">
       <option name="closed" value="true" />
@@ -652,47 +667,7 @@
       <option name="project" value="LOCAL" />
       <updated>1699004669385</updated>
     </task>
-    <task id="LOCAL-00048" summary="Reworked selection, fixed a move infer bug">
-      <option name="closed" value="true" />
-      <created>1699116118343</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1699116118343</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Sonarlint bs">
-      <option name="closed" value="true" />
-      <created>1699379235780</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1699379235780</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Fixed image alignment issues">
-      <option name="closed" value="true" />
-      <created>1699380342940</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1699380342940</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Promotion works now">
-      <option name="closed" value="true" />
-      <created>1699385630866</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1699385630866</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Added game ended modal">
-      <option name="closed" value="true" />
-      <created>1699388303921</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1699388303921</updated>
-    </task>
-    <option name="localTasksCounter" value="53" />
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -710,6 +685,13 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added MoveResult class and extended BitMap functionality" />
+    <MESSAGE value="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes" />
+    <MESSAGE value="Augmented intelliJ warning set" />
+    <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
+    <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
+    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
+    <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
     <MESSAGE value="Random bullshit that sonarlint added" />
@@ -728,14 +710,7 @@
     <MESSAGE value="Still trying to center the images... :(" />
     <MESSAGE value="Started work on GameVsPlayerFrame" />
     <MESSAGE value="It is somewhat playable and looks somewhat good" />
-    <MESSAGE value="Reworked selection, fixed a move infer bug" />
-    <MESSAGE value="Sonarlint bs" />
-    <MESSAGE value="Fixed image alignment issues" />
-    <MESSAGE value="Promotion works now" />
-    <MESSAGE value="It is sort of working now" />
-    <MESSAGE value="Added game ended modal" />
-    <MESSAGE value="PvP works fine now" />
-    <option name="LAST_COMMIT_MESSAGE" value="PvP works fine now" />
+    <option name="LAST_COMMIT_MESSAGE" value="It is somewhat playable and looks somewhat good" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -759,7 +734,7 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
