@@ -1,5 +1,7 @@
 package chessai.chessai.swing_ui;
 
+import chessai.chessai.engine.MinimaxEngine;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,21 +11,37 @@ public class Menu {
 
     public Menu() {
 
-        window = new JFrame("Chess AI");
-        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	    window = new JFrame("Chess AI");
+	    window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        JButton playVsEngineBtn = new JButton("Human vs Human");
-        playVsEngineBtn.addActionListener(e -> {
-	        var pvpFrame = new PvPGameFrame();
-	        pvpFrame.setVisible(true);
-	        pvpFrame.setSize(new Dimension(800, 800));
-	        pvpFrame.setLocationRelativeTo(null);
-        });
+	    window.setLayout(new GridLayout(2, 1));
 
-        window.add(playVsEngineBtn);
+	    JButton playVsHumanBtn = new JButton("Human vs Human");
+	    playVsHumanBtn.addActionListener(e -> {
+		    var pvpFrame = new PvPGameFrame();
+		    pvpFrame.setVisible(true);
+		    pvpFrame.setSize(new Dimension(800, 800));
+		    pvpFrame.setLocationRelativeTo(null);
+	    });
 
-        window.pack();
-        window.setLocationRelativeTo(null);
+	    window.add(playVsHumanBtn);
+
+	    JButton playVsEngineBtn = new JButton("Human vs Engine");
+	    playVsEngineBtn.addActionListener(e -> {
+		    var pvpFrame = new PvEGameFrame(
+//					new MonteCarloEngine(0, 1.4142, 20, 400),
+				    new MinimaxEngine(6),
+				    true
+		    );
+		    pvpFrame.setVisible(true);
+		    pvpFrame.setSize(new Dimension(800, 800));
+		    pvpFrame.setLocationRelativeTo(null);
+	    });
+
+	    window.add(playVsEngineBtn);
+
+	    window.pack();
+	    window.setLocationRelativeTo(null);
     }
 
     public void show() {

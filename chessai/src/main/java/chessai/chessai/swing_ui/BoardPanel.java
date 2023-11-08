@@ -107,7 +107,6 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < 64; i++) {
             // WARNING: this removes all children, not only the chess pieces
             this.squarePanels[i].removeAll();
-            this.squarePanels[i].validate();
         }
 
         for (int i = 0; i < 64; i++) {
