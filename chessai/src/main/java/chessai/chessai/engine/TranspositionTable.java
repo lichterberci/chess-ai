@@ -3,7 +3,7 @@ package chessai.chessai.engine;
 import chessai.chessai.lib.Board;
 
 /**
- * Implements a transpoisition table using Zobrist hashing
+ * Implements a transposition table using Zobrist hashing
  */
 public class TranspositionTable {
 
