@@ -9,13 +9,17 @@ import java.util.Optional;
 public class MinimaxEngine extends ChessEngine {
 
 	final int maxDepth;
+	private final TranspositionTable transpositionTable;
 
 	public MinimaxEngine(int maxDepth) {
 		this.maxDepth = maxDepth;
+		this.transpositionTable = new TranspositionTable(1_000_000_000);
 	}
 
 	@Override
 	public Optional<Move> makeMove(Board board) {
+
+		transpositionTable.clear();
 
 		List<Move> possibleLegalMoves = board.getLegalMoves();
 
@@ -42,43 +46,57 @@ public class MinimaxEngine extends ChessEngine {
 					beta
 			);
 
+			System.out.println(move + " --> " + currentEval);
+
 			if (board.colorToMove == PieceColor.WHITE) {
+
 				if (bestEval < currentEval) {
 					bestEval = currentEval;
 					indexOfBestMove = i;
 				}
+
 				alpha = Math.max(alpha, bestEval);
 			} else {
+
 				if (bestEval > currentEval) {
 					bestEval = currentEval;
 					indexOfBestMove = i;
 				}
+
 				beta = Math.min(beta, bestEval);
 			}
 
-			if (alpha <= beta)
+			if (beta <= alpha)
 				break;
 		}
+
+		System.out.println("best: " + possibleLegalMoves.get(indexOfBestMove) + " (" + bestEval + ")");
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
 
 	private int evaluateState(Board board, int depthRemaining, boolean isMaximizingPlayer, int alpha, int beta) {
 
+		if (transpositionTable.contains(board))
+			return transpositionTable.get(board);
+
 		List<Move> possibleLegalMoves = board.getLegalMoves();
 
 		GameState state = board.getState();
 
-		if (state == GameState.WHITE_WIN) {
-			return Integer.MAX_VALUE;
-		} else if (state == GameState.BLACK_WIN) {
-			return Integer.MIN_VALUE;
-		} else if (state == GameState.DRAW) {
-			return 0;
-		}
+		if (state != GameState.PLAYING || depthRemaining <= 0) {
+			int result;
 
-		if (depthRemaining == 0) {
-			return evaluateOngoingPosition(board);
+			result = switch (state) {
+				case WHITE_WIN -> Integer.MAX_VALUE;
+				case BLACK_WIN -> Integer.MIN_VALUE;
+				case DRAW -> 0;
+				case PLAYING -> evaluateOngoingPosition(board);
+			};
+
+			transpositionTable.put(board, result);
+
+			return result;
 		}
 
 		if (possibleLegalMoves.isEmpty())
@@ -86,8 +104,7 @@ public class MinimaxEngine extends ChessEngine {
 
 		int bestEval = isMaximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-		for (int i = 0; i < possibleLegalMoves.size(); i++) {
-			Move move = possibleLegalMoves.get(i);
+		for (Move move : possibleLegalMoves) {
 
 			int currentEval = evaluateState(
 					board.makeMove(move),
@@ -114,8 +131,6 @@ public class MinimaxEngine extends ChessEngine {
 	}
 
 	private int evaluateOngoingPosition(Board board) {
-
-		final boolean isWhiteToMove = board.colorToMove == PieceColor.WHITE;
 
 		final int pawnValue = 100;
 		final int knightValue = 300;

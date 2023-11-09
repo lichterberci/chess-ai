@@ -44,3 +44,5 @@ n
 >src/main/java/chessai/chessai/javafxUI/ui/BoardController.java,4\8\481d0cce522df93294c722e4d1880bf9d10ab212
 h
 8src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java,e\b\ebb082b5135ae47dda57c11f7227348e955237c6
+n
+>src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java,2\5\25ddb484e028fa32184fe4540fafbe0b88041a20

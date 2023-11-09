@@ -290,7 +290,11 @@ public class Board {
         }
 
         // generate moves for the other side, so we can determine whether we are in or will be in check
-        for (int index : enemyPieces.getIndexesOfOnes()) {
+        for (int index = 0; index < 64; index++) {
+
+            if (!enemyPieces.getBit(index))
+                continue;
+
             Piece enemyPiece = squares[index];
 
             MoveResult moveResult = enemyPiece.getPseudoLegalMoves(this);
@@ -1150,6 +1154,20 @@ public class Board {
             return move.from().row() == 6 && move.to().row() == 7;
         else
             return move.from().row() == 1 && move.to().row() == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return ZobristHash.computeHash(this);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+
+        if (other == null) return false;
+        if (other == this) return true;
+
+        return other.hashCode() == hashCode();
     }
 }
 
