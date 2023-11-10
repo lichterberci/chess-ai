@@ -40,9 +40,9 @@ public class PvPGameFrame extends JFrame {
 				100
 		);
 
-		boardPanel.drawPosition(board);
 		boardPanel.selectSquare(null);
 		boardPanel.repaint();
+
 
 		boardPanel.addOnSquareClickListeners(this::onSquareClick);
 

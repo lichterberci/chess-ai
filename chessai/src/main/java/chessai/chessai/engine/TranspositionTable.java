@@ -2,50 +2,86 @@ package chessai.chessai.engine;
 
 import chessai.chessai.lib.Board;
 
+import java.security.InvalidKeyException;
+
 /**
  * Implements a transposition table using Zobrist hashing
  */
 public class TranspositionTable {
 
-    private final int capacity;
-    private final int[] table;
+    public final int capacity;
+    /**
+     * we store the value in the first 32 bit and the key in the second 32 bit
+     */
+    public final long[] table;
 
     public TranspositionTable() {
         this(100_000);
     }
 
     public TranspositionTable(int capacityInBytes) {
-        this.capacity = capacityInBytes / 4;
+        this.capacity = capacityInBytes / 8;
 
-        table = new int[this.capacity];
+        table = new long[this.capacity];
 
         for (int i = 0; i < capacity; i++) {
-            table[i] = -1;
+            table[i] = 0;
         }
     }
 
     public void put(Board board, int eval) {
-        int index = getIndex(board);
-        table[index] = eval;
+        put(board.hashCode(), eval);
     }
 
-    public int get(Board board) {
-        int index = getIndex(board);
-        return table[index];
+    public void put(int hash, int eval) {
+
+        int index = getInitialIndex(hash);
+
+        while (table[index] != 0) {
+            index++;
+            if (index >= capacity)
+                index -= capacity;
+        }
+
+
+        long evalLong = eval;
+
+        evalLong <<= 32;
+
+        table[index] = evalLong | ((long)hash);
+    }
+
+    public int get(Board board) throws InvalidKeyException {
+        return get(board.hashCode());
+    }
+
+    public int get(int hash) throws InvalidKeyException {
+        for (int i = getInitialIndex(hash); table[i] != 0; i = Integer.remainderUnsigned(i + 1, capacity)) {
+            if ((int) (table[i] & 0xFFFF_FFFFL) == hash)
+                return (int) ((long) ((table[i] >>> 32)));
+        }
+
+        throw new InvalidKeyException("Key does not exist!");
     }
 
     public boolean contains(Board board) {
-        int index = getIndex(board);
-        return table[index] != -1;
+        int hash = board.hashCode();
+
+        for (int i = getInitialIndex(hash); table[i] != 0; i = Integer.remainderUnsigned(i + 1, capacity)) {
+            if ((int) (table[i] & 0xFFFF_FFFFL) == hash)
+                return true;
+        }
+
+        return false;
     }
 
     public void clear() {
         for (int i = 0; i < capacity; i++) {
-            table[i] = -1;
+            table[i] = 0;
         }
     }
 
-    private int getIndex(Board board) {
-        return Integer.remainderUnsigned(board.hashCode(), capacity);
+    private int getInitialIndex(int hash) {
+        return Integer.remainderUnsigned(hash, capacity);
     }
 }

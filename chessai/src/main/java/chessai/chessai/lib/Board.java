@@ -28,16 +28,16 @@ public class Board {
     public Square enPassantTarget;
     public int fullMoveClock;
     public int halfMoveCounter;
-    public List<String> previousPositions;
+    public List<Integer> previousPositionHashes;
     public BitMap whitePieces;
     public BitMap blackPieces;
     public BitMap whiteKing;
     public BitMap blackKing;
     public BitMap whiteAttackSquares;
     public BitMap blackAttackSquares;
-
     private GameState cachedGameState;
     private List<Move> cachedLegalMoves;
+    private int cachedHash;
 
     public Board(Board other) {
         this(other.squares,
@@ -49,7 +49,7 @@ public class Board {
                 other.enPassantTarget,
                 other.fullMoveClock,
                 other.halfMoveCounter,
-                other.previousPositions,
+                other.previousPositionHashes,
                 other.whitePieces,
                 other.blackPieces,
                 other.whiteKing,
@@ -57,7 +57,8 @@ public class Board {
                 other.whiteAttackSquares,
                 other.blackAttackSquares,
                 other.cachedLegalMoves,
-                other.cachedGameState);
+                other.cachedGameState,
+                other.cachedHash);
     }
 
     public Board(Piece[] squares,
@@ -69,13 +70,13 @@ public class Board {
                  Square enPassantTarget,
                  int fullMoveClock,
                  int halfMoveCounter,
-                 List<String> previousPositions,
+                 List<Integer> previousPositionHashes,
                  BitMap whitePieces,
                  BitMap blackPieces,
                  BitMap whiteKing,
                  BitMap blackKing,
                  BitMap whiteAttackSquares,
-                 BitMap blackAttackSquares, List<Move> cachedLegalMoves, GameState cachedGameState) {
+                 BitMap blackAttackSquares, List<Move> cachedLegalMoves, GameState cachedGameState, int cachedHash) {
 
         this.squares = new Piece[64];
 
@@ -100,9 +101,9 @@ public class Board {
         this.enPassantTarget = enPassantTarget;
         this.fullMoveClock = fullMoveClock;
         this.halfMoveCounter = halfMoveCounter;
-        this.previousPositions = new ArrayList<>();
-        if (previousPositions != null)
-            this.previousPositions.addAll(previousPositions);
+        this.previousPositionHashes = new LinkedList<>();
+        if (previousPositionHashes != null)
+            this.previousPositionHashes.addAll(previousPositionHashes);
         this.whitePieces = whitePieces != null ? new BitMap(whitePieces.getData()) : null;
         this.blackPieces = blackPieces != null ? new BitMap(blackPieces.getData()) : null;
         this.whiteKing = whiteKing != null ? new BitMap(whiteKing.getData()) : null;
@@ -111,6 +112,7 @@ public class Board {
         this.blackAttackSquares = blackAttackSquares != null ? new BitMap(blackAttackSquares.getData()) : null;
         this.cachedLegalMoves = cachedLegalMoves != null ? new ArrayList<>(cachedLegalMoves) : null;
         this.cachedGameState = cachedGameState;
+        this.cachedHash = cachedHash;
     }
 
     public Board(String fenString) throws ParseException {
@@ -181,6 +183,18 @@ public class Board {
             cachedGameState = GameState.DRAW;
             return GameState.DRAW;
         }
+
+        // look for 3 fold repetition
+        int countOfCurrentPosition = 1;
+
+        int currentHash = hashCode();
+
+        for (int hash : previousPositionHashes)
+            if (hash == currentHash && countOfCurrentPosition < 3)
+                countOfCurrentPosition++;
+
+        if (countOfCurrentPosition == 3)
+            return GameState.DRAW;
 
         LinkedList<Piece> piecesWithRightColor = new LinkedList<>();
         LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
@@ -738,7 +752,12 @@ public class Board {
                 result.fullMoveClock++;
         }
 
-        result.previousPositions.add(getFENPositionString());
+        if (move.isCapture())
+            result.previousPositionHashes = new LinkedList<>();
+
+        result.previousPositionHashes.add(hashCode());
+
+        result.cachedHash = 0; // we could xor the pieces, but it will remain something for the future
 
         return result;
     }
@@ -1158,7 +1177,15 @@ public class Board {
 
     @Override
     public int hashCode() {
-        return ZobristHash.computeHash(this);
+//
+//        if (cachedHash != 0)
+//            return cachedHash;
+
+        int hash = ZobristHash.computeHash(this);
+
+        cachedHash = hash;
+
+        return hash;
     }
 
     @Override
@@ -1166,7 +1193,7 @@ public class Board {
 
         if (other == null) return false;
         if (other == this) return true;
-
+        if (!(other instanceof Board)) return false;
         return other.hashCode() == hashCode();
     }
 }

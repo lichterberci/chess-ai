@@ -3,6 +3,7 @@ package chessai.chessai.engine;
 import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.*;
 
+import java.security.InvalidKeyException;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,17 +78,26 @@ public class MinimaxEngine extends ChessEngine {
 
 	private int evaluateState(Board board, int depthRemaining, boolean isMaximizingPlayer, int alpha, int beta) {
 
-		if (transpositionTable.contains(board))
-			return transpositionTable.get(board);
+		if (transpositionTable.contains(board)) {
+			try {
+				int storedEval = transpositionTable.get(board);
+				if (storedEval == -1) {
+					System.out.println(Long.toBinaryString(transpositionTable.table[Integer.remainderUnsigned(board.hashCode(), transpositionTable.capacity)]));
+				}
+				return storedEval;
+			} catch (InvalidKeyException e) {
+				// we just don't return
+				System.err.println("Invalid key!");
+			}
+		}
 
 		List<Move> possibleLegalMoves = board.getLegalMoves();
 
 		GameState state = board.getState();
 
 		if (state != GameState.PLAYING || depthRemaining <= 0) {
-			int result;
 
-			result = switch (state) {
+			int result = switch (state) {
 				case WHITE_WIN -> Integer.MAX_VALUE;
 				case BLACK_WIN -> Integer.MIN_VALUE;
 				case DRAW -> 0;

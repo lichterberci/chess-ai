@@ -58,8 +58,6 @@ public class PvEGameFrame extends JFrame {
 		this.add(boardPanel, BorderLayout.CENTER);
 
 		boardPanel.setVisible(true);
-
-		this.pack();
 	}
 
 	private void makeMove(Move move) {

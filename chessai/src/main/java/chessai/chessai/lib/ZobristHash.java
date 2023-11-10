@@ -65,4 +65,25 @@ public class ZobristHash {
         return hash;
     }
 
+    public static int xorPiece(int hash, int squareIndex, Class<? extends Piece> pieceType, PieceColor color) {
+
+        int indexOfPiece = 0;
+
+        // default is 0 for pawn
+        if (pieceType == Knight.class)
+            indexOfPiece = 1;
+        else if (pieceType == Bishop.class)
+            indexOfPiece = 2;
+        else if (pieceType == Rook.class)
+            indexOfPiece = 3;
+        else if (pieceType == Queen.class)
+            indexOfPiece = 4;
+        else if (pieceType == King.class)
+            indexOfPiece = 5;
+
+        if (color == PieceColor.BLACK)
+            indexOfPiece += 6;
+
+        return hash ^ pieceBitStrings[squareIndex][indexOfPiece];
+    }
 }
