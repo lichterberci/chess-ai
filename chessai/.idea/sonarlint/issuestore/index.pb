@@ -44,6 +44,12 @@ n
 >src/main/java/chessai/chessai/javafxUI/ui/BoardController.java,4\8\481d0cce522df93294c722e4d1880bf9d10ab212
 h
 8src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java,e\b\ebb082b5135ae47dda57c11f7227348e955237c6
+k
+;src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java,e\f\ef760e4dec209d0cc987f22e8617e6fb2f6cec09
+h
+8src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java,d\c\dcf88c4ca4fa2d7d09077ffae300fdabbe93207c
+g
+7src/main/java/chessai/chessai/engine/MinimaxEngine.java,5\c\5c0ea53722fb9417decc018c71582d7271535737
 n
 >src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java,2\5\25ddb484e028fa32184fe4540fafbe0b88041a20
 g

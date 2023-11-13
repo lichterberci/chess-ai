@@ -43,12 +43,7 @@ public class TranspositionTable {
                 index -= capacity;
         }
 
-
-        long evalLong = eval;
-
-        evalLong <<= 32;
-
-        table[index] = evalLong | ((long)hash);
+        table[index] = ((long) eval << 32) | ((long) hash & 0xFFFF_FFFFL);
     }
 
     public int get(Board board) throws InvalidKeyException {
@@ -58,7 +53,7 @@ public class TranspositionTable {
     public int get(int hash) throws InvalidKeyException {
         for (int i = getInitialIndex(hash); table[i] != 0; i = Integer.remainderUnsigned(i + 1, capacity)) {
             if ((int) (table[i] & 0xFFFF_FFFFL) == hash)
-                return (int) ((long) ((table[i] >>> 32)));
+                return (int) (table[i] >>> 32);
         }
 
         throw new InvalidKeyException("Key does not exist!");
