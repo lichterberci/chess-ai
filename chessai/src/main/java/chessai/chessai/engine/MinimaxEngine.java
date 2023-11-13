@@ -4,6 +4,7 @@ import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.*;
 
 import java.security.InvalidKeyException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class MinimaxEngine extends ChessEngine {
 
 		if (possibleLegalMoves.size() == 1)
 			return Optional.of(possibleLegalMoves.get(0));
+
+		sortMovesInPlace(possibleLegalMoves);
 
 		int indexOfBestMove = 0;
 		int bestEval = board.colorToMove == PieceColor.WHITE ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -81,11 +84,7 @@ public class MinimaxEngine extends ChessEngine {
 
 		if (transpositionTable.contains(board)) {
 			try {
-				int storedEval = transpositionTable.get(board);
-				if (storedEval == -1) {
-					System.out.println(Long.toBinaryString(transpositionTable.table[Integer.remainderUnsigned(board.hashCode(), transpositionTable.capacity)]));
-				}
-				return storedEval;
+				return transpositionTable.get(board);
 			} catch (InvalidKeyException e) {
 				// we just don't return
 				System.err.println("Invalid key!");
@@ -93,6 +92,8 @@ public class MinimaxEngine extends ChessEngine {
 		}
 
 		List<Move> possibleLegalMoves = board.getLegalMoves();
+
+		sortMovesInPlace(possibleLegalMoves);
 
 		GameState state = board.getState();
 
@@ -139,6 +140,34 @@ public class MinimaxEngine extends ChessEngine {
 		}
 
 		return bestEval;
+	}
+
+	private void sortMovesInPlace(List<Move> possibleLegalMoves) {
+
+		if (possibleLegalMoves == null || possibleLegalMoves.isEmpty() || possibleLegalMoves.size() == 1)
+			return;
+
+		Comparator<Move> moveComparator = (move1, move2) -> {
+
+			if (move1.isCapture())
+				return -1;
+			if (move2.isCapture())
+				return 1;
+
+			if (move1.promotionPieceType() != null)
+				return -1;
+			if (move2.promotionPieceType() != null)
+				return 1;
+
+			return 0;
+		};
+
+		try {
+			possibleLegalMoves.sort(moveComparator);
+		} catch (UnsupportedOperationException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	private int evaluateOngoingPosition(Board board) {
@@ -238,7 +267,7 @@ public class MinimaxEngine extends ChessEngine {
 				positionMap = pawnPositionMap;
 			} else if (piece.getClass().equals(Knight.class)) {
 				pieceValue = knightValue;
-				positionMap = kingPositionMap;
+				positionMap = knightPositionMap;
 			} else if (piece.getClass().equals(Bishop.class)) {
 				pieceValue = bishopValue;
 				positionMap = bishopPositionMap;

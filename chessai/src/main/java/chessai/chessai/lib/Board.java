@@ -277,7 +277,7 @@ public class Board {
     public List<Move> getLegalMoves(boolean onlyGenerateEnemyAttackMaps) {
 
         if (cachedLegalMoves != null)
-            return cachedLegalMoves;
+            return new ArrayList<>(cachedLegalMoves); // we copy it, so it will become modifiable
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;

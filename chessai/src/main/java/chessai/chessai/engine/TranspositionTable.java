@@ -9,11 +9,12 @@ import java.security.InvalidKeyException;
  */
 public class TranspositionTable {
 
-    public final int capacity;
+    private final int capacity;
     /**
      * we store the value in the first 32 bit and the key in the second 32 bit
      */
-    public final long[] table;
+    private final long[] table;
+    private static final int DEFAULT_VALUE = Integer.MIN_VALUE + 1;
 
     public TranspositionTable() {
         this(100_000);
@@ -24,9 +25,7 @@ public class TranspositionTable {
 
         table = new long[this.capacity];
 
-        for (int i = 0; i < capacity; i++) {
-            table[i] = 0;
-        }
+        clear();
     }
 
     public void put(Board board, int eval) {
@@ -37,7 +36,7 @@ public class TranspositionTable {
 
         int index = getInitialIndex(hash);
 
-        while (table[index] != 0) {
+        while (table[index] != DEFAULT_VALUE) {
             index++;
             if (index >= capacity)
                 index -= capacity;
@@ -51,7 +50,7 @@ public class TranspositionTable {
     }
 
     public int get(int hash) throws InvalidKeyException {
-        for (int i = getInitialIndex(hash); table[i] != 0; i = Integer.remainderUnsigned(i + 1, capacity)) {
+        for (int i = getInitialIndex(hash); table[i] != DEFAULT_VALUE; i = Integer.remainderUnsigned(i + 1, capacity)) {
             if ((int) (table[i] & 0xFFFF_FFFFL) == hash)
                 return (int) (table[i] >>> 32);
         }
@@ -62,7 +61,7 @@ public class TranspositionTable {
     public boolean contains(Board board) {
         int hash = board.hashCode();
 
-        for (int i = getInitialIndex(hash); table[i] != 0; i = Integer.remainderUnsigned(i + 1, capacity)) {
+        for (int i = getInitialIndex(hash); table[i] != DEFAULT_VALUE; i = Integer.remainderUnsigned(i + 1, capacity)) {
             if ((int) (table[i] & 0xFFFF_FFFFL) == hash)
                 return true;
         }
@@ -72,7 +71,7 @@ public class TranspositionTable {
 
     public void clear() {
         for (int i = 0; i < capacity; i++) {
-            table[i] = 0;
+            table[i] = DEFAULT_VALUE;
         }
     }
 
