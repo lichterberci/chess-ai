@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class MinimaxEngine extends ChessEngine {
 
+	private static final float POSITION_MAP_WEIGHT = 0.3f;
 	final int maxDepth;
 	private final TranspositionTable transpositionTable;
 
@@ -150,6 +151,75 @@ public class MinimaxEngine extends ChessEngine {
 
 		int result = 0;
 
+
+		// note: all of these maps are for white (for black, we look at them from the other side)
+
+		final int[] pawnPositionMap = new int[]{
+				0, 0, 0, 0, 0, 0, 0, 0,
+				60, 60, 60, 60, 60, 60, 60, 60,
+				50, 50, 50, 50, 50, 50, 50, 50,
+				35, 40, 40, 40, 40, 40, 40, 35,
+				20, 20, 30, 35, 35, 30, 20, 20,
+				10, 15, 20, 15, 15, 20, 15, 10,
+				20, 20, 10, 10, 10, 10, 20, 20,
+				0, 0, 0, 0, 0, 0, 0, 0
+		};
+
+		final int[] knightPositionMap = new int[]{
+				10, 10, 10, 10, 10, 10, 10, 10,
+				10, 30, 30, 30, 30, 30, 30, 10,
+				10, 30, 40, 40, 40, 40, 30, 10,
+				10, 30, 40, 50, 50, 40, 30, 10,
+				10, 30, 40, 50, 50, 40, 30, 10,
+				10, 30, 40, 40, 40, 40, 30, 10,
+				10, 30, 30, 30, 30, 30, 30, 10,
+				10, 10, 10, 10, 10, 10, 10, 10
+		};
+
+		final int[] bishopPositionMap = new int[]{
+				20, 10, 10, 10, 10, 10, 10, 20,
+				10, 20, 30, 30, 30, 30, 20, 10,
+				10, 30, 40, 40, 40, 40, 30, 10,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				20, 30, 40, 45, 45, 40, 30, 20,
+				20, 50, 30, 30, 30, 30, 40, 20,
+				20, 10, 10, 10, 10, 10, 10, 20
+		};
+
+		final int[] rookPositionMap = new int[]{
+				40, 45, 45, 45, 45, 45, 45, 40,
+				50, 50, 50, 60, 60, 50, 50, 50,
+				20, 30, 40, 40, 40, 40, 30, 20,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				10, 30, 40, 45, 45, 40, 30, 10,
+				10, 10, 20, 30, 30, 20, 10, 10,
+				20, 20, 30, 40, 40, 30, 20, 20
+		};
+
+		final int[] queenPositionMap = new int[]{
+				40, 45, 45, 45, 45, 45, 45, 40,
+				50, 50, 50, 60, 60, 50, 50, 50,
+				20, 30, 40, 40, 40, 40, 30, 20,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				10, 40, 45, 50, 50, 45, 40, 10,
+				10, 30, 40, 45, 45, 40, 30, 10,
+				10, 10, 20, 40, 40, 20, 10, 10,
+				20, 20, 30, 40, 40, 30, 20, 20
+		};
+
+		final int[] kingPositionMap = new int[]{
+				0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0,
+				20, 20, 10, 10, 10, 10, 20, 20,
+				30, 30, 10, 10, 10, 10, 30, 30,
+		};
+
 		for (int i = 0; i < 64; i++) {
 
 			Piece piece = board.get(i);
@@ -157,21 +227,34 @@ public class MinimaxEngine extends ChessEngine {
 			if (piece == null)
 				continue;
 
+			boolean isPieceWhite = piece.getColor() == PieceColor.WHITE;
+
 			int pieceValue = 0;
+
+			int[] positionMap = kingPositionMap;
 
 			if (piece.getClass().equals(Pawn.class)) {
 				pieceValue = pawnValue;
+				positionMap = pawnPositionMap;
 			} else if (piece.getClass().equals(Knight.class)) {
 				pieceValue = knightValue;
+				positionMap = kingPositionMap;
 			} else if (piece.getClass().equals(Bishop.class)) {
 				pieceValue = bishopValue;
+				positionMap = bishopPositionMap;
 			} else if (piece.getClass().equals(Rook.class)) {
 				pieceValue = rookValue;
+				positionMap = rookPositionMap;
 			} else if (piece.getClass().equals(Queen.class)) {
 				pieceValue = queenValue;
+				positionMap = queenPositionMap;
 			}
 
-			result += piece.getColor() == PieceColor.WHITE ? pieceValue : -pieceValue;
+			final int positionMapIndex = isPieceWhite ? i : Square.getIndex(i % 8, 7 - i / 8);
+
+			pieceValue += (int) Math.floor(POSITION_MAP_WEIGHT * positionMap[positionMapIndex]);
+
+			result += isPieceWhite ? pieceValue : -pieceValue;
 		}
 
 		return result;

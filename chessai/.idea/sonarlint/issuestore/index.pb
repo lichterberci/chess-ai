@@ -60,3 +60,5 @@ l
 <src/main/java/chessai/chessai/engine/TranspositionTable.java,3\4\34abcee3ba414874379e8c1e1dc09e0e45df6f7b
 h
 8src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java,d\c\dcf88c4ca4fa2d7d09077ffae300fdabbe93207c
+p
+@src/test/java/chessai/chessai/engine/TranspositionTableTest.java,3\3\330fe99fb1abd151218371194836e6b1aa860772
