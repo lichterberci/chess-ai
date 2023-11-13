@@ -1082,6 +1082,8 @@ public class Board {
 
         halfMoveCounter = Integer.parseInt(fenStringParts[4]);
         fullMoveClock = Integer.parseInt(fenStringParts[5]);
+
+        previousPositionHashes = new LinkedList<>();
     }
 
     public String getFENString() {
