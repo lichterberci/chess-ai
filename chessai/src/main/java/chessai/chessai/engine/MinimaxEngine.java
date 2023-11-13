@@ -4,6 +4,7 @@ import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.*;
 
 import java.security.InvalidKeyException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +25,20 @@ public class MinimaxEngine extends ChessEngine {
 
 		transpositionTable.clear();
 
-		List<Move> possibleLegalMoves = board.getLegalMoves();
+		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
-		if (possibleLegalMoves.isEmpty())
+		if (possiblyImmutableLegalMoves.isEmpty())
 			return Optional.empty();
 
-		if (possibleLegalMoves.size() == 1)
-			return Optional.of(possibleLegalMoves.get(0));
+		if (possiblyImmutableLegalMoves.size() == 1)
+			return Optional.of(possiblyImmutableLegalMoves.get(0));
+//
+//		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
+//
+//		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
+
+//		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
+		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
 		sortMovesInPlace(possibleLegalMoves);
 
@@ -44,7 +52,8 @@ public class MinimaxEngine extends ChessEngine {
 			Move move = possibleLegalMoves.get(i);
 
 			int currentEval = evaluateState(
-					board.makeMove(move),
+//					boards.get(i),
+					board.makeMove(possibleLegalMoves.get(i)),
 					maxDepth,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
@@ -91,7 +100,14 @@ public class MinimaxEngine extends ChessEngine {
 			}
 		}
 
-		List<Move> possibleLegalMoves = board.getLegalMoves();
+		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
+
+//		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
+
+//		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
+
+//		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
+		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
 		sortMovesInPlace(possibleLegalMoves);
 
@@ -116,10 +132,11 @@ public class MinimaxEngine extends ChessEngine {
 
 		int bestEval = isMaximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-		for (Move move : possibleLegalMoves) {
+		for (int i = 0; i < possibleLegalMoves.size(); i++) {
 
 			int currentEval = evaluateState(
-					board.makeMove(move),
+//                    boards.get(i),
+					board.makeMove(possibleLegalMoves.get(i)),
 					depthRemaining - 1,
 					!isMaximizingPlayer,
 					alpha,
@@ -149,14 +166,19 @@ public class MinimaxEngine extends ChessEngine {
 
 		Comparator<Move> moveComparator = (move1, move2) -> {
 
-			if (move1.isCapture())
+			if (move1.isCapture() && !move2.isCapture())
 				return -1;
 			if (move2.isCapture())
 				return 1;
 
-			if (move1.promotionPieceType() != null)
+			if (move1.promotionPieceType() != null && move2.promotionPieceType() == null)
 				return -1;
 			if (move2.promotionPieceType() != null)
+				return 1;
+
+			if (move1.isCheck() && !move2.isCheck())
+				return -1;
+			if (move2.isCheck())
 				return 1;
 
 			return 0;

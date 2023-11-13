@@ -4,22 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.security.InvalidKeyException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TranspositionTableTest {
 
     @Test
-    void put() {
-
-        var table = new TranspositionTable(1024);
-
-        table.put(10, -1);
-
-        assertEquals((long) -1 << 32 | 10, table.table[10]);
-    }
-
-    @Test
-    void get() throws InvalidKeyException {
+    void putAndGet() throws InvalidKeyException {
 
         var table = new TranspositionTable(1024);
 
@@ -36,9 +26,23 @@ class TranspositionTableTest {
 
     @Test
     void contains() {
-    }
 
-    @Test
-    void clear() {
+        var table = new TranspositionTable(1024);
+
+        table.put(10, -1);
+        assertTrue(table.contains(10));
+        assertFalse(table.contains(9));
+
+        table.put(138, -1);
+        assertTrue(table.contains(138));
+        assertTrue(table.contains(10));
+        assertFalse(table.contains(-1));
+
+        table.put(-100, 20);
+        assertTrue(table.contains(-100));
+        assertTrue(table.contains(138));
+        assertTrue(table.contains(10));
+        assertFalse(table.contains(0));
+
     }
 }

@@ -59,7 +59,10 @@ public class TranspositionTable {
     }
 
     public boolean contains(Board board) {
-        int hash = board.hashCode();
+        return contains(board.hashCode());
+    }
+
+    public boolean contains(int hash) {
 
         for (int i = getInitialIndex(hash); table[i] != DEFAULT_VALUE; i = Integer.remainderUnsigned(i + 1, capacity)) {
             if ((int) (table[i] & 0xFFFF_FFFFL) == hash)

@@ -6,26 +6,33 @@ import chessai.chessai.lib.PieceColor;
 import chessai.chessai.lib.Square;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class BoardPanel extends JPanel {
+    private static final String PIECE_THEME_PATH = "/chessai/chessai/swing_ui/pieces_from_chess_com";
+    private static final String SOUND_THEME_PATH = "/chessai/chessai/swing_ui/sounds";
     private final Color whiteTileColor;
     private final Color blackTileColor;
     private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
     private JPanel[] squarePanels;
-    private Board positionDisplayed;
-    private final List<Consumer<Square>> onSquareClickListeners;
-    private final List<Consumer<Square>> onSquareDragStartListeners;
-    private final List<Consumer<Square>> onSquareDragEndListeners;
+    private transient Board positionDisplayed;
+    private final transient List<Consumer<Square>> onSquareClickListeners;
+    private final transient List<Consumer<Square>> onSquareDragStartListeners;
+    private final transient List<Consumer<Square>> onSquareDragEndListeners;
+
+    public record MoveSoundType(boolean isCapture, boolean isCheck, boolean isPromotion, boolean isCastle) {
+    }
 
     public BoardPanel(Color whiteTileColor, Color blackTileColor, Color selectedSquareColor, boolean whiteIsAtTheBottom, int squareSize) {
         this(whiteTileColor, blackTileColor, selectedSquareColor, whiteIsAtTheBottom, squareSize, null);
@@ -119,7 +126,8 @@ public class BoardPanel extends JPanel {
             if (piece == null)
                 continue;
 
-            String urlString = "/chessai/chessai/swing_ui/pieces/%s%s.png".formatted(
+            String urlString = "%s/%s%s.png".formatted(
+                    PIECE_THEME_PATH,
                     piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
                     Character.toUpperCase(piece.getFENChar())
             );
@@ -222,5 +230,61 @@ public class BoardPanel extends JPanel {
 
     public void removeAllOnSquareDragEndListeners() {
         onSquareDragEndListeners.clear();
+    }
+
+    public void playMoveSound(MoveSoundType soundType) {
+
+        if (soundType.isCheck) {
+            playClip("move-check");
+        } else if (soundType.isCapture) {
+            playClip("capture");
+        } else if (soundType.isPromotion) {
+            playClip("promote");
+        } else if (soundType.isCastle) {
+            playClip("castle");
+        } else {
+            playClip("move-self");
+        }
+    }
+
+    private void playClip(String name) {
+        String urlString = "%s/%s.wav".formatted(
+                SOUND_THEME_PATH,
+                name
+        );
+
+        InputStream resourceInputStream = getClass().getResourceAsStream(urlString);
+
+        if (resourceInputStream == null) {
+            System.err.printf("Sound resource path is null! (%s)%n", urlString);
+            return;
+        }
+
+        AudioInputStream audioInputStream;
+
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(resourceInputStream);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            System.err.printf("Cannot load sound! (%s)%n", urlString);
+            return;
+        }
+
+        Clip clip;
+
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            System.err.printf("Cannot load clip! (%s)%n", urlString);
+            return;
+        }
+
+        try {
+            clip.open(audioInputStream);
+        } catch (LineUnavailableException | IOException e) {
+            System.err.printf("Cannot open clip! (%s)%n", urlString);
+            return;
+        }
+
+        clip.start();
     }
 }

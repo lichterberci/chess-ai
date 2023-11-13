@@ -9,15 +9,25 @@ public record Move(
         @Nullable Class<? extends Piece> promotionPieceType,
         boolean isCapture,
         boolean isEnPassant,
-        @Nullable SpecialMove specialMove
+        @Nullable SpecialMove specialMove,
+        boolean isCheck
 ) {
     public Move (Square from, Square to, Class<? extends  Piece> promotionPieceType, boolean isCapture, boolean isEnPassant, SpecialMove specialMove) {
+        this(from, to, promotionPieceType, isCapture, isEnPassant, specialMove, false);
+    }
+
+    public Move(int from, int to, Class<? extends Piece> promotionPieceType, boolean isCapture, boolean isEnPassant, SpecialMove specialMove) {
+        this(from, to, promotionPieceType, isCapture, isEnPassant, specialMove, false);
+    }
+
+    public Move(Square from, Square to, Class<? extends Piece> promotionPieceType, boolean isCapture, boolean isEnPassant, SpecialMove specialMove, boolean isCheck) {
         this(from.getIndex(),
                 to.getIndex(),
                 promotionPieceType,
                 isCapture,
                 isEnPassant,
-                specialMove
+                specialMove,
+                isCheck
         );
     }
 
@@ -53,7 +63,20 @@ public record Move(
                 pieceType,
                 isCapture,
                 isEnPassant,
-                specialMove
+                specialMove,
+                isCheck
+        );
+    }
+
+    public Move withCheck(boolean isCheck) {
+        return new Move(
+                fromIndex,
+                toIndex,
+                promotionPieceType,
+                isCapture,
+                isEnPassant,
+                specialMove,
+                isCheck
         );
     }
 }

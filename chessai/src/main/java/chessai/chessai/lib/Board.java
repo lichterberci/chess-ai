@@ -277,7 +277,7 @@ public class Board {
     public List<Move> getLegalMoves(boolean onlyGenerateEnemyAttackMaps) {
 
         if (cachedLegalMoves != null)
-            return new ArrayList<>(cachedLegalMoves); // we copy it, so it will become modifiable
+            return cachedLegalMoves;
 
         BitMap enemyPieces;
         BitMap checkTrackForOurKing;
@@ -1197,6 +1197,27 @@ public class Board {
         if (other == this) return true;
         if (!(other instanceof Board)) return false;
         return other.hashCode() == hashCode();
+    }
+
+    public List<Move> withIsCheckSet(List<Move> moves, List<Board> boards) {
+
+        List<Move> result = new ArrayList<>(moves.size());
+
+        for (int i = 0; i < moves.size(); i++) {
+            Move move = moves.get(i);
+            result.add(withIsCheckSet(move, boards.get(i)));
+        }
+
+        return result;
+    }
+
+    public Move withIsCheckSet(Move move) {
+        return withIsCheckSet(move, null);
+    }
+
+    public Move withIsCheckSet(Move move, Board board) {
+        return move.withCheck((board != null ? board : this.makeMove(move))
+                .isKingInCheck(this.colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE));
     }
 }
 

@@ -62,6 +62,11 @@ public class PvEGameFrame extends JFrame {
 
 	private void makeMove(Move move) {
 
+		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(move.isCapture(),
+				board.withIsCheckSet(move).isCheck(),
+				move.promotionPieceType() != null,
+				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE));
+
 		board = board.makeMove(move);
 
 		boardPanel.drawPosition(board);

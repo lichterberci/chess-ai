@@ -40,9 +40,9 @@ public class PvPGameFrame extends JFrame {
 				100
 		);
 
+		boardPanel.drawPosition(board);
 		boardPanel.selectSquare(null);
 		boardPanel.repaint();
-
 
 		boardPanel.addOnSquareClickListeners(this::onSquareClick);
 
@@ -52,6 +52,11 @@ public class PvPGameFrame extends JFrame {
 	}
 
 	private void makeMove(Move move) {
+
+		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(move.isCapture(),
+				board.withIsCheckSet(move).isCheck(),
+				move.promotionPieceType() != null,
+				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE));
 
 		board = board.makeMove(move);
 
