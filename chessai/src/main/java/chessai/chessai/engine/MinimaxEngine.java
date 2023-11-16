@@ -4,25 +4,34 @@ import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.*;
 
 import java.security.InvalidKeyException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MinimaxEngine extends ChessEngine {
 
-	private static final float POSITION_MAP_WEIGHT = 0.3f;
-	final int maxDepth;
+	private static final float POSITION_MAP_WEIGHT = 10f;
+	private final int maxDepth;
 	private final TranspositionTable transpositionTable;
+	private final int[][] historicalBestMovesCount;
 
 	public MinimaxEngine(int maxDepth) {
 		this.maxDepth = maxDepth;
 		this.transpositionTable = new TranspositionTable(1_000_000_000);
+		historicalBestMovesCount = new int[64][64];
 	}
 
 	@Override
 	public Optional<Move> makeMove(Board board) {
 
+		Optional<Move> bestMove = Optional.empty();
+
+		for (int i = 0; i < maxDepth; i++) {
+			bestMove = search(board, i);
+		}
+
+		return bestMove;
+	}
+
+	public Optional<Move> search(Board board, int depth) {
 		transpositionTable.clear();
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
@@ -54,7 +63,7 @@ public class MinimaxEngine extends ChessEngine {
 			int currentEval = evaluateState(
 //					boards.get(i),
 					board.makeMove(possibleLegalMoves.get(i)),
-					maxDepth,
+					depth,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
 					beta
@@ -84,7 +93,7 @@ public class MinimaxEngine extends ChessEngine {
 				break;
 		}
 
-		System.out.println("best: " + possibleLegalMoves.get(indexOfBestMove) + " (" + bestEval + ")");
+		System.out.println("best at depth " + depth + ": " + possibleLegalMoves.get(indexOfBestMove) + " (" + bestEval + ")");
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
@@ -132,11 +141,14 @@ public class MinimaxEngine extends ChessEngine {
 
 		int bestEval = isMaximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
-		for (int i = 0; i < possibleLegalMoves.size(); i++) {
+		int fromIndexOfBestMove = 0;
+		int toIndexOfBestMove = 0;
+
+		for (Move possibleLegalMove : possibleLegalMoves) {
 
 			int currentEval = evaluateState(
 //                    boards.get(i),
-					board.makeMove(possibleLegalMoves.get(i)),
+					board.makeMove(possibleLegalMove),
 					depthRemaining - 1,
 					!isMaximizingPlayer,
 					alpha,
@@ -144,10 +156,18 @@ public class MinimaxEngine extends ChessEngine {
 			);
 
 			if (isMaximizingPlayer) {
-				bestEval = Math.max(currentEval, bestEval);
+				if (currentEval > bestEval) {
+					bestEval = currentEval;
+					fromIndexOfBestMove = possibleLegalMove.fromIndex();
+					toIndexOfBestMove = possibleLegalMove.toIndex();
+				}
 				alpha = Math.max(alpha, bestEval);
 			} else {
-				bestEval = Math.min(currentEval, bestEval);
+				if (currentEval < bestEval) {
+					bestEval = currentEval;
+					fromIndexOfBestMove = possibleLegalMove.fromIndex();
+					toIndexOfBestMove = possibleLegalMove.toIndex();
+				}
 				beta = Math.min(beta, bestEval);
 			}
 
@@ -155,6 +175,8 @@ public class MinimaxEngine extends ChessEngine {
 				break;
 			}
 		}
+
+		historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
 
 		return bestEval;
 	}
@@ -181,7 +203,10 @@ public class MinimaxEngine extends ChessEngine {
 			if (move2.isCheck())
 				return 1;
 
-			return 0;
+			int historicalScoreOfMove1 = historicalBestMovesCount[move1.fromIndex()][move1.toIndex()];
+			int historicalScoreOfMove2 = historicalBestMovesCount[move2.fromIndex()][move2.toIndex()];
+
+			return historicalScoreOfMove2 - historicalScoreOfMove1;
 		};
 
 		try {
@@ -303,7 +328,12 @@ public class MinimaxEngine extends ChessEngine {
 
 			final int positionMapIndex = isPieceWhite ? i : Square.getIndex(i % 8, 7 - i / 8);
 
-			pieceValue += (int) Math.floor(POSITION_MAP_WEIGHT * positionMap[positionMapIndex]);
+			final int maxValue = Arrays.stream(positionMap).max().getAsInt();
+
+			// we normalize the values
+			final float valueFromPositionMap = (float) positionMap[positionMapIndex] / maxValue;
+
+			pieceValue += (int) Math.floor(POSITION_MAP_WEIGHT * valueFromPositionMap);
 
 			result += isPieceWhite ? pieceValue : -pieceValue;
 		}

@@ -9,18 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added basic move ordering">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Worked on move ordering and sounds">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__08__17_57_[Changes]/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__08__17_57_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__08__17_57__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/TranspositionTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/TranspositionTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/sounds/capture.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/sounds/move-self.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/TranspositionTableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/TranspositionTableTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -313,15 +308,8 @@
       <workItem from="1699548470682" duration="732000" />
       <workItem from="1699638770771" duration="676000" />
       <workItem from="1699646834244" duration="5412000" />
-      <workItem from="1699903628151" duration="6622000" />
-    </task>
-    <task id="LOCAL-00008" summary="getState works now :D">
-      <option name="closed" value="true" />
-      <created>1695833901482</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1695833901482</updated>
+      <workItem from="1699903628151" duration="7096000" />
+      <workItem from="1700123038051" duration="1310000" />
     </task>
     <task id="LOCAL-00009" summary="Castling rights corrected">
       <option name="closed" value="true" />
@@ -707,7 +695,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699905505613</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Worked on move ordering and sounds">
+      <option name="closed" value="true" />
+      <created>1699910286060</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1699910286060</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -725,7 +721,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
     <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
@@ -750,7 +745,8 @@
     <MESSAGE value="Started adding position maps for ongoing position eval" />
     <MESSAGE value="Positionmaps are done but some errors arose" />
     <MESSAGE value="Added basic move ordering" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added basic move ordering" />
+    <MESSAGE value="Worked on move ordering and sounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="Worked on move ordering and sounds" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
