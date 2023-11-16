@@ -30,6 +30,7 @@ public class Menu {
 	    playVsEngineBtn.addActionListener(e -> {
 		    var pvpFrame = new PvEGameFrame(
 //					new MonteCarloEngine(0, 1.4142, 20, 400),
+                    "8/1k6/8/8/8/8/1K1Q4/8 w - - 0 1",
 				    new MinimaxEngine(6),
 				    true
 		    );

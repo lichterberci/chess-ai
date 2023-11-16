@@ -214,4 +214,46 @@ class BoardTest {
 
         assertDoesNotThrow(() -> board.getLegalMoves());
     }
+
+    @Test
+    void setIsCheckForMove() throws ParseException {
+
+        Board board = new Board("8/1k6/8/8/8/8/1K1Q4/8 w - - 0 1");
+
+        Move kingToB3 = new Move(Square.getIndex("b2"),
+                Square.getIndex("b3"),
+                null,
+                false,
+                false,
+                SpecialMove.NONE);
+
+        assertFalse(board.withIsCheckSet(kingToB3).isCheck());
+
+        Move queenToD5 = new Move(Square.getIndex("d2"),
+                Square.getIndex("d5"),
+                null,
+                false,
+                false,
+                SpecialMove.NONE);
+
+        assertTrue(board.withIsCheckSet(queenToD5).isCheck());
+
+        assertTrue(
+                board
+                        .makeMove(queenToD5)
+                        .makeMove(new Move(Square.getIndex("b7"),
+                                Square.getIndex("a7"),
+                                null,
+                                false,
+                                false,
+                                SpecialMove.NONE))
+                        .withIsCheckSet(new Move(Square.getIndex("d5"),
+                                Square.getIndex("d7"),
+                                null,
+                                false,
+                                false,
+                                SpecialMove.NONE))
+                        .isCheck()
+        );
+    }
 }

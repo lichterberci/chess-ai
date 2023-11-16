@@ -14,8 +14,12 @@ public class MinimaxEngine extends ChessEngine {
 	private final int[][] historicalBestMovesCount;
 
 	public MinimaxEngine(int maxDepth) {
+		this(maxDepth, 1_000_000_000);
+	}
+
+	public MinimaxEngine(int maxDepth, int transpositionTableCapacityInBytes) {
 		this.maxDepth = maxDepth;
-		this.transpositionTable = new TranspositionTable(1_000_000_000);
+		this.transpositionTable = new TranspositionTable(transpositionTableCapacityInBytes);
 		historicalBestMovesCount = new int[64][64];
 	}
 
@@ -24,7 +28,8 @@ public class MinimaxEngine extends ChessEngine {
 
 		Optional<Move> bestMove = Optional.empty();
 
-		for (int i = 0; i < maxDepth; i++) {
+		for (int i = 0; i <= maxDepth; i++) {
+			transpositionTable.clear();
 			bestMove = search(board, i);
 		}
 
@@ -32,7 +37,6 @@ public class MinimaxEngine extends ChessEngine {
 	}
 
 	public Optional<Move> search(Board board, int depth) {
-		transpositionTable.clear();
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
@@ -78,7 +82,9 @@ public class MinimaxEngine extends ChessEngine {
 					indexOfBestMove = i;
 				}
 
-				alpha = Math.max(alpha, bestEval);
+				if (bestEval > alpha) {
+					alpha = bestEval;
+				}
 			} else {
 
 				if (bestEval > currentEval) {
@@ -86,7 +92,9 @@ public class MinimaxEngine extends ChessEngine {
 					indexOfBestMove = i;
 				}
 
-				beta = Math.min(beta, bestEval);
+				if (bestEval < beta) {
+					beta = bestEval;
+				}
 			}
 
 			if (beta <= alpha)
