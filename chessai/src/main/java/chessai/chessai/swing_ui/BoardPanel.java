@@ -25,6 +25,7 @@ public class BoardPanel extends JPanel {
     private final Color blackTileColor;
     private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
+    private final int squareSize;
     private JPanel[] squarePanels;
     private transient Board positionDisplayed;
     private final transient List<Consumer<Square>> onSquareClickListeners;
@@ -44,6 +45,7 @@ public class BoardPanel extends JPanel {
         this.blackTileColor = blackTileColor;
         this.selectedSquareColor = selectedSquareColor;
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
+        this.squareSize = squareSize;
         this.onSquareClickListeners = new LinkedList<>();
         this.onSquareDragEndListeners = new LinkedList<>();
         this.onSquareDragStartListeners = new LinkedList<>();
@@ -51,13 +53,15 @@ public class BoardPanel extends JPanel {
         this.setSize(squareSize * 8, squareSize * 8);
         this.setLayout(new GridLayout(8, 8));
 
-        drawBoardAndSetUpSquares(whiteTileColor, blackTileColor, squareSize);
+        drawBoardAndSetUpSquares(whiteTileColor, blackTileColor);
 
         if (board != null)
             drawPosition(board);
+
+        System.out.println("ctor: " + squareSize + ", w: " + this.getWidth() + " h: " + this.getHeight());
     }
 
-    private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor, int squareSize) {
+    private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor) {
 
         squarePanels = new JPanel[64];
 
@@ -118,8 +122,6 @@ public class BoardPanel extends JPanel {
 
         for (int i = 0; i < 64; i++) {
 
-            final int squareSize = squarePanels[i].getWidth();
-
             Piece piece = positionDisplayed.get(this.whiteIsAtTheBottom ? i : 63 - i);
             Square square = new Square(this.whiteIsAtTheBottom ? i : 63 - i);
 
@@ -142,7 +144,7 @@ public class BoardPanel extends JPanel {
             Image image;
 
             try {
-                image = ImageIO.read(imageResource).getScaledInstance((int) (squareSize * 0.95), (int) (squareSize * 0.95), Image.SCALE_SMOOTH);
+                image = ImageIO.read(imageResource).getScaledInstance((int) (squareSize * 0.9), (int) (squareSize * 0.9), Image.SCALE_SMOOTH);
 //                image = ImageIO.read(imageResource);
             } catch (IOException e) {
                 System.err.printf("Image resource path is null! (%s)%n", urlString);
@@ -150,7 +152,7 @@ public class BoardPanel extends JPanel {
             }
 
             var imageComponent = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
-            imageComponent.setSize(new Dimension(squareSize, squareSize));
+            imageComponent.setSize(new Dimension((int) (squareSize * 0.9), (int) (squareSize * 0.9)));
             imageComponent.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

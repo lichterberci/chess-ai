@@ -22,7 +22,7 @@ public class PvPGameFrame extends JFrame {
 		super("Human vs human");
 
 		this.setLayout(new BorderLayout());
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
@@ -40,8 +40,11 @@ public class PvPGameFrame extends JFrame {
 				100
 		);
 
+		this.setSize(new Dimension(800, 800));
+
 		boardPanel.drawPosition(board);
 		boardPanel.selectSquare(null);
+		boardPanel.validate();
 		boardPanel.repaint();
 
 		boardPanel.addOnSquareClickListeners(this::onSquareClick);
@@ -61,8 +64,10 @@ public class PvPGameFrame extends JFrame {
 		board = board.makeMove(move);
 
 		boardPanel.drawPosition(board);
-
+		boardPanel.validate();
 		boardPanel.repaint();
+
+//		boardPanel.repaint();
 
 		if (board.getState() != GameState.PLAYING)
 			gameEndedAction(board.getState());

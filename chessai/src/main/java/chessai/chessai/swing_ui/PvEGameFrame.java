@@ -31,7 +31,7 @@ public class PvEGameFrame extends JFrame {
 		this.isPlayerWhite = isPlayerWhite;
 
 		this.setLayout(new BorderLayout());
-		this.setResizable(false);
+//		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
@@ -51,9 +51,12 @@ public class PvEGameFrame extends JFrame {
 
 		boardPanel.drawPosition(board);
 		boardPanel.selectSquare(null);
+		boardPanel.validate();
 		boardPanel.repaint();
 
 		boardPanel.addOnSquareClickListeners(this::onSquareClick);
+
+//		boardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 200));
 
 		this.add(boardPanel, BorderLayout.CENTER);
 
@@ -72,7 +75,7 @@ public class PvEGameFrame extends JFrame {
 		board = board.makeMove(move);
 
 		boardPanel.drawPosition(board);
-
+		boardPanel.validate();
 		boardPanel.repaint();
 
 		if (board.getState() != GameState.PLAYING) {
