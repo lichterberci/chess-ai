@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -79,6 +80,8 @@ public class PvEGameFrame extends JFrame {
 		boardPanel.drawPosition(board);
 		boardPanel.validate();
 		boardPanel.repaint();
+
+		boardPanel.drawLayer("moveHighlight", Settings.getInstance().getMoveHighlightColor(), List.of(move.from(), move.to()), 2);
 
 		if (board.getState() != GameState.PLAYING) {
 			gameEndedAction(board.getState());

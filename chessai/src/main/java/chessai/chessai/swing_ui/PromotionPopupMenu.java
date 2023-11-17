@@ -63,7 +63,7 @@ public class PromotionPopupMenu extends JPopupMenu {
 
     private Image loadImage(Piece piece) {
 
-        String urlString = "/chessai/chessai/swing_ui/%s/%s%s.png".formatted(
+        String urlString = "/chessai/chessai/swing_ui/themes/%s/%s%s.png".formatted(
                 Settings.getInstance().getPieceTheme(),
                 piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
                 Character.toUpperCase(piece.getFENChar())

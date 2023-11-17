@@ -12,7 +12,7 @@ public class Settings implements Serializable {
     private Color whiteTileColor = new Color(237, 214, 179, 255);
     private Color blackTileColor = new Color(179, 134, 98, 255);
     private Color selectedPieceBackgroundColor = new Color(255, 28, 28, 147);
-    private Color moveHighlightColor = new Color(222, 219, 53, 205);
+    private Color moveHighlightColor = new Color(225, 214, 47, 255);
 
     static {
         loadSavedSettingsOrSetToDefault();

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class PvPGameFrame extends JFrame {
@@ -57,16 +58,20 @@ public class PvPGameFrame extends JFrame {
 
 	private void makeMove(Move move) {
 
-		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(move.isCapture(),
-				board.withIsCheckSet(move).isCheck(),
-				move.promotionPieceType() != null,
-				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE));
-
 		board = board.makeMove(move);
+
+		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(
+				move.isCapture(),
+				board.isKingInCheck(board.colorToMove),
+				move.promotionPieceType() != null,
+				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE)
+		);
 
 		boardPanel.drawPosition(board);
 		boardPanel.validate();
 		boardPanel.repaint();
+
+		boardPanel.drawLayer("moveHighlight", Settings.getInstance().getMoveHighlightColor(), List.of(move.from(), move.to()), 2);
 
 //		boardPanel.repaint();
 

@@ -54,8 +54,6 @@ public class BoardPanel extends JPanel {
 
         if (board != null)
             drawPosition(board);
-
-        System.out.println("ctor: " + squareSize + ", w: " + this.getWidth() + " h: " + this.getHeight());
     }
 
     private void drawBoardAndSetUpSquares() {
@@ -125,7 +123,7 @@ public class BoardPanel extends JPanel {
             if (piece == null)
                 continue;
 
-            String urlString = "/chessai/chessai/swing_ui/%s/%s%s.png".formatted(
+            String urlString = "/chessai/chessai/swing_ui/themes/%s/%s%s.png".formatted(
                     Settings.getInstance().getPieceTheme(),
                     piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
                     Character.toUpperCase(piece.getFENChar())
@@ -192,7 +190,7 @@ public class BoardPanel extends JPanel {
 
                 Color defaultTileColor = shouldSquareBeColoredWhite ? Settings.getInstance().getWhiteTileColor() : Settings.getInstance().getBlackTileColor();
 
-                Square currentSquare = whiteIsAtTheBottom ? new Square(file, row) : new Square(file, 7 - row);
+                Square currentSquare = whiteIsAtTheBottom ? new Square(file, 7 - row) : new Square(file, row);
 
                 Optional<BackgroundColorLayer> colorOfMaxPriorityLayer = orderedBackgroundLayers.stream()
                         .filter(layer -> layer.squares().contains(currentSquare))
@@ -262,7 +260,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void playClip(String name) {
-        String urlString = "%/chessai/chessai/swing_ui/%s/%s.wav".formatted(
+        String urlString = "/chessai/chessai/swing_ui/%s/%s.wav".formatted(
                 Settings.getInstance().getSoundTheme(),
                 name
         );
