@@ -270,11 +270,45 @@ public class Board {
         return canOppositeWin;
     }
 
-    public List<Move> getLegalMoves() {
-        return getLegalMoves(false);
+    public void generateAttackSquare() {
+
+        whiteAttackSquares = new BitMap(0);
+        blackAttackSquares = new BitMap(0);
+
+        PieceColor realColorToMove = colorToMove;
+
+        colorToMove = PieceColor.WHITE;
+
+        for (int index = 0; index < 64; index++) {
+
+            if (!whitePieces.getBit(index))
+                continue;
+
+            Piece whitePiece = squares[index];
+
+            MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
+
+            whiteAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+        }
+
+        colorToMove = PieceColor.BLACK;
+
+        for (int index = 0; index < 64; index++) {
+
+            if (!blackPieces.getBit(index))
+                continue;
+
+            Piece whitePiece = squares[index];
+
+            MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
+
+            blackAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+        }
+
+        colorToMove = realColorToMove;
     }
 
-    public List<Move> getLegalMoves(boolean onlyGenerateEnemyAttackMaps) {
+    public List<Move> getLegalMoves() {
 
         if (cachedLegalMoves != null)
             return cachedLegalMoves;
@@ -327,9 +361,6 @@ public class Board {
             blackAttackSquares = enemyAttackSquares;
         else
             whiteAttackSquares = enemyAttackSquares;
-
-        if (onlyGenerateEnemyAttackMaps)
-            return new ArrayList<>();
 
         // double check
         if (enemyDoubleAttackSquares.and(ourKing).isNonZero()) {
@@ -729,6 +760,8 @@ public class Board {
         result.enPassantTarget = null;
         result.cachedGameState = null;
         result.cachedLegalMoves = null;
+        result.whiteAttackSquares = null;
+        result.blackAttackSquares = null;
 
         result.squares = getSquaresAfterMove(move, result, to);
 

@@ -9,25 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Piece align,ent bug FINALLY FIXED!!!! ^^D">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added chess.com neo theme">
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Settings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bk.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bq.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/br.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wk.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wq.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +42,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -322,14 +308,6 @@
       <workItem from="1699646834244" duration="5412000" />
       <workItem from="1699903628151" duration="7096000" />
       <workItem from="1700123038051" duration="3971000" />
-    </task>
-    <task id="LOCAL-00011" summary="Added GameManager and simplified resource loading">
-      <option name="closed" value="true" />
-      <created>1695839786782</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1695839786782</updated>
     </task>
     <task id="LOCAL-00012" summary="Board clearing fixed">
       <option name="closed" value="true" />
@@ -715,7 +693,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700254197546</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="Added chess.com neo theme">
+      <option name="closed" value="true" />
+      <created>1700255970170</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1700255970170</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,8 +719,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
-    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
     <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
@@ -762,7 +746,8 @@
     <MESSAGE value="Worked on move ordering and sounds" />
     <MESSAGE value="Added iterative deepening and historical heuristic" />
     <MESSAGE value="Piece align,ent bug FINALLY FIXED!!!! ^^D" />
-    <option name="LAST_COMMIT_MESSAGE" value="Piece align,ent bug FINALLY FIXED!!!! ^^D" />
+    <MESSAGE value="Added chess.com neo theme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added chess.com neo theme" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -773,6 +758,11 @@
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>

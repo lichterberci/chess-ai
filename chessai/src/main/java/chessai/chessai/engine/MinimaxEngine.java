@@ -384,7 +384,7 @@ public class MinimaxEngine extends ChessEngine {
 		}
 
 		if (board.whiteAttackSquares == null || board.blackAttackSquares == null)
-			board.getLegalMoves(true);
+			board.generateAttackSquare();
 
 		int attackSquareSumDifference = 0;
 
