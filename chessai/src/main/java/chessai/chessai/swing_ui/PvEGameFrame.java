@@ -7,6 +7,7 @@ import chessai.chessai.lib.pieces.Queen;
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -42,15 +43,16 @@ public class PvEGameFrame extends JFrame {
 		}
 
 		boardPanel = new BoardPanel(
-				new Color(237, 214, 179, 255),
-				new Color(179, 134, 98, 255),
-				new Color(255, 28, 28, 147),
+
 				isPlayerWhite,
 				100
 		);
 
 		boardPanel.drawPosition(board);
-		boardPanel.selectSquare(null);
+		boardPanel.drawLayer("selectedSquare",
+				Settings.getInstance().getSelectedPieceBackgroundColor(),
+				Collections.emptyList(),
+				3);
 		boardPanel.validate();
 		boardPanel.repaint();
 
@@ -182,7 +184,10 @@ public class PvEGameFrame extends JFrame {
 
 	private void selectPieceOnBoard(Square square) {
 		selectedPiece = square;
-		boardPanel.selectSquare(square);
+		boardPanel.drawLayer("selectedSquare",
+				Settings.getInstance().getSelectedPieceBackgroundColor(),
+				Collections.singletonList(square),
+				3);
 		boardPanel.repaint();
 	}
 

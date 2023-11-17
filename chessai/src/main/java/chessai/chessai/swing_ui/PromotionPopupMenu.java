@@ -34,36 +34,37 @@ public class PromotionPopupMenu extends JPopupMenu {
     }
 
     private void addMenuItem(String altText, Class<? extends Piece> promotionClass, PieceColor pieceColor) {
-        JMenuItem queenItem = new JMenuItem();
+        JMenuItem item = new JMenuItem();
 
-        Image queenImage = null;
+        Image image;
 
         try {
-            queenImage = loadImage(promotionClass.getConstructor(PieceColor.class).newInstance(pieceColor));
+            image = loadImage(promotionClass.getConstructor(PieceColor.class).newInstance(pieceColor));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             throw new IllegalArgumentException("%s is not a valid piece!".formatted(promotionClass));
         }
 
-        if (queenImage != null)
-            queenItem.setIcon(new ImageIcon(queenImage));
+        if (image != null)
+            item.setIcon(new ImageIcon(image));
         else
-            queenItem.setText(altText);
+            item.setText(altText);
 
-        queenItem.setHorizontalAlignment(SwingConstants.CENTER);
-        queenItem.setVerticalAlignment(SwingConstants.CENTER);
-        queenItem.setVerticalTextPosition(SwingConstants.CENTER);
-        queenItem.setHorizontalTextPosition(SwingConstants.CENTER);
-        queenItem.setVisible(true);
-        queenItem.addActionListener(e -> this.action.accept(promotionClass));
-        queenItem.setBorderPainted(false);
+        item.setHorizontalAlignment(SwingConstants.CENTER);
+        item.setVerticalAlignment(SwingConstants.CENTER);
+        item.setVerticalTextPosition(SwingConstants.CENTER);
+        item.setHorizontalTextPosition(SwingConstants.CENTER);
+        item.setVisible(true);
+        item.addActionListener(e -> this.action.accept(promotionClass));
+        item.setBorderPainted(false);
 
-        this.add(queenItem, BorderLayout.CENTER);
+        this.add(item, BorderLayout.CENTER);
     }
 
     private Image loadImage(Piece piece) {
 
-        String urlString = "/chessai/chessai/swing_ui/pieces/%s%s.png".formatted(
+        String urlString = "/chessai/chessai/swing_ui/%s/%s%s.png".formatted(
+                Settings.getInstance().getPieceTheme(),
                 piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
                 Character.toUpperCase(piece.getFENChar())
         );

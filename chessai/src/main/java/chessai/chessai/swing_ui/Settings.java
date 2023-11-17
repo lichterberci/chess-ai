@@ -7,12 +7,12 @@ public class Settings implements Serializable {
 
     private static final String SETTINGS_PATH = "./settings.dat";
     private static Settings instance;
-    private String pieceTheme;
-    private String soundTheme;
-    private Color whiteTileColor;
-    private Color blackTileColor;
-    private Color selectedPieceBackgroundColor;
-    private Color moveHighlightColor;
+    private String pieceTheme = "neo";
+    private String soundTheme = "sounds";
+    private Color whiteTileColor = new Color(237, 214, 179, 255);
+    private Color blackTileColor = new Color(179, 134, 98, 255);
+    private Color selectedPieceBackgroundColor = new Color(255, 28, 28, 147);
+    private Color moveHighlightColor = new Color(222, 219, 53, 205);
 
     static {
         loadSavedSettingsOrSetToDefault();

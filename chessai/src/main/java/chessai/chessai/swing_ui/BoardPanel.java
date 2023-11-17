@@ -14,17 +14,12 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class BoardPanel extends JPanel {
-    private static final String PIECE_THEME_PATH = "/chessai/chessai/swing_ui/chess_com_neo";
-    private static final String SOUND_THEME_PATH = "/chessai/chessai/swing_ui/sounds";
     private static final float PIECE_SIZE = 0.95f;
-    private final Color whiteTileColor;
-    private final Color blackTileColor;
-    private final Color selectedSquareColor;
     private final boolean whiteIsAtTheBottom;
     private final int squareSize;
     private JPanel[] squarePanels;
@@ -32,29 +27,30 @@ public class BoardPanel extends JPanel {
     private final transient List<Consumer<Square>> onSquareClickListeners;
     private final transient List<Consumer<Square>> onSquareDragStartListeners;
     private final transient List<Consumer<Square>> onSquareDragEndListeners;
-
+    private final transient Map<String, BackgroundColorLayer> backgroundColorLayerMap;
     public record MoveSoundType(boolean isCapture, boolean isCheck, boolean isPromotion, boolean isCastle) {
     }
 
-    public BoardPanel(Color whiteTileColor, Color blackTileColor, Color selectedSquareColor, boolean whiteIsAtTheBottom, int squareSize) {
-        this(whiteTileColor, blackTileColor, selectedSquareColor, whiteIsAtTheBottom, squareSize, null);
+    private record BackgroundColorLayer(List<Square> squares, Color backgrounColor, int priority) {
     }
 
-    public BoardPanel(Color whiteTileColor, Color blackTileColor, Color selectedSquareColor, boolean whiteIsAtTheBottom, int squareSize, Board board) {
+    public BoardPanel(boolean whiteIsAtTheBottom, int squareSize) {
+        this(whiteIsAtTheBottom, squareSize, null);
+    }
 
-        this.whiteTileColor = whiteTileColor;
-        this.blackTileColor = blackTileColor;
-        this.selectedSquareColor = selectedSquareColor;
+    public BoardPanel(boolean whiteIsAtTheBottom, int squareSize, Board board) {
+
         this.whiteIsAtTheBottom = whiteIsAtTheBottom;
         this.squareSize = squareSize;
         this.onSquareClickListeners = new LinkedList<>();
         this.onSquareDragEndListeners = new LinkedList<>();
         this.onSquareDragStartListeners = new LinkedList<>();
+        this.backgroundColorLayerMap = new HashMap<>();
 
         this.setSize(squareSize * 8, squareSize * 8);
         this.setLayout(new GridLayout(8, 8));
 
-        drawBoardAndSetUpSquares(whiteTileColor, blackTileColor);
+        drawBoardAndSetUpSquares();
 
         if (board != null)
             drawPosition(board);
@@ -62,7 +58,7 @@ public class BoardPanel extends JPanel {
         System.out.println("ctor: " + squareSize + ", w: " + this.getWidth() + " h: " + this.getHeight());
     }
 
-    private void drawBoardAndSetUpSquares(Color whiteTileColor, Color blackTileColor) {
+    private void drawBoardAndSetUpSquares() {
 
         squarePanels = new JPanel[64];
 
@@ -78,7 +74,7 @@ public class BoardPanel extends JPanel {
 
                 final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
 
-                squarePanel.setBackground(shouldSquareBeColoredWhite ? whiteTileColor : blackTileColor);
+                squarePanel.setBackground(shouldSquareBeColoredWhite ? Settings.getInstance().getWhiteTileColor() : Settings.getInstance().getBlackTileColor());
                 squarePanel.setAlignmentY(CENTER_ALIGNMENT);
                 squarePanel.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -129,8 +125,8 @@ public class BoardPanel extends JPanel {
             if (piece == null)
                 continue;
 
-            String urlString = "%s/%s%s.png".formatted(
-                    PIECE_THEME_PATH,
+            String urlString = "/chessai/chessai/swing_ui/%s/%s%s.png".formatted(
+                    Settings.getInstance().getPieceTheme(),
                     piece.getColor() == PieceColor.WHITE ? 'w' : 'b',
                     Character.toUpperCase(piece.getFENChar())
             );
@@ -178,21 +174,36 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void selectSquare(Square square) {
+    public void drawLayer(String name, Color color, List<Square> squares, int priority) {
+        backgroundColorLayerMap.put(name, new BackgroundColorLayer(squares, color, priority));
+        repaintBackground();
+    }
 
-        int selectedIndex = square == null ? -1 : square.getIndex();
+    private void repaintBackground() {
 
-        if (!this.whiteIsAtTheBottom)
-            selectedIndex = 63 - selectedIndex; // flip the board if needed (-1 will be invalid this way too)
+        List<BackgroundColorLayer> orderedBackgroundLayers = backgroundColorLayerMap.values()
+                .stream()
+                .sorted(Comparator.comparing(BackgroundColorLayer::priority).reversed())
+                .toList();
 
         for (int row = 0; row < 8; row++) {
             for (int file = 0; file < 8; file++) {
-
                 final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
 
-                Color tileColor = shouldSquareBeColoredWhite ? whiteTileColor : blackTileColor;
+                Color defaultTileColor = shouldSquareBeColoredWhite ? Settings.getInstance().getWhiteTileColor() : Settings.getInstance().getBlackTileColor();
 
-                squarePanels[row * 8 + file].setBackground(row * 8 + file != selectedIndex ? tileColor : selectedSquareColor);
+                Square currentSquare = whiteIsAtTheBottom ? new Square(file, row) : new Square(file, 7 - row);
+
+                Optional<BackgroundColorLayer> colorOfMaxPriorityLayer = orderedBackgroundLayers.stream()
+                        .filter(layer -> layer.squares().contains(currentSquare))
+                        .findFirst();
+
+                if (colorOfMaxPriorityLayer.isEmpty()) {
+                    squarePanels[row * 8 + file].setBackground(defaultTileColor);
+                    continue;
+                }
+
+                squarePanels[row * 8 + file].setBackground(colorOfMaxPriorityLayer.get().backgrounColor());
             }
         }
 
@@ -251,8 +262,8 @@ public class BoardPanel extends JPanel {
     }
 
     private void playClip(String name) {
-        String urlString = "%s/%s.wav".formatted(
-                SOUND_THEME_PATH,
+        String urlString = "%/chessai/chessai/swing_ui/%s/%s.wav".formatted(
+                Settings.getInstance().getSoundTheme(),
                 name
         );
 
