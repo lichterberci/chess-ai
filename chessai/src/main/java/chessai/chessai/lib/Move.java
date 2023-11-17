@@ -56,6 +56,14 @@ public record Move(
         return String.format("Move(from=%s, to=%s, isCapture=%s, isEnPassant=%s, specialMove=%s)", from(), to(), isCapture, isEnPassant, specialMove);
     }
 
+    public String toShortString() {
+        return toShortString(false);
+    }
+
+    public String toShortString(boolean upperCase) {
+        return String.format("%s%s", Square.toString(fromIndex, upperCase), Square.toString(toIndex, upperCase));
+    }
+
     public Move withPromotionType(Class<? extends Piece> pieceType) {
         return new Move(
                 fromIndex,

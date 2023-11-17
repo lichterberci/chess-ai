@@ -13,6 +13,14 @@ public class Square {
         this.squareData = (short) (((file & 0xFF) << 8) | (row & 0xFF));
     }
 
+    public static String toString(int index) {
+        return toString(index, true);
+    }
+
+    public static String toString(int index, boolean upperCase) {
+        return String.valueOf((char) ((upperCase ? 'A' : 'a') + getFile(index))) + (getRow(index) + 1);
+    }
+
     public int getIndex() {
         int result = (squareData >>> 8) + ((7 - (squareData & 0xFF)) * 8);
         if (result > 63 || result < 0)
@@ -30,7 +38,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return String.valueOf((char) ('A' + (squareData >>> 8) & 0xFF)) + (((squareData) & 0xFF) + 1);
+        return toString(getIndex());
     }
 
     public static int getIndex(String name) {

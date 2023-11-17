@@ -9,9 +9,16 @@ import java.util.*;
 public class MinimaxEngine extends ChessEngine {
 
 	private static final float POSITION_MAP_WEIGHT = 10f;
+	private static final float ATTACK_SQUARE_WEIGHT = 5f;
 	private final int maxDepth;
 	private final TranspositionTable transpositionTable;
 	private final int[][] historicalBestMovesCount;
+	/**
+	 * @implSpec <a href="https://www.chessprogramming.org/Triangular_PV-Table">chess programming wiki page</a>
+	 */
+	private Move[] pvTable;
+	private Move[] prevPvTable;
+	private int currentMaxDepth;
 
 	public MinimaxEngine(int maxDepth) {
 		this(maxDepth, 1_000_000_000);
@@ -28,8 +35,9 @@ public class MinimaxEngine extends ChessEngine {
 
 		Optional<Move> bestMove = Optional.empty();
 
-		for (int i = 0; i <= maxDepth; i++) {
+		for (int i = 1; i <= maxDepth; i++) {
 			transpositionTable.clear();
+			currentMaxDepth = i;
 			bestMove = search(board, i);
 		}
 
@@ -51,9 +59,13 @@ public class MinimaxEngine extends ChessEngine {
 //		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
 
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
+		int pvTablSize = Math.ceilDiv((maxDepth + 1) * (maxDepth + 2), 2);
+		prevPvTable = pvTable != null ? pvTable : new Move[pvTablSize];
+		pvTable = new Move[pvTablSize];
+
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
-		sortMovesInPlace(possibleLegalMoves);
+		sortMovesInPlace(possibleLegalMoves, 0);
 
 		int indexOfBestMove = 0;
 		int bestEval = board.colorToMove == PieceColor.WHITE ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -70,10 +82,12 @@ public class MinimaxEngine extends ChessEngine {
 					depth,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
-					beta
+					beta,
+					0
 			);
 
-			System.out.println(move + " --> " + currentEval);
+			if (depth == maxDepth)
+				System.out.printf("%s --> %d%n", move.toShortString(), currentEval);
 
 			if (board.colorToMove == PieceColor.WHITE) {
 
@@ -101,12 +115,18 @@ public class MinimaxEngine extends ChessEngine {
 				break;
 		}
 
-		System.out.println("best at depth " + depth + ": " + possibleLegalMoves.get(indexOfBestMove) + " (" + bestEval + ")");
+		if (depth == maxDepth)
+			System.out.printf("best at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
 
-	private int evaluateState(Board board, int depthRemaining, boolean isMaximizingPlayer, int alpha, int beta) {
+	private int evaluateState(Board board,
+							  int depthRemaining,
+							  boolean isMaximizingPlayer,
+							  int alpha,
+							  int beta,
+							  int pvIndex) {
 
 		if (transpositionTable.contains(board)) {
 			try {
@@ -117,6 +137,10 @@ public class MinimaxEngine extends ChessEngine {
 			}
 		}
 
+		pvTable[pvIndex] = null;
+
+		int pvNextIndex = pvIndex + depthRemaining;
+
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
 //		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
@@ -126,15 +150,15 @@ public class MinimaxEngine extends ChessEngine {
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
-		sortMovesInPlace(possibleLegalMoves);
+		sortMovesInPlace(possibleLegalMoves, pvIndex);
 
 		GameState state = board.getState();
 
 		if (state != GameState.PLAYING || depthRemaining <= 0) {
 
 			int result = switch (state) {
-				case WHITE_WIN -> Integer.MAX_VALUE;
-				case BLACK_WIN -> Integer.MIN_VALUE;
+				case WHITE_WIN -> Integer.MAX_VALUE - currentMaxDepth;
+				case BLACK_WIN -> Integer.MIN_VALUE + currentMaxDepth;
 				case DRAW -> 0;
 				case PLAYING -> evaluateOngoingPosition(board);
 			};
@@ -152,29 +176,34 @@ public class MinimaxEngine extends ChessEngine {
 		int fromIndexOfBestMove = 0;
 		int toIndexOfBestMove = 0;
 
-		for (Move possibleLegalMove : possibleLegalMoves) {
+		for (Move move : possibleLegalMoves) {
 
 			int currentEval = evaluateState(
 //                    boards.get(i),
-					board.makeMove(possibleLegalMove),
+					board.makeMove(move),
 					depthRemaining - 1,
 					!isMaximizingPlayer,
 					alpha,
-					beta
+					beta,
+					pvNextIndex
 			);
 
 			if (isMaximizingPlayer) {
 				if (currentEval > bestEval) {
 					bestEval = currentEval;
-					fromIndexOfBestMove = possibleLegalMove.fromIndex();
-					toIndexOfBestMove = possibleLegalMove.toIndex();
+					pvTable[pvIndex] = move;
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, depthRemaining + 1);
+					fromIndexOfBestMove = move.fromIndex();
+					toIndexOfBestMove = move.toIndex();
 				}
 				alpha = Math.max(alpha, bestEval);
 			} else {
 				if (currentEval < bestEval) {
 					bestEval = currentEval;
-					fromIndexOfBestMove = possibleLegalMove.fromIndex();
-					toIndexOfBestMove = possibleLegalMove.toIndex();
+					pvTable[pvIndex] = move;
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, depthRemaining + 1);
+					fromIndexOfBestMove = move.fromIndex();
+					toIndexOfBestMove = move.toIndex();
 				}
 				beta = Math.min(beta, bestEval);
 			}
@@ -189,12 +218,21 @@ public class MinimaxEngine extends ChessEngine {
 		return bestEval;
 	}
 
-	private void sortMovesInPlace(List<Move> possibleLegalMoves) {
+	private void copyPvTableSegment(int toIndex, int fromIndex, int length) {
+		System.arraycopy(pvTable, fromIndex, pvTable, toIndex, length);
+	}
+
+	private void sortMovesInPlace(List<Move> possibleLegalMoves, int pvIndex) {
 
 		if (possibleLegalMoves == null || possibleLegalMoves.isEmpty() || possibleLegalMoves.size() == 1)
 			return;
 
 		Comparator<Move> moveComparator = (move1, move2) -> {
+
+			if (move1.equals(prevPvTable[pvIndex]) && !move2.equals(prevPvTable[pvIndex]))
+				return -1;
+			if (move2.equals(prevPvTable[pvIndex]))
+				return 1;
 
 			if (move1.isCapture() && !move2.isCapture())
 				return -1;
@@ -211,8 +249,8 @@ public class MinimaxEngine extends ChessEngine {
 			if (move2.isCheck())
 				return 1;
 
-			int historicalScoreOfMove1 = historicalBestMovesCount[move1.fromIndex()][move1.toIndex()];
-			int historicalScoreOfMove2 = historicalBestMovesCount[move2.fromIndex()][move2.toIndex()];
+			final int historicalScoreOfMove1 = historicalBestMovesCount[move1.fromIndex()][move1.toIndex()];
+			final int historicalScoreOfMove2 = historicalBestMovesCount[move2.fromIndex()][move2.toIndex()];
 
 			return historicalScoreOfMove2 - historicalScoreOfMove1;
 		};
@@ -235,15 +273,14 @@ public class MinimaxEngine extends ChessEngine {
 
 		int result = 0;
 
-
 		// note: all of these maps are for white (for black, we look at them from the other side)
 
 		final int[] pawnPositionMap = new int[]{
 				0, 0, 0, 0, 0, 0, 0, 0,
 				60, 60, 60, 60, 60, 60, 60, 60,
-				50, 50, 50, 50, 50, 50, 50, 50,
-				35, 40, 40, 40, 40, 40, 40, 35,
-				20, 20, 30, 35, 35, 30, 20, 20,
+				50, 50, 50, 55, 55, 50, 50, 50,
+				35, 40, 40, 50, 50, 40, 40, 35,
+				20, 20, 30, 45, 45, 30, 20, 20,
 				10, 15, 20, 15, 15, 20, 15, 10,
 				20, 20, 10, 10, 10, 10, 20, 20,
 				0, 0, 0, 0, 0, 0, 0, 0
@@ -345,6 +382,18 @@ public class MinimaxEngine extends ChessEngine {
 
 			result += isPieceWhite ? pieceValue : -pieceValue;
 		}
+
+		if (board.whiteAttackSquares == null || board.blackAttackSquares == null)
+			board.getLegalMoves(true);
+
+		int attackSquareSumDifference = 0;
+
+		for (int i = 0; i < 64; i++) {
+			attackSquareSumDifference += board.whiteAttackSquares.getBit(i) ? 1 : 0;
+			attackSquareSumDifference -= board.blackAttackSquares.getBit(i) ? 1 : 0;
+		}
+
+		result += ATTACK_SQUARE_WEIGHT * attackSquareSumDifference;
 
 		return result;
 	}

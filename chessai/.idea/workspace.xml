@@ -9,13 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added iterative deepening and historical heuristic">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed transpositiontable hashing">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__09__14_11_[Changes]/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__09__14_11_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__09__14_11__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__13__19_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__13__19_09__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Square.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/engine/mates/MateInTwoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/BoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +116,7 @@
       <recent name="chessai.chessai.swing_ui" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MateInTwoTest.findMateInTwo">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -143,7 +147,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="BoardTest.setIsCheckForMove" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -167,7 +171,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -191,7 +195,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="TranspositionTableTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -215,7 +219,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="TranspositionTableTest.contains" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -239,7 +243,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -305,11 +309,38 @@
       <workItem from="1698757747299" duration="2193000" />
       <workItem from="1699000536746" duration="6145000" />
       <workItem from="1699379147998" duration="9670000" />
-      <workItem from="1699548470682" duration="732000" />
-      <workItem from="1699638770771" duration="676000" />
-      <workItem from="1699646834244" duration="5412000" />
-      <workItem from="1699903628151" duration="7096000" />
-      <workItem from="1700123038051" duration="3971000" />
+    </task>
+    <task id="LOCAL-00006" summary="Added test for board.move">
+      <option name="closed" value="true" />
+      <created>1695824928384</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1695824928384</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added test case for castling">
+      <option name="closed" value="true" />
+      <created>1695825317132</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1695825317132</updated>
+    </task>
+    <task id="LOCAL-00008" summary="getState works now :D">
+      <option name="closed" value="true" />
+      <created>1695833901482</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1695833901482</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Castling rights corrected">
+      <option name="closed" value="true" />
+      <created>1695838597694</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1695838597694</updated>
     </task>
     <task id="LOCAL-00010" summary="Updated onCommit actions">
       <option name="closed" value="true" />
@@ -671,39 +702,7 @@
       <option name="project" value="LOCAL" />
       <updated>1699898213361</updated>
     </task>
-    <task id="LOCAL-00055" summary="Positionmaps are done but some errors arose">
-      <option name="closed" value="true" />
-      <created>1699901962497</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1699901962498</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Added basic move ordering">
-      <option name="closed" value="true" />
-      <created>1699905505612</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1699905505613</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Worked on move ordering and sounds">
-      <option name="closed" value="true" />
-      <created>1699910286060</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1699910286060</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Added iterative deepening and historical heuristic">
-      <option name="closed" value="true" />
-      <created>1700124490492</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1700124490493</updated>
-    </task>
-    <option name="localTasksCounter" value="59" />
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -721,6 +720,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Augmented intelliJ warning set" />
+    <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
+    <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
+    <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
+    <MESSAGE value="Fixed some bugs, but it is not yet near..." />
     <MESSAGE value="All tests pass!!!" />
     <MESSAGE value="Double check is now correctly determined" />
     <MESSAGE value="Random bullshit that sonarlint added" />
@@ -740,13 +744,8 @@
     <MESSAGE value="It is somewhat playable and looks somewhat good" />
     <MESSAGE value="Extracted GameEndedDialog to its own class and file" />
     <MESSAGE value="Added transosition table and fixed minimax" />
-    <MESSAGE value="Minor changes" />
-    <MESSAGE value="Started adding position maps for ongoing position eval" />
-    <MESSAGE value="Positionmaps are done but some errors arose" />
-    <MESSAGE value="Added basic move ordering" />
-    <MESSAGE value="Worked on move ordering and sounds" />
-    <MESSAGE value="Added iterative deepening and historical heuristic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added iterative deepening and historical heuristic" />
+    <MESSAGE value="Fixed transpositiontable hashing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed transpositiontable hashing" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -770,7 +769,7 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
