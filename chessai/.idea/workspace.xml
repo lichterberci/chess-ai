@@ -9,14 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added iterative deepening and historical heuristic">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__10__14_32_[Changes]/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__10__14_32_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__10__14_32__Changes_.xml" beforeDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Piece align,ent bug FINALLY FIXED!!!! ^^D">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/bq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/br.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chessai/chessai/swing_ui/pieces_from_chess_com/wr.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,14 +322,6 @@
       <workItem from="1699646834244" duration="5412000" />
       <workItem from="1699903628151" duration="7096000" />
       <workItem from="1700123038051" duration="3971000" />
-    </task>
-    <task id="LOCAL-00010" summary="Updated onCommit actions">
-      <option name="closed" value="true" />
-      <created>1695838662266</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1695838662266</updated>
     </task>
     <task id="LOCAL-00011" summary="Added GameManager and simplified resource loading">
       <option name="closed" value="true" />
@@ -704,7 +707,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700124490493</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Piece align,ent bug FINALLY FIXED!!!! ^^D">
+      <option name="closed" value="true" />
+      <created>1700254197546</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1700254197546</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -722,8 +733,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Augmented intelliJ warning set" />
-    <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
     <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
     <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
     <MESSAGE value="Fixed some bugs, but it is not yet near..." />
@@ -752,7 +761,8 @@
     <MESSAGE value="Added basic move ordering" />
     <MESSAGE value="Worked on move ordering and sounds" />
     <MESSAGE value="Added iterative deepening and historical heuristic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added iterative deepening and historical heuristic" />
+    <MESSAGE value="Piece align,ent bug FINALLY FIXED!!!! ^^D" />
+    <option name="LAST_COMMIT_MESSAGE" value="Piece align,ent bug FINALLY FIXED!!!! ^^D" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

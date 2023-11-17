@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class BoardPanel extends JPanel {
-    private static final String PIECE_THEME_PATH = "/chessai/chessai/swing_ui/pieces_from_chess_com";
+    private static final String PIECE_THEME_PATH = "/chessai/chessai/swing_ui/chess_com_neo";
     private static final String SOUND_THEME_PATH = "/chessai/chessai/swing_ui/sounds";
+    private static final float PIECE_SIZE = 0.95f;
     private final Color whiteTileColor;
     private final Color blackTileColor;
     private final Color selectedSquareColor;
@@ -144,7 +145,7 @@ public class BoardPanel extends JPanel {
             Image image;
 
             try {
-                image = ImageIO.read(imageResource).getScaledInstance((int) (squareSize * 0.9), (int) (squareSize * 0.9), Image.SCALE_SMOOTH);
+                image = ImageIO.read(imageResource).getScaledInstance((int) (squareSize * PIECE_SIZE), (int) (squareSize * PIECE_SIZE), Image.SCALE_SMOOTH);
 //                image = ImageIO.read(imageResource);
             } catch (IOException e) {
                 System.err.printf("Image resource path is null! (%s)%n", urlString);
@@ -152,7 +153,7 @@ public class BoardPanel extends JPanel {
             }
 
             var imageComponent = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
-            imageComponent.setSize(new Dimension((int) (squareSize * 0.9), (int) (squareSize * 0.9)));
+            imageComponent.setSize(new Dimension((int) (squareSize * PIECE_SIZE), (int) (squareSize * PIECE_SIZE)));
             imageComponent.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

@@ -53,7 +53,7 @@ public record Move(
 
     @Override
     public String toString() {
-        return String.format("Move(from=%s, to=%s, isCapture=%s, isEnPassant=%s, specialMove=%s)", from(), to(), isCapture, isEnPassant, specialMove);
+        return String.format("Move(from=%s, to=%s, isCapture=%s, isEnPassant=%s, specialMove=%s, isCheck=%s)", from(), to(), isCapture, isEnPassant, specialMove, isCheck);
     }
 
     public String toShortString() {

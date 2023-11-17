@@ -31,7 +31,7 @@ public class PvEGameFrame extends JFrame {
 		this.isPlayerWhite = isPlayerWhite;
 
 		this.setLayout(new BorderLayout());
-//		this.setResizable(false);
+		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
@@ -65,14 +65,14 @@ public class PvEGameFrame extends JFrame {
 
 	private void makeMove(Move move) {
 
-        boardPanel.playMoveSound(new BoardPanel.MoveSoundType(
-                move.isCapture(),
-				board.withIsCheckSet(move).isCheck(),
-				move.promotionPieceType() != null,
-                move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE)
-        );
-
 		board = board.makeMove(move);
+
+		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(
+				move.isCapture(),
+				board.isKingInCheck(board.colorToMove),
+				move.promotionPieceType() != null,
+				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE)
+		);
 
 		boardPanel.drawPosition(board);
 		boardPanel.validate();

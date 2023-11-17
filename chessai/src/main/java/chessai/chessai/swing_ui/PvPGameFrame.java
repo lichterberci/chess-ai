@@ -22,7 +22,7 @@ public class PvPGameFrame extends JFrame {
 		super("Human vs human");
 
 		this.setLayout(new BorderLayout());
-//		this.setResizable(false);
+		this.setResizable(false);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		try {
