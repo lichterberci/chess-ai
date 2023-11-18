@@ -62,3 +62,9 @@ a
 1src/main/java/chessai/chessai/lib/MoveResult.java,f\5\f581bda67b571d764f354d8c6c880f75594739f6
 d
 4src/main/java/chessai/chessai/swing_ui/Settings.java,8\5\8565b3fb19cb08c6b39fb52d750ee5e9bcc6bf22
+\
+,src/main/java/chessai/chessai/lib/Piece.java,7\2\72500a126fbf80ed93b49ca2934e04923357110a
+f
+6src/main/java/chessai/chessai/engine/RandomEngine.java,c\0\c0ec97bfc9546169edaf42528721d7ca405ca884
+e
+5src/main/java/chessai/chessai/engine/ChessEngine.java,0\4\04f456cc3713867d0abbfc301fc7871fba4f8657

@@ -188,6 +188,28 @@ public class MonteCarloEngine extends ChessEngine {
 
                 backTraversingCurrentNode = backTraversingCurrentNode.parent;
             }
+
+            // update best move, if necessary
+
+            if (i % 5 == 4) {
+                Move result = null;
+                int maxSimulations = -1;
+
+                for (int j = 0; j < root.children.size(); j++) {
+                    TreeNode child = root.children.get(j);
+
+                    if (child.numSimulationsRanByThisNode > maxSimulations) {
+                        maxSimulations = child.numSimulationsRanByThisNode;
+                        result = legalMovesByRoot.get(j);
+                    }
+                }
+
+                if (result == null) {
+                    callbackAfterEachDepth.accept(Optional.empty());
+                }
+
+                callbackAfterEachDepth.accept(Optional.of(result));
+            }
         }
 
         // pick the child with the most simulations
