@@ -81,6 +81,7 @@ public class MinimaxEngine extends ChessEngine {
 			20, 20, 10, 10, 10, 10, 20, 20,
 			30, 30, 10, 10, 10, 10, 30, 30,
 	};
+	private static final int MAX_ADDITIONAL_DEPTH = 4;
 	private final int maxDepth;
 	private final TranspositionTable transpositionTable;
 	private final int[][] historicalBestMovesCount;
@@ -131,7 +132,7 @@ public class MinimaxEngine extends ChessEngine {
 //		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
 
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
-		int pvTablSize = Math.ceilDiv((maxDepth + 1) * (maxDepth + 2), 2);
+		int pvTablSize = Math.ceilDiv((maxDepth + MAX_ADDITIONAL_DEPTH + 1) * (maxDepth + MAX_ADDITIONAL_DEPTH + 2), 2);
 		prevPvTable = pvTable != null ? pvTable : new Move[pvTablSize];
 		pvTable = new Move[pvTablSize];
 
@@ -151,7 +152,8 @@ public class MinimaxEngine extends ChessEngine {
 			int currentEval = evaluateState(
 //					boards.get(i),
 					board.makeMove(possibleLegalMoves.get(i)),
-					depth,
+					0,
+					0,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
 					beta,
@@ -194,7 +196,8 @@ public class MinimaxEngine extends ChessEngine {
 	}
 
 	private int evaluateState(Board board,
-							  int depthRemaining,
+							  int depth,
+							  int additionalDepth,
 							  boolean isMaximizingPlayer,
 							  int alpha,
 							  int beta,
@@ -211,7 +214,7 @@ public class MinimaxEngine extends ChessEngine {
 
 		pvTable[pvIndex] = null;
 
-		int pvNextIndex = pvIndex + depthRemaining;
+		int pvNextIndex = pvIndex + currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth;
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
@@ -226,7 +229,7 @@ public class MinimaxEngine extends ChessEngine {
 
 		GameState state = board.getState();
 
-		if (state != GameState.PLAYING || depthRemaining <= 0) {
+		if ((state != GameState.PLAYING || depth >= currentMaxDepth) && !(board.isKingInCheck(board.colorToMove) && additionalDepth < MAX_ADDITIONAL_DEPTH && state == GameState.PLAYING)) {
 
 			int result = switch (state) {
 				case WHITE_WIN -> Integer.MAX_VALUE - currentMaxDepth;
@@ -253,7 +256,8 @@ public class MinimaxEngine extends ChessEngine {
 			int currentEval = evaluateState(
 //                    boards.get(i),
 					board.makeMove(move),
-					depthRemaining - 1,
+					Math.min(currentMaxDepth, depth + 1),
+					depth < currentMaxDepth ? 0 : additionalDepth + 1,
 					!isMaximizingPlayer,
 					alpha,
 					beta,
@@ -264,7 +268,7 @@ public class MinimaxEngine extends ChessEngine {
 				if (currentEval > bestEval) {
 					bestEval = currentEval;
 					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, depthRemaining + 1);
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth - 1);
 					fromIndexOfBestMove = move.fromIndex();
 					toIndexOfBestMove = move.toIndex();
 				}
@@ -273,7 +277,7 @@ public class MinimaxEngine extends ChessEngine {
 				if (currentEval < bestEval) {
 					bestEval = currentEval;
 					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, depthRemaining + 1);
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth - 1);
 					fromIndexOfBestMove = move.fromIndex();
 					toIndexOfBestMove = move.toIndex();
 				}
