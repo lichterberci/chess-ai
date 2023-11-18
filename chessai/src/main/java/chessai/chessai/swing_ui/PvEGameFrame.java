@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+@SuppressWarnings("ALL")
 public class PvEGameFrame extends JFrame {
 
 	private final BoardPanel boardPanel;
@@ -21,16 +22,18 @@ public class PvEGameFrame extends JFrame {
 	private final transient ChessEngine engine;
 	private final transient boolean isPlayerWhite;
 	private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
+	private transient final Optional<Integer> availableTimeInMillisForEngine;
 
-	public PvEGameFrame(ChessEngine engine, boolean isPlayerWhite) {
-		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", engine, isPlayerWhite);
+	public PvEGameFrame(ChessEngine engine, boolean isPlayerWhite, Optional<Integer> availableTimeInMillisForEngine) {
+		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", engine, isPlayerWhite, availableTimeInMillisForEngine);
 	}
 
-	public PvEGameFrame(String startFen, ChessEngine engine, boolean isPlayerWhite) {
+	public PvEGameFrame(String startFen, ChessEngine engine, boolean isPlayerWhite, Optional<Integer> availableTimeInMillisForEngine) {
 		super("Human vs engine");
 
 		this.engine = engine;
 		this.isPlayerWhite = isPlayerWhite;
+		this.availableTimeInMillisForEngine = availableTimeInMillisForEngine;
 
 		this.setLayout(new BorderLayout());
 		this.setResizable(false);
@@ -68,6 +71,10 @@ public class PvEGameFrame extends JFrame {
 
 	private void makeMove(Move move) {
 
+		if (move == null) {
+			throw new RuntimeException("Move is null!");
+		}
+
 		board = board.makeMove(move);
 
 		boardPanel.playMoveSound(new BoardPanel.MoveSoundType(
@@ -96,14 +103,26 @@ public class PvEGameFrame extends JFrame {
 
 	private void calculateEngineMoveAndMakMoveAfterwards() {
 		this.engineMoveCalculatorWorker = new SwingWorker<>() {
+
+			Optional<Move> currentBestMove = Optional.empty();
+
 			@Override
 			protected Optional<Move> doInBackground() {
-				return PvEGameFrame.this.engine.makeMove(PvEGameFrame.this.board);
+				return PvEGameFrame.this.engine.makeMove(
+						PvEGameFrame.this.board,
+						optMove -> currentBestMove = optMove,
+						this::isCancelled
+				);
 			}
 
 			@Override
 			protected void done() {
-				// this is a callback to run after tge thread finishes execution
+				// this is a callback to run after the thread finishes execution
+
+				if (isCancelled()) {
+					PvEGameFrame.this.makeMove(currentBestMove.orElse(null));
+					return;
+				}
 
 				Optional<Move> result;
 
@@ -118,9 +137,29 @@ public class PvEGameFrame extends JFrame {
 					PvEGameFrame.this.dispose();
 				}
 
-				PvEGameFrame.this.makeMove(result.get());
+				PvEGameFrame.this.makeMove(result.orElse(null));
 			}
 		};
+
+		if (availableTimeInMillisForEngine.isPresent()) {
+			new SwingWorker<Void, Void>() {
+				int availableTimeInMillis = PvEGameFrame.this.availableTimeInMillisForEngine.get();
+
+				@Override
+				protected Void doInBackground() throws Exception {
+
+					long startTime = System.currentTimeMillis();
+
+					while (System.currentTimeMillis() < startTime + availableTimeInMillis) {
+						Thread.sleep(100);
+					}
+
+					PvEGameFrame.this.engineMoveCalculatorWorker.cancel(true);
+
+					return null;
+				}
+			}.execute();
+		}
 
 		engineMoveCalculatorWorker.execute();
 	}

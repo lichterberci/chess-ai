@@ -272,37 +272,41 @@ public class Board {
 
     public void generateAttackSquare() {
 
-        whiteAttackSquares = new BitMap(0);
-        blackAttackSquares = new BitMap(0);
-
         PieceColor realColorToMove = colorToMove;
 
-        colorToMove = PieceColor.WHITE;
+        if (whiteAttackSquares == null) {
+            whiteAttackSquares = new BitMap(0);
 
-        for (int index = 0; index < 64; index++) {
+            colorToMove = PieceColor.WHITE;
 
-            if (!whitePieces.getBit(index))
-                continue;
+            for (int index = 0; index < 64; index++) {
 
-            Piece whitePiece = squares[index];
+                if (!whitePieces.getBit(index))
+                    continue;
 
-            MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
+                Piece whitePiece = squares[index];
 
-            whiteAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+                MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
+
+                whiteAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+            }
         }
+        if (blackAttackSquares == null) {
+            blackAttackSquares = new BitMap(0);
 
-        colorToMove = PieceColor.BLACK;
+            colorToMove = PieceColor.BLACK;
 
-        for (int index = 0; index < 64; index++) {
+            for (int index = 0; index < 64; index++) {
 
-            if (!blackPieces.getBit(index))
-                continue;
+                if (!blackPieces.getBit(index))
+                    continue;
 
-            Piece whitePiece = squares[index];
+                Piece whitePiece = squares[index];
 
-            MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
+                MoveResult moveResult = whitePiece.getPseudoLegalMoves(this);
 
-            blackAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+                blackAttackSquares.orInPlace(moveResult.attackTargetsWhilePretendingTheEnemyKingIsNotThere());
+            }
         }
 
         colorToMove = realColorToMove;
@@ -409,7 +413,11 @@ public class Board {
                                                   BitMap uncapturableEnPassantTarget,
                                                   BitMap enemyAttackSquares,
                                                   List<Move> result, int ourKingIndex) {
-        for (int ourPieceIndex : ourPieces.getIndexesOfOnes()) {
+        for (int ourPieceIndex = 0; ourPieceIndex < 64; ourPieceIndex++) {
+
+            if (!ourPieces.getBit(ourPieceIndex))
+                continue;
+
             Piece ourPiece = squares[ourPieceIndex];
 
             if (ourKing.getBit(ourPieceIndex)) {
@@ -433,6 +441,7 @@ public class Board {
                                                          List<Move> result,
                                                          BitMap uncapturableEnPassantTarget,
                                                          int ourKingIndex) {
+
         MoveResult moveResult = squares[ourPieceIndex].getPseudoLegalMoves(this);
 
         BitMap validMoveSquares = pinMapForOurPieces.getBit(ourPieceIndex) ?

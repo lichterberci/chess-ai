@@ -58,3 +58,7 @@ l
 <src/main/java/chessai/chessai/engine/TranspositionTable.java,3\4\34abcee3ba414874379e8c1e1dc09e0e45df6f7b
 p
 @src/test/java/chessai/chessai/engine/TranspositionTableTest.java,3\3\330fe99fb1abd151218371194836e6b1aa860772
+a
+1src/main/java/chessai/chessai/lib/MoveResult.java,f\5\f581bda67b571d764f354d8c6c880f75594739f6
+d
+4src/main/java/chessai/chessai/swing_ui/Settings.java,8\5\8565b3fb19cb08c6b39fb52d750ee5e9bcc6bf22

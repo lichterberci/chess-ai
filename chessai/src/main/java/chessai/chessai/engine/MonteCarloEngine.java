@@ -7,6 +7,8 @@ import chessai.chessai.lib.PieceColor;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 public class MonteCarloEngine extends ChessEngine {
@@ -19,17 +21,9 @@ public class MonteCarloEngine extends ChessEngine {
         private int numWins = 0; // +1
         private int numDraws = 0; // +0.5
 
-        private String debugName;
-
-        @Override
-        public String toString() {
-            return debugName;
-        }
-
         TreeNode(Board state, TreeNode parent, Move move) {
             this.state = state;
             this.parent = parent;
-            this.debugName = "%s (%s)".formatted(move, state.getFENString());
         }
 
         List<Move> generateEmptyChildren() {
@@ -70,7 +64,7 @@ public class MonteCarloEngine extends ChessEngine {
     }
 
     @Override
-    public Optional<Move> makeMove(Board board) {
+    public Optional<Move> makeMove(Board board, Consumer<Optional<Move>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
 
         TreeNode root = new TreeNode(board, null, null);
         List<Move> legalMovesByRoot = root.generateEmptyChildren();
@@ -90,7 +84,7 @@ public class MonteCarloEngine extends ChessEngine {
 
         // search
 
-        for (int i = 0; i < numNodesToCheck; i++) {
+        for (int i = 0; i < numNodesToCheck && !isCancelled.getAsBoolean(); i++) {
 
             // selection
 

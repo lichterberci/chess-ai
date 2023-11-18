@@ -172,7 +172,8 @@ public class GameManager {
             if (boardWrapper.board.colorToMove == PieceColor.WHITE && whitePlayerType != PlayerType.HUMAN
                     || boardWrapper.board.colorToMove == PieceColor.BLACK && blackPlayerType != PlayerType.HUMAN
             ) {
-                var engineMove = (boardWrapper.board.colorToMove == PieceColor.WHITE ? whiteEngine : blackEngine).makeMove(boardWrapper.board);
+                var engineMove = (boardWrapper.board.colorToMove == PieceColor.WHITE ? whiteEngine : blackEngine).makeMove(boardWrapper.board, m -> {
+                }, () -> false);
 
                 engineMove.ifPresent(value -> boardWrapper.board = boardWrapper.board.makeMove(value));
 
@@ -210,7 +211,8 @@ public class GameManager {
         boardController.addOnMouseDragExitFromSquareListeners(tryToMoveToSquare::apply);
 
         if (whitePlayerType == PlayerType.ENGINE) {
-            var engineMove = whiteEngine.makeMove(boardWrapper.board);
+            var engineMove = whiteEngine.makeMove(boardWrapper.board, m -> {
+            }, () -> false);
 
             engineMove.ifPresent(move -> boardWrapper.board = boardWrapper.board.makeMove(move));
 

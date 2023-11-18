@@ -4,10 +4,11 @@ import chessai.chessai.engine.MinimaxEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 public class Menu {
 
-    private JFrame window;
+	private final JFrame window;
 
     public Menu() {
 
@@ -31,9 +32,9 @@ public class Menu {
 		    var pvpFrame = new PvEGameFrame(
 //					new MonteCarloEngine(0, 1.4142, 20, 400),
 //                    "8/1k6/8/8/8/8/1K1Q4/8 w - - 0 1",
-					new MinimaxEngine(5),
-				    true
-		    );
+					new MinimaxEngine(8),
+					true,
+					Optional.of(10_000));
 		    pvpFrame.setVisible(true);
 		    pvpFrame.setSize(new Dimension(800, 800));
 		    pvpFrame.setLocationRelativeTo(null);

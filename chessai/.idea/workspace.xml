@@ -9,13 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Cleaned up themes, added layers to board coloring">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added time limit to engine">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PromotionPopupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/ChessEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/ChessEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/javafxUI/ui/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Settings.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -313,14 +319,7 @@
       <workItem from="1699646834244" duration="5412000" />
       <workItem from="1699903628151" duration="7096000" />
       <workItem from="1700123038051" duration="3971000" />
-    </task>
-    <task id="LOCAL-00014" summary="Selection works and random engine added">
-      <option name="closed" value="true" />
-      <created>1695847878299</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1695847878299</updated>
+      <workItem from="1700335898764" duration="6410000" />
     </task>
     <task id="LOCAL-00015" summary="Drag and drop implemented">
       <option name="closed" value="true" />
@@ -706,7 +705,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700259484688</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Layers work now">
+      <option name="closed" value="true" />
+      <created>1700259965898</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1700259965898</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,9 +731,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
-    <MESSAGE value="Updated method names" />
-    <MESSAGE value="Removed some more old code and added some tests" />
     <MESSAGE value="Resolved kingmap issues" />
     <MESSAGE value="Fixed bitmap issues" />
     <MESSAGE value="Mate in two is found :)" />
@@ -750,7 +754,9 @@
     <MESSAGE value="Added chess.com neo theme" />
     <MESSAGE value="Added settings" />
     <MESSAGE value="Cleaned up themes, added layers to board coloring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up themes, added layers to board coloring" />
+    <MESSAGE value="Layers work now" />
+    <MESSAGE value="Added time limit to engine" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added time limit to engine" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -761,12 +767,17 @@
           <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
           <option name="timeStamp" value="8" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="9" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="java.util.stream.ReferencePipeline$Head" memberName="combinedFlags" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.MoveResult" memberName="moveTargets" />
+        <PinnedItemInfo parentTag="chessai.chessai.lib.Board" memberName="squares" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.BitMap" memberName="data" />
         <PinnedItemInfo parentTag="chessai.chessai.engine.MinimaxEngine" memberName="maxDepth" />
         <PinnedItemInfo parentTag="chessai.chessai.lib.Square" memberName="squareData" />
