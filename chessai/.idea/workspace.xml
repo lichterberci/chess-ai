@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Creating custom button...">
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Fonts.java" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Menu UI is starting to look good">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PrimaryButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PrimaryButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Settings.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,15 +314,7 @@
       <workItem from="1700335898764" duration="8048000" />
       <workItem from="1700346836814" duration="1252000" />
       <workItem from="1700392486058" duration="1435000" />
-      <workItem from="1700403188509" duration="7011000" />
-    </task>
-    <task id="LOCAL-00020" summary="Added check for draw enstates">
-      <option name="closed" value="true" />
-      <created>1696675541096</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1696675541096</updated>
+      <workItem from="1700403188509" duration="12255000" />
     </task>
     <task id="LOCAL-00021" summary="Added MoveResult class and extended BitMap functionality">
       <option name="closed" value="true" />
@@ -709,7 +700,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700417535965</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Menu UI is starting to look good">
+      <option name="closed" value="true" />
+      <created>1700419918265</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1700419918266</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +726,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Workspace changes" />
     <MESSAGE value="Fixed MCTS and optimized some things" />
     <MESSAGE value="Changed mate in 2 test's hyperparams a bit" />
     <MESSAGE value="Images are almost ready" />
@@ -752,7 +750,8 @@
     <MESSAGE value="Updated monte carlo search" />
     <MESSAGE value="Minor changes" />
     <MESSAGE value="Creating custom button..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating custom button..." />
+    <MESSAGE value="Menu UI is starting to look good" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menu UI is starting to look good" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

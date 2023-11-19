@@ -18,6 +18,18 @@ public class Settings implements Serializable {
         loadSavedSettingsOrSetToDefault();
     }
 
+    public Settings() {
+    }
+
+    public Settings(Settings other) {
+        this.blackTileColor = other.blackTileColor;
+        this.whiteTileColor = other.whiteTileColor;
+        this.moveHighlightColor = other.moveHighlightColor;
+        this.selectedPieceBackgroundColor = other.selectedPieceBackgroundColor;
+        this.soundTheme = other.soundTheme;
+        this.pieceTheme = other.pieceTheme;
+    }
+
     public static void loadSavedSettingsOrSetToDefault() {
         try (var fileInputStream = new FileInputStream(SETTINGS_PATH)) {
             try (ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
@@ -42,6 +54,19 @@ public class Settings implements Serializable {
         }
     }
 
+    public void reset() {
+        Settings defaultValue = new Settings();
+        blackTileColor = defaultValue.blackTileColor;
+        whiteTileColor = defaultValue.whiteTileColor;
+        moveHighlightColor = defaultValue.moveHighlightColor;
+        selectedPieceBackgroundColor = defaultValue.selectedPieceBackgroundColor;
+        pieceTheme = defaultValue.pieceTheme;
+        soundTheme = defaultValue.soundTheme;
+    }
+
+    public static void updateInstance(Settings settings) {
+        instance = new Settings(settings);
+    }
     public static Settings getInstance() {
         return instance;
     }
