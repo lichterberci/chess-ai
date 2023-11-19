@@ -22,7 +22,7 @@ public class PvEGameFrame extends JFrame {
 	private final transient ChessEngine engine;
 	private final transient boolean isPlayerWhite;
 	private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
-	private transient final Optional<Integer> availableTimeInMillisForEngine;
+    private final transient Optional<Integer> availableTimeInMillisForEngine;
 
 	public PvEGameFrame(ChessEngine engine, boolean isPlayerWhite, Optional<Integer> availableTimeInMillisForEngine) {
 		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", engine, isPlayerWhite, availableTimeInMillisForEngine);
@@ -67,6 +67,9 @@ public class PvEGameFrame extends JFrame {
 		this.add(boardPanel, BorderLayout.CENTER);
 
 		boardPanel.setVisible(true);
+
+        if (!isPlayerWhite)
+            calculateEngineMoveAndMakMoveAfterwards();
 	}
 
 	private void makeMove(Move move) {

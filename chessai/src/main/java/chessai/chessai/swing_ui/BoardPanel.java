@@ -186,11 +186,11 @@ public class BoardPanel extends JPanel {
 
         for (int row = 0; row < 8; row++) {
             for (int file = 0; file < 8; file++) {
-                final boolean shouldSquareBeColoredWhite = (file + row) % 2 == (this.whiteIsAtTheBottom ? 0 : 1);
+                final boolean shouldSquareBeColoredWhite = (file + row) % 2 == 0;
 
                 Color defaultTileColor = shouldSquareBeColoredWhite ? Settings.getInstance().getWhiteTileColor() : Settings.getInstance().getBlackTileColor();
 
-                Square currentSquare = whiteIsAtTheBottom ? new Square(file, 7 - row) : new Square(file, row);
+                Square currentSquare = whiteIsAtTheBottom ? new Square(file, 7 - row) : new Square(7 - file, row);
 
                 Optional<BackgroundColorLayer> colorOfMaxPriorityLayer = orderedBackgroundLayers.stream()
                         .filter(layer -> layer.squares().contains(currentSquare))

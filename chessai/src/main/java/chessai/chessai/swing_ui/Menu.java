@@ -1,21 +1,31 @@
 package chessai.chessai.swing_ui;
 
+import chessai.chessai.engine.ChessEngine;
 import chessai.chessai.engine.MinimaxEngine;
+import chessai.chessai.engine.MonteCarloEngine;
+import chessai.chessai.engine.RandomEngine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Menu {
 
+	private static final Map<String, ChessEngine> PLAYABLE_CHESS_ENGINES;
 	private final JFrame window;
 	private final JPanel mainPanel;
 	private final JPanel settingsPanel;
 	private final JPanel pvpGameSettingsPanel;
 	private final JPanel pveGameSettingsPanel;
+
+	static {
+		PLAYABLE_CHESS_ENGINES = new HashMap<>();
+		PLAYABLE_CHESS_ENGINES.put("Random", new RandomEngine());
+		PLAYABLE_CHESS_ENGINES.put("Monte Carlo", new MonteCarloEngine(0, 1.4142, 100, 1000));
+		PLAYABLE_CHESS_ENGINES.put("Minimax", new MinimaxEngine(10, 1_000_000_000));
+	}
 
     public Menu() {
 
@@ -256,22 +266,70 @@ public class Menu {
 
 	private void setupPveGamePanel() {
 
-		pveGameSettingsPanel.setLayout(new GridLayout(2, 1));
+		pveGameSettingsPanel.setLayout(new GridLayout(4, 1));
 
-		JLabel humanVsEngine = new JLabel("Play against the engine!");
-		humanVsEngine.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		JLabel humanVsEngineLabel = new JLabel("Choose game settings!");
+		humanVsEngineLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		humanVsEngineLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		humanVsEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
 
-		pveGameSettingsPanel.add(humanVsEngine);
+		pveGameSettingsPanel.add(humanVsEngineLabel);
+
+		JPanel engineSelectorPanel = new JPanel(new FlowLayout());
+
+		JLabel selectEngineLabel = new JLabel("Select engine: ");
+		selectEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+
+		engineSelectorPanel.add(selectEngineLabel);
+
+		JComboBox<String> engineSelectorDropdown = new JComboBox<>(new Vector<>(PLAYABLE_CHESS_ENGINES.keySet().stream().toList()));
+		engineSelectorDropdown.setSelectedIndex(0);
+		engineSelectorPanel.add(engineSelectorDropdown);
+
+		pveGameSettingsPanel.add(engineSelectorPanel);
+
+		JPanel isPlayingWithWhitePanel = new JPanel(new FlowLayout());
+
+		JLabel isPlayingWithWhiteLabel = new JLabel("Player is white: ");
+		isPlayingWithWhiteLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		isPlayingWithWhitePanel.add(isPlayingWithWhiteLabel);
+
+		JCheckBox isPlayingWithWhiteCheckBox = new JCheckBox();
+		isPlayingWithWhiteCheckBox.setSize(new Dimension(20, 20));
+		isPlayingWithWhitePanel.add(isPlayingWithWhiteCheckBox);
+
+		pveGameSettingsPanel.add(isPlayingWithWhitePanel);
+
+		JPanel timeAvailableForTheEnginePanel = new JPanel(new FlowLayout());
+
+		JLabel timeAvailableForTheEngineLabel = new JLabel("Time available for the engine (in seconds): ");
+		timeAvailableForTheEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		timeAvailableForTheEnginePanel.add(timeAvailableForTheEngineLabel);
+
+		JTextField timeAvailableForTheEngineTextField = new JTextField(5);
+		timeAvailableForTheEngineTextField.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		timeAvailableForTheEnginePanel.add(timeAvailableForTheEngineTextField);
+
+		pveGameSettingsPanel.add(timeAvailableForTheEnginePanel);
+
 
 		JPanel buttonHolder = new JPanel(new FlowLayout());
 
+		Optional<Integer> availableTimeForTheEngine;
+
+		try {
+			availableTimeForTheEngine = Optional.of((int) Math.abs(Math.floor(Double.parseDouble(timeAvailableForTheEngineTextField.getText().trim()) * 1000)));
+		} catch (NumberFormatException e) {
+			availableTimeForTheEngine = Optional.of(1_000);
+		}
+
+		Optional<Integer> finalAvailableTimeForTheEngine = availableTimeForTheEngine;
+
 		JButton playBtn = new PrimaryButton("Play", e -> SwingUtilities.invokeLater(() -> {
 			var pvpFrame = new PvEGameFrame(
-//					new MonteCarloEngine(0, 1.4142, 10, 10000),
-//                    "8/1k6/8/8/8/8/1K1Q4/8 w - - 0 1",
-					new MinimaxEngine(8),
-					true,
-					Optional.of(10_000));
+					PLAYABLE_CHESS_ENGINES.get((String) engineSelectorDropdown.getSelectedItem()),
+					isPlayingWithWhiteCheckBox.isSelected(),
+					finalAvailableTimeForTheEngine);
 			pvpFrame.setVisible(true);
 			pvpFrame.setSize(new Dimension(800, 800));
 			pvpFrame.setLocationRelativeTo(null);
