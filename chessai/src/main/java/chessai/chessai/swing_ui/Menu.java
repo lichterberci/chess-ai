@@ -266,12 +266,12 @@ public class Menu {
 
 	private void setupPveGamePanel() {
 
-		pveGameSettingsPanel.setLayout(new GridLayout(4, 1));
+		pveGameSettingsPanel.setLayout(new GridLayout(5, 1));
 
 		JLabel humanVsEngineLabel = new JLabel("Choose game settings!");
 		humanVsEngineLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		humanVsEngineLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		humanVsEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		humanVsEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 20));
 
 		pveGameSettingsPanel.add(humanVsEngineLabel);
 
@@ -307,6 +307,7 @@ public class Menu {
 		timeAvailableForTheEnginePanel.add(timeAvailableForTheEngineLabel);
 
 		JTextField timeAvailableForTheEngineTextField = new JTextField(5);
+		timeAvailableForTheEngineTextField.setText("10.0");
 		timeAvailableForTheEngineTextField.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
 		timeAvailableForTheEnginePanel.add(timeAvailableForTheEngineTextField);
 
@@ -315,21 +316,20 @@ public class Menu {
 
 		JPanel buttonHolder = new JPanel(new FlowLayout());
 
-		Optional<Integer> availableTimeForTheEngine;
-
-		try {
-			availableTimeForTheEngine = Optional.of((int) Math.abs(Math.floor(Double.parseDouble(timeAvailableForTheEngineTextField.getText().trim()) * 1000)));
-		} catch (NumberFormatException e) {
-			availableTimeForTheEngine = Optional.of(1_000);
-		}
-
-		Optional<Integer> finalAvailableTimeForTheEngine = availableTimeForTheEngine;
 
 		JButton playBtn = new PrimaryButton("Play", e -> SwingUtilities.invokeLater(() -> {
+			Optional<Integer> availableTimeForTheEngine;
+
+			try {
+				availableTimeForTheEngine = Optional.of((int) Math.abs(Math.floor(Double.parseDouble(timeAvailableForTheEngineTextField.getText().trim()) * 1000)));
+			} catch (NumberFormatException err) {
+				availableTimeForTheEngine = Optional.empty();
+			}
+
 			var pvpFrame = new PvEGameFrame(
 					PLAYABLE_CHESS_ENGINES.get((String) engineSelectorDropdown.getSelectedItem()),
 					isPlayingWithWhiteCheckBox.isSelected(),
-					finalAvailableTimeForTheEngine);
+					availableTimeForTheEngine);
 			pvpFrame.setVisible(true);
 			pvpFrame.setSize(new Dimension(800, 800));
 			pvpFrame.setLocationRelativeTo(null);

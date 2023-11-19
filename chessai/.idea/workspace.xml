@@ -9,11 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="UI is coming together...">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="PvE options are almost ready">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,15 +313,7 @@
       <workItem from="1700335898764" duration="8048000" />
       <workItem from="1700346836814" duration="1252000" />
       <workItem from="1700392486058" duration="1435000" />
-      <workItem from="1700403188509" duration="14822000" />
-    </task>
-    <task id="LOCAL-00022" summary="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes">
-      <option name="closed" value="true" />
-      <created>1697455094560</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1697455094560</updated>
+      <workItem from="1700403188509" duration="15543000" />
     </task>
     <task id="LOCAL-00023" summary="Augmented intelliJ warning set">
       <option name="closed" value="true" />
@@ -709,7 +699,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700425209258</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="PvE options are almost ready">
+      <option name="closed" value="true" />
+      <created>1700427888111</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1700427888111</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -727,7 +725,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed mate in 2 test's hyperparams a bit" />
     <MESSAGE value="Images are almost ready" />
     <MESSAGE value="Added SVGs, but they don't work :/" />
     <MESSAGE value="Still trying to center the images... :(" />
@@ -752,7 +749,8 @@
     <MESSAGE value="Creating custom button..." />
     <MESSAGE value="Menu UI is starting to look good" />
     <MESSAGE value="UI is coming together..." />
-    <option name="LAST_COMMIT_MESSAGE" value="UI is coming together..." />
+    <MESSAGE value="PvE options are almost ready" />
+    <option name="LAST_COMMIT_MESSAGE" value="PvE options are almost ready" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
