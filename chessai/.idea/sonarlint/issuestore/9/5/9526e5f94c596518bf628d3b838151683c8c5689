@@ -2,6 +2,6 @@
 H
 java:S1172"+Remove this unused method parameter "move".(€€‰½8³Ó´¢¾1
 o
-java:S3776C"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(Ë·ø¹8ÛÖˆþ·1
+java:S3776C"RRefactor this method to reduce its Cognitive Complexity from 50 to the 15 allowed.(Ë·ø¹8ÛÖˆþ·1
 ã
-java:S6541C"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 75 to 64, Complexity from 17 to 14, Nesting Level from 4 to 2, Number of Variables from 20 to 6.(Ë·ø¹8êÖˆþ·1
+java:S6541C"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 90 to 64, Complexity from 21 to 14, Nesting Level from 4 to 2, Number of Variables from 24 to 6.(Ë·ø¹8êÖˆþ·1
