@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Updated monte carlo search">
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/MinimaxEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/5/9526e5f94c596518bf628d3b838151683c8c5689" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Minor changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PrimaryButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
     </list>
@@ -314,15 +313,8 @@
       <workItem from="1700123038051" duration="3971000" />
       <workItem from="1700335898764" duration="8048000" />
       <workItem from="1700346836814" duration="1252000" />
-      <workItem from="1700392486058" duration="1339000" />
-    </task>
-    <task id="LOCAL-00018" summary="Optimizing...">
-      <option name="closed" value="true" />
-      <created>1696625182928</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1696625182928</updated>
+      <workItem from="1700392486058" duration="1435000" />
+      <workItem from="1700403188509" duration="4629000" />
     </task>
     <task id="LOCAL-00019" summary="Optimizing...">
       <option name="closed" value="true" />
@@ -708,7 +700,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700347922635</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Minor changes">
+      <option name="closed" value="true" />
+      <created>1700396273102</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1700396273103</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -737,7 +737,6 @@
     <MESSAGE value="It is somewhat playable and looks somewhat good" />
     <MESSAGE value="Extracted GameEndedDialog to its own class and file" />
     <MESSAGE value="Added transosition table and fixed minimax" />
-    <MESSAGE value="Minor changes" />
     <MESSAGE value="Started adding position maps for ongoing position eval" />
     <MESSAGE value="Positionmaps are done but some errors arose" />
     <MESSAGE value="Added basic move ordering" />
@@ -751,7 +750,8 @@
     <MESSAGE value="Added time limit to engine" />
     <MESSAGE value="Added plus search after checks" />
     <MESSAGE value="Updated monte carlo search" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated monte carlo search" />
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
