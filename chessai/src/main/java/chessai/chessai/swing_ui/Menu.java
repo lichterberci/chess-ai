@@ -24,32 +24,34 @@ public class Menu {
 		mainPanel = new JPanel();
 		setupMainPanel();
 		mainPanel.setVisible(true);
+		window.add(mainPanel);
 
 		pvpGameSettingsPanel = new JPanel();
 		setupPvpGamePanel();
 		pvpGameSettingsPanel.setVisible(true);
+		window.add(pvpGameSettingsPanel);
 
 		pveGameSettingsPanel = new JPanel();
 		setupPveGamePanel();
 		pveGameSettingsPanel.setVisible(true);
+		window.add(pveGameSettingsPanel);
 
 		settingsPanel = new JPanel();
 		setupSettingsPanel();
 		settingsPanel.setVisible(true);
-
-		selectMenuPanel("MAIN");
+		window.add(settingsPanel);
 
 		window.setLocationRelativeTo(null);
-		window.setLayout(new BorderLayout());
+		window.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+		selectMenuPanel("MAIN");
 
 		window.setVisible(true);
 	}
 
 	private void setupSettingsPanel() {
 
-		JButton backBtn = new JButton("Back");
-
-		backBtn.addActionListener(e -> selectMenuPanel("MAIN"));
+		JButton backBtn = new PrimaryButton("Back", e -> selectMenuPanel("MAIN"));
 
 		settingsPanel.add(backBtn);
 	}
@@ -62,11 +64,7 @@ public class Menu {
 
 		JPanel buttonHolder = new JPanel(new FlowLayout());
 
-		JButton playBtn = new JButton("Play");
-		JButton backBtn = new JButton("Back");
-
-		backBtn.addActionListener(e -> selectMenuPanel("MAIN"));
-		playBtn.addActionListener(e -> {
+		JButton playBtn = new PrimaryButton("Play", e -> {
 			selectMenuPanel("MAIN");
 
 			var pvpFrame = new PvEGameFrame(
@@ -79,49 +77,33 @@ public class Menu {
 			pvpFrame.setSize(new Dimension(800, 800));
 			pvpFrame.setLocationRelativeTo(null);
 		});
+		JButton backBtn = new PrimaryButton("Back", e -> selectMenuPanel("MAIN"));
 
-		buttonHolder.add(playBtn);
 		buttonHolder.add(backBtn);
+		buttonHolder.add(playBtn);
 
 		pveGameSettingsPanel.add(buttonHolder, BorderLayout.CENTER);
 	}
 
 	private void setupMainPanel() {
+		mainPanel.setLayout(new GridLayout(3, 1, 0, 30));
 
-		mainPanel.setSize(window.getSize());
-		mainPanel.setLayout(new GridLayout(3, 1));
-
-		JButton pvpBtn = new PrimaryButton("Play against your friend!");
-		JButton pveBtn = new PrimaryButton("Play against the engine!");
-		JButton settingsBtn = new PrimaryButton("Settings");
-
-		pvpBtn.addActionListener(e -> selectMenuPanel("PVP"));
-		pveBtn.addActionListener(e -> selectMenuPanel("PVE"));
-		settingsBtn.addActionListener(e -> selectMenuPanel("SETTINGS"));
+		JButton pvpBtn = new PrimaryButton("Play against your friend!", e -> selectMenuPanel("PVP"));
+		JButton pveBtn = new PrimaryButton("Play against the engine!", e -> selectMenuPanel("PVE"));
+		JButton settingsBtn = new PrimaryButton("Settings", e -> selectMenuPanel("SETTINGS"));
 
 		mainPanel.add(pvpBtn);
 		mainPanel.add(pveBtn);
 		mainPanel.add(settingsBtn);
-
-		pvpBtn.setVisible(true);
-		pveBtn.setVisible(true);
-		settingsBtn.setVisible(true);
 	}
 
 	private void setupPvpGamePanel() {
-
 
 		JLabel humanVsHumanLabel = new JLabel("Play against your friend!");
 
 		pvpGameSettingsPanel.add(humanVsHumanLabel, BorderLayout.NORTH);
 
-		JButton playBtn = new JButton("Play");
-		JButton backBtn = new JButton("Back");
-
-		JPanel buttonHolder = new JPanel(new FlowLayout());
-
-		backBtn.addActionListener(e -> selectMenuPanel("MAIN"));
-		playBtn.addActionListener(e -> {
+		JButton playBtn = new PrimaryButton("Play", e -> {
 			selectMenuPanel("MAIN");
 
 			var pvpFrame = new PvPGameFrame();
@@ -129,9 +111,12 @@ public class Menu {
 			pvpFrame.setLocationRelativeTo(null);
 			pvpFrame.setVisible(true);
 		});
+		JButton backBtn = new PrimaryButton("Back", e -> selectMenuPanel("MAIN"));
 
-		buttonHolder.add(playBtn);
+		JPanel buttonHolder = new JPanel(new FlowLayout());
+
 		buttonHolder.add(backBtn);
+		buttonHolder.add(playBtn);
 
 		buttonHolder.setVisible(true);
 
@@ -140,24 +125,21 @@ public class Menu {
 
 	private void selectMenuPanel(String panelName) {
 
-		window.remove(mainPanel);
-		window.remove(pvpGameSettingsPanel);
-		window.remove(pveGameSettingsPanel);
-		window.remove(settingsPanel);
+		mainPanel.setVisible(false);
+		pvpGameSettingsPanel.setVisible(false);
+		pveGameSettingsPanel.setVisible(false);
+		settingsPanel.setVisible(false);
 
 		if (panelName.equals("MAIN"))
-			window.add(mainPanel, BorderLayout.CENTER);
+			mainPanel.setVisible(true);
 		if (panelName.equals("SETTINGS"))
-			window.add(settingsPanel, BorderLayout.CENTER);
+			settingsPanel.setVisible(true);
 		if (panelName.equals("PVP"))
-			window.add(pvpGameSettingsPanel, BorderLayout.CENTER);
+			pvpGameSettingsPanel.setVisible(true);
 		if (panelName.equals("PVE"))
-			window.add(pveGameSettingsPanel, BorderLayout.CENTER);
+			pveGameSettingsPanel.setVisible(true);
 
-		for (Component component : window.getComponents()) {
-			component.validate();
-			component.setVisible(true);
-		}
+		window.validate();
 	}
 
 	public void show() {
