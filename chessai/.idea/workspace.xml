@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixed transpositiontable hashing">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__17__21_17__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__17__21_17__Changes_.xml" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Added darker layer color on black tiles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/BoardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,14 +306,6 @@
       <workItem from="1698757747299" duration="2193000" />
       <workItem from="1699000536746" duration="6145000" />
       <workItem from="1699379147998" duration="9670000" />
-    </task>
-    <task id="LOCAL-00006" summary="Added test for board.move">
-      <option name="closed" value="true" />
-      <created>1695824928384</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1695824928384</updated>
     </task>
     <task id="LOCAL-00007" summary="Added test case for castling">
       <option name="closed" value="true" />
@@ -699,7 +691,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699898213361</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Added darker layer color on black tiles">
+      <option name="closed" value="true" />
+      <created>1700498035763</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1700498035764</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -717,7 +717,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Augmented intelliJ warning set" />
     <MESSAGE value="Implemented general sliding move generation (currently only on rook)" />
     <MESSAGE value="Added SlidingPiece class and implemented sliding for Rook" />
     <MESSAGE value="Updated gitignore to ignore sonarlint indexes" />
@@ -742,7 +741,8 @@
     <MESSAGE value="Extracted GameEndedDialog to its own class and file" />
     <MESSAGE value="Added transosition table and fixed minimax" />
     <MESSAGE value="Fixed transpositiontable hashing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed transpositiontable hashing" />
+    <MESSAGE value="Added darker layer color on black tiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added darker layer color on black tiles" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

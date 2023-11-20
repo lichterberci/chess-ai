@@ -1,9 +1,7 @@
 package chessai.chessai.engine;
 
-import chessai.chessai.lib.Board;
-import chessai.chessai.lib.GameState;
-import chessai.chessai.lib.Move;
-import chessai.chessai.lib.PieceColor;
+import chessai.chessai.lib.*;
+import chessai.chessai.lib.pieces.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,10 +45,15 @@ public class MonteCarloEngine extends ChessEngine {
             final int numSimulationsRanByTheParentNode = parent != null ? parent.numSimulationsRanByThisNode : 0;
 
             return (numWins + numDraws * 0.5) / numSimulationsRanByThisNode
-		            + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
+                    + explorationParameter * Math.sqrt(Math.log(numSimulationsRanByTheParentNode) / numSimulationsRanByThisNode);
         }
     }
 
+    private static final int PAWN_VALUE = 100;
+    private static final int KNIGHT_VALUE = 300;
+    private static final int BISHOP_VALUE = 320;
+    private static final int ROOK_VALUE = 500;
+    private static final int QUEEN_VALUE = 900;
     private final Random random;
     private final double explorationParameter;
     private final int numSimulations;
@@ -270,7 +273,9 @@ public class MonteCarloEngine extends ChessEngine {
             if (legalMoves.isEmpty())
                 throw new IllegalStateException("There are no legal moves, but the state is PLAYING!");
 
-            Move move = legalMoves.get(random.nextInt(legalMoves.size()));
+//            Move move = legalMoves.get(random.nextInt(legalMoves.size()));
+
+            Move move = getBiasedRandomMove(playingBoard, legalMoves, random);
 
 //            System.out.println("        " + playingBoard.getFENString() + " ::: " + playingBoard.get(move.from()).getFENChar() + " " + move.from() + " -> " + move.to());
 
@@ -278,5 +283,69 @@ public class MonteCarloEngine extends ChessEngine {
         }
 
         return playingBoard.getState();
+    }
+
+    private Move getBiasedRandomMove(Board board, List<Move> moves, Random random) {
+
+        List<Double> moveWeights = moves.stream().map((Move move) -> getMoveWeight(board, move)).toList();
+
+        double sumWeight = moveWeights.stream().mapToDouble(x -> x).sum();
+
+        double currentWeightsSum = 0;
+
+        double randomValue = random.nextDouble(sumWeight);
+
+        for (int i = 0; i < moves.size(); i++) {
+
+            if (currentWeightsSum + moveWeights.get(i) > randomValue)
+                return moves.get(i);
+
+            currentWeightsSum += moveWeights.get(i);
+        }
+
+        return moves.get(moves.size() - 1);
+    }
+
+    private double getMoveWeight(Board board, Move move) {
+
+        double result = 1;
+
+        Piece movingPiece = board.get(move.fromIndex());
+
+        if (move.isCapture()) {
+
+            int capturedIndex = move.toIndex();
+            if (move.isEnPassant())
+                capturedIndex += board.colorToMove == PieceColor.WHITE ? 8 : -8;
+
+            Piece capturedPiece = board.get(capturedIndex);
+
+            int valueDifference = getPieceValue(capturedPiece.getClass()) - getPieceValue(movingPiece.getClass());
+
+            result += 4 * valueDifference;
+        }
+
+        if (move.isCheck())
+            result += 10;
+
+        if (move.promotionPieceType() != null)
+            result += 20;
+
+        return Math.max(result, 1);
+    }
+
+    private int getPieceValue(Class<? extends Piece> pieceType) {
+        if (pieceType.equals(Pawn.class))
+            return PAWN_VALUE;
+        else if (pieceType.equals(Knight.class))
+            return KNIGHT_VALUE;
+        else if (pieceType.equals(Bishop.class))
+            return BISHOP_VALUE;
+        else if (pieceType.equals(Rook.class))
+            return ROOK_VALUE;
+        else if (pieceType.equals(Queen.class))
+            return QUEEN_VALUE;
+        else
+            return 0;
     }
 }

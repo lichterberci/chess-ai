@@ -23,7 +23,7 @@ public class Menu {
 	static {
 		PLAYABLE_CHESS_ENGINES = new HashMap<>();
 		PLAYABLE_CHESS_ENGINES.put("Random", new RandomEngine());
-		PLAYABLE_CHESS_ENGINES.put("Monte Carlo", new MonteCarloEngine(0, 1.4142, 100, 1000));
+		PLAYABLE_CHESS_ENGINES.put("Monte Carlo", new MonteCarloEngine(0, 1.4142, 50, 1000));
 		PLAYABLE_CHESS_ENGINES.put("Minimax", new MinimaxEngine(10, 1_000_000_000));
 	}
 
