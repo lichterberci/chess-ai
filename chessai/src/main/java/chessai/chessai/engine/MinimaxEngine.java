@@ -112,7 +112,8 @@ public class MinimaxEngine extends ChessEngine {
 			transpositionTable.clear();
 			currentMaxDepth = i;
 			bestMove = search(board, i, isCancelled);
-			callbackAfterEachDepth.accept(bestMove);
+			if (!isCancelled.getAsBoolean())
+				callbackAfterEachDepth.accept(bestMove);
 		}
 
 		return bestMove;
@@ -190,7 +191,8 @@ public class MinimaxEngine extends ChessEngine {
 				break;
 		}
 
-		System.out.printf("Best move at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
+		if (!isCancelled.getAsBoolean())
+			System.out.printf("Best move at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
@@ -223,26 +225,17 @@ public class MinimaxEngine extends ChessEngine {
 
 		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
 
-		if (board.colorToMove == PieceColor.WHITE) {
-			if (staticEval >= beta)
-				return beta;
+		if (alpha > staticEval + BIG_DELTA)
+			return alpha;
 
-			if (staticEval + BIG_DELTA < alpha)
-				return alpha;
+		if (beta < staticEval - BIG_DELTA)
+			return beta;
 
-			if (alpha < staticEval)
-				alpha = staticEval;
-		} else {
-			if (staticEval <= alpha)
-				return alpha;
-
-			if (staticEval - BIG_DELTA > beta)
-				return beta;
-
-			if (beta > staticEval)
-				beta = staticEval;
-
-		}
+//		if (alpha < staticEval)
+//			alpha = staticEval;
+//
+//		if (beta > staticEval)
+//			beta = staticEval;
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
@@ -280,8 +273,8 @@ public class MinimaxEngine extends ChessEngine {
 		) {
 
 			int result = switch (state) {
-				case WHITE_WIN -> Integer.MAX_VALUE - currentMaxDepth;
-				case BLACK_WIN -> Integer.MIN_VALUE + currentMaxDepth;
+				case WHITE_WIN -> Integer.MAX_VALUE - depth - additionalDepth;
+				case BLACK_WIN -> Integer.MIN_VALUE + depth + additionalDepth;
 				case DRAW -> 0;
 				case PLAYING -> staticEval;
 			};
@@ -465,8 +458,7 @@ public class MinimaxEngine extends ChessEngine {
 				positionMap = QUEEN_POSITION_MAP;
 			}
 
-			final int positionMapIndex = isPieceWhite ? i : Square.getIndex(i % 8, 7 - i / 8);
-
+			final int positionMapIndex = isPieceWhite ? i : Square.getIndex(7 - i % 8, 7 - i / 8);
 
 			int maxValue = Integer.MIN_VALUE;
 
@@ -489,8 +481,10 @@ public class MinimaxEngine extends ChessEngine {
 		int attackSquareSumDifference = 0;
 
 		for (int i = 0; i < 64; i++) {
-			attackSquareSumDifference += board.whiteAttackSquares.getBit(i) ? 1 : 0;
-			attackSquareSumDifference -= board.blackAttackSquares.getBit(i) ? 1 : 0;
+			if (board.whiteAttackSquares.getBit(i))
+				attackSquareSumDifference += 1;
+			if (board.blackAttackSquares.getBit(i))
+				attackSquareSumDifference -= 1;
 		}
 
 		result += (int) (ATTACK_SQUARE_WEIGHT * attackSquareSumDifference);

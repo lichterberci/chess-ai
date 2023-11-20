@@ -47,7 +47,6 @@ public class PvEGameFrame extends JFrame {
 		}
 
 		boardPanel = new BoardPanel(
-
 				isPlayerWhite,
 				100
 		);
