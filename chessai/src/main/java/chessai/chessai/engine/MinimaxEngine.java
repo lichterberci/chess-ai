@@ -81,7 +81,8 @@ public class MinimaxEngine extends ChessEngine {
 			20, 20, 10, 10, 10, 10, 20, 20,
 			30, 30, 10, 10, 10, 10, 30, 30,
 	};
-	private static final int MAX_ADDITIONAL_DEPTH = 4;
+	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 1; // has to be lower than the max add. depth
+	private static final int MAX_ADDITIONAL_DEPTH = 2;
 	private final int maxDepth;
 	private final TranspositionTable transpositionTable;
 	private final int[][] historicalBestMovesCount;
@@ -132,9 +133,9 @@ public class MinimaxEngine extends ChessEngine {
 //		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
 
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
-		int pvTablSize = Math.ceilDiv((maxDepth + MAX_ADDITIONAL_DEPTH + 1) * (maxDepth + MAX_ADDITIONAL_DEPTH + 2), 2);
-		prevPvTable = pvTable != null ? pvTable : new Move[pvTablSize];
-		pvTable = new Move[pvTablSize];
+		int pvTableSize = Math.ceilDiv((maxDepth + MAX_ADDITIONAL_DEPTH + 1) * (maxDepth + MAX_ADDITIONAL_DEPTH + 2), 2);
+		prevPvTable = pvTable != null ? pvTable : new Move[pvTableSize];
+		pvTable = new Move[pvTableSize];
 
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
@@ -189,8 +190,7 @@ public class MinimaxEngine extends ChessEngine {
 				break;
 		}
 
-		if (depth == maxDepth)
-			System.out.printf("best at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
+		System.out.printf("Best move at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
@@ -216,6 +216,34 @@ public class MinimaxEngine extends ChessEngine {
 
 		int pvNextIndex = pvIndex + currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth;
 
+		// delta cut-off
+		// if the situation is hopeless, we just return the static eval
+
+		int staticEval = evaluateOngoingPosition(board);
+
+		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
+
+		if (board.colorToMove == PieceColor.WHITE) {
+			if (staticEval >= beta)
+				return beta;
+
+			if (staticEval + BIG_DELTA < alpha)
+				return alpha;
+
+			if (alpha < staticEval)
+				alpha = staticEval;
+		} else {
+			if (staticEval <= alpha)
+				return alpha;
+
+			if (staticEval - BIG_DELTA > beta)
+				return beta;
+
+			if (beta > staticEval)
+				beta = staticEval;
+
+		}
+
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
 //		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
@@ -229,13 +257,33 @@ public class MinimaxEngine extends ChessEngine {
 
 		GameState state = board.getState();
 
-		if ((state != GameState.PLAYING || depth >= currentMaxDepth) && !(board.isKingInCheck(board.colorToMove) && additionalDepth < MAX_ADDITIONAL_DEPTH && state == GameState.PLAYING)) {
+		boolean isFirstMoveInteresting = !possibleLegalMoves.isEmpty()
+				&& (possibleLegalMoves.get(0).isCapture()
+				|| possibleLegalMoves.get(0).promotionPieceType() != null
+				|| possibleLegalMoves.get(0).isCheck());
+
+		if ((
+				state != GameState.PLAYING
+						|| depth >= currentMaxDepth // silent move limit
+		)
+				&& !(
+				isFirstMoveInteresting
+						&& additionalDepth < MAX_ADDITIONAL_DEPTH_FOR_CAPTURES
+						&& state == GameState.PLAYING
+		)
+				// if we are in check, we continue the search
+				&& !(
+				board.isKingInCheck(board.colorToMove)
+						&& additionalDepth < MAX_ADDITIONAL_DEPTH
+						&& state == GameState.PLAYING
+		)
+		) {
 
 			int result = switch (state) {
 				case WHITE_WIN -> Integer.MAX_VALUE - currentMaxDepth;
 				case BLACK_WIN -> Integer.MIN_VALUE + currentMaxDepth;
 				case DRAW -> 0;
-				case PLAYING -> evaluateOngoingPosition(board);
+				case PLAYING -> staticEval;
 			};
 
 			transpositionTable.put(board, result);
