@@ -201,7 +201,12 @@ public class BoardPanel extends JPanel {
                     continue;
                 }
 
-                squarePanels[row * 8 + file].setBackground(colorOfMaxPriorityLayer.get().backgrounColor());
+                Color layerColor = colorOfMaxPriorityLayer.get().backgrounColor();
+
+                if (!shouldSquareBeColoredWhite)
+                    layerColor = layerColor.darker();
+
+                squarePanels[row * 8 + file].setBackground(layerColor);
             }
         }
 
