@@ -81,8 +81,8 @@ public class MinimaxEngine extends ChessEngine {
 			20, 20, 10, 10, 10, 10, 20, 20,
 			30, 30, 10, 10, 10, 10, 30, 30,
 	};
-	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 1; // has to be lower than the max add. depth
-	private static final int MAX_ADDITIONAL_DEPTH = 2;
+	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 0; // has to be lower than the max add. depth
+	private static final int MAX_ADDITIONAL_DEPTH = 0;
 	private final int maxDepth;
 	private final TranspositionTable transpositionTable;
 	private final int[][] historicalBestMovesCount;

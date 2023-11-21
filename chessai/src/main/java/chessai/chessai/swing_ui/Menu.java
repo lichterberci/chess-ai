@@ -14,6 +14,7 @@ import java.util.*;
 public class Menu {
 
 	private static final Map<String, ChessEngine> PLAYABLE_CHESS_ENGINES;
+	private static final Map<String, String> AVAILABLE_THEMES;
 	private final JFrame window;
 	private final JPanel mainPanel;
 	private final JPanel settingsPanel;
@@ -25,6 +26,11 @@ public class Menu {
 		PLAYABLE_CHESS_ENGINES.put("Random", new RandomEngine());
 		PLAYABLE_CHESS_ENGINES.put("Monte Carlo", new MonteCarloEngine(0, 1.4142, 50, 1000));
 		PLAYABLE_CHESS_ENGINES.put("Minimax", new MinimaxEngine(20, 1_000_000_000));
+
+		AVAILABLE_THEMES = new HashMap<>();
+		AVAILABLE_THEMES.put("Neo", "neo");
+		AVAILABLE_THEMES.put("Classic", "classic");
+		AVAILABLE_THEMES.put("Old", "old");
 	}
 
     public Menu() {
@@ -73,6 +79,37 @@ public class Menu {
 		Settings currentUnsavedSettings = new Settings(Settings.getInstance());
 
 		settingsPanel.setLayout(new BorderLayout());
+
+		// ---------------------- THEMES ---------------------------------------
+
+		JPanel themeSelectorPanel = new JPanel();
+		themeSelectorPanel.setLayout(new GridLayout(1, 2, 20, 10));
+		themeSelectorPanel.setBorder(BorderFactory.createTitledBorder("Themes"));
+
+		JLabel pieceThemeLabel = new JLabel("Pieces:");
+		pieceThemeLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		pieceThemeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		pieceThemeLabel.setHorizontalTextPosition(SwingConstants.RIGHT);
+		themeSelectorPanel.add(pieceThemeLabel);
+
+		JComboBox<String> pieceThemeDropdown = new JComboBox<>(new Vector<>(AVAILABLE_THEMES.keySet().stream().toList()));
+		pieceThemeDropdown.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		pieceThemeDropdown.setEditable(false);
+		pieceThemeDropdown.setSelectedItem(
+				AVAILABLE_THEMES.entrySet()
+						.stream()
+						.filter(entry -> entry.getValue().equals(currentUnsavedSettings.getPieceTheme()))
+						.map(Map.Entry::getKey)
+						.findFirst()
+						.get()
+		);
+		pieceThemeDropdown.repaint();
+		pieceThemeDropdown.addActionListener(e -> {
+			currentUnsavedSettings.setPieceTheme(AVAILABLE_THEMES.get((String) pieceThemeDropdown.getSelectedItem()));
+		});
+		themeSelectorPanel.add(pieceThemeDropdown);
+
+		settingsPanel.add(themeSelectorPanel, BorderLayout.NORTH);
 
 		JPanel colorSettingsHolder = new JPanel();
 		colorSettingsHolder.setLayout(new GridLayout(4, 3, 10, 20));
@@ -176,6 +213,14 @@ public class Menu {
 			whiteTileColorPreviewPanel.setBackground(currentUnsavedSettings.getWhiteTileColor());
 			moveHighlightColorPreviewPanel.setBackground(currentUnsavedSettings.getMoveHighlightColor());
 			selectedSquareColorPreviewPanel.setBackground(currentUnsavedSettings.getSelectedPieceBackgroundColor());
+			pieceThemeDropdown.setSelectedItem(
+					AVAILABLE_THEMES.entrySet()
+							.stream()
+							.filter(entry -> entry.getValue().equals(currentUnsavedSettings.getPieceTheme()))
+							.map(Map.Entry::getKey)
+							.findFirst()
+							.get()
+			);
 			selectMenuPanel("MAIN");
 		});
 		JButton resetBtn = new PrimaryButton("Reset", e -> {
@@ -184,6 +229,14 @@ public class Menu {
 			whiteTileColorPreviewPanel.setBackground(currentUnsavedSettings.getWhiteTileColor());
 			moveHighlightColorPreviewPanel.setBackground(currentUnsavedSettings.getMoveHighlightColor());
 			selectedSquareColorPreviewPanel.setBackground(currentUnsavedSettings.getSelectedPieceBackgroundColor());
+			pieceThemeDropdown.setSelectedItem(
+					AVAILABLE_THEMES.entrySet()
+							.stream()
+							.filter(entry -> entry.getValue().equals(currentUnsavedSettings.getPieceTheme()))
+							.map(Map.Entry::getKey)
+							.findFirst()
+							.get()
+			);
 		});
 		JButton saveBtn = new PrimaryButton("Save", e -> {
 			Settings.updateInstance(currentUnsavedSettings);
