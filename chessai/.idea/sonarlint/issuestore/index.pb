@@ -68,3 +68,7 @@ e
 5src/main/java/chessai/chessai/engine/ChessEngine.java,0\4\04f456cc3713867d0abbfc301fc7871fba4f8657
 f
 6src/main/java/chessai/chessai/engine/RandomEngine.java,c\0\c0ec97bfc9546169edaf42528721d7ca405ca884
+a
+1src/main/java/chessai/chessai/swing_ui/Fonts.java,e\3\e338c330539bd6afd19b8bb707972c1180abf7b5
+i
+9src/main/java/chessai/chessai/swing_ui/PrimaryButton.java,3\0\30ef3b5dd90ed132a891e70d936e93fc8f74311d

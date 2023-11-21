@@ -148,18 +148,24 @@ public class MinimaxEngine extends ChessEngine {
 		int alpha = Integer.MIN_VALUE;
 		int beta = Integer.MAX_VALUE;
 
+		int toIndexOfBestMove = 0;
+		int fromIndexOfBestMove = 0;
+
+		int pvIndex = 0;
+		int pvNextIndex = 1;
+
 		for (int i = 0; i < possibleLegalMoves.size() && !isCancelled.getAsBoolean(); i++) {
 			Move move = possibleLegalMoves.get(i);
 
 			int currentEval = evaluateState(
 //					boards.get(i),
 					board.makeMove(possibleLegalMoves.get(i)),
-					0,
+					1,
 					0,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
 					beta,
-					0
+					pvNextIndex
 			);
 
 			if (depth == maxDepth)
@@ -170,6 +176,10 @@ public class MinimaxEngine extends ChessEngine {
 				if (bestEval < currentEval) {
 					bestEval = currentEval;
 					indexOfBestMove = i;
+					toIndexOfBestMove = move.toIndex();
+					fromIndexOfBestMove = move.fromIndex();
+					pvTable[pvIndex] = move;
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - 1);
 				}
 
 				if (bestEval > alpha) {
@@ -180,6 +190,10 @@ public class MinimaxEngine extends ChessEngine {
 				if (bestEval > currentEval) {
 					bestEval = currentEval;
 					indexOfBestMove = i;
+					toIndexOfBestMove = move.toIndex();
+					fromIndexOfBestMove = move.fromIndex();
+					pvTable[pvIndex] = move;
+					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - 1);
 				}
 
 				if (bestEval < beta) {
@@ -190,6 +204,8 @@ public class MinimaxEngine extends ChessEngine {
 			if (beta <= alpha)
 				break;
 		}
+
+		historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
 
 		if (!isCancelled.getAsBoolean())
 			System.out.printf("Best move at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
