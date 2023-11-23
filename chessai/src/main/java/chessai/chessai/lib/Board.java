@@ -193,8 +193,10 @@ public class Board {
             if (hash == currentHash && countOfCurrentPosition < 3)
                 countOfCurrentPosition++;
 
-        if (countOfCurrentPosition == 3)
+        if (countOfCurrentPosition == 3) {
+            cachedGameState = GameState.DRAW;
             return GameState.DRAW;
+        }
 
         LinkedList<Piece> piecesWithRightColor = new LinkedList<>();
         LinkedList<Piece> piecesWithOppositeColor = new LinkedList<>();
