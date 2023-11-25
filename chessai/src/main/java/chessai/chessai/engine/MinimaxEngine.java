@@ -81,8 +81,8 @@ public class MinimaxEngine extends ChessEngine {
 			20, 20, 10, 10, 10, 10, 20, 20,
 			30, 30, 10, 10, 10, 10, 30, 30,
 	};
-	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 0; // has to be lower than the max add. depth
-	private static final int MAX_ADDITIONAL_DEPTH = 0;
+	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 2; // has to be lower than the max add. depth
+	private static final int MAX_ADDITIONAL_DEPTH = 2;
 	private final int maxDepth;
 	private final int pvTableLength;
 	private final TranspositionTable transpositionTable;
@@ -144,55 +144,82 @@ public class MinimaxEngine extends ChessEngine {
 		sortMovesInPlace(possibleLegalMoves, 0, board);
 
 		int indexOfBestMove = 0;
+		int bestEval = board.colorToMove == PieceColor.WHITE ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+
+		int alpha = Integer.MIN_VALUE;
+		int beta = Integer.MAX_VALUE;
 
 		int toIndexOfBestMove = 0;
 		int fromIndexOfBestMove = 0;
 
-		int colorCoefficient = board.colorToMove == PieceColor.WHITE ? 1 : -1;
-
-		int bestEval = Integer.MIN_VALUE;
-
 		for (int i = 0; i < possibleLegalMoves.size() && !isCancelled.getAsBoolean(); i++) {
 			Move move = possibleLegalMoves.get(i);
 
-			int currentEval = -negamaxAlphaBeta(
+			int currentEval = evaluateState(
+//					boards.get(i),
 					board.makeMove(possibleLegalMoves.get(i)),
 					1,
 					0,
-					Integer.MIN_VALUE,
-					Integer.MAX_VALUE,
-					-colorCoefficient
+					board.colorToMove == PieceColor.BLACK,
+					alpha,
+					beta
 			);
 
-			if (currentEval > bestEval) {
-				bestEval = currentEval;
+			if (depth == maxDepth)
+				System.out.printf("%s --> %d%n", move.toShortString(), currentEval);
 
-				toIndexOfBestMove = move.toIndex();
-				fromIndexOfBestMove = move.fromIndex();
+			if (board.colorToMove == PieceColor.WHITE) {
 
-				pvTable[0][0] = move;
-				System.arraycopy(pvTable[1], 0, pvTable[0], 1, pvTableLength - 1);
+				if (bestEval < currentEval) {
+					bestEval = currentEval;
+					indexOfBestMove = i;
+					toIndexOfBestMove = move.toIndex();
+					fromIndexOfBestMove = move.fromIndex();
+					pvTable[0][0] = move;
+					System.arraycopy(pvTable[1], 0, pvTable[0], 1, pvTableLength - 1);
+				}
+
+				if (bestEval > alpha) {
+					alpha = bestEval;
+				}
+			} else {
+
+				if (bestEval > currentEval) {
+					bestEval = currentEval;
+					indexOfBestMove = i;
+					toIndexOfBestMove = move.toIndex();
+					fromIndexOfBestMove = move.fromIndex();
+					pvTable[0][0] = move;
+					System.arraycopy(pvTable[1], 0, pvTable[0], 1, pvTableLength - 1);
+				}
+
+				if (bestEval < beta) {
+					beta = bestEval;
+				}
 			}
+
+			if (beta <= alpha)
+				break;
 		}
 
 		historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
 
 		if (!isCancelled.getAsBoolean())
-			System.out.printf("Best move at depth %d + %d: %s (%d)%n", depth, MAX_ADDITIONAL_DEPTH, possibleLegalMoves.get(indexOfBestMove), colorCoefficient * bestEval);
+			System.out.printf("Best move at depth %d + %d: %s (%d)%n", depth, MAX_ADDITIONAL_DEPTH, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
 
-	private int negamaxAlphaBeta(Board board,
-								 int depth,
-								 int additionalDepth,
-								 int alpha,
-								 int beta,
-								 int colorCoefficient) {
+	private int evaluateState(Board board,
+							  int depth,
+							  int additionalDepth,
+							  boolean isMaximizingPlayer,
+							  int alpha,
+							  int beta) {
 
 		if (transpositionTable.contains(board)) {
 			try {
-				return colorCoefficient * transpositionTable.get(board);
+				return transpositionTable.get(board);
 			} catch (InvalidKeyException e) {
 				// we just don't return
 				System.err.println("Invalid key!");
@@ -204,6 +231,7 @@ public class MinimaxEngine extends ChessEngine {
 		// delta cut-off
 		// if the situation is hopeless, we just return the static eval
 
+		int staticEval = evaluateOngoingPosition(board);
 
 //		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
 //
@@ -221,100 +249,113 @@ public class MinimaxEngine extends ChessEngine {
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
+//		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
+
+//		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
+
+//		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
 		sortMovesInPlace(possibleLegalMoves, depth + additionalDepth, board);
 
 		GameState state = board.getState();
-//
-//		boolean isFirstMoveInteresting = !possibleLegalMoves.isEmpty()
-//				&& (possibleLegalMoves.get(0).isCapture()
-//				|| possibleLegalMoves.get(0).promotionPieceType() != null
-//				|| possibleLegalMoves.get(0).isCheck());
+
+		boolean isFirstMoveInteresting = !possibleLegalMoves.isEmpty()
+				&& (possibleLegalMoves.get(0).isCapture()
+				|| possibleLegalMoves.get(0).promotionPieceType() != null
+				|| possibleLegalMoves.get(0).isCheck());
 
 		if ((
 				state != GameState.PLAYING
 						|| depth >= currentMaxDepth // silent move limit
 		)
-//				&& !(
-//				isFirstMoveInteresting
-//						&& additionalDepth < MAX_ADDITIONAL_DEPTH_FOR_CAPTURES
-//						&& state == GameState.PLAYING
-//		)
-//				// if we are in check, we continue the search
-//				&& !(
-//				board.isKingInCheck(board.colorToMove)
-//						&& additionalDepth < MAX_ADDITIONAL_DEPTH
-//						&& state == GameState.PLAYING
-//		)
+				&& !(
+				isFirstMoveInteresting
+						&& additionalDepth < MAX_ADDITIONAL_DEPTH_FOR_CAPTURES
+						&& state == GameState.PLAYING
+		)
+				// if we are in check, we continue the search
+				&& !(
+				board.isKingInCheck(board.colorToMove)
+						&& additionalDepth < MAX_ADDITIONAL_DEPTH
+						&& state == GameState.PLAYING
+		)
 		) {
 
-			final int evalInAbsoulteTerms = switch (state) {
+			int result = switch (state) {
 				case WHITE_WIN -> Integer.MAX_VALUE - depth - additionalDepth;
 				case BLACK_WIN -> Integer.MIN_VALUE + depth + additionalDepth;
 				case DRAW -> 0;
-				case PLAYING -> evaluateOngoingPosition(board);
+				case PLAYING -> staticEval;
 			};
 
-			transpositionTable.put(board, evalInAbsoulteTerms);
+			transpositionTable.put(board, result);
 
-			return colorCoefficient * evalInAbsoulteTerms;
+			return result;
 		}
 
 		if (possibleLegalMoves.isEmpty())
 			throw new IllegalStateException("There has to be at least one legal move!");
 
+		int bestEval = isMaximizingPlayer ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+
 		int fromIndexOfBestMove = 0;
 		int toIndexOfBestMove = 0;
 
-		int bestValue = Integer.MIN_VALUE;
-
 		for (Move move : possibleLegalMoves) {
 
-			int currentEval = -negamaxAlphaBeta(
+			int currentEval = evaluateState(
 //                    boards.get(i),
 					board.makeMove(move),
 					Math.min(currentMaxDepth, depth + 1),
 					depth < currentMaxDepth ? 0 : additionalDepth + 1,
-					-beta,
-					-alpha,
-					-colorCoefficient
+					!isMaximizingPlayer,
+					alpha,
+					beta
 			);
 
-			if (currentEval > bestValue) {
-				bestValue = currentEval;
+			if (isMaximizingPlayer) {
+				if (currentEval > bestEval) {
+					bestEval = currentEval;
 
-				pvTable[depth + additionalDepth][0] = move;
-				System.arraycopy(pvTable[depth + additionalDepth + 1],
-						0,
-						pvTable[depth + additionalDepth],
-						1,
-						pvTableLength - depth - additionalDepth - 1);
+					pvTable[depth + additionalDepth][0] = move;
+					System.arraycopy(pvTable[depth + additionalDepth + 1],
+							0,
+							pvTable[depth + additionalDepth],
+							1,
+							pvTableLength - depth - additionalDepth - 1);
 
-				fromIndexOfBestMove = move.fromIndex();
-				toIndexOfBestMove = move.toIndex();
+					fromIndexOfBestMove = move.fromIndex();
+					toIndexOfBestMove = move.toIndex();
+				}
+
+				alpha = Math.max(alpha, bestEval);
+			} else {
+				if (currentEval < bestEval) {
+					bestEval = currentEval;
+
+					pvTable[depth + additionalDepth][0] = move;
+					System.arraycopy(pvTable[depth + additionalDepth + 1],
+							0,
+							pvTable[depth + additionalDepth],
+							1,
+							pvTableLength - depth - additionalDepth - 1);
+
+					fromIndexOfBestMove = move.fromIndex();
+					toIndexOfBestMove = move.toIndex();
+				}
+
+				beta = Math.min(beta, bestEval);
 			}
 
-//			// fail hard beta-cutoff
-//			if (bestValue >= beta) {
-//
-//				historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
-//
-//				return beta;
-//			}
-
-			// alpha is like the max in minimax
-			if (bestValue > alpha) {
-				alpha = bestValue;
-			}
-
-			if (alpha >= beta)
+			if (beta <= alpha) {
 				break;
+			}
 		}
 
 		historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
 
-		return bestValue;
+		return bestEval;
 	}
 
 	private void sortMovesInPlace(List<Move> possibleLegalMoves, int actualDepth, Board board) {
