@@ -38,7 +38,11 @@ public class Square {
 
     @Override
     public String toString() {
-        return toString(getIndex());
+        return toString(false);
+    }
+
+    public String toString(boolean upperCase) {
+        return toString(getIndex(), upperCase);
     }
 
     public static int getIndex(String name) {

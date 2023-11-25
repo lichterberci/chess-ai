@@ -23,6 +23,7 @@ public class PvEGameFrame extends JFrame {
 	private final transient boolean isPlayerWhite;
 	private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
     private final transient Optional<Integer> availableTimeInMillisForEngine;
+	private final PGNBuilder pgnBuilder;
 
 	public PvEGameFrame(ChessEngine engine, boolean isPlayerWhite, Optional<Integer> availableTimeInMillisForEngine) {
 		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", engine, isPlayerWhite, availableTimeInMillisForEngine);
@@ -69,6 +70,8 @@ public class PvEGameFrame extends JFrame {
 
         if (!isPlayerWhite)
             calculateEngineMoveAndMakMoveAfterwards();
+
+		pgnBuilder = new PGNBuilder(board, isPlayerWhite ? "Player" : "Engine", isPlayerWhite ? "Engine" : "Player");
 	}
 
 	private void makeMove(Move move) {
@@ -76,6 +79,9 @@ public class PvEGameFrame extends JFrame {
 		if (move == null) {
 			throw new RuntimeException("Move is null!");
 		}
+
+		pgnBuilder.addMove(move);
+		System.out.println(pgnBuilder.buildString());
 
 		board = board.makeMove(move);
 
