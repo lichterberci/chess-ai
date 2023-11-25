@@ -3,6 +3,7 @@ package chessai.chessai.engine;
 import chessai.chessai.lib.Board;
 
 import java.security.InvalidKeyException;
+import java.util.Arrays;
 
 /**
  * Implements a transposition table using Zobrist hashing
@@ -73,9 +74,10 @@ public class TranspositionTable {
     }
 
     public void clear() {
-        for (int i = 0; i < capacity; i++) {
-            table[i] = DEFAULT_VALUE;
-        }
+//        for (int i = 0; i < capacity; i++) {
+//            table[i] = DEFAULT_VALUE;
+//        }
+        Arrays.fill(table, DEFAULT_VALUE);
     }
 
     private int getInitialIndex(int hash) {

@@ -81,16 +81,17 @@ public class MinimaxEngine extends ChessEngine {
 			20, 20, 10, 10, 10, 10, 20, 20,
 			30, 30, 10, 10, 10, 10, 30, 30,
 	};
-	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 0; // has to be lower than the max add. depth
-	private static final int MAX_ADDITIONAL_DEPTH = 0;
+	private static final int MAX_ADDITIONAL_DEPTH_FOR_CAPTURES = 2; // has to be lower than the max add. depth
+	private static final int MAX_ADDITIONAL_DEPTH = 2;
 	private final int maxDepth;
+	private final int pvTableLength;
 	private final TranspositionTable transpositionTable;
 	private final int[][] historicalBestMovesCount;
 	/**
 	 * @implSpec <a href="https://www.chessprogramming.org/Triangular_PV-Table">chess programming wiki page</a>
 	 */
-	private Move[] pvTable;
-	private Move[] prevPvTable;
+	private Move[][] pvTable;
+	private Move[][] prevPvTable;
 	private int currentMaxDepth;
 
 	public MinimaxEngine(int maxDepth) {
@@ -99,6 +100,7 @@ public class MinimaxEngine extends ChessEngine {
 
 	public MinimaxEngine(int maxDepth, int transpositionTableCapacityInBytes) {
 		this.maxDepth = maxDepth;
+		this.pvTableLength = maxDepth + MAX_ADDITIONAL_DEPTH;
 		this.transpositionTable = new TranspositionTable(transpositionTableCapacityInBytes);
 		historicalBestMovesCount = new int[64][64];
 	}
@@ -134,9 +136,8 @@ public class MinimaxEngine extends ChessEngine {
 //		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
 
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
-		int pvTableSize = Math.ceilDiv((maxDepth + MAX_ADDITIONAL_DEPTH + 1) * (maxDepth + MAX_ADDITIONAL_DEPTH + 2), 2);
-		prevPvTable = pvTable != null ? pvTable : new Move[pvTableSize];
-		pvTable = new Move[pvTableSize];
+		prevPvTable = pvTable != null ? pvTable : new Move[pvTableLength][pvTableLength];
+		pvTable = new Move[pvTableLength][pvTableLength];
 
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
@@ -151,9 +152,6 @@ public class MinimaxEngine extends ChessEngine {
 		int toIndexOfBestMove = 0;
 		int fromIndexOfBestMove = 0;
 
-		int pvIndex = 0;
-		int pvNextIndex = 1;
-
 		for (int i = 0; i < possibleLegalMoves.size() && !isCancelled.getAsBoolean(); i++) {
 			Move move = possibleLegalMoves.get(i);
 
@@ -164,8 +162,7 @@ public class MinimaxEngine extends ChessEngine {
 					0,
 					board.colorToMove == PieceColor.BLACK,
 					alpha,
-					beta,
-					pvNextIndex
+					beta
 			);
 
 			if (depth == maxDepth)
@@ -178,8 +175,8 @@ public class MinimaxEngine extends ChessEngine {
 					indexOfBestMove = i;
 					toIndexOfBestMove = move.toIndex();
 					fromIndexOfBestMove = move.fromIndex();
-					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - 1);
+					pvTable[0][0] = move;
+					System.arraycopy(pvTable[1], 0, pvTable[0], 1, pvTableLength - 1);
 				}
 
 				if (bestEval > alpha) {
@@ -192,8 +189,8 @@ public class MinimaxEngine extends ChessEngine {
 					indexOfBestMove = i;
 					toIndexOfBestMove = move.toIndex();
 					fromIndexOfBestMove = move.fromIndex();
-					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - 1);
+					pvTable[0][0] = move;
+					System.arraycopy(pvTable[1], 0, pvTable[0], 1, pvTableLength - 1);
 				}
 
 				if (bestEval < beta) {
@@ -208,7 +205,7 @@ public class MinimaxEngine extends ChessEngine {
 		historicalBestMovesCount[fromIndexOfBestMove][toIndexOfBestMove]++;
 
 		if (!isCancelled.getAsBoolean())
-			System.out.printf("Best move at depth %d: %s (%d)%n", depth, possibleLegalMoves.get(indexOfBestMove), bestEval);
+			System.out.printf("Best move at depth %d + %d: %s (%d)%n", depth, MAX_ADDITIONAL_DEPTH, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
 		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
 	}
@@ -218,8 +215,7 @@ public class MinimaxEngine extends ChessEngine {
 							  int additionalDepth,
 							  boolean isMaximizingPlayer,
 							  int alpha,
-							  int beta,
-							  int pvIndex) {
+							  int beta) {
 
 		if (transpositionTable.contains(board)) {
 			try {
@@ -230,22 +226,20 @@ public class MinimaxEngine extends ChessEngine {
 			}
 		}
 
-		pvTable[pvIndex] = null;
-
-		int pvNextIndex = pvIndex + currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth;
+		pvTable[depth + additionalDepth] = new Move[pvTableLength];
 
 		// delta cut-off
 		// if the situation is hopeless, we just return the static eval
 
 		int staticEval = evaluateOngoingPosition(board);
 
-		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
-
-		if (alpha > staticEval + BIG_DELTA)
-			return alpha;
-
-		if (beta < staticEval - BIG_DELTA)
-			return beta;
+//		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
+//
+//		if (alpha > staticEval + BIG_DELTA)
+//			return alpha;
+//
+//		if (beta < staticEval - BIG_DELTA)
+//			return beta;
 
 //		if (alpha < staticEval)
 //			alpha = staticEval;
@@ -262,7 +256,7 @@ public class MinimaxEngine extends ChessEngine {
 //		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
-		sortMovesInPlace(possibleLegalMoves, pvIndex, board);
+		sortMovesInPlace(possibleLegalMoves, depth + additionalDepth, board);
 
 		GameState state = board.getState();
 
@@ -317,27 +311,40 @@ public class MinimaxEngine extends ChessEngine {
 					depth < currentMaxDepth ? 0 : additionalDepth + 1,
 					!isMaximizingPlayer,
 					alpha,
-					beta,
-					pvNextIndex
+					beta
 			);
 
 			if (isMaximizingPlayer) {
 				if (currentEval > bestEval) {
 					bestEval = currentEval;
-					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth - 1);
+
+					pvTable[depth + additionalDepth][0] = move;
+					System.arraycopy(pvTable[depth + additionalDepth + 1],
+							0,
+							pvTable[depth + additionalDepth],
+							1,
+							pvTableLength - depth - additionalDepth - 1);
+
 					fromIndexOfBestMove = move.fromIndex();
 					toIndexOfBestMove = move.toIndex();
 				}
+
 				alpha = Math.max(alpha, bestEval);
 			} else {
 				if (currentEval < bestEval) {
 					bestEval = currentEval;
-					pvTable[pvIndex] = move;
-					copyPvTableSegment(pvIndex + 1, pvNextIndex, currentMaxDepth + MAX_ADDITIONAL_DEPTH - depth - additionalDepth - 1);
+
+					pvTable[depth + additionalDepth][0] = move;
+					System.arraycopy(pvTable[depth + additionalDepth + 1],
+							0,
+							pvTable[depth + additionalDepth],
+							1,
+							pvTableLength - depth - additionalDepth - 1);
+
 					fromIndexOfBestMove = move.fromIndex();
 					toIndexOfBestMove = move.toIndex();
 				}
+
 				beta = Math.min(beta, bestEval);
 			}
 
@@ -351,18 +358,14 @@ public class MinimaxEngine extends ChessEngine {
 		return bestEval;
 	}
 
-	private void copyPvTableSegment(int toIndex, int fromIndex, int length) {
-		System.arraycopy(pvTable, fromIndex, pvTable, toIndex, length);
-	}
-
-	private void sortMovesInPlace(List<Move> possibleLegalMoves, int pvIndex, Board board) {
+	private void sortMovesInPlace(List<Move> possibleLegalMoves, int actualDepth, Board board) {
 
 		if (possibleLegalMoves == null || possibleLegalMoves.isEmpty() || possibleLegalMoves.size() == 1)
 			return;
 
 		Comparator<Move> moveComparator = (move1, move2) -> {
 
-			Move bestMoveAtThisPly = prevPvTable[pvIndex];
+			Move bestMoveAtThisPly = prevPvTable[0][actualDepth];
 
 			if (move1.equals(bestMoveAtThisPly) && !move2.equals(bestMoveAtThisPly))
 				return -1;
