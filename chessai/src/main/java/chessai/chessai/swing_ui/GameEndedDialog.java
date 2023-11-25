@@ -4,10 +4,14 @@ import chessai.chessai.lib.GameState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GameEndedDialog extends JDialog {
 
-	public GameEndedDialog(Frame owner, GameState resultState) {
+	public GameEndedDialog(Frame owner, GameState resultState, String pgnString) {
 
 		super(owner, "Game ended", true);
 
@@ -34,18 +38,44 @@ public class GameEndedDialog extends JDialog {
 
 		JPanel buttonHolderPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
 
-		JButton backToBoardBtn = new JButton("Back to board");
-		backToBoardBtn.addActionListener(e -> this.dispose());
+		JButton backToBoardBtn = new PrimaryButton("Back to board", e -> this.dispose());
 		backToBoardBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JButton closeBoardBtn = new JButton("Close board");
-		closeBoardBtn.addActionListener(e -> {
+		JButton copyPgnToClipboardBtn = new PrimaryButton("Copy PGN to clipboard", e -> {
+			var selection = new StringSelection(pgnString);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+		});
+		copyPgnToClipboardBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JButton savePgnBtn = new PrimaryButton("Save PGN to file", e -> {
+			var fileChooser = new JFileChooser();
+			fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+			int fileChoosingResult = fileChooser.showSaveDialog(this);
+			if (fileChoosingResult == JFileChooser.APPROVE_OPTION) {
+				File file = fileChooser.getSelectedFile();
+				try {
+					file.createNewFile();
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
+				try (var fw = new FileWriter(file)) {
+					fw.write(pgnString);
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+		});
+		savePgnBtn.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JButton closeBoardBtn = new PrimaryButton("Close board", e -> {
 			this.dispose();
 			owner.dispose();
 		});
 		closeBoardBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
 		buttonHolderPanel.add(backToBoardBtn);
+		buttonHolderPanel.add(copyPgnToClipboardBtn);
+		buttonHolderPanel.add(savePgnBtn);
 		buttonHolderPanel.add(closeBoardBtn);
 
 		this.add(buttonHolderPanel);

@@ -118,12 +118,12 @@ public class PGNBuilder {
 	public String buildString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("[Event \"%s\"]".formatted(EVENT_NAME));
-		sb.append("[Site \"%s\"]".formatted(SITE_NAME));
-		sb.append("[Date \"%s\"]".formatted(LocalDate.now().toString()));
-		sb.append("[White \"%s\"]".formatted(whiteName));
-		sb.append("[Black \"%s\"]".formatted(blackName));
-		sb.append("[Result \"%s\"]".formatted(switch (result) {
+		sb.append("[Event \"%s\"]%n".formatted(EVENT_NAME));
+		sb.append("[Site \"%s\"]%n".formatted(SITE_NAME));
+		sb.append("[Date \"%s\"]%n".formatted(LocalDate.now().toString()));
+		sb.append("[White \"%s\"]%n".formatted(whiteName));
+		sb.append("[Black \"%s\"]%n".formatted(blackName));
+		sb.append("[Result \"%s\"]%n".formatted(switch (result) {
 			case WHITE_WIN -> "1-0";
 			case BLACK_WIN -> "0-1";
 			case DRAW -> "½-½";
@@ -132,7 +132,7 @@ public class PGNBuilder {
 
 		for (int i = 0; i < movesInAlgebraicNotation.size(); i++) {
 			if (i % 2 == 0)
-				sb.append("%d. ".formatted(i + 1));
+				sb.append("%d. ".formatted((i + 1) / 2));
 
 			sb.append("%s ".formatted(movesInAlgebraicNotation.get(i)));
 		}

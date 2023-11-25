@@ -15,6 +15,7 @@ public class PvPGameFrame extends JFrame {
 	private final BoardPanel boardPanel;
 	private transient Board board;
 	private transient Square selectedPiece;
+	private final transient PGNBuilder pgnBuilder;
 
 	public PvPGameFrame() {
 		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -54,6 +55,8 @@ public class PvPGameFrame extends JFrame {
 		this.add(boardPanel, BorderLayout.CENTER);
 
 		boardPanel.setVisible(true);
+
+		pgnBuilder = new PGNBuilder(board, "Player 1", "Player 2");
 	}
 
 	private void makeMove(Move move) {
@@ -66,6 +69,8 @@ public class PvPGameFrame extends JFrame {
 				move.promotionPieceType() != null,
 				move.specialMove() == SpecialMove.KING_SIDE_CASTLE || move.specialMove() == SpecialMove.QUEEN_SIDE_CASTLE)
 		);
+
+		pgnBuilder.addMove(move);
 
 		boardPanel.drawPosition(board);
 		boardPanel.validate();
@@ -81,7 +86,8 @@ public class PvPGameFrame extends JFrame {
 
 	private void gameEndedAction(GameState endState) {
 
-		GameEndedDialog gameEndedDialog = new GameEndedDialog(this, endState);
+		pgnBuilder.setResult(endState);
+		GameEndedDialog gameEndedDialog = new GameEndedDialog(this, endState, pgnBuilder.buildString());
 		gameEndedDialog.setVisible(true);
 
 	}

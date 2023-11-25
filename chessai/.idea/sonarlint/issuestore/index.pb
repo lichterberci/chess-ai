@@ -76,3 +76,5 @@ a
 1src/main/java/chessai/chessai/swing_ui/Fonts.java,e\3\e338c330539bd6afd19b8bb707972c1180abf7b5
 i
 9src/main/java/chessai/chessai/swing_ui/PrimaryButton.java,3\0\30ef3b5dd90ed132a891e70d936e93fc8f74311d
+a
+1src/test/java/chessai/chessai/lib/SquareTest.java,5\a\5a5fe32ecf5ab4b536e16a190ab61dc042115549

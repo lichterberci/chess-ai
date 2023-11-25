@@ -23,7 +23,7 @@ public class PvEGameFrame extends JFrame {
 	private final transient boolean isPlayerWhite;
 	private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
     private final transient Optional<Integer> availableTimeInMillisForEngine;
-	private final PGNBuilder pgnBuilder;
+	private final transient PGNBuilder pgnBuilder;
 
 	public PvEGameFrame(ChessEngine engine, boolean isPlayerWhite, Optional<Integer> availableTimeInMillisForEngine) {
 		this("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", engine, isPlayerWhite, availableTimeInMillisForEngine);
@@ -81,7 +81,6 @@ public class PvEGameFrame extends JFrame {
 		}
 
 		pgnBuilder.addMove(move);
-		System.out.println(pgnBuilder.buildString());
 
 		board = board.makeMove(move);
 
@@ -174,7 +173,8 @@ public class PvEGameFrame extends JFrame {
 
 	private void gameEndedAction(GameState endState) {
 
-		GameEndedDialog gameEndedDialog = new GameEndedDialog(this, endState);
+		pgnBuilder.setResult(endState);
+		GameEndedDialog gameEndedDialog = new GameEndedDialog(this, endState, pgnBuilder.buildString());
 		gameEndedDialog.setVisible(true);
 
 	}
