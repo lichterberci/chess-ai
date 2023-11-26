@@ -13,9 +13,10 @@ public abstract class ChessEngine {
         return makeMove(board,
                 optMove -> {
                 },
-                () -> false);
+                () -> false)
+                .map(EvaluatedMove::move);
     }
 
-    public abstract Optional<Move> makeMove(Board board, Consumer<Optional<Move>> callbackAfterEachDepth, BooleanSupplier isCancelled);
+    public abstract Optional<EvaluatedMove> makeMove(Board board, Consumer<Optional<EvaluatedMove>> callbackAfterEachDepth, BooleanSupplier isCancelled);
 
 }

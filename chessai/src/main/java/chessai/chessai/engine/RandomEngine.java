@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 public class RandomEngine extends ChessEngine {
 
     @Override
-    public Optional<Move> makeMove(Board board, Consumer<Optional<Move>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
+    public Optional<EvaluatedMove> makeMove(Board board, Consumer<Optional<EvaluatedMove>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
         List<Move> moves = board.getLegalMoves();
 
         if (moves.isEmpty())
@@ -20,6 +20,6 @@ public class RandomEngine extends ChessEngine {
 
         Random random = new Random(System.currentTimeMillis());
 
-        return Optional.of(moves.get(random.nextInt(moves.size())));
+        return Optional.of(new EvaluatedMove(moves.get(random.nextInt(moves.size())), 0));
     }
 }

@@ -69,7 +69,7 @@ public class MonteCarloEngine extends ChessEngine {
     }
 
     @Override
-    public Optional<Move> makeMove(Board board, Consumer<Optional<Move>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
+    public Optional<EvaluatedMove> makeMove(Board board, Consumer<Optional<EvaluatedMove>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
 
         TreeNode root = new TreeNode(board, null, null);
         List<Move> legalMovesByRoot = root.generateEmptyChildren();
@@ -82,7 +82,7 @@ public class MonteCarloEngine extends ChessEngine {
         if (root.children.size() == 1) {
             Move result = legalMovesByRoot.get(0);
             System.out.printf("Forced move: %s ---> %s%n", result.from(), result.to());
-            return Optional.of(result);
+            return Optional.of(new EvaluatedMove(result, 0));
         }
 
 //        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
@@ -198,6 +198,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             if (i % NODES_TO_SEARCH_BETWEEN_UPDATES == 1) {
                 Move result = null;
+                int resultEval = 0;
                 int maxSimulations = -1;
 
                 for (int j = 0; j < root.children.size(); j++) {
@@ -206,6 +207,8 @@ public class MonteCarloEngine extends ChessEngine {
                     if (child.numSimulationsRanByThisNode > maxSimulations) {
                         maxSimulations = child.numSimulationsRanByThisNode;
                         result = legalMovesByRoot.get(j);
+                        resultEval = (int) (child.numWins + child.numDraws / 2.0f - 0.5f) / child.numSimulationsRanByThisNode
+                                * (child.state.colorToMove == PieceColor.WHITE ? Integer.MAX_VALUE : Integer.MIN_VALUE);
                     }
                 }
 
@@ -213,13 +216,14 @@ public class MonteCarloEngine extends ChessEngine {
                     callbackAfterEachDepth.accept(Optional.empty());
                 }
 
-                callbackAfterEachDepth.accept(Optional.of(result));
+                callbackAfterEachDepth.accept(Optional.of(new EvaluatedMove(result, resultEval)));
             }
         }
 
         // pick the child with the most simulations
 
 	    Move result = null;
+        int resultEval = 0;
 	    int maxSimulations = -1;
 //        double maxScore = Double.MIN_VALUE;
 //        double bestWinRate = -1;
@@ -251,6 +255,8 @@ public class MonteCarloEngine extends ChessEngine {
 	        if (child.numSimulationsRanByThisNode > maxSimulations) {
 		        maxSimulations = child.numSimulationsRanByThisNode;
 		        result = legalMovesByRoot.get(i);
+                resultEval = (int) (child.numWins + child.numDraws / 2.0f - 0.5f) / child.numSimulationsRanByThisNode
+                        * (child.state.colorToMove == PieceColor.WHITE ? Integer.MAX_VALUE : Integer.MIN_VALUE);
 	        }
         }
 
@@ -261,7 +267,7 @@ public class MonteCarloEngine extends ChessEngine {
 
 //        System.out.println("move: " + result.from() + " --> " + result.to());
 
-        return Optional.of(result);
+        return Optional.of(new EvaluatedMove(result, resultEval));
     }
 
     private GameState simulate(Board board) {

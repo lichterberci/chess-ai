@@ -106,22 +106,23 @@ public class MinimaxEngine extends ChessEngine {
 	}
 
 	@Override
-	public Optional<Move> makeMove(Board board, Consumer<Optional<Move>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
+	public Optional<EvaluatedMove> makeMove(Board board, Consumer<Optional<EvaluatedMove>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
 
-		Optional<Move> bestMove = Optional.empty();
+		Optional<EvaluatedMove> bestMove = Optional.empty();
 
 		for (int i = 1; i <= maxDepth && !isCancelled.getAsBoolean(); i++) {
 			transpositionTable.clear();
 			currentMaxDepth = i;
 			bestMove = search(board, i, isCancelled);
-			if (!isCancelled.getAsBoolean())
+			if (!isCancelled.getAsBoolean()) {
 				callbackAfterEachDepth.accept(bestMove);
+			}
 		}
 
 		return bestMove;
 	}
 
-	public Optional<Move> search(Board board, int depth, BooleanSupplier isCancelled) {
+	public Optional<EvaluatedMove> search(Board board, int depth, BooleanSupplier isCancelled) {
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
@@ -129,7 +130,7 @@ public class MinimaxEngine extends ChessEngine {
 			return Optional.empty();
 
 		if (possiblyImmutableLegalMoves.size() == 1)
-			return Optional.of(possiblyImmutableLegalMoves.get(0));
+			return Optional.of(new EvaluatedMove(possiblyImmutableLegalMoves.get(0), 0));
 //
 //		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
 //
@@ -207,7 +208,7 @@ public class MinimaxEngine extends ChessEngine {
 		if (!isCancelled.getAsBoolean())
 			System.out.printf("Best move at depth %d + %d: %s (%d)%n", depth, MAX_ADDITIONAL_DEPTH, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
-		return Optional.of(possibleLegalMoves.get(indexOfBestMove));
+		return Optional.of(new EvaluatedMove(possibleLegalMoves.get(indexOfBestMove), bestEval));
 	}
 
 	private int evaluateState(Board board,

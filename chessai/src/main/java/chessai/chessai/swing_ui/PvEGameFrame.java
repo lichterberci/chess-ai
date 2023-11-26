@@ -1,6 +1,7 @@
 package chessai.chessai.swing_ui;
 
 import chessai.chessai.engine.ChessEngine;
+import chessai.chessai.engine.EvaluatedMove;
 import chessai.chessai.lib.*;
 import chessai.chessai.lib.pieces.Queen;
 
@@ -21,7 +22,7 @@ public class PvEGameFrame extends JFrame {
 	private transient Square selectedPiece;
 	private final transient ChessEngine engine;
 	private final transient boolean isPlayerWhite;
-	private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
+	private transient SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>> engineMoveCalculatorWorker;
     private final transient Optional<Integer> availableTimeInMillisForEngine;
 	private final transient PGNBuilder pgnBuilder;
 
@@ -114,10 +115,10 @@ public class PvEGameFrame extends JFrame {
 			Optional<Move> currentBestMove = Optional.empty();
 
 			@Override
-			protected Optional<Move> doInBackground() {
+			protected Optional<EvaluatedMove> doInBackground() {
 				return PvEGameFrame.this.engine.makeMove(
 						PvEGameFrame.this.board,
-						optMove -> currentBestMove = optMove,
+						optMove -> currentBestMove = optMove.map(EvaluatedMove::move),
 						this::isCancelled
 				);
 			}
@@ -134,7 +135,7 @@ public class PvEGameFrame extends JFrame {
 				Optional<Move> result;
 
 				try {
-					result = this.get();
+					result = this.get().map(EvaluatedMove::move);
 				} catch (InterruptedException | ExecutionException e) {
 					throw new RuntimeException(e);
 				}

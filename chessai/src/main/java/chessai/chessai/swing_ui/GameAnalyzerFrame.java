@@ -1,6 +1,7 @@
 package chessai.chessai.swing_ui;
 
 import chessai.chessai.engine.ChessEngine;
+import chessai.chessai.engine.EvaluatedMove;
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.Move;
 import chessai.chessai.lib.PGNReader;
@@ -23,10 +24,11 @@ public class GameAnalyzerFrame extends JFrame {
     private final ChessEngine engine;
     private transient int currentBoardIndex;
     private final transient BoardPanel boardPanel;
-    private transient SwingWorker<Optional<Move>, Optional<Move>> engineMoveCalculatorWorker;
+    private transient SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>> engineMoveCalculatorWorker;
 
     public GameAnalyzerFrame(String pgnString, ChessEngine engine) throws ParseException {
         super("Game analyzer");
+
         this.engine = engine;
 
         this.setLayout(new BorderLayout());
@@ -101,7 +103,7 @@ public class GameAnalyzerFrame extends JFrame {
         this.engineMoveCalculatorWorker = new SwingWorker<>() {
 
             @Override
-            protected Optional<Move> doInBackground() {
+            protected Optional<EvaluatedMove> doInBackground() {
                 return GameAnalyzerFrame.this.engine.makeMove(
                         GameAnalyzerFrame.this.boards.get(GameAnalyzerFrame.this.currentBoardIndex),
                         optMove -> {
@@ -113,7 +115,7 @@ public class GameAnalyzerFrame extends JFrame {
 
                             GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                                     Settings.getInstance().getSelectedPieceBackgroundColor(),
-                                    List.of(optMove.get().from(), optMove.get().to()),
+                                    List.of(optMove.get().move().from(), optMove.get().move().to()),
                                     4);
                         },
                         this::isCancelled
@@ -127,7 +129,7 @@ public class GameAnalyzerFrame extends JFrame {
                 if (isCancelled())
                     return;
 
-                Optional<Move> result;
+                Optional<EvaluatedMove> result;
 
                 try {
                     result = this.get();
@@ -145,7 +147,7 @@ public class GameAnalyzerFrame extends JFrame {
 
                 GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                         Settings.getInstance().getSelectedPieceBackgroundColor(),
-                        List.of(result.get().from(), result.get().to()),
+                        List.of(result.get().move().from(), result.get().move().to()),
                         4);
             }
         };
