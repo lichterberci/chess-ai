@@ -9,8 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="PGN parser added">
-      <change afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/PGNReaderTest.java" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixing parser...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
     </list>
@@ -317,15 +316,7 @@
       <workItem from="1700392486058" duration="1435000" />
       <workItem from="1700403188509" duration="15543000" />
       <workItem from="1700938769464" duration="1809000" />
-      <workItem from="1701013781479" duration="13110000" />
-    </task>
-    <task id="LOCAL-00026" summary="Updated gitignore to ignore sonarlint indexes">
-      <option name="closed" value="true" />
-      <created>1697532021103</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1697532021104</updated>
+      <workItem from="1701013781479" duration="14095000" />
     </task>
     <task id="LOCAL-00027" summary="Fixed some bugs, but it is not yet near...">
       <option name="closed" value="true" />
@@ -711,7 +702,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701025331459</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Fixing parser...">
+      <option name="closed" value="true" />
+      <created>1701027140468</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1701027140469</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,7 +728,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated method names" />
     <MESSAGE value="Removed some more old code and added some tests" />
     <MESSAGE value="Resolved kingmap issues" />
     <MESSAGE value="Fixed bitmap issues" />
@@ -754,7 +752,8 @@
     <MESSAGE value="PGN building is probably done" />
     <MESSAGE value="File saver added, not working yet" />
     <MESSAGE value="PGN parser added" />
-    <option name="LAST_COMMIT_MESSAGE" value="PGN parser added" />
+    <MESSAGE value="Fixing parser..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing parser..." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

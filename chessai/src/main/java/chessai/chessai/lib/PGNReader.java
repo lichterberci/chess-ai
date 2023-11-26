@@ -6,7 +6,6 @@ import chessai.chessai.lib.pieces.Queen;
 import chessai.chessai.lib.pieces.Rook;
 
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -82,38 +81,19 @@ public class PGNReader {
 
         String nonFieldInput = input.substring(input.lastIndexOf(']') + 1);
 
-        Pattern roundPattern = Pattern.compile("^\\s*(?<round>[^\\w\\d]\\d+\\.\\s+[\\d\\w=+\\-#]+\\s+(?:[\\d\\w=\\-+#]+)?\\s*)+\\s*$");
-        Pattern movesInRoundPattern = Pattern.compile("(?<moveIndex>\\d+)\\.\\s+(?<move1>[\\d\\w=\\-+#]+)\\s+(?<move2>[\\d\\w=\\-+#]+)?");
-
-        Matcher roundMatcher = roundPattern.matcher(" " + nonFieldInput);
+        Pattern movesInRoundPattern = Pattern.compile("(?<move1>[\\d\\w=\\-+#]+)\\s+(?<move2>[\\d\\w=\\-+#]+)?");
 
         boards.add(new Board(board));
 
-        if (!roundMatcher.find())
-            throw new ParseException(input, input.indexOf(nonFieldInput));
+        for (String round : nonFieldInput.split("\\s*\\d+\\.\\s*")) {
 
-        List<String> roundGroups = new LinkedList<>();
-
-        for (int i = 0; i < roundMatcher.groupCount(); i++) {
-            roundGroups.add(roundMatcher.group(i + 1).trim());
-        }
-
-        Collections.sort(roundGroups);
-
-        roundGroups.forEach(x -> System.out.println("round: " + x));
-
-        for (int i = 0; i < roundGroups.size(); i++) {
-            String round = roundGroups.get(i);
+            if (round.trim().isEmpty())
+                continue;
 
             Matcher roundInfoMatcher = movesInRoundPattern.matcher(round);
 
             if (!roundInfoMatcher.find())
                 throw new ParseException(round, 0);
-
-            int roundNum = Integer.parseUnsignedInt(roundInfoMatcher.group("moveIndex"));
-
-            if (roundNum != i + 1)
-                throw new ParseException(input, input.indexOf(round));
 
             Move whiteMove = parseMove(board, roundInfoMatcher.group("move1").trim());
 
@@ -184,7 +164,7 @@ public class PGNReader {
 
             int rowAbsoluteDifference = isDoublePush ? 2 : 1;
 
-            int signedRowDiff = board.colorToMove == PieceColor.WHITE ? rowAbsoluteDifference : -rowAbsoluteDifference;
+            int signedRowDiff = board.colorToMove == PieceColor.WHITE ? -rowAbsoluteDifference : rowAbsoluteDifference;
 
             Square fromSquare = new Square(toSquare.file(), toSquare.row() + signedRowDiff);
 
@@ -201,11 +181,12 @@ public class PGNReader {
 
             String[] captureParts = moveString.split("x");
 
+            Square toSquare = new Square(captureParts[1]);
+
             int fromFile = captureParts[0].charAt(0) - 'a';
-            int fromRow = board.colorToMove == PieceColor.WHITE ? 6 : 1;
+            int fromRow = toSquare.row() + (board.colorToMove == PieceColor.WHITE ? -1 : 1);
 
             Square fromSquare = new Square(fromFile, fromRow);
-            Square toSquare = new Square(captureParts[1]);
 
             boolean isEnPassant = toSquare.equals(board.enPassantTarget);
 
