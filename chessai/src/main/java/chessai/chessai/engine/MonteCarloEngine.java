@@ -21,7 +21,7 @@ public class MonteCarloEngine extends ChessEngine {
         private int numWins = 0; // +1
         private int numDraws = 0; // +0.5
 
-        TreeNode(Board state, TreeNode parent, Move move) {
+        TreeNode(Board state, TreeNode parent) {
             this.state = state;
             this.parent = parent;
         }
@@ -32,7 +32,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             this.children = legalMoves
                     .stream()
-                    .map(move -> new TreeNode(state.makeMove(move), this, move))
+                    .map(move -> new TreeNode(state.makeMove(move), this))
                     .toList();
 
             return legalMoves;
@@ -71,7 +71,7 @@ public class MonteCarloEngine extends ChessEngine {
     @Override
     public Optional<EvaluatedMove> makeMove(Board board, Consumer<Optional<EvaluatedMove>> callbackAfterEachDepth, BooleanSupplier isCancelled) {
 
-        TreeNode root = new TreeNode(board, null, null);
+        TreeNode root = new TreeNode(board, null);
         List<Move> legalMovesByRoot = root.generateEmptyChildren();
 
         // no moves
@@ -99,9 +99,6 @@ public class MonteCarloEngine extends ChessEngine {
 
                 Optional<TreeNode> nextNode = traversingNode.children.stream()
                         .max(Comparator.comparingDouble(node -> node.getScore(explorationParameter)));
-
-                if (nextNode.isEmpty())
-                    break;
 
                 traversingNode = nextNode.get();
             }

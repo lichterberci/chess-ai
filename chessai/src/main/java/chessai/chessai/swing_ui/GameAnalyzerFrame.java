@@ -21,7 +21,7 @@ public class GameAnalyzerFrame extends JFrame {
 
     private final transient List<Board> boards;
     private final transient List<Move> moves;
-    private final ChessEngine engine;
+    private final transient ChessEngine engine;
     private transient int currentBoardIndex;
     private final transient BoardPanel boardPanel;
     private transient SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>> engineMoveCalculatorWorker;

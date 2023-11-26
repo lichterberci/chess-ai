@@ -9,12 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Eval bar added">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Eval bar finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/EvalBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/EvalBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameAnalyzerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameAnalyzerFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,15 +318,7 @@
       <workItem from="1700392486058" duration="1435000" />
       <workItem from="1700403188509" duration="15543000" />
       <workItem from="1700938769464" duration="1809000" />
-      <workItem from="1701013781479" duration="27870000" />
-    </task>
-    <task id="LOCAL-00032" summary="Updated method names">
-      <option name="closed" value="true" />
-      <created>1698340321340</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1698340321340</updated>
+      <workItem from="1701013781479" duration="27963000" />
     </task>
     <task id="LOCAL-00033" summary="Removed some more old code and added some tests">
       <option name="closed" value="true" />
@@ -714,7 +704,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701038971222</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Eval bar finished">
+      <option name="closed" value="true" />
+      <created>1701042689433</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1701042689433</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,7 +730,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed mate in 2 test's hyperparams a bit" />
     <MESSAGE value="Images are almost ready" />
     <MESSAGE value="Added SVGs, but they don't work :/" />
     <MESSAGE value="Still trying to center the images... :(" />
@@ -757,7 +754,8 @@
     <MESSAGE value="Analyzer frame complete (TODO: PGN reading in menu)" />
     <MESSAGE value="Engines now return the eval as well" />
     <MESSAGE value="Eval bar added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Eval bar added" />
+    <MESSAGE value="Eval bar finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Eval bar finished" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
