@@ -100,7 +100,7 @@ public class MinimaxEngine extends ChessEngine {
 
 	public MinimaxEngine(int maxDepth, int transpositionTableCapacityInBytes) {
 		this.maxDepth = maxDepth;
-		this.pvTableLength = maxDepth + MAX_ADDITIONAL_DEPTH;
+        this.pvTableLength = maxDepth + MAX_ADDITIONAL_DEPTH + 1;
 		this.transpositionTable = new TranspositionTable(transpositionTableCapacityInBytes);
 		historicalBestMovesCount = new int[64][64];
 	}

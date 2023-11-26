@@ -270,7 +270,7 @@ public class BoardPanel extends JPanel {
                 name
         );
 
-        InputStream resourceInputStream = getClass().getResourceAsStream(urlString);
+        InputStream resourceInputStream = BoardPanel.class.getResourceAsStream(urlString);
 
         if (resourceInputStream == null) {
             System.err.printf("Sound resource path is null! (%s)%n", urlString);

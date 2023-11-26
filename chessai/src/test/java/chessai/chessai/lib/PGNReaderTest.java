@@ -2,8 +2,7 @@ package chessai.chessai.lib;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PGNReaderTest {
 
@@ -57,7 +56,11 @@ class PGNReaderTest {
         assertDoesNotThrow(() -> reader.parseString(pgnString));
 
         assertEquals(83, reader.getBoards().size());
+
+        assertEquals("rnbq1rk1/ppppppbp/5np1/8/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQ - 1 5", reader.getBoards().get(8).getFENString());
+        assertEquals("1Q6/5pk1/2p3p1/1pbbN2p/4n2P/8/r5P1/5K2 b - - 5 36", reader.getBoards().get(71).getFENString());
     }
+
 
     @Test
     void getMoves() {
@@ -84,5 +87,9 @@ class PGNReaderTest {
         assertDoesNotThrow(() -> reader.parseString(pgnString));
 
         assertEquals(82, reader.getMoves().size());
+
+        assertEquals(SpecialMove.KING_SIDE_CASTLE, reader.getMoves().get(7).specialMove());
+
+        assertTrue(reader.getMoves().get(12).isCapture());
     }
 }

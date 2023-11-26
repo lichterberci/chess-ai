@@ -786,14 +786,14 @@ public class Board {
 
         result.colorToMove = colorToMove == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
 
+        if (colorToMove == PieceColor.BLACK)
+            result.fullMoveClock++;
+
         // move counts
         if (move.isCapture() || movingPiece instanceof Pawn) {
             result.halfMoveCounter = 0;
-            result.fullMoveClock = 0;
         } else {
             result.halfMoveCounter++;
-            if (result.halfMoveCounter % 2 == 0)
-                result.fullMoveClock++;
         }
 
         if (move.isCapture())
