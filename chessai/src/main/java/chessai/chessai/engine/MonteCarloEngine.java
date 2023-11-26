@@ -81,7 +81,6 @@ public class MonteCarloEngine extends ChessEngine {
         // forced move
         if (root.children.size() == 1) {
             Move result = legalMovesByRoot.get(0);
-            System.out.printf("Forced move: %s ---> %s%n", result.from(), result.to());
             return Optional.of(new EvaluatedMove(result, 0));
         }
 
@@ -207,8 +206,10 @@ public class MonteCarloEngine extends ChessEngine {
                     if (child.numSimulationsRanByThisNode > maxSimulations) {
                         maxSimulations = child.numSimulationsRanByThisNode;
                         result = legalMovesByRoot.get(j);
-                        resultEval = (int) (child.numWins + child.numDraws / 2.0f - 0.5f) / child.numSimulationsRanByThisNode
-                                * (child.state.colorToMove == PieceColor.WHITE ? Integer.MAX_VALUE : Integer.MIN_VALUE);
+                        double winRate = (child.numWins + child.numDraws / 2.0f) / child.numSimulationsRanByThisNode;
+                        resultEval = (int) (Math.pow(winRate * 2 - 1, 3) * Integer.MAX_VALUE);
+                        if (child.state.colorToMove == PieceColor.WHITE)
+                            resultEval = -resultEval;
                     }
                 }
 
@@ -255,8 +256,10 @@ public class MonteCarloEngine extends ChessEngine {
 	        if (child.numSimulationsRanByThisNode > maxSimulations) {
 		        maxSimulations = child.numSimulationsRanByThisNode;
 		        result = legalMovesByRoot.get(i);
-                resultEval = (int) (child.numWins + child.numDraws / 2.0f - 0.5f) / child.numSimulationsRanByThisNode
-                        * (child.state.colorToMove == PieceColor.WHITE ? Integer.MAX_VALUE : Integer.MIN_VALUE);
+                double winRate = (child.numWins + child.numDraws / 2.0f) / child.numSimulationsRanByThisNode;
+                resultEval = (int) (Math.pow(winRate * 2 - 1, 3) * Integer.MAX_VALUE);
+                if (child.state.colorToMove == PieceColor.WHITE)
+                    resultEval = -resultEval;
 	        }
         }
 

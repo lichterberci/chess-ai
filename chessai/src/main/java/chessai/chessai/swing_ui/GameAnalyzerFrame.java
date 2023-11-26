@@ -25,20 +25,27 @@ public class GameAnalyzerFrame extends JFrame {
     private transient int currentBoardIndex;
     private final transient BoardPanel boardPanel;
     private transient SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>> engineMoveCalculatorWorker;
+    private final transient EvalBar evalBar;
 
     public GameAnalyzerFrame(String pgnString, ChessEngine engine) throws ParseException {
         super("Game analyzer");
 
         this.engine = engine;
 
+//        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setSize(820, 800);
 
         PGNReader pgnReader = new PGNReader(pgnString);
 
         boards = new ArrayList<>(pgnReader.getBoards());
         moves = new ArrayList<>(pgnReader.getMoves());
+
+        evalBar = new EvalBar();
+        evalBar.setMinimumSize(new Dimension(20, 800));
+        this.add(evalBar, BorderLayout.WEST);
 
         boardPanel = new BoardPanel(
                 true,
@@ -46,6 +53,7 @@ public class GameAnalyzerFrame extends JFrame {
         );
         boardPanel.setVisible(true);
         this.add(boardPanel, BorderLayout.CENTER);
+
 
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -55,6 +63,9 @@ public class GameAnalyzerFrame extends JFrame {
         });
 
         drawBoard(0);
+
+        validate();
+        pack();
     }
 
     private void keyPressed(KeyEvent e) {
@@ -86,6 +97,8 @@ public class GameAnalyzerFrame extends JFrame {
         boardPanel.validate();
         boardPanel.repaint();
 
+        evalBar.setEval(0);
+
         if (index < boards.size() - 1)
             calculateBestMoves();
         else
@@ -112,6 +125,8 @@ public class GameAnalyzerFrame extends JFrame {
 
                             if (optMove.isEmpty())
                                 return;
+
+                            GameAnalyzerFrame.this.evalBar.setEval(optMove.get().eval());
 
                             GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                                     Settings.getInstance().getSelectedPieceBackgroundColor(),
@@ -144,6 +159,8 @@ public class GameAnalyzerFrame extends JFrame {
 
                 if (result.isEmpty())
                     return;
+
+                GameAnalyzerFrame.this.evalBar.setEval(result.get().eval());
 
                 GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                         Settings.getInstance().getSelectedPieceBackgroundColor(),

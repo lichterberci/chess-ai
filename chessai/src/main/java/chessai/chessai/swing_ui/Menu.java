@@ -464,7 +464,6 @@ public class Menu {
 				return;
 			}
 
-			gameAnalyzerFrame.setSize(new Dimension(800, 800));
 			gameAnalyzerFrame.setLocationRelativeTo(null);
 			gameAnalyzerFrame.setVisible(true);
 
