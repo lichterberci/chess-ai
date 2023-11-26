@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Fixing parser...">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Parser fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/PGNReaderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/PGNReaderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +113,7 @@
       <recent name="chessai.chessai.swing_ui" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.PGNReaderTest.parseString">
+  <component name="RunManager" selected="Gradle.PGNReaderTest.getMoves">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -122,30 +122,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="BoardTest.getState" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;chessai.chessai.lib.BoardTest.getState&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
     </configuration>
     <configuration name="BoardTest.setIsCheckForMove" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -195,6 +171,54 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="PGNReaderTest.getBoards" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;chessai.chessai.lib.PGNReaderTest.getBoards&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PGNReaderTest.getMoves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;chessai.chessai.lib.PGNReaderTest.getMoves&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="PGNReaderTest.parseString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -219,30 +243,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TranspositionTableTest.contains" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;chessai.chessai.engine.TranspositionTableTest.contains&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
       <module name="chessai.test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -257,20 +257,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.PGNReaderTest.getBoards" />
+      <item itemvalue="Gradle.PGNReaderTest.getMoves" />
       <item itemvalue="Gradle.PGNReaderTest.parseString" />
       <item itemvalue="Gradle.BoardTest.setIsCheckForMove" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
-      <item itemvalue="Gradle.TranspositionTableTest.contains" />
-      <item itemvalue="Gradle.BoardTest.getState" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.PGNReaderTest.getMoves" />
+        <item itemvalue="Gradle.PGNReaderTest.getBoards" />
         <item itemvalue="Gradle.PGNReaderTest.parseString" />
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.BoardTest.setIsCheckForMove" />
-        <item itemvalue="Gradle.TranspositionTableTest.contains" />
-        <item itemvalue="Gradle.BoardTest.getState" />
       </list>
     </recent_temporary>
   </component>
@@ -316,15 +316,7 @@
       <workItem from="1700392486058" duration="1435000" />
       <workItem from="1700403188509" duration="15543000" />
       <workItem from="1700938769464" duration="1809000" />
-      <workItem from="1701013781479" duration="14095000" />
-    </task>
-    <task id="LOCAL-00027" summary="Fixed some bugs, but it is not yet near...">
-      <option name="closed" value="true" />
-      <created>1697780435559</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1697780435559</updated>
+      <workItem from="1701013781479" duration="14491000" />
     </task>
     <task id="LOCAL-00028" summary="All tests pass!!!">
       <option name="closed" value="true" />
@@ -710,7 +702,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701027140469</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Parser fixed">
+      <option name="closed" value="true" />
+      <created>1701028029119</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1701028029119</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -728,7 +728,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Removed some more old code and added some tests" />
     <MESSAGE value="Resolved kingmap issues" />
     <MESSAGE value="Fixed bitmap issues" />
     <MESSAGE value="Mate in two is found :)" />
@@ -753,7 +752,8 @@
     <MESSAGE value="File saver added, not working yet" />
     <MESSAGE value="PGN parser added" />
     <MESSAGE value="Fixing parser..." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing parser..." />
+    <MESSAGE value="Parser fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Parser fixed" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
