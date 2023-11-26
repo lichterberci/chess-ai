@@ -6,6 +6,7 @@ import chessai.chessai.lib.pieces.Queen;
 import chessai.chessai.lib.pieces.Rook;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,9 +14,9 @@ import java.util.regex.Pattern;
 
 public class PGNReader {
 
-    private static final String DEFAULT_POSITION_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-    private List<Board> boards;
-    private List<Move> moves;
+    private static final String DEFAULT_POSITION_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    private final List<Board> boards;
+    private final List<Move> moves;
     private GameState endResult;
 
     public PGNReader() {
@@ -50,10 +51,16 @@ public class PGNReader {
 
         String startingFen = DEFAULT_POSITION_FEN;
 
+        if (!fieldsMatcher.find())
+            throw new ParseException(input, 0);
+
         for (int i = 0; i < fieldsMatcher.groupCount(); i++) {
-            String fieldString = fieldsMatcher.group(i);
+            String fieldString = fieldsMatcher.group(i + 1);
 
             Matcher fieldNameValueMatcher = fieldNameValuePattern.matcher(fieldString);
+
+            if (!fieldNameValueMatcher.find())
+                throw new ParseException(input, input.indexOf(fieldString));
 
             String fieldName = fieldNameValueMatcher.group("FieldName").trim();
             String fieldValue = fieldNameValueMatcher.group("FieldValue").trim();
@@ -75,18 +82,33 @@ public class PGNReader {
 
         String nonFieldInput = input.substring(input.lastIndexOf(']') + 1);
 
-        Pattern roundPattern = Pattern.compile("\\d+\\.\\s+[\\d\\w=+#]+\\s+([\\d\\w=+#]+)?");
-        Pattern movesInRoundPattern = Pattern.compile("(?<moveIndex>\\d+)\\.\\s+(?<move1>[\\d\\w=+#]+)\\s+(?<move2>[\\d\\w=+#]+)?");
+        Pattern roundPattern = Pattern.compile("^\\s*(?<round>[^\\w\\d]\\d+\\.\\s+[\\d\\w=+\\-#]+\\s+(?:[\\d\\w=\\-+#]+)?\\s*)+\\s*$");
+        Pattern movesInRoundPattern = Pattern.compile("(?<moveIndex>\\d+)\\.\\s+(?<move1>[\\d\\w=\\-+#]+)\\s+(?<move2>[\\d\\w=\\-+#]+)?");
 
-        Matcher roundMatcher = roundPattern.matcher(nonFieldInput);
+        Matcher roundMatcher = roundPattern.matcher(" " + nonFieldInput);
 
         boards.add(new Board(board));
 
-        for (int i = 0; i < roundMatcher.groupCount(); i++) {
+        if (!roundMatcher.find())
+            throw new ParseException(input, input.indexOf(nonFieldInput));
 
-            String round = roundMatcher.group(i);
+        List<String> roundGroups = new LinkedList<>();
+
+        for (int i = 0; i < roundMatcher.groupCount(); i++) {
+            roundGroups.add(roundMatcher.group(i + 1).trim());
+        }
+
+        Collections.sort(roundGroups);
+
+        roundGroups.forEach(x -> System.out.println("round: " + x));
+
+        for (int i = 0; i < roundGroups.size(); i++) {
+            String round = roundGroups.get(i);
 
             Matcher roundInfoMatcher = movesInRoundPattern.matcher(round);
+
+            if (!roundInfoMatcher.find())
+                throw new ParseException(round, 0);
 
             int roundNum = Integer.parseUnsignedInt(roundInfoMatcher.group("moveIndex"));
 
@@ -204,7 +226,7 @@ public class PGNReader {
 
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -219,7 +241,7 @@ public class PGNReader {
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().file() == fromFile)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -234,7 +256,7 @@ public class PGNReader {
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().row() == fromRow)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -251,7 +273,7 @@ public class PGNReader {
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().file() == fromFile)
                     .filter(m -> m.from().row() == fromRow)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -265,7 +287,7 @@ public class PGNReader {
 
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -280,7 +302,7 @@ public class PGNReader {
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().file() == fromFile)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -295,7 +317,7 @@ public class PGNReader {
             return board.getLegalMoves().stream()
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().row() == fromRow)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }
@@ -312,7 +334,7 @@ public class PGNReader {
                     .filter(m -> m.toIndex() == toSquare.getIndex())
                     .filter(m -> m.from().file() == fromFile)
                     .filter(m -> m.from().row() == fromRow)
-                    .filter(m -> board.get(m.fromIndex()) != null && board.get(m.fromIndex()).getFENChar() == moveString.charAt(0))
+                    .filter(m -> board.get(m.fromIndex()) != null && Character.toUpperCase(board.get(m.fromIndex()).getFENChar()) == Character.toUpperCase(moveString.charAt(0)))
                     .findFirst()
                     .orElseThrow(() -> new ParseException(moveString, 0));
         }

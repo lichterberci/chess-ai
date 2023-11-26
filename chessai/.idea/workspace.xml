@@ -9,14 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="File saver added, not working yet">
-      <change afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="PGN parser added">
+      <change afterPath="$PROJECT_DIR$/src/test/java/chessai/chessai/lib/PGNReaderTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.dat" beforeDir="false" afterPath="$PROJECT_DIR$/settings.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvEGameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +41,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -81,7 +77,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "extract.method.default.visibility": "private",
     "git-widget-placeholder": "main",
-    "last.edited.regexp": "33. e4 cxd8=Q",
+    "last.edited.regexp": " 33. e4 cxd8=Q 33. e4 cxd8=Q 33. e4# e4 1. a2 a4 ",
     "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -110,15 +106,15 @@
       <recent name="E:\chess-ai\chessai\javadocs" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="chessai.chessai.engine" />
       <recent name="chessai.chessai.lib" />
+      <recent name="chessai.chessai.engine" />
       <recent name="chessai.chessai.lib.pieces" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="chessai.chessai.swing_ui" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Application">
+  <component name="RunManager" selected="Gradle.PGNReaderTest.parseString">
     <configuration name="Application" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -200,7 +196,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TranspositionTableTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="PGNReaderTest.parseString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -213,7 +209,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;chessai.chessai.engine.TranspositionTableTest&quot;" />
+            <option value="&quot;chessai.chessai.lib.PGNReaderTest.parseString&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -262,20 +258,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
+      <item itemvalue="Gradle.PGNReaderTest.parseString" />
       <item itemvalue="Gradle.BoardTest.setIsCheckForMove" />
       <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
       <item itemvalue="Gradle.TranspositionTableTest.contains" />
       <item itemvalue="Gradle.BoardTest.getState" />
-      <item itemvalue="Gradle.TranspositionTableTest" />
       <item itemvalue="JUnit.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.PGNReaderTest.parseString" />
         <item itemvalue="Gradle.MateInTwoTest.findMateInTwo" />
         <item itemvalue="Gradle.BoardTest.setIsCheckForMove" />
         <item itemvalue="Gradle.TranspositionTableTest.contains" />
         <item itemvalue="Gradle.BoardTest.getState" />
-        <item itemvalue="Gradle.TranspositionTableTest" />
       </list>
     </recent_temporary>
   </component>
@@ -321,15 +317,7 @@
       <workItem from="1700392486058" duration="1435000" />
       <workItem from="1700403188509" duration="15543000" />
       <workItem from="1700938769464" duration="1809000" />
-      <workItem from="1701013781479" duration="11381000" />
-    </task>
-    <task id="LOCAL-00025" summary="Added SlidingPiece class and implemented sliding for Rook">
-      <option name="closed" value="true" />
-      <created>1697473871162</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1697473871162</updated>
+      <workItem from="1701013781479" duration="13110000" />
     </task>
     <task id="LOCAL-00026" summary="Updated gitignore to ignore sonarlint indexes">
       <option name="closed" value="true" />
@@ -715,7 +703,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700940568851</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="PGN parser added">
+      <option name="closed" value="true" />
+      <created>1701025331458</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1701025331459</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,7 +729,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
     <MESSAGE value="Updated method names" />
     <MESSAGE value="Removed some more old code and added some tests" />
     <MESSAGE value="Resolved kingmap issues" />
@@ -758,7 +753,8 @@
     <MESSAGE value="Reverted to a good version" />
     <MESSAGE value="PGN building is probably done" />
     <MESSAGE value="File saver added, not working yet" />
-    <option name="LAST_COMMIT_MESSAGE" value="File saver added, not working yet" />
+    <MESSAGE value="PGN parser added" />
+    <option name="LAST_COMMIT_MESSAGE" value="PGN parser added" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
