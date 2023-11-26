@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 
 public class MonteCarloEngine extends ChessEngine {
 
+    private static final int NODES_TO_SEARCH_BETWEEN_UPDATES = 10;
+
     private static class TreeNode {
         private final Board state;
         private final TreeNode parent;
@@ -194,7 +196,7 @@ public class MonteCarloEngine extends ChessEngine {
 
             // update best move, if necessary
 
-            if (i % 5 == 4) {
+            if (i % NODES_TO_SEARCH_BETWEEN_UPDATES == 1) {
                 Move result = null;
                 int maxSimulations = -1;
 
@@ -228,7 +230,7 @@ public class MonteCarloEngine extends ChessEngine {
 
 //            double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
 
-	        System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===>  (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
+//	        System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===>  (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
 //
 //            if (Double.isNaN(winRate))
 //                continue;
@@ -253,11 +255,11 @@ public class MonteCarloEngine extends ChessEngine {
         }
 
         if (result == null) {
-            System.out.println("empty move");
+//            System.out.println("empty move");
             return Optional.empty();
         }
 
-        System.out.println("move: " + result.from() + " --> " + result.to());
+//        System.out.println("move: " + result.from() + " --> " + result.to());
 
         return Optional.of(result);
     }
