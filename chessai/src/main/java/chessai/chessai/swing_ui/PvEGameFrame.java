@@ -71,7 +71,7 @@ public class PvEGameFrame extends JFrame {
         if (!isPlayerWhite)
             calculateEngineMoveAndMakMoveAfterwards();
 
-		pgnBuilder = new PGNBuilder(board, isPlayerWhite ? "Player" : "Engine", isPlayerWhite ? "Engine" : "Player");
+        pgnBuilder = new PGNBuilder(board, isPlayerWhite ? "Player" : "Engine", isPlayerWhite ? "Engine" : "Player", startFen);
 	}
 
 	private void makeMove(Move move) {

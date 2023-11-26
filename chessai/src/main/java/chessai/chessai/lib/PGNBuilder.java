@@ -13,14 +13,16 @@ public class PGNBuilder {
 	private Board board;
 	private final String whiteName;
 	private final String blackName;
-	private List<String> movesInAlgebraicNotation;
+	private final List<String> movesInAlgebraicNotation;
+	private final String initialFen;
 	private GameState result = GameState.PLAYING;
 
-	public PGNBuilder(Board board, String whiteName, String blackName) {
+	public PGNBuilder(Board board, String whiteName, String blackName, String initialFen) {
 		this.board = board;
 		this.whiteName = whiteName;
 		this.blackName = blackName;
 		this.movesInAlgebraicNotation = new LinkedList<>();
+		this.initialFen = initialFen;
 	}
 
 	public void addMove(Move move) {
@@ -71,10 +73,10 @@ public class PGNBuilder {
 				else
 					throw new IllegalStateException("Invalid promotion class!");
 
-				moveString = String.valueOf((char) (move.from().file() + 'a')) + (move.isCapture() ? "x" : "") + Square.toString(move.toIndex(), false) + "=" + promotionChar;
+				moveString = (move.isCapture() ? ((char) (move.from().file() + 'a') + "x") : "") + Square.toString(move.toIndex(), false) + "=" + promotionChar;
 			} else if (isPawn && move.isCapture()) {
 
-				moveString = String.valueOf((char) (move.from().file() + 'a')) + "x" + Square.toString(move.toIndex(), false);
+				moveString = (char) (move.from().file() + 'a') + "x" + Square.toString(move.toIndex(), false);
 
 			} else if (isPawn) {
 
@@ -121,6 +123,7 @@ public class PGNBuilder {
 		sb.append("[Event \"%s\"]%n".formatted(EVENT_NAME));
 		sb.append("[Site \"%s\"]%n".formatted(SITE_NAME));
 		sb.append("[Date \"%s\"]%n".formatted(LocalDate.now().toString()));
+		sb.append("[FEN \"%s\"]%n".formatted(initialFen));
 		sb.append("[White \"%s\"]%n".formatted(whiteName));
 		sb.append("[Black \"%s\"]%n".formatted(blackName));
 		sb.append("[Result \"%s\"]%n".formatted(switch (result) {

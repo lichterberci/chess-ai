@@ -56,7 +56,7 @@ public class PvPGameFrame extends JFrame {
 
 		boardPanel.setVisible(true);
 
-		pgnBuilder = new PGNBuilder(board, "Player 1", "Player 2");
+        pgnBuilder = new PGNBuilder(board, "Player 1", "Player 2", startFen);
 	}
 
 	private void makeMove(Move move) {

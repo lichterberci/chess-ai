@@ -3,6 +3,7 @@ package chessai.chessai.swing_ui;
 import chessai.chessai.lib.GameState;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
@@ -48,16 +49,27 @@ public class GameEndedDialog extends JDialog {
 		copyPgnToClipboardBtn.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JButton savePgnBtn = new PrimaryButton("Save PGN to file", e -> {
+
 			var fileChooser = new JFileChooser();
 			fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			fileChooser.setFileFilter(new FileNameExtensionFilter("", ".pgn", ".txt"));
 			int fileChoosingResult = fileChooser.showSaveDialog(this);
+
 			if (fileChoosingResult == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
+
 				try {
-					file.createNewFile();
+					if (!file.exists()) {
+						boolean wasFileSuccessfullyCreated = file.createNewFile();
+
+						if (!wasFileSuccessfullyCreated)
+							System.err.printf("Could not create file [path=%s]%n", file.getPath());
+					}
 				} catch (IOException ex) {
 					throw new RuntimeException(ex);
 				}
+
 				try (var fw = new FileWriter(file)) {
 					fw.write(pgnString);
 				} catch (IOException ex) {
