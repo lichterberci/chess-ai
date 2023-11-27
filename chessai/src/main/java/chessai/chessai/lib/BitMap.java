@@ -5,8 +5,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Encapsulates a long that stores a 64 bit bitmap.
+ * bit 0 (lsb) : A8
+ * ...
+ * bit 63 (msb) : H1
+ */
 public class BitMap {
 
+    /**
+     * Iterator used for iterating through the bits of a bitmap
+     */
     static class BitMapIterator implements Iterator<Boolean> {
         private final BitMap bitMap;
         private byte index = 0;

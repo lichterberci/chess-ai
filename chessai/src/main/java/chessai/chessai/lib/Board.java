@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a position during a chess match.
+ */
 public class Board {
 
     /**
@@ -20,11 +23,18 @@ public class Board {
      * 63 = H1
      */
     Piece[] squares;
+    /**
+     * Determines the side which can move in the position.
+     */
     public PieceColor colorToMove;
     public boolean canBlackCastleKingSide;
     public boolean canBlackCastleQueenSide;
     public boolean canWhiteCastleKingSide;
     public boolean canWhiteCastleQueenSide;
+    /**
+     * If a double pawn push was the last move, this represents its target
+     * (so the one on which that the enemy pawn would be after an en passant capture)
+     */
     public Square enPassantTarget;
     public int fullMoveClock;
     public int halfMoveCounter;
@@ -119,17 +129,31 @@ public class Board {
         setFromFENString(fenString);
     }
 
+    /**
+     * Gets the piece at the given square
+     *
+     * @param square the square
+     * @return the piece (or null if there is non)
+     */
     public Piece get(@NotNull Square square) {
         if (square.getIndex() == -1)
             return null;
         return squares[square.getIndex()];
     }
 
+
+    /**
+     * Gets the piece at the given square
+     *
+     * @param index the index of the square
+     * @return the piece (or null if there is non)
+     */
     public Piece get(int index) {
         if (index == -1)
             return null;
         return squares[index];
     }
+
     public Optional<PieceColor> getColorAtSquare(Square square) {
         if (squares[square.getIndex()] == null)
             return Optional.empty();
@@ -144,6 +168,12 @@ public class Board {
         return Optional.ofNullable(squares[file + (7 - row) * 8]).map(Piece::getColor);
     }
 
+    /**
+     * Determines whether the king with the color <code>color</code> is in check
+     *
+     * @param color the color of the king
+     * @return true if the king is in check
+     */
     public boolean isKingInCheck(PieceColor color) {
 
         if (whiteAttackSquares == null || blackAttackSquares == null) {
@@ -153,6 +183,9 @@ public class Board {
         return color == PieceColor.WHITE ? blackAttackSquares.and(whiteKing).isNonZero() : whiteAttackSquares.and(blackKing).isNonZero();
     }
 
+    /**
+     * Populates the attack map bitmaps
+     */
     private void generateAttackMapsForBothSides() {
         whiteAttackSquares = new BitMap(0);
         blackAttackSquares = new BitMap(0);
@@ -174,6 +207,11 @@ public class Board {
         }
     }
 
+    /**
+     * Determines the state of the game (win/draw/ongoing)
+     *
+     * @return the state of the current position
+     */
     public GameState getState() {
 
         if (cachedGameState != null)
@@ -272,6 +310,9 @@ public class Board {
         return canOppositeWin;
     }
 
+    /**
+     * Populates the attack square bitmaps
+     */
     public void generateAttackSquare() {
 
         PieceColor realColorToMove = colorToMove;
@@ -314,6 +355,11 @@ public class Board {
         colorToMove = realColorToMove;
     }
 
+    /**
+     * Calculates the legal moves in the given position
+     *
+     * @return the legal moves
+     */
     public List<Move> getLegalMoves() {
 
         if (cachedLegalMoves != null)
@@ -746,12 +792,24 @@ public class Board {
                 .toList();
     }
 
+    /**
+     * Determines if a move is legal
+     *
+     * @param move the move
+     * @return true if it is legal
+     */
     public boolean isMoveLegal(Move move) {
         if (cachedLegalMoves != null)
             return cachedLegalMoves.contains(move);
         return getLegalMoves().contains(move);
     }
 
+    /**
+     * Makes a move in a given position
+     *
+     * @param move the move to make
+     * @return a new <code>Board</code> object with the new position
+     */
     public Board makeMove(Move move) {
 
         Square from = move.from();
@@ -836,13 +894,13 @@ public class Board {
 
         if (move.isCapture() && (squares[move.toIndex()] instanceof Rook)) {
             if (move.toIndex() == Square.getIndex("a1"))
-                    result.canWhiteCastleQueenSide = false;
+                result.canWhiteCastleQueenSide = false;
             if (move.toIndex() == Square.getIndex("a8"))
-                    result.canBlackCastleQueenSide = false;
+                result.canBlackCastleQueenSide = false;
             if (move.toIndex() == Square.getIndex("h1"))
-                    result.canWhiteCastleKingSide = false;
+                result.canWhiteCastleKingSide = false;
             if (move.toIndex() == Square.getIndex("h8"))
-                    result.canBlackCastleKingSide = false;
+                result.canBlackCastleKingSide = false;
         }
     }
 
@@ -965,6 +1023,14 @@ public class Board {
         return newSquares;
     }
 
+    /**
+     * Tries to infer a move from two squares
+     *
+     * @param from              the first selected square
+     * @param to                the second selected square
+     * @param promotedPieceType the type selected during promotion (or null)
+     * @return the move it found, or empty if it didn't
+     */
     public Optional<Move> tryToInferMove(Square from, Square to, Class<? extends Piece> promotedPieceType) {
 
         if (from.getIndex() == to.getIndex())
@@ -1022,6 +1088,12 @@ public class Board {
         return specialType;
     }
 
+    /**
+     * Sets the position given in a FEN strnig
+     *
+     * @param fenString the FEN posiiton
+     * @throws ParseException if the FEN is invalid
+     */
     public void setFromFENString(@NotNull String fenString) throws ParseException {
 
         squares = new Piece[64];
@@ -1130,6 +1202,11 @@ public class Board {
         previousPositionHashes = new LinkedList<>();
     }
 
+    /**
+     * Generates the FEN string of the position
+     *
+     * @return the FEN
+     */
     public String getFENString() {
         StringBuilder sb = new StringBuilder(40);
 
@@ -1172,6 +1249,11 @@ public class Board {
 
     }
 
+    /**
+     * Generates the FEN string of only the position (no castling rights, etc.)
+     *
+     * @return the FEN
+     */
     public String getFENPositionString() {
         StringBuilder sb = new StringBuilder(32);
 
@@ -1208,6 +1290,12 @@ public class Board {
         return sb.toString();
     }
 
+    /**
+     * Infers if a move should be a promotion or not
+     *
+     * @param move the move
+     * @return true if it should be a promotion
+     */
     public boolean shouldMoveBePromotion(Move move) {
 
         Piece movingPiece = get(move.fromIndex());
@@ -1221,11 +1309,16 @@ public class Board {
             return move.from().row() == 1 && move.to().row() == 0;
     }
 
+    /**
+     * Calculates a Zobrist hash
+     *
+     * @return the hash
+     */
     @Override
     public int hashCode() {
-//
-//        if (cachedHash != 0)
-//            return cachedHash;
+
+        if (cachedHash != 0)
+            return cachedHash;
 
         int hash = ZobristHash.computeHash(this);
 
@@ -1243,6 +1336,13 @@ public class Board {
         return other.hashCode() == hashCode();
     }
 
+    /**
+     * Populates the isCheck field of the given moves
+     *
+     * @param moves  the moves
+     * @param boards the positions after the moves
+     * @return the moves with the populated isCheck fields
+     */
     public List<Move> withIsCheckSet(List<Move> moves, List<Board> boards) {
 
         List<Move> result = new ArrayList<>(moves.size());
@@ -1255,6 +1355,12 @@ public class Board {
         return result;
     }
 
+    /**
+     * Populates the isCheck field of the move
+     *
+     * @param move the move
+     * @return the move with the populated isCheck field
+     */
     public Move withIsCheckSet(Move move) {
         return withIsCheckSet(move, null);
     }

@@ -9,6 +9,9 @@ import java.util.Random;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
+/**
+ * This is an engine mainly used for fun or for testing purposes. It returns a random legal move in the position.
+ */
 public class RandomEngine extends ChessEngine {
 
     @Override
