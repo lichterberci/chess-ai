@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'application'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
 }
 
@@ -29,14 +28,7 @@ application {
     mainClass = 'chessai.chessai.HelloApplication'
 }
 
-javafx {
-    version = '18.0.2'
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
 dependencies {
-    implementation('org.controlsfx:controlsfx:11.1.2')
-    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
     implementation 'org.jetbrains:annotations:24.0.0'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
@@ -50,12 +42,13 @@ test {
 }
 
 jlink {
-    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    imageZip = project.file("${buildDir}/distributions/app.zip")
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'app'
     }
 }
+
 
 jlinkZip {
     group = 'distribution'

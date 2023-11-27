@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class PuzzleSolverFrame extends JFrame {
 	private final transient EvalBar evalBar;
 	private final transient BoardPanel boardPanel;
+	private transient SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>> engineMoveCalculatorWorker;
 
 	public PuzzleSolverFrame(String fen, ChessEngine engine) throws ParseException {
 		super("Puzzle solver");
@@ -41,7 +42,7 @@ public class PuzzleSolverFrame extends JFrame {
 	}
 
 	private void solvePuzzle(ChessEngine engine, Board board) {
-		new SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>>() {
+		engineMoveCalculatorWorker = new SwingWorker<Optional<EvaluatedMove>, Optional<EvaluatedMove>>() {
 			@Override
 			protected Optional<EvaluatedMove> doInBackground() {
 				return engine.makeMove(
@@ -96,7 +97,9 @@ public class PuzzleSolverFrame extends JFrame {
 						List.of(result.get().move().from(), result.get().move().to()),
 						4);
 			}
-		}.execute();
+		};
+
+		engineMoveCalculatorWorker.execute();
 
 	}
 

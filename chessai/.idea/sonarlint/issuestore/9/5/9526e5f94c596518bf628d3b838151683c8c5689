@@ -1,7 +1,0 @@
-
-m
-java:S3655g"PCall "nextNode.isPresent()" or "!nextNode.isEmpty()" before accessing the value.(Óüø8Ë³°ğÀ1
-t
-java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 55 to the 15 allowed.(êËôøÿÿÿÿ8ÆµâïÀ1
-è
-java:S6541H"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 94 to 64, Complexity from 22 to 14, Nesting Level from 5 to 2, Number of Variables from 28 to 6.(êËôøÿÿÿÿ8ÚµâïÀ1

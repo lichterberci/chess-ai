@@ -32,11 +32,10 @@ public class Menu {
 	static {
 		PLAYABLE_CHESS_ENGINES = new HashMap<>();
 		PLAYABLE_CHESS_ENGINES.put("Random", new RandomEngine());
-		PLAYABLE_CHESS_ENGINES.put("Monte Carlo", new MonteCarloEngine(0, 1.4142, 50, 10000));
-		PLAYABLE_CHESS_ENGINES.put("Deep Monte Carlo", new MonteCarloEngine(0, 1.4142, 300, 10000));
+		PLAYABLE_CHESS_ENGINES.put("Shallow Monte Carlo", new MonteCarloEngine(0, 1.1, 50, 10000));
+		PLAYABLE_CHESS_ENGINES.put("Deep Monte Carlo", new MonteCarloEngine(0, 1.4, 300, 100000));
 		PLAYABLE_CHESS_ENGINES.put("Minimax (10MB transposition table)", new MinimaxEngine(20, 10_000_000));
 		PLAYABLE_CHESS_ENGINES.put("Minimax (1GB transposition table)", new MinimaxEngine(20, 1_000_000_000));
-		PLAYABLE_CHESS_ENGINES.put("Minimax (2GB transposition table)", new MinimaxEngine(20, 2_000_000_000));
 
 		AVAILABLE_THEMES = new HashMap<>();
 		AVAILABLE_THEMES.put("Neo", "neo");
