@@ -24,6 +24,7 @@ public class Menu {
 	private final JPanel pvpGameSettingsPanel;
 	private final JPanel pveGameSettingsPanel;
 	private final JPanel analyzeGamePanel;
+	private final JPanel puzzleSolverPanel;
 
 	static {
 		PLAYABLE_CHESS_ENGINES = new HashMap<>();
@@ -67,24 +68,29 @@ public class Menu {
 		pveGameSettingsPanel.setVisible(true);
 		window.add(pveGameSettingsPanel);
 
-		analyzeGamePanel = new JPanel();
-		setupAnalyzeGamePanel();
-		analyzeGamePanel.setVisible(true);
-		window.add(analyzeGamePanel);
+	    analyzeGamePanel = new JPanel();
+	    setupAnalyzeGamePanel();
+	    analyzeGamePanel.setVisible(true);
+	    window.add(analyzeGamePanel);
 
-		settingsPanel = new JPanel();
-		setupSettingsPanel();
-		settingsPanel.setVisible(true);
-		window.add(settingsPanel);
+	    settingsPanel = new JPanel();
+	    setupSettingsPanel();
+	    settingsPanel.setVisible(true);
+	    window.add(settingsPanel);
 
-		window.setLocationRelativeTo(null);
-		window.setLayout(new FlowLayout(FlowLayout.CENTER));
+	    puzzleSolverPanel = new JPanel();
+	    setupPuzzleSolverPanel();
+	    puzzleSolverPanel.setVisible(true);
+	    window.add(puzzleSolverPanel);
 
-		selectMenuPanel("MAIN");
+	    window.setLocationRelativeTo(null);
+	    window.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-		window.setMinimumSize(new Dimension(300, 150));
-		window.setVisible(true);
-	}
+	    selectMenuPanel("MAIN");
+
+	    window.setMinimumSize(new Dimension(300, 150));
+	    window.setVisible(true);
+    }
 
 	private void setupSettingsPanel() {
 
@@ -270,7 +276,7 @@ public class Menu {
 
 
 	private void setupMainPanel() {
-		mainPanel.setLayout(new GridLayout(5, 1, 0, 20));
+		mainPanel.setLayout(new GridLayout(7, 1, 0, 20));
 
 		JLabel title = new JLabel("GM dojo");
 		Image pawnImage;
@@ -290,11 +296,15 @@ public class Menu {
 		JButton pveBtn = new PrimaryButton("Play against the engine!", e -> selectMenuPanel("PVE"));
 		JButton analyzeBtn = new PrimaryButton("Analyze your game!", e -> selectMenuPanel("ANALYZE"));
 		JButton settingsBtn = new PrimaryButton("Settings", e -> selectMenuPanel("SETTINGS"));
+		JButton solveBtn = new PrimaryButton("Let the engine solve your puzzle!", e -> selectMenuPanel("PUZZLE"));
+		JButton exitBtn = new PrimaryButton("Exit", e -> window.dispose());
 
 		mainPanel.add(pvpBtn);
 		mainPanel.add(pveBtn);
 		mainPanel.add(analyzeBtn);
+		mainPanel.add(solveBtn);
 		mainPanel.add(settingsBtn);
+		mainPanel.add(exitBtn);
 
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	}
@@ -489,7 +499,7 @@ public class Menu {
 
 		JPanel buttonHolder = new JPanel(new FlowLayout());
 
-		JButton anaylzeBtn = new PrimaryButton("Analyze", e -> SwingUtilities.invokeLater(() -> {
+		JButton analyzeBtn = new PrimaryButton("Analyze", e -> SwingUtilities.invokeLater(() -> {
 			String pgnString = pgnTextArea.getText();
 
 			GameAnalyzerFrame gameAnalyzerFrame;
@@ -497,8 +507,6 @@ public class Menu {
 			try {
 				gameAnalyzerFrame = new GameAnalyzerFrame(pgnString, PLAYABLE_CHESS_ENGINES.get((String) engineSelectorDropdown.getSelectedItem()));
 			} catch (ParseException ex) {
-//				System.err.println(ex);
-//				return;
 				throw new RuntimeException(ex);
 			}
 
@@ -511,9 +519,71 @@ public class Menu {
 
 
 		buttonHolder.add(backBtn);
-		buttonHolder.add(anaylzeBtn);
+		buttonHolder.add(analyzeBtn);
 
 		analyzeGamePanel.add(buttonHolder);
+	}
+
+	private void setupPuzzleSolverPanel() {
+
+		puzzleSolverPanel.setLayout(new GridLayout(4, 1));
+
+		JLabel solveThePuzzleLabel = new JLabel("Help the engine solve the puzzle!");
+		solveThePuzzleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		solveThePuzzleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		solveThePuzzleLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 20));
+
+		puzzleSolverPanel.add(solveThePuzzleLabel);
+
+		JPanel engineSelectorPanel = new JPanel(new FlowLayout());
+
+		JLabel selectEngineLabel = new JLabel("Select engine: ");
+		selectEngineLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+
+		engineSelectorPanel.add(selectEngineLabel);
+
+		JComboBox<String> engineSelectorDropdown = new JComboBox<>(new Vector<>(PLAYABLE_CHESS_ENGINES.keySet().stream().toList()));
+		engineSelectorDropdown.setSelectedIndex(0);
+		engineSelectorPanel.add(engineSelectorDropdown);
+
+		puzzleSolverPanel.add(engineSelectorPanel);
+
+		JPanel fenPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+		JLabel fenLabel = new JLabel("FEN: ");
+		fenLabel.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		fenPanel.add(fenLabel);
+
+		JTextField fenField = new JTextField(20);
+		fenField.setFont(Fonts.getRobotoFont(Font.PLAIN, 15));
+		fenPanel.add(fenField);
+
+		puzzleSolverPanel.add(fenPanel);
+
+		JPanel buttonHolder = new JPanel(new FlowLayout());
+
+		JButton solveBtn = new PrimaryButton("Solve", e -> SwingUtilities.invokeLater(() -> {
+			PuzzleSolverFrame puzzleSolverFrame;
+
+			try {
+				puzzleSolverFrame = new PuzzleSolverFrame(fenField.getText().trim(), PLAYABLE_CHESS_ENGINES.get((String) engineSelectorDropdown.getSelectedItem()));
+			} catch (ParseException ex) {
+				throw new RuntimeException(ex);
+			}
+
+			puzzleSolverFrame.setLocationRelativeTo(null);
+			puzzleSolverFrame.setVisible(true);
+
+			selectMenuPanel("MAIN");
+		}));
+
+		JButton backBtn = new PrimaryButton("Back", e -> selectMenuPanel("MAIN"));
+
+		buttonHolder.add(backBtn);
+		buttonHolder.add(solveBtn);
+
+		puzzleSolverPanel.add(buttonHolder);
+
 	}
 
 	private void selectMenuPanel(String panelName) {
@@ -523,6 +593,7 @@ public class Menu {
 		pveGameSettingsPanel.setVisible(false);
 		settingsPanel.setVisible(false);
 		analyzeGamePanel.setVisible(false);
+		puzzleSolverPanel.setVisible(false);
 
 		if (panelName.equals("MAIN"))
 			mainPanel.setVisible(true);
@@ -534,6 +605,8 @@ public class Menu {
 			pveGameSettingsPanel.setVisible(true);
 		if (panelName.equals("ANALYZE"))
 			analyzeGamePanel.setVisible(true);
+		if (panelName.equals("PUZZLE"))
+			puzzleSolverPanel.setVisible(true);
 
 		window.setTitle(switch (panelName) {
 			case "MAIN" -> "Menu";
@@ -541,6 +614,7 @@ public class Menu {
 			case "PVP" -> "Play against your friend!";
 			case "PVE" -> "Play against the engine!";
 			case "ANALYZE" -> "Analyze your game!";
+			case "PUZZLE" -> "Puzzle solving!";
 			default -> throw new IllegalStateException("Unexpected value: " + panelName);
 		});
 
