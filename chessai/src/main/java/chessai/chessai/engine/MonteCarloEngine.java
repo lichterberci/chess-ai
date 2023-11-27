@@ -9,10 +9,16 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
+/**
+ * Implements the Monte Carlo Tree Search algorithm with move ordering in the simulation phase to get better results.
+ */
 public class MonteCarloEngine extends ChessEngine {
 
     private static final int NODES_TO_SEARCH_BETWEEN_UPDATES = 10;
 
+    /**
+     * The class represents a node in the MCTS tree.
+     */
     private static class TreeNode {
         private final Board state;
         private final TreeNode parent;
@@ -38,6 +44,12 @@ public class MonteCarloEngine extends ChessEngine {
             return legalMoves;
         }
 
+        /**
+         * Calculates the UTC score of the node
+         *
+         * @param explorationParameter the 'C' exploration parameter
+         * @return the UTC score
+         */
         public double getScore(double explorationParameter) {
 
             if (numSimulationsRanByThisNode == 0) {
@@ -61,6 +73,14 @@ public class MonteCarloEngine extends ChessEngine {
     private final int numSimulations;
     private final int numNodesToCheck;
 
+    /**
+     * Creates a new MCTS engine
+     *
+     * @param seed                 the seed of the random class that is used internally
+     * @param explorationParameter the 'C' exploration parameter used during the search
+     * @param numSimulations       the number of simulations at each step
+     * @param numNodesToCheck      the number of searches before finishing
+     */
     public MonteCarloEngine(int seed, double explorationParameter, int numSimulations, int numNodesToCheck) {
         random = new Random(seed);
         this.explorationParameter = explorationParameter;
@@ -83,8 +103,6 @@ public class MonteCarloEngine extends ChessEngine {
             Move result = legalMovesByRoot.get(0);
             return Optional.of(new EvaluatedMove(result, Optional.empty()));
         }
-
-//        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
 
         // search
 
@@ -113,9 +131,6 @@ public class MonteCarloEngine extends ChessEngine {
 
             AtomicInteger numWinsToAdd = new AtomicInteger();
             AtomicInteger numDrawsToAdd = new AtomicInteger();
-//
-//            int numWinsToAdd = 0;
-//            int numDrawsToAdd = 0;
 
             TreeNode backTraversingCurrentNode;
 
@@ -149,10 +164,8 @@ public class MonteCarloEngine extends ChessEngine {
                 // our selected node is in a terminal state
 
                 switch (selectedNodeToExplore.state.getState()) {
-                    case WHITE_WIN ->
-                            numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.WHITE ? numSimulations : 0);
-                    case BLACK_WIN ->
-                            numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.BLACK ? numSimulations : 0);
+                    case WHITE_WIN -> numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.WHITE ? numSimulations : 0);
+                    case BLACK_WIN -> numWinsToAdd.getAndAdd(board.colorToMove == PieceColor.BLACK ? numSimulations : 0);
                     case DRAW -> numDrawsToAdd.getAndAdd(numSimulations);
                     default -> throw new IllegalArgumentException("Unexpected value for game state!");
                 }
@@ -165,19 +178,6 @@ public class MonteCarloEngine extends ChessEngine {
 
                 backTraversingCurrentNode = selectedNodeToExplore.parent;
             }
-
-//            for (int j = 0; j < numSimulations; j++) {
-//
-//                GameState result = simulate(new Board(selectedNodeToExplore.state));
-//
-//                if (result == GameState.DRAW)
-//                    numDrawsToAdd += 1;
-//                    // IMPORTANT: here, we check for the color of the board of the root (aka. simply board)
-//                else if (board.colorToMove == PieceColor.WHITE ? result == GameState.WHITE_WIN : result == GameState.BLACK_WIN)
-//                    numWinsToAdd += 1;
-//
-//            }
-
 
             // backpropagation
 
@@ -220,56 +220,37 @@ public class MonteCarloEngine extends ChessEngine {
 
         // pick the child with the most simulations
 
-	    Move result = null;
+        Move result = null;
         int resultEval = 0;
-	    int maxSimulations = -1;
-//        double maxScore = Double.MIN_VALUE;
-//        double bestWinRate = -1;
+        int maxSimulations = -1;
 
         for (int i = 0; i < root.children.size(); i++) {
 
-	        TreeNode child = root.children.get(i);
+            TreeNode child = root.children.get(i);
 
-//            double winRate = (child.numWins + child.numDraws / 2.0) / child.numSimulationsRanByThisNode;
-
-//	        System.out.println(legalMovesByRoot.get(i).from() + " --> " + legalMovesByRoot.get(i).to() + " ===>  (" + (child.numWins + child.numDraws / 2.0) + "/" + child.numSimulationsRanByThisNode + ")");
-//
-//            if (Double.isNaN(winRate))
-//                continue;
-
-//            if (winRate > bestWinRate) {
-//                result = legalMovesByRoot.get(i);
-//                bestWinRate = winRate;
-//            }
-
-//            System.out.println(child.score);
-
-//            if (child.score > maxScore) {
-//                System.out.println("update to child");
-//                result = legalMovesByRoot.get(i);
-//                maxScore = child.score;
-//            }
-
-	        if (child.numSimulationsRanByThisNode > maxSimulations) {
-		        maxSimulations = child.numSimulationsRanByThisNode;
-		        result = legalMovesByRoot.get(i);
+            if (child.numSimulationsRanByThisNode > maxSimulations) {
+                maxSimulations = child.numSimulationsRanByThisNode;
+                result = legalMovesByRoot.get(i);
                 double winRate = (child.numWins + child.numDraws / 2.0f) / child.numSimulationsRanByThisNode;
                 resultEval = (int) (Math.pow(winRate * 2 - 1, 3) * Integer.MAX_VALUE);
                 if (child.state.colorToMove == PieceColor.WHITE)
                     resultEval = -resultEval;
-	        }
+            }
         }
 
         if (result == null) {
-//            System.out.println("empty move");
             return Optional.empty();
         }
-
-//        System.out.println("move: " + result.from() + " --> " + result.to());
 
         return Optional.of(new EvaluatedMove(result, Optional.of(resultEval)));
     }
 
+    /**
+     * The simulation step of the MCTS
+     *
+     * @param board the position
+     * @return the state after the simulation finishes
+     */
     private GameState simulate(Board board) {
 
         Board playingBoard = new Board(board);
@@ -293,6 +274,14 @@ public class MonteCarloEngine extends ChessEngine {
         return playingBoard.getState();
     }
 
+    /**
+     * Supplies the moves to the simulation step.
+     *
+     * @param board  the position
+     * @param moves  the legal moves in the position
+     * @param random the random class used during the selection
+     * @return the move chosen at random (biased)
+     */
     private Move getBiasedRandomMove(Board board, List<Move> moves, Random random) {
 
         List<Double> moveWeights = moves.stream().map((Move move) -> getMoveWeight(board, move)).toList();
@@ -314,6 +303,13 @@ public class MonteCarloEngine extends ChessEngine {
         return moves.get(moves.size() - 1);
     }
 
+    /**
+     * Determines the weight of each move during the random selection
+     *
+     * @param board the position
+     * @param move  the move
+     * @return the weight of the move in the given position
+     */
     private double getMoveWeight(Board board, Move move) {
 
         double result = 1;
@@ -342,6 +338,12 @@ public class MonteCarloEngine extends ChessEngine {
         return Math.max(result, 1);
     }
 
+    /**
+     * Determines the static value of a piece type
+     *
+     * @param pieceType the piece type
+     * @return the value of a piece with that type
+     */
     private int getPieceValue(Class<? extends Piece> pieceType) {
         if (pieceType.equals(Pawn.class))
             return PAWN_VALUE;

@@ -11,6 +11,12 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
+/**
+ * A chess engine that uses the minimax algorithm to determine the best move.
+ * It uses alpha-beta pruning and delta-pruning alongside a transposition table and the so-called historical heuristic to
+ * speed up move generation.
+ * It also uses iterative deepening with principal variation saved, so the move ordering is better at the next iteration.
+ */
 public class MinimaxEngine extends ChessEngine {
 
 	private static final float POSITION_MAP_WEIGHT = 10f;
@@ -94,13 +100,26 @@ public class MinimaxEngine extends ChessEngine {
 	private Move[][] prevPvTable;
 	private int currentMaxDepth;
 
+	/**
+	 * Creates a new minimax engine
+	 *
+	 * @param maxDepth the max depth that the engine searches
+	 */
 	public MinimaxEngine(int maxDepth) {
 		this(maxDepth, 1_000_000_000);
 	}
 
+
+	/**
+	 * Creates a new minimax engine
+	 *
+	 * @param maxDepth                          the max depth that the engine searches
+	 * @param transpositionTableCapacityInBytes the size of the transposition table (which is allocated as an array
+	 *                                          not to use more RAM than we want)
+	 */
 	public MinimaxEngine(int maxDepth, int transpositionTableCapacityInBytes) {
 		this.maxDepth = maxDepth;
-        this.pvTableLength = maxDepth + MAX_ADDITIONAL_DEPTH + 1;
+		this.pvTableLength = maxDepth + MAX_ADDITIONAL_DEPTH + 1;
 		this.transpositionTable = new TranspositionTable(transpositionTableCapacityInBytes);
 		historicalBestMovesCount = new int[64][64];
 	}
@@ -122,7 +141,15 @@ public class MinimaxEngine extends ChessEngine {
 		return bestMove;
 	}
 
-	public Optional<EvaluatedMove> search(Board board, int depth, BooleanSupplier isCancelled) {
+	/**
+	 * Initiates a search at <code>depth</code> depth
+	 *
+	 * @param board       the position of the root
+	 * @param depth       the max depth of the search
+	 * @param isCancelled supplies the cancellation token
+	 * @return the best move with eval (or empty if there is none)
+	 */
+	private Optional<EvaluatedMove> search(Board board, int depth, BooleanSupplier isCancelled) {
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
@@ -211,12 +238,23 @@ public class MinimaxEngine extends ChessEngine {
 		return Optional.of(new EvaluatedMove(possibleLegalMoves.get(indexOfBestMove), Optional.of(bestEval)));
 	}
 
+	/**
+	 * This is the alpha-beta call that is iteratively called during the search
+	 *
+	 * @param board              the position
+	 * @param depth              the current depth
+	 * @param additionalDepth    the current additional depth
+	 * @param isMaximizingPlayer determines whether we want to maximize the score or minimize it
+	 * @param alpha              the alpha parameter
+	 * @param beta               the beta parameter
+	 * @return the evaluation of the position
+	 */
 	private int evaluateState(Board board,
-							  int depth,
-							  int additionalDepth,
-							  boolean isMaximizingPlayer,
-							  int alpha,
-							  int beta) {
+	                          int depth,
+	                          int additionalDepth,
+	                          boolean isMaximizingPlayer,
+	                          int alpha,
+	                          int beta) {
 
 		if (transpositionTable.contains(board)) {
 			try {
@@ -229,32 +267,10 @@ public class MinimaxEngine extends ChessEngine {
 
 		pvTable[depth + additionalDepth] = new Move[pvTableLength];
 
-		// delta cut-off
-		// if the situation is hopeless, we just return the static eval
-
 		int staticEval = evaluateOngoingPosition(board);
-
-//		final int BIG_DELTA = 2 * QUEEN_VALUE; // maybe add another queen value if we can promote this move
-//
-//		if (alpha > staticEval + BIG_DELTA)
-//			return alpha;
-//
-//		if (beta < staticEval - BIG_DELTA)
-//			return beta;
-
-//		if (alpha < staticEval)
-//			alpha = staticEval;
-//
-//		if (beta > staticEval)
-//			beta = staticEval;
 
 		List<Move> possiblyImmutableLegalMoves = board.getLegalMoves();
 
-//		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
-
-//		possiblyImmutableLegalMoves.forEach(move -> boards.add(board.makeMove(move)));
-
-//		List<Move> possibleLegalMoves = board.withIsCheckSet(possiblyImmutableLegalMoves, boards);
 		List<Move> possibleLegalMoves = new ArrayList<>(possiblyImmutableLegalMoves);
 
 		sortMovesInPlace(possibleLegalMoves, depth + additionalDepth, board);
@@ -306,7 +322,6 @@ public class MinimaxEngine extends ChessEngine {
 		for (Move move : possibleLegalMoves) {
 
 			int currentEval = evaluateState(
-//                    boards.get(i),
 					board.makeMove(move),
 					Math.min(currentMaxDepth, depth + 1),
 					depth < currentMaxDepth ? 0 : additionalDepth + 1,
@@ -359,6 +374,13 @@ public class MinimaxEngine extends ChessEngine {
 		return bestEval;
 	}
 
+	/**
+	 * Orders moves to speed up alpha-beta search
+	 *
+	 * @param possibleLegalMoves the list of moves
+	 * @param actualDepth        our current depth (depth + additional depth)
+	 * @param board              the position
+	 */
 	private void sortMovesInPlace(List<Move> possibleLegalMoves, int actualDepth, Board board) {
 
 		if (possibleLegalMoves == null || possibleLegalMoves.isEmpty() || possibleLegalMoves.size() == 1)
@@ -429,6 +451,12 @@ public class MinimaxEngine extends ChessEngine {
 
 	}
 
+	/**
+	 * Determines the static value of a piece
+	 *
+	 * @param pieceType the type of piece
+	 * @return the value of a piece
+	 */
 	private int getPieceValue(Class<? extends Piece> pieceType) {
 		if (pieceType.equals(Pawn.class))
 			return PAWN_VALUE;
@@ -444,6 +472,11 @@ public class MinimaxEngine extends ChessEngine {
 			return 0;
 	}
 
+	/**
+	 * Statically evaluates a given state
+	 * @param board the position to evaluate
+	 * @return the evaluation of the position
+	 */
 	private int evaluateOngoingPosition(Board board) {
 
 		int result = 0;
