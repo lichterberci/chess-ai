@@ -92,6 +92,11 @@ public class GameAnalyzerFrame extends JFrame {
                     Settings.getInstance().getMoveHighlightColor(),
                     List.of(moves.get(index - 1).from(), moves.get(index - 1).to()),
                     1);
+        } else {
+            boardPanel.drawLayer("moveHighlight",
+                    Settings.getInstance().getMoveHighlightColor(),
+                    Collections.emptyList(),
+                    1);
         }
 
         boardPanel.validate();
@@ -126,7 +131,8 @@ public class GameAnalyzerFrame extends JFrame {
                             if (optMove.isEmpty())
                                 return;
 
-                            GameAnalyzerFrame.this.evalBar.setEval(optMove.get().eval());
+                            if (optMove.get().eval().isPresent())
+                                GameAnalyzerFrame.this.evalBar.setEval(optMove.get().eval().get());
 
                             GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                                     Settings.getInstance().getSelectedPieceBackgroundColor(),
@@ -160,7 +166,8 @@ public class GameAnalyzerFrame extends JFrame {
                 if (result.isEmpty())
                     return;
 
-                GameAnalyzerFrame.this.evalBar.setEval(result.get().eval());
+                if (result.get().eval().isPresent())
+                    GameAnalyzerFrame.this.evalBar.setEval(result.get().eval().get());
 
                 GameAnalyzerFrame.this.boardPanel.drawLayer("engineMove",
                         Settings.getInstance().getSelectedPieceBackgroundColor(),

@@ -81,7 +81,7 @@ public class MonteCarloEngine extends ChessEngine {
         // forced move
         if (root.children.size() == 1) {
             Move result = legalMovesByRoot.get(0);
-            return Optional.of(new EvaluatedMove(result, 0));
+            return Optional.of(new EvaluatedMove(result, Optional.empty()));
         }
 
 //        List<TreeNode> unexploredNodes = new ArrayList<>(root.children);
@@ -214,7 +214,7 @@ public class MonteCarloEngine extends ChessEngine {
                     callbackAfterEachDepth.accept(Optional.empty());
                 }
 
-                callbackAfterEachDepth.accept(Optional.of(new EvaluatedMove(result, resultEval)));
+                callbackAfterEachDepth.accept(Optional.of(new EvaluatedMove(result, Optional.of(resultEval))));
             }
         }
 
@@ -267,7 +267,7 @@ public class MonteCarloEngine extends ChessEngine {
 
 //        System.out.println("move: " + result.from() + " --> " + result.to());
 
-        return Optional.of(new EvaluatedMove(result, resultEval));
+        return Optional.of(new EvaluatedMove(result, Optional.of(resultEval)));
     }
 
     private GameState simulate(Board board) {

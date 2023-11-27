@@ -64,6 +64,8 @@ public class PGNReader {
             String fieldName = fieldNameValueMatcher.group("FieldName").trim();
             String fieldValue = fieldNameValueMatcher.group("FieldValue").trim();
 
+            System.out.println("field: " + fieldName + " - " + fieldValue);
+
             switch (fieldName) {
                 case "FEN" -> startingFen = fieldValue;
                 case "Result" -> endResult = switch (fieldValue) {
@@ -95,6 +97,9 @@ public class PGNReader {
             if (!roundInfoMatcher.find())
                 throw new ParseException(round, 0);
 
+            if (Pattern.compile("^\\s*[01/2½]+-[01/2½]+\\s*$").matcher(roundInfoMatcher.group("move1")).matches())
+                continue;
+
             Move whiteMove = parseMove(board, roundInfoMatcher.group("move1").trim());
 
             moves.add(whiteMove);
@@ -104,6 +109,9 @@ public class PGNReader {
             boards.add(new Board(board));
 
             if (roundInfoMatcher.group("move2") != null) {
+
+                if (Pattern.compile("^\\s*[01/2½]+-[01/2½]+\\s*$").matcher(roundInfoMatcher.group("move2")).matches())
+                    continue;
 
                 Move blackMove = parseMove(board, roundInfoMatcher.group("move2").trim());
 

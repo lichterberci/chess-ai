@@ -53,7 +53,7 @@ public class GameEndedDialog extends JDialog {
 			var fileChooser = new JFileChooser();
 			fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			fileChooser.setFileFilter(new FileNameExtensionFilter("", ".pgn", ".txt"));
+			fileChooser.setFileFilter(new FileNameExtensionFilter("PGN files", "pgn", "txt"));
 			int fileChoosingResult = fileChooser.showSaveDialog(this);
 
 			if (fileChoosingResult == JFileChooser.APPROVE_OPTION) {

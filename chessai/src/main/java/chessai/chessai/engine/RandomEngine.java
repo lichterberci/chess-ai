@@ -20,6 +20,6 @@ public class RandomEngine extends ChessEngine {
 
         Random random = new Random(System.currentTimeMillis());
 
-        return Optional.of(new EvaluatedMove(moves.get(random.nextInt(moves.size())), 0));
+        return Optional.of(new EvaluatedMove(moves.get(random.nextInt(moves.size())), Optional.empty()));
     }
 }

@@ -135,7 +135,7 @@ public class PGNBuilder {
 
 		for (int i = 0; i < movesInAlgebraicNotation.size(); i++) {
 			if (i % 2 == 0)
-				sb.append("%d. ".formatted((i + 1) / 2));
+				sb.append("%d. ".formatted((i + 1) / 2 + 1));
 
 			sb.append("%s ".formatted(movesInAlgebraicNotation.get(i)));
 		}

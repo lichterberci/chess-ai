@@ -9,10 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Eval bar finished">
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Stabilized minimax engine">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__25__11_51__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__25__11_51__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/5/2/529fd6579586c8ae9ecd04f247679c0fbd30c238" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/EvaluatedMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/EvaluatedMove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MinimaxEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/MonteCarloEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/engine/RandomEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameAnalyzerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameAnalyzerFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/GameEndedDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/swing_ui/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +87,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "extract.method.default.visibility": "private",
     "git-widget-placeholder": "main",
-    "last.edited.regexp": " 33. e4 cxd8=Q 33. e4 cxd8=Q 33. e4# e4 1. a2 a4 ",
+    "last.edited.regexp": " 0/2221121 - 1/2½  ",
     "last_opened_file_path": "E:/chess-ai/chessai/src/test/java/chessai/chessai",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -146,7 +155,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="MateInTwoTest.findMateInTwo" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -170,7 +179,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="PGNReaderTest.getBoards" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -194,7 +203,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="PGNReaderTest.getMoves" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -218,7 +227,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="PGNReaderTest.parseString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -242,7 +251,7 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Tests" type="JUnit" factoryName="JUnit">
@@ -308,17 +317,191 @@
       <workItem from="1698757747299" duration="2193000" />
       <workItem from="1699000536746" duration="6145000" />
       <workItem from="1699379147998" duration="9670000" />
-      <workItem from="1699548470682" duration="732000" />
-      <workItem from="1699638770771" duration="676000" />
-      <workItem from="1699646834244" duration="5412000" />
-      <workItem from="1699903628151" duration="7096000" />
-      <workItem from="1700123038051" duration="3971000" />
-      <workItem from="1700335898764" duration="8048000" />
-      <workItem from="1700346836814" duration="1252000" />
-      <workItem from="1700392486058" duration="1435000" />
-      <workItem from="1700403188509" duration="15543000" />
-      <workItem from="1700938769464" duration="1809000" />
-      <workItem from="1701013781479" duration="27963000" />
+      <workItem from="1700555960910" duration="4578000" />
+    </task>
+    <task id="LOCAL-00010" summary="Updated onCommit actions">
+      <option name="closed" value="true" />
+      <created>1695838662266</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1695838662266</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added GameManager and simplified resource loading">
+      <option name="closed" value="true" />
+      <created>1695839786782</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1695839786782</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Board clearing fixed">
+      <option name="closed" value="true" />
+      <created>1695840172409</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1695840172409</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Game is almost fully playable (promotions needed)">
+      <option name="closed" value="true" />
+      <created>1695845052226</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1695845052226</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Selection works and random engine added">
+      <option name="closed" value="true" />
+      <created>1695847878299</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1695847878299</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Drag and drop implemented">
+      <option name="closed" value="true" />
+      <created>1695927020535</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1695927020535</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Put javadocs into seperate folder">
+      <option name="closed" value="true" />
+      <created>1695928401696</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1695928401696</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added monte carlo tree search">
+      <option name="closed" value="true" />
+      <created>1696623795429</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1696623795429</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Optimizing...">
+      <option name="closed" value="true" />
+      <created>1696625182928</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1696625182928</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Optimizing...">
+      <option name="closed" value="true" />
+      <created>1696627440820</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1696627440820</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added check for draw enstates">
+      <option name="closed" value="true" />
+      <created>1696675541096</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1696675541096</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added MoveResult class and extended BitMap functionality">
+      <option name="closed" value="true" />
+      <created>1697454739223</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1697454739223</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added placeholder implementations of getPseudoLegalMovesAsBitMaps in piece classes">
+      <option name="closed" value="true" />
+      <created>1697455094560</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1697455094560</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Augmented intelliJ warning set">
+      <option name="closed" value="true" />
+      <created>1697455421607</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1697455421607</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Implemented general sliding move generation (currently only on rook)">
+      <option name="closed" value="true" />
+      <created>1697456741559</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1697456741559</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added SlidingPiece class and implemented sliding for Rook">
+      <option name="closed" value="true" />
+      <created>1697473871162</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1697473871162</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Updated gitignore to ignore sonarlint indexes">
+      <option name="closed" value="true" />
+      <created>1697532021103</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1697532021104</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fixed some bugs, but it is not yet near...">
+      <option name="closed" value="true" />
+      <created>1697780435559</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1697780435559</updated>
+    </task>
+    <task id="LOCAL-00028" summary="All tests pass!!!">
+      <option name="closed" value="true" />
+      <created>1697786289895</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1697786289895</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Double check is now correctly determined">
+      <option name="closed" value="true" />
+      <created>1697786627198</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1697786627198</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Random bullshit that sonarlint added">
+      <option name="closed" value="true" />
+      <created>1698335664250</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1698335664250</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fixed en passant pinning and removed deprecated methods">
+      <option name="closed" value="true" />
+      <created>1698339935824</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1698339935824</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Updated method names">
+      <option name="closed" value="true" />
+      <created>1698340321340</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1698340321340</updated>
     </task>
     <task id="LOCAL-00033" summary="Removed some more old code and added some tests">
       <option name="closed" value="true" />
@@ -528,191 +711,7 @@
       <option name="project" value="LOCAL" />
       <updated>1700506888841</updated>
     </task>
-    <task id="LOCAL-00059" summary="Piece align,ent bug FINALLY FIXED!!!! ^^D">
-      <option name="closed" value="true" />
-      <created>1700254197546</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1700254197546</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Added chess.com neo theme">
-      <option name="closed" value="true" />
-      <created>1700255970170</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1700255970170</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Added settings">
-      <option name="closed" value="true" />
-      <created>1700258077784</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1700258077785</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Cleaned up themes, added layers to board coloring">
-      <option name="closed" value="true" />
-      <created>1700259484688</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1700259484688</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Layers work now">
-      <option name="closed" value="true" />
-      <created>1700259965898</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1700259965898</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Added time limit to engine">
-      <option name="closed" value="true" />
-      <created>1700342374369</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1700342374369</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Added plus search after checks">
-      <option name="closed" value="true" />
-      <created>1700343365516</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1700343365516</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Updated monte carlo search">
-      <option name="closed" value="true" />
-      <created>1700347922635</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1700347922635</updated>
-    </task>
-    <task id="LOCAL-00067" summary="Minor changes">
-      <option name="closed" value="true" />
-      <created>1700396273102</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1700396273103</updated>
-    </task>
-    <task id="LOCAL-00068" summary="Creating custom button...">
-      <option name="closed" value="true" />
-      <created>1700417535964</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1700417535965</updated>
-    </task>
-    <task id="LOCAL-00069" summary="Menu UI is starting to look good">
-      <option name="closed" value="true" />
-      <created>1700419918265</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1700419918266</updated>
-    </task>
-    <task id="LOCAL-00070" summary="UI is coming together...">
-      <option name="closed" value="true" />
-      <created>1700425209257</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1700425209258</updated>
-    </task>
-    <task id="LOCAL-00071" summary="PvE options are almost ready">
-      <option name="closed" value="true" />
-      <created>1700427888111</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1700427888111</updated>
-    </task>
-    <task id="LOCAL-00072" summary="PGN building is probably done">
-      <option name="closed" value="true" />
-      <created>1700934737007</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1700934737007</updated>
-    </task>
-    <task id="LOCAL-00073" summary="File saver added, not working yet">
-      <option name="closed" value="true" />
-      <created>1700940568851</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1700940568851</updated>
-    </task>
-    <task id="LOCAL-00074" summary="PGN parser added">
-      <option name="closed" value="true" />
-      <created>1701025331458</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1701025331459</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Fixing parser...">
-      <option name="closed" value="true" />
-      <created>1701027140468</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1701027140469</updated>
-    </task>
-    <task id="LOCAL-00076" summary="Parser fixed">
-      <option name="closed" value="true" />
-      <created>1701028029119</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1701028029119</updated>
-    </task>
-    <task id="LOCAL-00077" summary="Augmented tests">
-      <option name="closed" value="true" />
-      <created>1701028462801</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1701028462801</updated>
-    </task>
-    <task id="LOCAL-00078" summary="Augmented pgn parser tests and game analyzer">
-      <option name="closed" value="true" />
-      <created>1701034794259</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1701034794260</updated>
-    </task>
-    <task id="LOCAL-00079" summary="Analyzer frame complete (TODO: PGN reading in menu)">
-      <option name="closed" value="true" />
-      <created>1701037583948</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1701037583948</updated>
-    </task>
-    <task id="LOCAL-00080" summary="Engines now return the eval as well">
-      <option name="closed" value="true" />
-      <created>1701038971222</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1701038971222</updated>
-    </task>
-    <task id="LOCAL-00081" summary="Eval bar finished">
-      <option name="closed" value="true" />
-      <created>1701042689433</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1701042689433</updated>
-    </task>
-    <option name="localTasksCounter" value="82" />
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -730,6 +729,19 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed some bugs, but it is not yet near..." />
+    <MESSAGE value="All tests pass!!!" />
+    <MESSAGE value="Double check is now correctly determined" />
+    <MESSAGE value="Random bullshit that sonarlint added" />
+    <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
+    <MESSAGE value="Updated method names" />
+    <MESSAGE value="Removed some more old code and added some tests" />
+    <MESSAGE value="Resolved kingmap issues" />
+    <MESSAGE value="Fixed bitmap issues" />
+    <MESSAGE value="Mate in two is found :)" />
+    <MESSAGE value="Workspace changes" />
+    <MESSAGE value="Fixed MCTS and optimized some things" />
+    <MESSAGE value="Changed mate in 2 test's hyperparams a bit" />
     <MESSAGE value="Images are almost ready" />
     <MESSAGE value="Added SVGs, but they don't work :/" />
     <MESSAGE value="Still trying to center the images... :(" />
@@ -742,20 +754,7 @@
     <MESSAGE value="Added move ordering for monte carlo engine" />
     <MESSAGE value="Implemented delta pruning (but it seems too good...)" />
     <MESSAGE value="Stabilized minimax engine" />
-    <MESSAGE value="Random changes" />
-    <MESSAGE value="Reverted to a good version" />
-    <MESSAGE value="PGN building is probably done" />
-    <MESSAGE value="File saver added, not working yet" />
-    <MESSAGE value="PGN parser added" />
-    <MESSAGE value="Fixing parser..." />
-    <MESSAGE value="Parser fixed" />
-    <MESSAGE value="Augmented tests" />
-    <MESSAGE value="Augmented pgn parser tests and game analyzer" />
-    <MESSAGE value="Analyzer frame complete (TODO: PGN reading in menu)" />
-    <MESSAGE value="Engines now return the eval as well" />
-    <MESSAGE value="Eval bar added" />
-    <MESSAGE value="Eval bar finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="Eval bar finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stabilized minimax engine" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -784,7 +783,7 @@
     </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/chessai$Tests.ic" NAME="Tests Coverage Results" MODIFIED="1695927057241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/chessai$Application.ic" NAME="Application Coverage Results" MODIFIED="1696621915646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

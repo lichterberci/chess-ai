@@ -2,5 +2,7 @@ package chessai.chessai.engine;
 
 import chessai.chessai.lib.Move;
 
-public record EvaluatedMove(Move move, Integer eval) {
+import java.util.Optional;
+
+public record EvaluatedMove(Move move, Optional<Integer> eval) {
 }

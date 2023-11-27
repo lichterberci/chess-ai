@@ -130,7 +130,7 @@ public class MinimaxEngine extends ChessEngine {
 			return Optional.empty();
 
 		if (possiblyImmutableLegalMoves.size() == 1)
-			return Optional.of(new EvaluatedMove(possiblyImmutableLegalMoves.get(0), 0));
+			return Optional.of(new EvaluatedMove(possiblyImmutableLegalMoves.get(0), Optional.empty()));
 //
 //		ArrayList<Board> boards = new ArrayList<>(possiblyImmutableLegalMoves.size());
 //
@@ -208,7 +208,7 @@ public class MinimaxEngine extends ChessEngine {
 		if (!isCancelled.getAsBoolean())
 			System.out.printf("Best move at depth %d + %d: %s (%d)%n", depth, MAX_ADDITIONAL_DEPTH, possibleLegalMoves.get(indexOfBestMove), bestEval);
 
-		return Optional.of(new EvaluatedMove(possibleLegalMoves.get(indexOfBestMove), bestEval));
+		return Optional.of(new EvaluatedMove(possibleLegalMoves.get(indexOfBestMove), Optional.of(bestEval)));
 	}
 
 	private int evaluateState(Board board,
