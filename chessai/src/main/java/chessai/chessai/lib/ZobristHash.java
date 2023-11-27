@@ -4,6 +4,10 @@ import chessai.chessai.lib.pieces.*;
 
 import java.util.Random;
 
+/**
+ * This is a special kind of hashing function, commonly used in chess engines.
+ * More on the algorithm: <a href="https://en.wikipedia.org/wiki/Zobrist_hashing">Wikipedia article</a>
+ */
 public class ZobristHash {
 
     static int[][] pieceBitStrings;
@@ -28,6 +32,12 @@ public class ZobristHash {
         blackToMoveBitString = random.nextInt();
     }
 
+    /**
+     * Computes the hash of the given position (board).
+     *
+     * @param board the position
+     * @return the zobrist hash value
+     */
     public static int computeHash(Board board) {
 
         int hash = 0;
@@ -65,6 +75,11 @@ public class ZobristHash {
         return hash;
     }
 
+    /**
+     * Can be used to incrementally update hashes
+     *
+     * @return the updated hash
+     */
     public static int xorPiece(int hash, int squareIndex, Class<? extends Piece> pieceType, PieceColor color) {
 
         int indexOfPiece = 0;

@@ -29,19 +29,11 @@ f
 6src/main/java/chessai/chessai/swing_ui/BoardPanel.java,5\b\5b7a53119775d7f5293b753f3a47454e731ee3f6
 `
 0src/main/java/chessai/chessai/swing_ui/Menu.java,1\2\120c7b71494c333e04799f32a39cf7c3a7d1cb3e
-j
-:src/main/java/chessai/chessai/javafxUI/ui/GameManager.java,1\5\1553b64b5330b45dbebd0787be6e95467d0f36b0
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-n
->src/main/java/chessai/chessai/javafxUI/ui/MainApplication.java,9\0\90679ce0e9ca70d3f0fc132220edc25b3c50ecd7
 k
 ;src/main/java/chessai/chessai/swing_ui/MainApplication.java,1\1\11b36b960781a9d0d40a7bf9dd1369c29ff06ab1
-i
-9src/main/java/chessai/chessai/javafxUI/ui/PlayerType.java,2\f\2fdd4f423bf57262d2aa1f96a141d4b4ec39579d
-n
->src/main/java/chessai/chessai/javafxUI/ui/BoardController.java,4\8\481d0cce522df93294c722e4d1880bf9d10ab212
 h
 8src/main/java/chessai/chessai/swing_ui/PvPGameFrame.java,e\b\ebb082b5135ae47dda57c11f7227348e955237c6
 k
@@ -78,3 +70,13 @@ i
 9src/main/java/chessai/chessai/swing_ui/PrimaryButton.java,3\0\30ef3b5dd90ed132a891e70d936e93fc8f74311d
 a
 1src/test/java/chessai/chessai/lib/SquareTest.java,5\a\5a5fe32ecf5ab4b536e16a190ab61dc042115549
+`
+0src/main/java/chessai/chessai/lib/PGNReader.java,d\6\d6d9408656ddd463b378a65de75e33957b95a6d6
+d
+4src/test/java/chessai/chessai/lib/PGNReaderTest.java,4\c\4c6624b4e61dd6bcf3a4582f4b1faa6fcb1f05e5
+g
+7src/main/java/chessai/chessai/engine/EvaluatedMove.java,0\8\08524c22a63e05bcf19f295a8ab0fd1c59ecd3b4
+m
+=src/main/java/chessai/chessai/swing_ui/GameAnalyzerFrame.java,d\b\db468fe69bff16c710816ae17cc355ba3dad1dad
+c
+3src/main/java/chessai/chessai/swing_ui/EvalBar.java,a\0\a0a975802d443f8fd1840472c1238d9e4a41d73f

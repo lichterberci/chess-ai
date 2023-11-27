@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
+/**
+ * The class containing all the menu logic.
+ */
 public class Menu {
 
 	private static final Map<String, ChessEngine> PLAYABLE_CHESS_ENGINES;

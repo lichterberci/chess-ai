@@ -1,7 +1,5 @@
-package chessai.chessai.engine.mates;
+package chessai.chessai.engine;
 
-import chessai.chessai.engine.ChessEngine;
-import chessai.chessai.engine.MinimaxEngine;
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.GameState;
 import chessai.chessai.lib.Move;

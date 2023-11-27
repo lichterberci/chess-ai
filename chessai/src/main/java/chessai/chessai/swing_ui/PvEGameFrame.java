@@ -14,6 +14,9 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+/**
+ * The frame, containing the controller for the person versus engine use-case.
+ */
 @SuppressWarnings("ALL")
 public class PvEGameFrame extends JFrame {
 

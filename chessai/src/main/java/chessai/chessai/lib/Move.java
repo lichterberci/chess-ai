@@ -3,6 +3,17 @@ package chessai.chessai.lib;
 
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Represents a move in the game.
+ *
+ * @param fromIndex          the index of the square, the piece is moving from
+ * @param toIndex            the index of the square, the piece is moving to
+ * @param promotionPieceType the type of piece, this piece wants to promote to (nullable)
+ * @param isCapture          if the move is a capture
+ * @param isEnPassant        if the move is en passant
+ * @param specialMove        special flags of the move
+ * @param isCheck            determines if the move is a check (usually this is left at a default false for performance reasons)
+ */
 public record Move(
         int fromIndex,
         int toIndex,
@@ -64,6 +75,12 @@ public record Move(
         return String.format("%s%s", Square.toString(fromIndex, upperCase), Square.toString(toIndex, upperCase));
     }
 
+    /**
+     * Copies the move and sets the promotion type
+     *
+     * @param pieceType the promotion type of the copy
+     * @return a new Move object with the promotion type set
+     */
     public Move withPromotionType(Class<? extends Piece> pieceType) {
         return new Move(
                 fromIndex,
@@ -76,6 +93,11 @@ public record Move(
         );
     }
 
+    /**
+     * Copies the move and sets the isCheck flag of the result
+     * @param isCheck the isCheck flag of the result
+     * @return a new move object with the given isCheck flag
+     */
     public Move withCheck(boolean isCheck) {
         return new Move(
                 fromIndex,

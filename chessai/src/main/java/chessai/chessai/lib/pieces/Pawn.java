@@ -2,6 +2,9 @@ package chessai.chessai.lib.pieces;
 
 import chessai.chessai.lib.*;
 
+/**
+ * Represents a pawn on the board
+ */
 public class Pawn extends Piece {
     public Pawn (PieceColor color) {
         super(color);

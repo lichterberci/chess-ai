@@ -2,6 +2,9 @@ package chessai.chessai.lib.pieces;
 
 import chessai.chessai.lib.*;
 
+/**
+ * Represents a rook on the board
+ */
 public class Rook extends SlidingPiece {
     public Rook(PieceColor color) {
         super(color);

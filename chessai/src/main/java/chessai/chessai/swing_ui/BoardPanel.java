@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Represents a view of a board.
+ */
 public class BoardPanel extends JPanel {
     private static final float PIECE_SIZE = 0.95f;
     private final boolean whiteIsAtTheBottom;
@@ -104,6 +107,11 @@ public class BoardPanel extends JPanel {
 
     }
 
+    /**
+     * updates the displayed position to the specified one
+     *
+     * @param board the position
+     */
     public void drawPosition(Board board) {
 
         if (board != null) {
@@ -172,6 +180,14 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets the background color of the given squares. Layers are sorted by priority when they are in conflict.
+     *
+     * @param name     the name of the layer
+     * @param color    the background color to use
+     * @param squares  the squares to update
+     * @param priority the priority of the layer
+     */
     public void drawLayer(String name, Color color, List<Square> squares, int priority) {
         backgroundColorLayerMap.put(name, new BackgroundColorLayer(squares, color, priority));
         repaintBackground();
@@ -249,6 +265,10 @@ public class BoardPanel extends JPanel {
         onSquareDragEndListeners.clear();
     }
 
+    /**
+     * Plays a short clip
+     * @param soundType the name of the clip to play
+     */
     public void playMoveSound(MoveSoundType soundType) {
 
         if (soundType.isCheck) {

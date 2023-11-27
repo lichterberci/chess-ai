@@ -5,6 +5,9 @@ import chessai.chessai.lib.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a knight on the board
+ */
 public class Knight extends Piece {
 
     private static final int MOVE_TARGET_START_FILE = 5;

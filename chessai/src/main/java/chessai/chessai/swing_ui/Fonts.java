@@ -3,6 +3,9 @@ package chessai.chessai.swing_ui;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Supplies custom fonts
+ */
 public class Fonts {
 
     private static Font roboto;

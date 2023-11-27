@@ -5,6 +5,9 @@ import chessai.chessai.lib.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a queen on the board
+ */
 public class Queen extends SlidingPiece {
 	public Queen(PieceColor color) {
 		super(color);

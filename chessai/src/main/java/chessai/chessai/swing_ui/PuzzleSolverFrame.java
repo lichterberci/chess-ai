@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * The frame containing the controller for the puzzle solving use-case.
+ */
 public class PuzzleSolverFrame extends JFrame {
 	private final transient EvalBar evalBar;
 	private final transient BoardPanel boardPanel;

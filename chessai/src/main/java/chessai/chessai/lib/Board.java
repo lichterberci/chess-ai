@@ -1089,9 +1089,9 @@ public class Board {
     }
 
     /**
-     * Sets the position given in a FEN strnig
+     * Sets the position given in a FEN string
      *
-     * @param fenString the FEN posiiton
+     * @param fenString the FEN position
      * @throws ParseException if the FEN is invalid
      */
     public void setFromFENString(@NotNull String fenString) throws ParseException {
@@ -1311,7 +1311,6 @@ public class Board {
 
     /**
      * Calculates a Zobrist hash
-     *
      * @return the hash
      */
     @Override

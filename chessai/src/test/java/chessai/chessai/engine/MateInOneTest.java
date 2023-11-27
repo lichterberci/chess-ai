@@ -1,7 +1,5 @@
-package chessai.chessai.engine.mates;
+package chessai.chessai.engine;
 
-import chessai.chessai.engine.ChessEngine;
-import chessai.chessai.engine.MonteCarloEngine;
 import chessai.chessai.lib.Board;
 import chessai.chessai.lib.GameState;
 import org.junit.jupiter.api.Test;

@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * This class parses PGN string and reads the moves and boards (positions).
+ */
 public class PGNReader {
 
     private static final String DEFAULT_POSITION_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -41,6 +44,12 @@ public class PGNReader {
         return endResult;
     }
 
+    /**
+     * Parses the string as a PGN
+     *
+     * @param input the input PGN string
+     * @throws ParseException if the input is malformed
+     */
     public void parseString(String input) throws ParseException {
 
         Pattern fieldPattern = Pattern.compile("(?<Field>\\[.+\".+\"])");

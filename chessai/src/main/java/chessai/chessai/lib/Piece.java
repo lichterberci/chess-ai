@@ -1,5 +1,8 @@
 package chessai.chessai.lib;
 
+/**
+ * Represents a piece on the board
+ */
 public abstract class Piece {
     protected PieceColor color;
     protected Square square;
@@ -8,8 +11,19 @@ public abstract class Piece {
         this.color = color;
     }
 
+    /**
+     * Returns the character representing this piece in a FEN string
+     *
+     * @return the FEN character of this piece
+     */
     public abstract char getFENChar();
 
+    /**
+     * Generates all the pseudo-legal moves by this piece
+     *
+     * @param board the current position
+     * @return all the data about the pseudo-legal moves
+     */
     public abstract MoveResult getPseudoLegalMoves(Board board);
 
     public Square getSquare() {

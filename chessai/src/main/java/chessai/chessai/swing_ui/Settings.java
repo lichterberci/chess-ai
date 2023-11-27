@@ -3,6 +3,9 @@ package chessai.chessai.swing_ui;
 import java.awt.*;
 import java.io.*;
 
+/**
+ * Represents the application settings (preferences). This class uses a singleton pattern.
+ */
 public class Settings implements Serializable {
 
     private static final String SETTINGS_PATH = "./settings.dat";
@@ -30,6 +33,9 @@ public class Settings implements Serializable {
         this.pieceTheme = other.pieceTheme;
     }
 
+    /**
+     * Updates the singleton instance from the persisted file
+     */
     public static void loadSavedSettingsOrSetToDefault() {
         try (var fileInputStream = new FileInputStream(SETTINGS_PATH)) {
             try (ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
@@ -44,6 +50,9 @@ public class Settings implements Serializable {
         }
     }
 
+    /**
+     * Persists the singleton instance
+     */
     public static void saveSettings() {
         try (var fileOutputStream = new FileOutputStream(SETTINGS_PATH)) {
             try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
@@ -54,6 +63,9 @@ public class Settings implements Serializable {
         }
     }
 
+    /**
+     * Resets the singleton instance (but does not persist it)
+     */
     public void reset() {
         Settings defaultValue = new Settings();
         blackTileColor = defaultValue.blackTileColor;
@@ -64,6 +76,11 @@ public class Settings implements Serializable {
         soundTheme = defaultValue.soundTheme;
     }
 
+    /**
+     * Sets the singleton instance
+     *
+     * @param settings the new state
+     */
     public static void updateInstance(Settings settings) {
         instance = new Settings(settings);
     }

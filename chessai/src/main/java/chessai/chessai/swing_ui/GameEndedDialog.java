@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * A popup that is displayed when a match terminates.
+ */
 public class GameEndedDialog extends JDialog {
 
 	public GameEndedDialog(Frame owner, GameState resultState, String pgnString) {

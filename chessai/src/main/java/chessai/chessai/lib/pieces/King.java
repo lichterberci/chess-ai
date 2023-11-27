@@ -2,6 +2,9 @@ package chessai.chessai.lib.pieces;
 
 import chessai.chessai.lib.*;
 
+/**
+ * Represents a king on the board
+ */
 public class King extends Piece {
 
     private static final int MOVE_TARGET_START_FILE = 6;

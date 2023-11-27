@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * This is a frame, on which the user can analyze their games (given via pgn string)
+ */
 public class GameAnalyzerFrame extends JFrame {
 
     private final transient List<Board> boards;

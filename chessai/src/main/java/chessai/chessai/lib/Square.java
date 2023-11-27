@@ -1,5 +1,8 @@
 package chessai.chessai.lib;
 
+/**
+ * Represents a square on the board.
+ */
 public class Square {
 
     /**
@@ -21,6 +24,17 @@ public class Square {
         return String.valueOf((char) ((upperCase ? 'A' : 'a') + getFile(index))) + (getRow(index) + 1);
     }
 
+    /**
+     * Gets the index of the square on the board.
+     * 0 = A8,
+     * 1 = B8,
+     * ...,
+     * 8 = A7,
+     * ...,
+     * 63 = H1
+     *
+     * @return the index
+     */
     public int getIndex() {
         int result = (squareData >>> 8) + ((7 - (squareData & 0xFF)) * 8);
         if (result > 63 || result < 0)
@@ -74,11 +88,17 @@ public class Square {
         return new Square(getIndex());
     }
 
+    @Override
     public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
         if (!(other instanceof Square otherSquare)) return false;
         return otherSquare.squareData == this.squareData;
+    }
+
+    @Override
+    public int hashCode() {
+        return squareData;
     }
 
     public int row() {

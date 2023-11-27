@@ -5,6 +5,9 @@ import chessai.chessai.lib.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a bishop on the board
+ */
 public class Bishop extends SlidingPiece {
     public Bishop(PieceColor color) {
         super(color);

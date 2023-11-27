@@ -15,6 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.function.Consumer;
 
+/**
+ * Represents a popup, on which the user can select the type of piece they want to promote to.
+ */
 public class PromotionPopupMenu extends JPopupMenu {
 
     private final transient Consumer<Class<? extends Piece>> action;

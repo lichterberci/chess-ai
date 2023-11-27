@@ -3,6 +3,9 @@ package chessai.chessai.swing_ui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Represents an evaluation bar (showing the current advantage of either side on a black-white slider)
+ */
 public class EvalBar extends JPanel {
     private int eval = 0;
 

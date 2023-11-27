@@ -2,8 +2,17 @@ package chessai.chessai.lib;
 
 import chessai.chessai.lib.pieces.*;
 
+/**
+ * This is used during parsing to create pieces.
+ */
 public class PieceFactory {
 
+    /**
+     * Creates a new piece, determined by the FEN character
+     *
+     * @param fenChar the FEN character that represents the piece
+     * @return a new piece isntance
+     */
     public static Piece generateFromChar (char fenChar) {
         return switch (fenChar) {
             case 'P' -> new Pawn(PieceColor.WHITE);

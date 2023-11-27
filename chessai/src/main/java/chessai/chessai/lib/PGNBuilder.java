@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This is a class with which PGN output can be constructed.
+ */
 public class PGNBuilder {
 
 	private static final String SITE_NAME = "Budapest";
@@ -25,6 +28,11 @@ public class PGNBuilder {
 		this.initialFen = initialFen;
 	}
 
+	/**
+	 * Registers a move
+	 *
+	 * @param move the move
+	 */
 	public void addMove(Move move) {
 
 		var nextBoard = board.makeMove(move);
@@ -113,10 +121,18 @@ public class PGNBuilder {
 		this.board = nextBoard;
 	}
 
+	/**
+	 * The result of the game can be set
+	 * @param result the result
+	 */
 	public void setResult(GameState result) {
 		this.result = result;
 	}
 
+	/**
+	 * Builds the PGN output
+	 * @return the PGN as a string
+	 */
 	public String buildString() {
 		StringBuilder sb = new StringBuilder();
 

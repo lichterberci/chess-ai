@@ -1,11 +1,17 @@
 package chessai.chessai.lib;
 
+/**
+ * This is a type of piece (namely: rook, bishop, queen)
+ */
 public abstract class SlidingPiece extends Piece {
 
 	protected SlidingPiece(PieceColor color) {
 		super(color);
 	}
 
+	/**
+	 * This is used during move generation to calculate the pseudo-legal moves
+	 */
 	protected static void slide(int currentFile,
 	                            int currentRow,
 	                            BitMap otherColorPieces,

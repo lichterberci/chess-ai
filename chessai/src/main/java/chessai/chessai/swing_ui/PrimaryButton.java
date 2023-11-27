@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents the button to use in the application for most purposes.
+ */
 public class PrimaryButton extends JButton {
 
     public PrimaryButton(String text) {

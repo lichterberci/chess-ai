@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * The frame, containing the controller for the person versus person use-case.
+ */
 public class PvPGameFrame extends JFrame {
 
 	private final BoardPanel boardPanel;
