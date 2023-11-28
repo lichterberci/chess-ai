@@ -143,7 +143,7 @@ public class PGNReader {
 
             String promotionString = moveString.split("=")[1];
 
-            Class<? extends Piece> promotionPieceType = switch (promotionString) {
+            Class<? extends Piece> promotionPieceType = switch (promotionString.toUpperCase()) {
                 case "Q" -> Queen.class;
                 case "R" -> Rook.class;
                 case "B" -> Bishop.class;

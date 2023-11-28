@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Started adding javadocs comments">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__27__20_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023__11__27__20_00__Changes_.xml" afterDir="false" />
+    <list default="true" id="51b73394-c481-4e9c-8c95-c585216fe0a8" name="Changes" comment="Random workspace changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/chessai/chessai/lib/PGNReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,14 +314,6 @@
       <workItem from="1699000536746" duration="6145000" />
       <workItem from="1699379147998" duration="9670000" />
       <workItem from="1700555960910" duration="4578000" />
-    </task>
-    <task id="LOCAL-00013" summary="Game is almost fully playable (promotions needed)">
-      <option name="closed" value="true" />
-      <created>1695845052226</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1695845052226</updated>
     </task>
     <task id="LOCAL-00014" summary="Selection works and random engine added">
       <option name="closed" value="true" />
@@ -707,7 +699,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701101599604</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Random workspace changes">
+      <option name="closed" value="true" />
+      <created>1701168782519</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1701168782519</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -725,7 +725,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Random bullshit that sonarlint added" />
     <MESSAGE value="Fixed en passant pinning and removed deprecated methods" />
     <MESSAGE value="Updated method names" />
     <MESSAGE value="Removed some more old code and added some tests" />
@@ -750,7 +749,8 @@
     <MESSAGE value="Fixed parser, added textarea" />
     <MESSAGE value="FEN solver added" />
     <MESSAGE value="Started adding javadocs comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started adding javadocs comments" />
+    <MESSAGE value="Random workspace changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Random workspace changes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
